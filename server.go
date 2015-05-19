@@ -1,9 +1,11 @@
 package main
 
 import (
+	"github.com/go-martini/martini"
+	"github.com/martini-contrib/gzip"
+	"log"
 	"net/http"
 	"path"
-	"github.com/go-martini/martini"
 )
 
 var m *martini.Martini
@@ -11,17 +13,18 @@ var m *martini.Martini
 func init() {
 	m = martini.New()
 	router := martini.NewRouter()
+	static := martini.Static("./src", martini.StaticOptions{ Fallback: "./src/index.html" })
 
 	m.Use(martini.Recovery())
 	m.Use(martini.Logger())
-	m.Use(martini.Static("./src"))
+	m.Use(gzip.All())
+	m.Use(static)
 
-	router.NotFound(func(writer http.ResponseWriter, request *http.Request) {
-		if path.Ext(request.URL.Path) == "" {
-			http.ServeFile(writer, request, "./src/index.html")
+	router.NotFound(func(res http.ResponseWriter, req *http.Request) {
+		if path.Ext(req.URL.Path) == "" {
+			http.ServeFile(res, req, "./src/index.html")
 		} else {
-			writer.WriteHeader(http.StatusNotFound)
-			writer.Write([]byte("404"))
+			res.WriteHeader(http.StatusNotFound)
 		}
 	})
 
@@ -29,5 +32,7 @@ func init() {
 }
 
 func main() {
-	m.Run()
+	if err := http.ListenAndServe(":8000", m); err != nil {
+		log.Fatal(err)
+	}
 }
