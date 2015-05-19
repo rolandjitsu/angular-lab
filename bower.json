@@ -1,0 +1,33 @@
+{
+	"author": {
+		"name": "Roland Groza",
+		"email": "rolandjitsu@gmail.com"
+	},
+	"dependencies": {
+		"es6-module-loader": "^0.16.6",
+		"normalize-css": "^3.0.0",
+		"system.js": "^0.16.11",
+		"traceur": "^0.0.89"
+	},
+	"description": "",
+	"homepage": "",
+	"ignore": [
+		"**/.*",
+		"bower_components",
+		"node_modules",
+		"src",
+		"Gruntfile.js"
+	],
+	"keywords": [],
+	"license": {
+		"type": "MIT",
+		"url": ""
+	},
+	"main": "",
+	"name": "SVGlyph",
+	"repository": {
+		"type": "",
+		"url": ""
+	},
+	"version": ""
+}

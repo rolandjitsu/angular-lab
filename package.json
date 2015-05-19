@@ -1,0 +1,28 @@
+{
+	"name": "angular2",
+	"version": "0.0.0",
+	"description": "",
+	"keywords": [],
+	"homepage": "",
+	"license": {
+		"type": "MIT",
+		"url": ""
+	},
+	"author": {
+		"name": "Roland Groza",
+		"email": "rolandjitsu@gmail.com"
+	},
+	"main": "",
+	"repository": {
+		"type": "",
+		"url": ""
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"bower": "1.4.x"
+	},
+	"engines": {
+		"node": "0.12.*"
+	},
+	"private": true
+}

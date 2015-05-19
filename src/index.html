@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<base href="/">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Movies</title>
+		<meta name="description" content="">
+		<link rel="stylesheet" type="text/css" href="bower_components/normalize-css/normalize.css">
+	</head>
+	<body>
+		<app></app>
+		<script src="bower_components/traceur/traceur.min.js"></script>
+		<script src="bower_components/es6-module-loader/dist/es6-module-loader.js"></script>
+		<script src="bower_components/system.js/dist/system.js"></script>
+		<script src="https://code.angularjs.org/2.0.0-alpha.23/angular2.dev.js"></script>
+		<script src="https://code.angularjs.org/2.0.0-alpha.23/router.dev.js"></script>
+		<script>
+			System.config({
+				traceurOptions: {
+					annotations: true
+				},
+				"paths":{
+					"*":"/*.js"
+				}
+			});
+			System.import('app');
+		</script>
+	</body>
+</html>

@@ -1,0 +1,141 @@
+### OSX ###
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon
+Icon
+
+# Thumbnails
+._*
+
+# External Disks
+.Spotlight-V100
+.Trashes
+
+# Remote AFP Share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+### SublimeText ###
+
+# Cache Files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# Workspace Files
+*.sublime-workspace
+
+# Project Files
+*.sublime-project
+
+# SFTP Configuration
+sftp-config.json
+
+
+### WebStorm ###
+
+# JetBrains IDE | IntelliJ/RubyMine/PhpStorm/AppCode/PyCharm
+/*.iml
+
+# Directory Project Settings
+.idea/
+
+# File Project Settings:
+*.ipr
+*.iws
+
+
+### Windows ###
+
+# Image File Caches
+Thumbs.db
+ehthumbs.db
+
+# Folder Config
+Desktop.ini
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Windows Installer
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Shortcuts
+*.lnk
+
+
+### Archives ###
+
+# General
+*.7z
+*.jar
+*.rar
+*.zip
+*.gz
+*.bzip
+*.bz2
+*.xz
+*.lzma
+*.cab
+
+# Packing
+*.iso
+*.tar
+
+# Package Management
+*.dmg
+*.xpi
+*.gem
+*.egg
+*.deb
+*.rpm
+*.msi
+*.msm
+*.msp
+
+
+### Node ###
+
+# Logs
+logs
+*.log
+
+# Runtime
+pids
+*.pid
+*.seed
+
+# Directory
+lib-cov
+
+# Coverage
+coverage
+
+# Grunt
+.grunt
+
+# Compiled Binary
+build/Release
+
+# Dependency
+node_modules
+
+# Environment Variables
+.lock-wscript
+
+
+### Misc ###
+
+bower_components
+tmp
+.envrc
