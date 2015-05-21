@@ -1,6 +1,6 @@
-import { bootstrap } from 'angular2/core';
+import { InjectAnnotation as Inject } from 'angular2/di';
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
-import { RouteConfigAnnotation as RouteConfig, RouterOutlet, RouterLink, routerInjectables } from 'angular2/router';
+import { RouteConfigAnnotation as RouteConfig, Router, RouterOutlet, RouterLink } from 'angular2/router';
 import { Home } from 'components/home/home';
 import { List } from 'components/list/list';
 import { Movie } from 'components/movie/movie';
@@ -13,7 +13,8 @@ import { Movie } from 'components/movie/movie';
 	template: '<router-outlet></router-outlet>',
 	directives: [
 		RouterOutlet,
-		RouterLink
+		RouterLink,
+		Home
 	]
 })
 
@@ -21,7 +22,7 @@ import { Movie } from 'components/movie/movie';
 	{
 		path: '/',
 		component: Home,
-		as: 'index'
+		as: 'home'
 	},
 	{
 		path: '/movies',
@@ -35,8 +36,6 @@ import { Movie } from 'components/movie/movie';
 	}
 ])
 
-class App {}
-
-bootstrap(App, [
-	routerInjectables
-]);
+export class App {
+	constructor(@Inject(Router) router) {}
+}
