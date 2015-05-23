@@ -26,7 +26,11 @@
 					"*":"/*.js"
 				}
 			});
-			System.import('bootstrap');
+			System
+				.import('bootstrap')
+				.catch(
+					console.log.bind(console)
+				);
 		</script>
 	</body>
 </html>
