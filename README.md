@@ -9,24 +9,18 @@ Besides things like the new [router](https://github.com/angular/router) and [com
 
 Clone this repo and setup the following tools on your machine:
 
-- [Node](http://nodejs.org) - if not already installed (used for a variety of things: update/install project dependencies, etc.)
+- [Node](http://nodejs.org) - if not already installed (used for a variety of things: update/install project dependencies, start a webserver, etc.)
 - [Direnv](http://direnv.net/) - exposes the necessary node binaries to the `PATH` in your shell (from `.envrc`) so that you do not have to install any deps globally (make sure to run `direnv allow` when navigating for the first time in the project folder)
-- [Go](https://golang.org/doc/install) - runs a webserver locally
+- [Gulp](http://gulpjs.com/) - if you choose not to use [Direnv](http://direnv.net/), this has to be installed globally unless already installed
 
-Once you have all tools setup install all node dependencies by running:
+Once you have the tools setup install all dependencies by running:
 
 ```shell
 npm install
 ```
 
-Now let's makes sure that our client deps are installed/updated:
+Now start the webserver and the build process:
 
 ```shell
-bower update
-```
-
-Start the webserver by using:
-
-```shell
-go run server.go
+gulp play
 ```
