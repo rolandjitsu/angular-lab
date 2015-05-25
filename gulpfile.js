@@ -110,7 +110,7 @@ gulp.task('play', ['default'], function () {
 		http
 			.createServer(app)
 			.listen(port, function () {
-				console.log('\nServer listening on port', port);
+				console.log('\nServer listening on port', port + '\n');
 			});
 });
 
