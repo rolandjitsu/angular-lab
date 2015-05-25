@@ -1,5 +1,6 @@
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
 import { RouteConfigAnnotation as RouteConfig, RouterOutlet, RouterLink, Router } from 'angular2/router';
+import { BrowserLocation } from 'angular2/src/router/browser_location';
 import { Home } from 'components/home/home';
 
 @Component({
@@ -7,7 +8,12 @@ import { Home } from 'components/home/home';
 })
 
 @View({
-	template: `<router-outlet></router-outlet>`,
+	template: `
+		<main>
+			<content></content>
+			<router-outlet></router-outlet>
+		</main>
+	`,
 	directives: [
 		RouterOutlet,
 		RouterLink
@@ -23,7 +29,9 @@ import { Home } from 'components/home/home';
 
 export class App {
 	router: Router;
-	constructor(router: Router) {
+	constructor(router: Router, browserLocation: BrowserLocation) {
 		this.router = Router;
+		let uri = browserLocation.path();
+		router.navigate(uri);
 	}
 }
