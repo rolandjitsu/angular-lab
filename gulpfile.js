@@ -98,16 +98,20 @@ gulp.task('play', ['default'], function () {
 		var http = require('http');
 		var connect = require('connect');
 		var serveStatic = require('serve-static');
+		var port = 8000;
+		var app;
 		gulp.watch(PATHS.src.html, ['css']);
 		gulp.watch(PATHS.src.html, ['html']);
 		gulp.watch(PATHS.src.js, ['js']);
+		app = connect();
+		app.use(
+			serveStatic(__dirname + '/dist')
+		)
 		http
-			.createServer(
-				connect().use(
-					serveStatic(__dirname + '/dist')
-				)
-			)
-			.listen(8000);
+			.createServer(app)
+			.listen(port, function () {
+				console.log('\nServer listening on port', port);
+			});
 });
 
 gulp.task('default', [
