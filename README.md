@@ -4,6 +4,7 @@
 
 Besides things like the new [router](https://github.com/angular/router) and [components](https://angular.io/docs/js/latest/api/annotations/Directive-class.html) in Angular 2, ES6 usage with [Traceur](https://github.com/google/traceur-compiler) and [SystemJS](https://github.com/systemjs/systemjs) are also being illustrated.
 
+
 #### Setup
 ----------
 
@@ -24,3 +25,9 @@ Now start the webserver and the build process:
 ```shell
 gulp play
 ```
+
+
+#### Credits
+------------
+
+- [Pawel Kozlowski](https://github.com/pkozlowski-opensource)
