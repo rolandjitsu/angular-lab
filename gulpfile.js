@@ -15,7 +15,7 @@ var PATHS = {
 		'node_modules/angular2/node_modules/zone.js/dist/long-stack-trace-zone.js'
 	],
 	src: {
-		css: 'src/**/*.js',
+		css: 'src/**/*.css',
 		html: 'src/**/*.html',
 		js: 'src/**/*.js'
 	}
@@ -32,7 +32,7 @@ gulp.task('angular2', function () {
 			"rx": "node_modules/angular2/node_modules/rx/dist/rx.js"
 		}
 	});
-	return builder.build('angular2/angular2', 'dist/lib/angular2.js', {});
+	return builder.build('angular2/angular2 + angular2/router', 'dist/lib/angular2.js', {});
 });
 
 gulp.task('libs', ['angular2'], function () {
@@ -46,17 +46,17 @@ gulp.task('libs', ['angular2'], function () {
 		);
 });
 
-gulp.task('css', function () {
+gulp.task('html', function () {
 	return gulp
-		.src(PATHS.src.css)
+		.src(PATHS.src.html)
 		.pipe(
 			gulp.dest('dist')
 		);
 });
 
-gulp.task('html', function () {
+gulp.task('css', function () {
 	return gulp
-		.src(PATHS.src.html)
+		.src(PATHS.src.css)
 		.pipe(
 			gulp.dest('dist')
 		);
@@ -106,6 +106,7 @@ gulp.task('play', ['default'], function () {
 
 gulp.task('default', [
 	'libs',
-	'js',
 	'html',
+	'css',
+	'js'
 ]);
