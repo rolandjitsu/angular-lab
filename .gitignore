@@ -5,6 +5,10 @@
 bower_components
 
 
+## Dist
+dist
+
+
 ## OS X
 .DS_Store
 .AppleDouble

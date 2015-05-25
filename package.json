@@ -1,11 +1,11 @@
 {
-	"name": "angular2",
+	"name": "ng2-play",
 	"version": "0.0.0",
 	"description": "",
 	"keywords": [],
 	"homepage": "",
 	"license": {
-		"type": "MIT",
+		"type": "",
 		"url": ""
 	},
 	"author": {
@@ -17,12 +17,23 @@
 		"type": "",
 		"url": ""
 	},
-	"dependencies": {},
-	"devDependencies": {
-		"bower": "1.4.x"
+	"dependencies": {
+		"angular2": "2.0.0-alpha.25",
+		"es6-module-loader": "0.16.5",
+		"reflect-metadata": "^0.1.0",
+		"systemjs": "0.16.7"
 	},
-	"engines": {
-		"node": "0.12.*"
+	"devDependencies": {
+		"bower": "1.4.x",
+		"connect": "^3.3.4",
+		"del": "~1.1.1",
+		"gulp": "~3.8.10",
+		"gulp-plumber": "^1.0.0",
+		"gulp-rename": "~1.2.0",
+		"gulp-size": "^1.2.1",
+		"gulp-traceur": "0.17.*",
+		"serve-static": "~1.8.1",
+		"systemjs-builder": "^0.10.3"
 	},
 	"private": true
 }
