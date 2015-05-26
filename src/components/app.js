@@ -1,7 +1,7 @@
+import { NgFor, NgIf } from 'angular2/directives';
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
 import { RouteConfigAnnotation as RouteConfig, RouterOutlet, RouterLink, Router } from 'angular2/router';
-import { BrowserLocation } from 'angular2/src/router/browser_location';
-import { Home } from 'components/home/home';
+import { routes } from 'routes';
 
 @Component({
 	selector: 'app'
@@ -9,29 +9,37 @@ import { Home } from 'components/home/home';
 
 @View({
 	template: `
+		<header></header>
+		<nav *ng-if="routes.length > 1">
+			<ul>
+				<li *ng-for="#route of routes; #i = index">
+					<a router-link={{route.as}}>{{route.component.name}}</a>
+				</li>
+			</ul>
+		</nav>
 		<main>
 			<content></content>
 			<router-outlet></router-outlet>
 		</main>
+		<footer></footer>
 	`,
 	directives: [
+		NgFor,
+		NgIf,
 		RouterOutlet,
 		RouterLink
 	]
 })
 
-@RouteConfig([
-	{
-		component: Home,
-		path: '/'
-	}
-])
+@RouteConfig(
+	Array.from(routes)
+)
 
 export class App {
+	routes: routes;
 	router: Router;
-	constructor(router: Router, browserLocation: BrowserLocation) {
+	constructor(router: Router) {
+		this.routes = routes;
 		this.router = Router;
-		let uri = browserLocation.path();
-		router.navigate(uri);
 	}
 }
