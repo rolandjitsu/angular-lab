@@ -1,5 +1,5 @@
-import { isString } from 'angular2/src/facade/lang';
 import { Pipe } from 'angular2/change_detection';
+import { isString } from 'angular2/src/facade/lang';
 
 export class LowercasePipe extends Pipe {
 	supports(obj):boolean {

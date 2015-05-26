@@ -7,7 +7,7 @@ import { PipeRegistry } from 'angular2/change_detection';
 import { routerInjectables } from 'angular2/router';
 
 import { App } from 'components/app';
-import { pipes } from 'core/pipes/pipes';
+import { pipes } from 'utils/pipes/pipes';
 
 let hasShadowDom = Boolean(
 	document && document.body && document.body.createShadowRoot
