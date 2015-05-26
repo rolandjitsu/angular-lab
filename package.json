@@ -24,7 +24,6 @@
 		"systemjs": "0.16.7"
 	},
 	"devDependencies": {
-		"bower": "1.4.x",
 		"del": "~1.1.1",
 		"gulp": "~3.8.10",
 		"gulp-connect": "^2.2.0",
