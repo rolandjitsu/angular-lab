@@ -13,7 +13,7 @@ import { routes } from 'routes';
 		<nav *ng-if="routes.length > 1">
 			<ul>
 				<li *ng-for="#route of routes; #i = index">
-					<a router-link={{route.as}}>{{route.component.name}}</a>
+					<a router-link="{{ route.component.name | lowercase }}">{{route.component.name}}</a>
 				</li>
 			</ul>
 		</nav>
