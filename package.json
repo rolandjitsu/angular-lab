@@ -25,9 +25,9 @@
 	},
 	"devDependencies": {
 		"bower": "1.4.x",
-		"connect": "^3.3.4",
 		"del": "~1.1.1",
 		"gulp": "~3.8.10",
+		"gulp-connect": "^2.2.0",
 		"gulp-plumber": "^1.0.0",
 		"gulp-rename": "~1.2.0",
 		"gulp-size": "^1.2.1",

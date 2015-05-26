@@ -1,4 +1,5 @@
 var Builder = require('systemjs-builder');
+var connect = require('gulp-connect');
 var del = require('del');
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
@@ -44,39 +45,30 @@ gulp.task('angular2', function () {
 gulp.task('libs', ['angular2'], function () {
 	return gulp
 		.src(PATHS.lib)
-		.pipe(
-			require('gulp-size')({showFiles: true, gzip: true})
-		)
-		.pipe(
-			gulp.dest('dist/lib')
-		);
+		.pipe(require('gulp-size')({
+			showFiles: true,
+			gzip: true
+		}))
+		.pipe(gulp.dest('dist/lib'));
 });
 
 gulp.task('html', function () {
 	return gulp
 		.src(PATHS.src.html)
-		.pipe(
-			gulp.dest('dist')
-		);
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('css', function () {
 	return gulp
 		.src(PATHS.src.css)
-		.pipe(
-			gulp.dest('dist')
-		);
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('js', function () {
 	return gulp
 		.src(PATHS.src.js)
-		.pipe(
-			rename({ extname: '' }) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
-		)
-		.pipe(
-			plumber()
-		)
+		.pipe(rename({ extname: '' })) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
+		.pipe(plumber())
 		.pipe(
 			traceur({
 				modules: 'instantiate',
@@ -86,32 +78,19 @@ gulp.task('js', function () {
 				memberVariables: true
 			})
 		)
-		.pipe(
-			rename({ extname: '.js' }) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
-		)
-		.pipe(
-			gulp.dest('dist')
-		);
+		.pipe(rename({ extname: '.js' })) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('play', ['default'], function () {
-		var http = require('http');
-		var connect = require('connect');
-		var serveStatic = require('serve-static');
-		var port = 8000;
-		var app;
-		gulp.watch(PATHS.src.css, ['css']);
-		gulp.watch(PATHS.src.html, ['html']);
-		gulp.watch(PATHS.src.js, ['js']);
-		app = connect();
-		app.use(
-			serveStatic(__dirname + '/dist')
-		)
-		http
-			.createServer(app)
-			.listen(port, function () {
-				console.log('\nServer listening on port', port + '\n');
-			});
+	gulp.watch(PATHS.src.css, ['css']);
+	gulp.watch(PATHS.src.html, ['html']);
+	gulp.watch(PATHS.src.js, ['js']);
+	connect.server({
+		root: 'dist',
+		port: 8000,
+		fallback: 'dist/index.html'
+	});
 });
 
 gulp.task('default', [
