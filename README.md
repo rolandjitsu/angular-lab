@@ -29,6 +29,7 @@ gulp play
 - [Angular Docs](https://angular.io)
 - [Futuristic routing in Angular](http://blog.thoughtram.io/angularjs/2015/02/19/futuristic-routing-in-angular.html)
 - [Angular 2 Education](https://github.com/timjacobi/angular2-education)
+- [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM)
 
 
 #### Credits
