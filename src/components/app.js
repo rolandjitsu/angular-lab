@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from 'angular2/directives';
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
+import { BrowserLocation } from 'angular2/src/router/browser_location';
 import { RouteConfigAnnotation as RouteConfig, RouterOutlet, RouterLink, Router } from 'angular2/router';
 import { routes } from 'routes';
 
@@ -38,8 +39,11 @@ import { routes } from 'routes';
 export class App {
 	routes: routes;
 	router: Router;
-	constructor(router: Router) {
+	constructor(router: Router, browserLocation: BrowserLocation) {
 		this.routes = routes;
 		this.router = Router;
+		// we need to manually go to the correct uri until the router is fixed
+		let uri = browserLocation.path();
+		router.navigate(uri);
 	}
 }
