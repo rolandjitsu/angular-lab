@@ -100,7 +100,7 @@ gulp.task('play', ['default'], function () {
 		var serveStatic = require('serve-static');
 		var port = 8000;
 		var app;
-		gulp.watch(PATHS.src.html, ['css']);
+		gulp.watch(PATHS.src.css, ['css']);
 		gulp.watch(PATHS.src.html, ['html']);
 		gulp.watch(PATHS.src.js, ['js']);
 		app = connect();
