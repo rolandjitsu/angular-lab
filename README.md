@@ -30,5 +30,6 @@ gulp play
 In the making of this simple app, I have made use of whatever resources I could find out there (since the docs on some of the Angular 2 features usage is not that extensive and it's constantly changing for the moment), thus it's worth mentioning that the following projects have served as inspiration and help:
 
 - [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
+- [angular2-webpack-starter](https://github.com/angular-class/angular2-webpack-starter)
 - [angular2-authentication-sample](https://github.com/auth0/angular2-authentication-sample)
 - [ng2do](https://github.com/davideast/ng2do)
