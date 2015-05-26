@@ -1,6 +1,10 @@
 ### https://github.com/github/gitignore
 
 
+## Direnv
+.envrc
+
+
 ## Bower
 bower_components
 

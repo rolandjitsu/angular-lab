@@ -9,8 +9,7 @@ Besides things like the new [Router](https://github.com/angular/router), [Compon
 Clone this repo and setup the following tools on your machine:
 
 - [Node](http://nodejs.org) - if not already installed (used for a variety of things: update/install project dependencies, start a webserver, etc.)
-- [Direnv](http://direnv.net/) - exposes the necessary node binaries to the `PATH` in your shell (from `.envrc`) so that you do not have to install any deps globally (make sure to run `direnv allow` when navigating for the first time in the project folder)
-- [Gulp](http://gulpjs.com/) - if you choose not to use [Direnv](http://direnv.net/), this has to be installed globally unless already installed
+- [Gulp](http://gulpjs.com/) - this has to be installed globally (`npm install --global gulp`) unless already installed
 
 Once you have the tools setup install all dependencies by running:
 
