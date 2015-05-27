@@ -1,3 +1,12 @@
 <div>
 	<h1>Tasks</h1>
+	<form [control-group]="form" (submit)="add($event, input.value)">
+		<input name="task" type="text" [control]="input">
+		<button>Add</button>
+	</form>
+	<ul>
+		<li *ng-for="#task of tasks; #index = index">
+			{{ task.value }} <button (click)="remove($event, index)">[X]</button>
+		</li>
+	</ul>
 </div>
