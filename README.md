@@ -1,7 +1,7 @@
 # Angular 2 Playground
 > As Pawel describes in the original [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) repo, this is a minimal setup of a ES6 project using Angular 2.0.
 
-Besides things like the new [Router](https://github.com/angular/router), [Components](https://angular.io/docs/js/latest/api/annotations/Component-class.html) and [Pipes](https://angular.io/docs/js/latest/api/pipes/Pipe-class.html) in Angular 2, ES6 usage with [Traceur](https://github.com/google/traceur-compiler) and [SystemJS](https://github.com/systemjs/systemjs) are also being illustrated.
+Besides things like the new [Router](https://github.com/angular/router), [Components](https://angular.io/docs/js/latest/api/annotations/Component-class.html), [Forms](https://angular.io/docs/js/latest/api/forms/) and [Pipes](https://angular.io/docs/js/latest/api/pipes/Pipe-class.html) in Angular 2, ES6 usage with [Traceur](https://github.com/google/traceur-compiler) and [SystemJS](https://github.com/systemjs/systemjs) are also being illustrated.
 
 
 #### Setup
@@ -31,6 +31,7 @@ gulp play
 - [Angular 2 Education](https://github.com/timjacobi/angular2-education)
 - [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM)
 - ECMAScript (*Offical Strawman*) - [Types](http://wiki.ecmascript.org/doku.php?id=strawman:types&s=types)
+- [Forms](https://ngforms.firebaseapp.com)
 
 
 #### Credits
