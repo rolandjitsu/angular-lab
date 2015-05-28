@@ -14,4 +14,4 @@ export const pipeInjectables = [
 	bind(PipeRegistry).toValue(
 		new PipeRegistry(pipes)
 	)
-]
+];
