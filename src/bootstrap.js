@@ -6,7 +6,7 @@ import { bind } from 'angular2/di';
 import { routerInjectables } from 'angular2/router';
 
 import { pipeInjectables } from 'pipes';
-import { tasksInjectables } from 'services/tasks';
+import { serviceInjectables } from 'services';
 import { App } from 'components/app';
 
 let hasShadowDom = Boolean(
@@ -26,5 +26,5 @@ bootstrap(App, [
 	shadowDomInjectables,
 	routerInjectables,
 	pipeInjectables,
-	tasksInjectables
+	serviceInjectables
 ]);

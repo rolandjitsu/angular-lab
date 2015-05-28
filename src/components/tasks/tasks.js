@@ -2,13 +2,13 @@ import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angula
 import { NgFor } from 'angular2/directives';
 import { DefaultValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Control, ControlGroup, Validators } from 'angular2/forms';
 
-import { TasksService } from 'services/tasks';
+import { Chores } from 'services';
 
 @Component({
 	selector: 'tasks',
 	appInjector: [
 		FormBuilder,
-		TasksService
+		Chores
 	]
 })
 
@@ -25,7 +25,7 @@ import { TasksService } from 'services/tasks';
 export class Tasks {
 	form: ControlGroup;
 	input: Control;
-	constructor(builder: FormBuilder, tasks: TasksService) {
+	constructor(builder: FormBuilder, tasks: Chores) {
 		this.form = builder.group({
 			'task': ['', Validators.required]
 		});

@@ -5,7 +5,7 @@
 		<button>Add</button>
 	</form>
 	<ul>
-		<li *ng-for="#task of tasks.get(); #index = index">
+		<li *ng-for="#task of tasks.checklist; #index = index">
 			{{ task.value }} <button (click)="remove($event, index)">[X]</button>
 		</li>
 	</ul>
