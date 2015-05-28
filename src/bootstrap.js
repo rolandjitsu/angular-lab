@@ -5,7 +5,7 @@ import { bind } from 'angular2/di';
 
 import { routerInjectables } from 'angular2/router';
 
-import { pipes } from 'utils/pipes/pipes';
+import { pipeInjectables } from 'pipes';
 import { tasksInjectables } from 'services/tasks';
 import { App } from 'components/app';
 
@@ -23,10 +23,8 @@ let shadowDomInjectables = [
 ]
 
 bootstrap(App, [
-	bind(PipeRegistry).toValue(
-		new PipeRegistry(pipes)
-	),
 	shadowDomInjectables,
 	routerInjectables,
+	pipeInjectables,
 	tasksInjectables
 ]);
