@@ -1,0 +1,26 @@
+{
+	"name": "ng2-play",
+	"version": "0.0.0",
+	"description": "Angular 2 Playground",
+	"keywords": [],
+	"homepage": "",
+	"license": {
+		"type": "MIT",
+		"url": "https://github.com/rolandjitsu/ng2-play/blob/master/LICENSE"
+	},
+	"author": {
+		"name": "Roland Groza",
+		"email": "rolandjitsu@gmail.com"
+	},
+	"main": "",
+	"ignore": [],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/rolandjitsu/ng2-play"
+	},
+	"dependencies": {
+		"firebase": "~2.2.5",
+		"normalize-css": "^3.0.0"
+	},
+	"private": true
+}
