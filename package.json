@@ -1,12 +1,12 @@
 {
 	"name": "ng2-play",
 	"version": "0.0.0",
-	"description": "",
+	"description": "Angular 2 Playground",
 	"keywords": [],
 	"homepage": "",
 	"license": {
-		"type": "",
-		"url": ""
+		"type": "MIT",
+		"url": "https://github.com/rolandjitsu/ng2-play/blob/master/LICENSE"
 	},
 	"author": {
 		"name": "Roland Groza",
@@ -14,25 +14,25 @@
 	},
 	"main": "",
 	"repository": {
-		"type": "",
-		"url": ""
+		"type": "git",
+		"url": "https://github.com/rolandjitsu/ng2-play"
 	},
 	"dependencies": {
 		"angular2": "2.0.0-alpha.25",
-		"es6-module-loader": "0.16.5",
+		"es6-module-loader": "^0.16.6",
 		"reflect-metadata": "^0.1.0",
-		"systemjs": "0.16.7"
+		"systemjs": "^0.16.11"
 	},
 	"devDependencies": {
-		"del": "~1.1.1",
-		"gulp": "~3.8.10",
+		"bower": "^1.4.1",
+		"del": "^1.2.0",
+		"gulp": "^3.8.10",
 		"gulp-connect": "^2.2.0",
-		"gulp-plumber": "^1.0.0",
-		"gulp-rename": "~1.2.0",
+		"gulp-plumber": "^1.0.1",
+		"gulp-rename": "~1.2.2",
 		"gulp-size": "^1.2.1",
-		"gulp-traceur": "0.17.*",
-		"serve-static": "~1.8.1",
-		"systemjs-builder": "^0.10.3"
+		"gulp-traceur": "^0.17.1",
+		"systemjs-builder": "^0.10.6"
 	},
 	"private": true
 }
