@@ -1,3 +1,4 @@
+var bower = require('bower');
 var Builder = require('systemjs-builder');
 var connect = require('gulp-connect');
 var del = require('del');
@@ -8,6 +9,8 @@ var traceur = require('gulp-traceur');
 
 var PATHS = {
 	lib: [
+		'bower_components/normalize-css/normalize.css',
+		'bower_components/firebase/firebase-debug.js',
 		'node_modules/gulp-traceur/node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.src.js',
 		'node_modules/systemjs/lib/extension-register.js',
@@ -26,6 +29,16 @@ gulp.task('clean', function (done) {
 	del(['dist'], done);
 });
 
+gulp.task('bower', function (done) {
+	bower
+		.commands
+		.install(null, { save: true }, { interactive: false })
+		.on('error', console.error.bind(console))
+		.on('end', function () {
+			done();
+		});
+});
+
 gulp.task('angular2', function () {
 	var builder = new Builder({
 		paths: {
@@ -42,7 +55,7 @@ gulp.task('angular2', function () {
 	return builder.build('angular2/angular2 + angular2/router', 'dist/lib/angular2.js', {});
 });
 
-gulp.task('libs', ['angular2'], function () {
+gulp.task('libs', ['bower', 'angular2'], function () {
 	return gulp
 		.src(PATHS.lib)
 		.pipe(require('gulp-size')({
