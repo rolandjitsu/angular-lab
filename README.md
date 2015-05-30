@@ -42,6 +42,7 @@ gulp play
 - [Dependency Injection in Angular 2](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
 - [ES6 Features](https://github.com/lukehoban/es6features)
 - [ES6 Singleton](http://amanvirk.me/singleton-classes-in-es6/)
+- [Angular 2 Template Syntax](http://victorsavkin.com/post/119943127151/angular-2-template-syntax)
 
 
 #### Credits
