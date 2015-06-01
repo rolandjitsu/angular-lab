@@ -17,6 +17,9 @@
 		"type": "git",
 		"url": "https://github.com/rolandjitsu/ng2-play"
 	},
+	"scripts": {
+		"start": "./node_modules/.bin/gulp play"
+	},
 	"dependencies": {
 		"angular2": "2.0.0-alpha.25",
 		"es6-module-loader": "^0.16.6",

@@ -1,14 +1,7 @@
 # Angular 2 Playground
-> As Pawel describes in the original [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) repo, this is a minimal setup of a ES6 project using Angular 2.0.
+> Minimal setup of Angular 2.0 ([Router](https://github.com/angular/router), [Components](https://angular.io/docs/js/latest/api/annotations/Component-class.html), [Forms](https://angular.io/docs/js/latest/api/forms/), [DI](https://angular.io/docs/js/latest/api/di_annotations/), [Pipes](https://angular.io/docs/js/latest/api/pipes/Pipe-class.html)), [ES6](https://github.com/lukehoban/es6features) and [Firebase](https://firebase.com).
 
-Throughout the project, the following things are being illustrated:
-- [Router](https://github.com/angular/router)
-- [Components](https://angular.io/docs/js/latest/api/annotations/Component-class.html)
-- [Forms](https://angular.io/docs/js/latest/api/forms/)
-- [DI](https://angular.io/docs/js/latest/api/di_annotations/)
-- [Pipes](https://angular.io/docs/js/latest/api/pipes/Pipe-class.html)
-
-Moreover, you can find a very slim example of compiling ES6 with [Traceur](https://github.com/google/traceur-compiler) and using [SystemJS](https://github.com/systemjs/systemjs) together with [ES6 Module Loader](https://github.com/ModuleLoader/es6-module-loader) to load the compiled files.
+Moreover, all ES6 files are being compiled with [Traceur](https://github.com/google/traceur-compiler) (`annotations` and `types` options enabled) and  loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs) together with [ES6 Module Loader](https://github.com/ModuleLoader/es6-module-loader).
 
 
 #### Setup
@@ -16,7 +9,7 @@ Moreover, you can find a very slim example of compiling ES6 with [Traceur](https
 Clone this repo and setup the following tools on your machine:
 
 - [Node](http://nodejs.org) - if not already installed (used for a variety of things: update/install project dependencies, start a webserver, etc.)
-- [Gulp](http://gulpjs.com/) - this has to be installed globally (`npm install --global gulp`) unless already installed
+- [Gulp](http://gulpjs.com/) - optional
 
 Once you have the tools setup install all dependencies by running:
 
@@ -24,10 +17,10 @@ Once you have the tools setup install all dependencies by running:
 npm install
 ```
 
-Now start the webserver and the build process:
+Now start the webserver (available at `localhost:8000`) and the build process (runs on file change):
 
 ```shell
-gulp play
+npm start # `gulp play` if gulp is installed globally
 ```
 
 
@@ -40,8 +33,7 @@ gulp play
 - ECMAScript (*Offical Strawman*) - [Types](http://wiki.ecmascript.org/doku.php?id=strawman:types&s=types)
 - [Forms](https://ngforms.firebaseapp.com)
 - [Dependency Injection in Angular 2](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
-- [ES6 Features](https://github.com/lukehoban/es6features)
-- [ES6 Singleton](http://amanvirk.me/singleton-classes-in-es6/)
+- [Traceur ES6 Language Features](https://github.com/google/traceur-compiler/wiki/LanguageFeatures)
 - [Angular 2 Template Syntax](http://victorsavkin.com/post/119943127151/angular-2-template-syntax)
 
 
