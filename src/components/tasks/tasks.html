@@ -1,12 +1,12 @@
-<div>
+<article>
 	<h1>Tasks</h1>
-	<form [control-group]="form" (submit)="add($event, input.value)">
-		<input name="task" type="text" [control]="input">
+	<form [control-group]="chore-form" (submit)="add($event, chore.value)">
+		<input name="chore" type="text" [control]="chore">
 		<button>Add</button>
 	</form>
 	<ul>
-		<li *ng-for="#task of tasks.checklist; #index = index">
-			{{ task.value }} <button (click)="remove($event, index)">[X]</button>
+		<li *ng-for="#task of chores.list; #index = index">
+			<task [model]="task"></task>
 		</li>
 	</ul>
-</div>
+</article>

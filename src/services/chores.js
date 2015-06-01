@@ -1,24 +1,16 @@
-export class TasksStore {
-	constructor () {
-		this.tasks = [];
-	}
-}
+import { FirebaseArray, FIREBASE_TIMESTAMP } from 'services/firebase';
 
-export class Chores {
-	_store: TasksStore;
-	constructor(store: TasksStore) {
-		this._store = store;
+export class Chores extends FirebaseArray {
+	constructor() {
+		let ref =  new Firebase('https://ng2-play.firebaseio.com/chores');
+		super(ref);
 	}
-	add(task: string): void {
-		this._store.tasks.push({
+
+	add(task) {
+		return super.add({
 			value: task,
-			timestamp: Date.now()
+			timestamp: FIREBASE_TIMESTAMP,
+			completed: false
 		});
-	}
-	remove(idx: number): void {
-		this._store.tasks.splice(idx, 1);
-	}
-	get checklist(): array {
-		return this._store.tasks;
 	}
 }

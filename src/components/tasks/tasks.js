@@ -1,8 +1,10 @@
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
+import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgFor } from 'angular2/directives';
-import { DefaultValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Control, ControlGroup, Validators } from 'angular2/forms';
+import { DefaultValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
 
 import { Chores } from 'services';
+import { Task } from 'components/task/task';
 
 @Component({
 	selector: 'tasks',
@@ -16,31 +18,26 @@ import { Chores } from 'services';
 	templateUrl: 'components/tasks/tasks.html',
 	directives: [
 		NgFor,
-		ControlGroupDirective,
+		DefaultValueAccessor,
 		ControlDirective,
-		DefaultValueAccessor
+		ControlGroupDirective,
+		Task
 	]
 })
 
 export class Tasks {
-	form: ControlGroup;
-	input: Control;
-	constructor(builder: FormBuilder, tasks: Chores) {
-		this.form = builder.group({
-			'task': ['', Validators.required]
+	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
+		this['chore-form'] = builder.group({
+			'chore': ['', Validators.required]
 		});
-		this.input = this.form.controls.task;
-		this.tasks = tasks;
+		this.chore = this['chore-form'].controls.chore;
+		this.chores = chores;
 	}
 	add(event, value) {
 		event.preventDefault();
 		if (!value || !value.length) return;
-		this.tasks.add(value);
-		event.target.querySelector('input[name="task"]').value = '';
-		this.form.controls.task.updateValue('');
-	}
-	remove(event, index) {
-		event.preventDefault();
-		this.tasks.remove(index);
+		this.chores.add(value);
+		event.target.querySelector('input[name="chore"]').value = '';
+		this['chore-form'].controls.chore.updateValue('');
 	}
 }

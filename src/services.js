@@ -1,8 +1,6 @@
 import { bind } from 'angular2/di';
-import { TasksStore } from 'services/chores';
 
-export { Chores } from 'services/chores';
+export * from 'services/chores';
+export * from 'services/firebase';
 
-export const serviceInjectables = [
-	bind(TasksStore).toClass(TasksStore)
-];
+export const serviceInjectables = [];
