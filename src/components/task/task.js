@@ -33,12 +33,6 @@ export class Task {
 	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
 		this.chores = chores;
 	}
-
-	set chore (model) {
-
-		console.log(chore);
-	}
-
 	remove(event) {
 		event.preventDefault();
 		this.chores.remove(this.chore);
