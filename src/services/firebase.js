@@ -117,6 +117,10 @@ export class FirebaseArray {
 	 * Adds a record to Firebase and returns the reference.
 	 * To obtain its key, use `ref.key()`, assuming `ref` is the variable assigned to the return value.
 	 *
+	 * Note that all the records stored in the array are objects.
+	 * Primitive values get stored as `{ value: primitive }`.
+	 * Moreover, each record will get a new property `key` which is used to do changes to the record (most methods require the `key`).
+	 *
 	 * @name add
 	 * @memberof FirebaseArray
 	 *
