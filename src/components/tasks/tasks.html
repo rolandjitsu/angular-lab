@@ -5,8 +5,13 @@
 		<button>Add</button>
 	</form>
 	<ul>
-		<li *ng-for="#task of chores.list; #index = index">
+		<li *ng-for="#task of chores.entries; #index = index">
 			<task [model]="task"></task>
+		</li>
+	</ul>
+	<ul>
+		<li *ng-for="#test of tests.entries; #index = index">
+			{{test | json}}
 		</li>
 	</ul>
 </article>

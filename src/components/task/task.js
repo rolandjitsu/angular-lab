@@ -32,9 +32,10 @@ import { Chores } from 'services';
 export class Task {
 	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
 		this.chores = chores;
+		console.log(chores);
 	}
 	remove(event) {
 		event.preventDefault();
-		this.chores.remove(this.chore);
+		this.chores.remove(this.chore.key);
 	}
 }

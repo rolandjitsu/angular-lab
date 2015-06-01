@@ -8,9 +8,18 @@ export class Chores extends FirebaseArray {
 
 	add(task) {
 		return super.add({
-			value: task,
+			desc: task,
 			timestamp: FIREBASE_TIMESTAMP,
 			completed: false
 		});
+	}
+}
+
+
+// TODO: remove bellow
+export class Tests extends FirebaseArray {
+	constructor() {
+		let ref =  new Firebase('https://ng2-play.firebaseio.com/chores');
+		super(ref);
 	}
 }

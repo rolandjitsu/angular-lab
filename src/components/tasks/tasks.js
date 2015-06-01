@@ -3,14 +3,15 @@ import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgFor } from 'angular2/directives';
 import { DefaultValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
 
-import { Chores } from 'services';
+import { Chores, Tests } from 'services';
 import { Task } from 'components/task/task';
 
 @Component({
 	selector: 'tasks',
 	appInjector: [
 		FormBuilder,
-		Chores
+		Chores,
+		Tests
 	]
 })
 
@@ -26,12 +27,13 @@ import { Task } from 'components/task/task';
 })
 
 export class Tasks {
-	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
+	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores, @Inject(Tests) tests) {
 		this['chore-form'] = builder.group({
-			'chore': ['', Validators.required]
+			'chore': ['', Validators.required] // create custom validator https://youtu.be/4C4bmDOV5hk?t=1014
 		});
 		this.chore = this['chore-form'].controls.chore;
 		this.chores = chores;
+		this.tests = tests;
 	}
 	add(event, value) {
 		event.preventDefault();
