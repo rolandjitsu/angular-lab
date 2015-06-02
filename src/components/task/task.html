@@ -1,44 +1,4 @@
-<style>
-
-	.task {
-		display: block;
-		margin-top: 0;
-		margin-bottom: 0;
-		padding-top: 5px;
-		padding-bottom: 5px;
-		padding-left: 0;
-		list-style: none;
-	}
-
-	.task > li,
-	.task-controls > li {
-		display: inline-block;
-	}
-
-	.task > li:not(:first-child) {
-		padding-left: 5px;
-	}
-
-	.task > li:not(:last-child) {
-		padding-right: 5px;
-	}
-
-	.task-controls {
-		display: block;
-		padding-left: 0;
-		list-style: none;
-	}
-
-	.task-controls > li:not(:first-child) {
-		padding-left: 2.5px;
-	}
-
-	.task-controls > li:not(:last-child) {
-		padding-right: 2.5px;
-	}
-
-</style>
-
+<style>@import "task.css";</style>
 <ul class="task" [control-group]="task">
 	<li><input name="status" type="checkbox" control="status"></li>
 	<li>{{chore.desc}}</li>
