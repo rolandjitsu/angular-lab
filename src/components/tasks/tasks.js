@@ -1,4 +1,5 @@
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
+// import { JitChangeDetection } from 'angular2/change_detection';
 import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgFor } from 'angular2/directives';
 import { DefaultValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
@@ -8,6 +9,7 @@ import { Task } from 'components/task/task';
 
 @Component({
 	selector: 'tasks',
+	// changeDetection: JitChangeDetection,
 	appInjector: [
 		FormBuilder,
 		Chores,

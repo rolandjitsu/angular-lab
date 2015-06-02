@@ -1,5 +1,5 @@
 import { ObservableWrapper } from 'angular2/src/facade/async';
-import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
+import { ComponentAnnotation as Component, ViewAnnotation as View, onDestroy } from 'angular2/angular2';
 import { JitChangeDetection } from 'angular2/change_detection';
 import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
@@ -12,10 +12,13 @@ import { Chores } from 'services';
 	properties: {
 		'chore': 'model'
 	},
-	changeDetection: JitChangeDetection,
+	// changeDetection: JitChangeDetection,
 	appInjector: [
 		FormBuilder,
 		Chores
+	],
+	lifecycle: [
+		onDestroy
 	]
 })
 
@@ -31,11 +34,42 @@ import { Chores } from 'services';
 
 export class Task {
 	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
+		let that = this;
 		this.chores = chores;
-		console.log(chores);
+		this.task = builder.group({
+			status: [false],
+			desc: ['']
+		});
+		this.status = this.task.controls.status;
+		this.desc = this.task.controls.desc;
+		this._subs = [
+			ObservableWrapper.subscribe(this.status.valueChanges, function (value) {
+				that.chores.update(
+					that.chore.key,
+					Object.assign({}, that.chore, {
+						completed: value
+					})
+				);
+			}),
+			ObservableWrapper.subscribe(this.desc.valueChanges, function (value) {
+				that.chores.update(
+					that.chore.key,
+					Object.assign({}, that.chore, {
+						desc: value
+					})
+				);
+			})
+		];
 	}
+
 	remove(event) {
 		event.preventDefault();
 		this.chores.remove(this.chore.key);
+	}
+
+	onDestroy() {
+		for (let sub of this._subs) {
+			ObservableWrapper.dispose(sub);
+		}
 	}
 }
