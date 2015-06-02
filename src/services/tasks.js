@@ -1,6 +1,6 @@
 import { FirebaseArray, FIREBASE_TIMESTAMP } from 'services/firebase';
 
-export class Chores extends FirebaseArray {
+export class Tasks extends FirebaseArray {
 	constructor() {
 		let ref =  new Firebase('https://ng2-play.firebaseio.com/chores');
 		super(ref);
@@ -8,10 +8,19 @@ export class Chores extends FirebaseArray {
 
 	add(task) {
 		return super.add({
+			created: FIREBASE_TIMESTAMP,
+			updated: FIREBASE_TIMESTAMP,
 			desc: task,
-			timestamp: FIREBASE_TIMESTAMP,
 			completed: false
 		});
+	}
+	update(record, data) {
+		super.update(
+			record.key,
+			Object.assign({}, record, data, {
+				updated: FIREBASE_TIMESTAMP
+			})
+		);
 	}
 }
 

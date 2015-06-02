@@ -1,3 +1,11 @@
+/**
+ * Base
+ */
+
+task {
+	display: inline-block;
+}
+
 .task {
 	display: block;
 	margin-top: 0;
@@ -11,6 +19,7 @@
 .task > li,
 .task-controls > li {
 	display: inline-block;
+	vertical-align: middle;
 }
 
 .task > li:not(:first-child) {
@@ -20,6 +29,38 @@
 .task > li:not(:last-child) {
 	padding-right: 5px;
 }
+
+
+/**
+ * Description
+ */
+
+.task-desc {
+	padding-top: 4px;
+	padding-right: 0;
+	padding-bottom: 4px;
+	padding-left: 0;
+	border: none;
+	outline: 0;
+	font-size: 16px;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.task-desc:focus {
+	text-overflow: clip;
+}
+
+.task--completed .task-desc {
+	text-decoration: line-through;
+	color: lightgray;
+}
+
+
+/**
+ * Controls
+ */
 
 .task-controls {
 	display: block;
@@ -33,4 +74,14 @@
 
 .task-controls > li:not(:last-child) {
 	padding-right: 2.5px;
+}
+
+.task-control {
+	padding: 0;
+	border: none;
+	background-color: transparent;
+	font-weight: 900;
+	font-size: 16px;
+	outline: none;
+	cursor: pointer;
 }

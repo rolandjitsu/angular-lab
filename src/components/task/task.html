@@ -1,13 +1,10 @@
 <style>@import "task.css";</style>
-<ul class="task" [control-group]="task">
-	<li><input name="status" type="checkbox" control="status"></li>
-	<li>{{chore.desc}}</li>
-	<li><input type="text" control="desc"></li>
+<ul class="task" [class.task--completed]="model.completed" [control-group]="task">
+	<li><input name="status" type="checkbox" control="status" [value]="model.completed" [checked]="model.completed"></li>
+	<li><input class="task-desc" type="text" control="desc" [value]="model.desc" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)"></li>
 	<li>
 		<ul class="task-controls">
-			<!-- <li><button (click)="move($event, 1)">&#8676;</button></li>
-			<li><button (click)="move($event, -1)">&#8677;</button></li> -->
-			<li><button (click)="remove($event)">&times;</button></li>
+			<li><button class="task-control" (click)="remove($event)">&times;</button></li>
 		</ul>
 	</li>
 </ul>

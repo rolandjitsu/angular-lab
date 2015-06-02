@@ -1,5 +1,5 @@
 import { Home } from 'components/home/home';
-import { Tasks } from 'components/tasks/tasks';
+import { Todos } from 'components/todos/todos';
 
 export var routes = [
 	{
@@ -8,8 +8,8 @@ export var routes = [
 		as: 'home'
 	},
 	{
-		component: Tasks,
-		path: '/tasks',
-		as: 'tasks'
+		component: Todos,
+		path: '/todos',
+		as: 'todos'
 	}
 ]

@@ -4,16 +4,16 @@ import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
 import { DefaultValueAccessor, CheckboxControlValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
 
-import { Chores } from 'services';
+import { Tasks } from 'services';
 
 @Component({
 	selector: 'task',
 	properties: {
-		'chore': 'model'
+		'model': 'model'
 	},
 	appInjector: [
 		FormBuilder,
-		Chores
+		Tasks
 	],
 	lifecycle: [
 		onDestroy
@@ -31,48 +31,47 @@ import { Chores } from 'services';
 })
 
 export class Task {
-	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
+	constructor(@Inject(FormBuilder) builder, @Inject(Tasks) tasks) {
 		let that = this;
-		that.chores = chores;
 		that.task = builder.group({
 			status: [false],
 			desc: ['', Validators.required]
 		});
 		that.status = that.task.controls.status;
 		that.desc = that.task.controls.desc;
+		that._tasks = tasks;
 		that._subs = [
 			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
-				that.chores.update(
-					that.chore.key,
-					Object.assign({}, that.chore, {
-						completed: value
-					})
-				);
+				that._tasks.update(that.model, {
+					completed: value
+				});
 			}),
 			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
 				if (!that.desc.valid) return;
-				that.chores.update(
-					that.chore.key,
-					Object.assign({}, that.chore, {
-						desc: value
-					})
-				);
+				that._tasks.update(that.model, {
+					desc: value
+				});
 			})
 		];
 	}
 
-	set chore(value) {
-		this._model = value;
-		this.status.updateValue(value.completed);
+	set model(model) {
+		this._model = model;
+		this.status.updateValue(model.completed);
+		this.desc.updateValue(model.desc);
 	}
 
-	get chore() {
+	get model() {
 		return this._model;
 	}
 
 	remove(event) {
 		event.preventDefault();
-		this.chores.remove(this.chore.key);
+		this._tasks.remove(this.model.key);
+	}
+	blur(event) {
+		event.preventDefault();
+		event.target.blur();
 	}
 
 	onDestroy() {

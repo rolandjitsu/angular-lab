@@ -1,0 +1,18 @@
+<article>
+	<h1>Tasks</h1>
+	<form [control-group]="todo" (submit)="add($event, desc.value)">
+		<input name="desc" type="text" [control]="desc" [value]="desc.value" placeholder="Description">
+		<button>Add</button>
+	</form>
+	<ul>
+		<li *ng-for="#task of tasks">
+			<task [model]="task"></task>
+		</li>
+	</ul>
+	<!-- cleanup Tests -->
+	<ul>
+		<li *ng-for="#test of tests.entries; #index = index">
+			{{test | json}}
+		</li>
+	</ul>
+</article>
