@@ -33,15 +33,15 @@ import { Chores } from 'services';
 export class Task {
 	constructor(@Inject(FormBuilder) builder, @Inject(Chores) chores) {
 		let that = this;
-		this.chores = chores;
-		this.task = builder.group({
+		that.chores = chores;
+		that.task = builder.group({
 			status: [false],
-			desc: ['']
+			desc: ['', Validators.required]
 		});
-		this.status = this.task.controls.status;
-		this.desc = this.task.controls.desc;
-		this._subs = [
-			ObservableWrapper.subscribe(this.status.valueChanges, function (value) {
+		that.status = that.task.controls.status;
+		that.desc = that.task.controls.desc;
+		that._subs = [
+			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
 				that.chores.update(
 					that.chore.key,
 					Object.assign({}, that.chore, {
@@ -49,7 +49,8 @@ export class Task {
 					})
 				);
 			}),
-			ObservableWrapper.subscribe(this.desc.valueChanges, function (value) {
+			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
+				if (!that.desc.valid) return;
 				that.chores.update(
 					that.chore.key,
 					Object.assign({}, that.chore, {
