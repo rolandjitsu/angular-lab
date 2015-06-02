@@ -35,6 +35,7 @@
 		"gulp-rename": "~1.2.2",
 		"gulp-size": "^1.2.1",
 		"gulp-traceur": "^0.17.1",
+		"gulp-watch": "^4.2.4",
 		"systemjs-builder": "^0.10.6"
 	},
 	"private": true

@@ -6,6 +6,7 @@ var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var traceur = require('gulp-traceur');
+var watch = require('gulp-watch');
 
 var PATHS = {
 	lib: [
@@ -65,18 +66,6 @@ gulp.task('libs', ['bower', 'angular2'], function () {
 		.pipe(gulp.dest('dist/lib'));
 });
 
-gulp.task('html', function () {
-	return gulp
-		.src(PATHS.src.html)
-		.pipe(gulp.dest('dist'));
-});
-
-gulp.task('css', function () {
-	return gulp
-		.src(PATHS.src.css)
-		.pipe(gulp.dest('dist'));
-});
-
 gulp.task('js', function () {
 	return gulp
 		.src(PATHS.src.js)
@@ -95,10 +84,28 @@ gulp.task('js', function () {
 		.pipe(gulp.dest('dist'));
 });
 
+gulp.task('html', function () {
+	return gulp
+		.src(PATHS.src.html)
+		.pipe(gulp.dest('dist'));
+});
+
+gulp.task('css', function () {
+	return gulp
+		.src(PATHS.src.css)
+		.pipe(gulp.dest('dist'));
+});
+
 gulp.task('play', ['default'], function () {
-	gulp.watch(PATHS.src.css, ['css']);
-	gulp.watch(PATHS.src.html, ['html']);
-	gulp.watch(PATHS.src.js, ['js']);
+	watch(PATHS.src.js, function () {
+		gulp.start('js');
+	});
+	watch(PATHS.src.html, function () {
+		gulp.start('html');
+	});
+	watch(PATHS.src.css, function () {
+		gulp.start('css');
+	});
 	connect.server({
 		root: 'dist',
 		port: 8000,
@@ -108,7 +115,7 @@ gulp.task('play', ['default'], function () {
 
 gulp.task('default', [
 	'libs',
+	'js',
 	'html',
-	'css',
-	'js'
+	'css'
 ]);
