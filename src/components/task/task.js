@@ -1,6 +1,5 @@
 import { ObservableWrapper } from 'angular2/src/facade/async';
 import { ComponentAnnotation as Component, ViewAnnotation as View, onDestroy } from 'angular2/angular2';
-import { JitChangeDetection } from 'angular2/change_detection';
 import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
 import { DefaultValueAccessor, CheckboxControlValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
@@ -12,7 +11,6 @@ import { Chores } from 'services';
 	properties: {
 		'chore': 'model'
 	},
-	// changeDetection: JitChangeDetection,
 	appInjector: [
 		FormBuilder,
 		Chores
@@ -60,6 +58,15 @@ export class Task {
 				);
 			})
 		];
+	}
+
+	set chore(value) {
+		this._model = value;
+		this.status.updateValue(value.completed);
+	}
+
+	get chore() {
+		return this._model;
 	}
 
 	remove(event) {
