@@ -11,17 +11,11 @@ install:
     - npm install --loglevel silent
     - npm install -g firebase-tools --loglevel silent
 
-before_script:
-    - mkdir /home/travis/tmp
+script: ./scripts/ci/build.sh
 
-script:
-    - ./scripts/ci/build.sh
+after_success: ./scripts/ci/deploy.sh
 
-after_success:
-    - ./scripts/ci/deploy.sh
-
-after_script:
-    - ./scripts/ci/clean.sh
+after_script: ./scripts/ci/clean.sh
 
 notifications:
     email:

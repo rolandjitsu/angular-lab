@@ -7,8 +7,10 @@
         "scripts",
         "src",
         ".*",
-        "*.json",
-        "*.js"
+        "bower.json",
+        "firebase.json",
+        "gulpfile.js",
+        "package.json"
     ],
     "rewrites": [{
         "source": "**",
