@@ -1,0 +1,17 @@
+{
+    "firebase": "ng2-play",
+    "public": "dist",
+    "ignore": [
+        "bower_components",
+        "node_modules",
+        "scripts",
+        "src",
+        ".*",
+        "*.json",
+        "*.js"
+    ],
+    "rewrites": [{
+        "source": "**",
+        "destination": "dist/index.html"
+    }]
+}
