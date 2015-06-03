@@ -6,7 +6,7 @@
         "node_modules",
         "scripts",
         "src",
-        ".*",
+        "**/.*",
         "bower.json",
         "firebase.json",
         "gulpfile.js",
