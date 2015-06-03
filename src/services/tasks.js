@@ -2,7 +2,9 @@ import { FirebaseArray, FIREBASE_TIMESTAMP } from 'services/firebase';
 
 export class Tasks extends FirebaseArray {
 	constructor() {
-		let ref =  new Firebase('https://ng2-play.firebaseio.com/chores');
+		let root =  new Firebase('https://ng2-play.firebaseio.com');
+		let auth = root.getAuth();
+		let ref = root.child('/chores/' + auth.uid);
 		super(ref);
 	}
 

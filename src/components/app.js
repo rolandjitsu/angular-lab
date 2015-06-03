@@ -42,8 +42,12 @@ export class App {
 	constructor(router: Router, browserLocation: BrowserLocation) {
 		this.routes = routes;
 		this.router = Router;
-		// we need to manually go to the correct uri until the router is fixed
 		let uri = browserLocation.path();
-		router.navigate(uri);
+		let root = new Firebase("https://ng2-play.firebaseio.com");
+		let auth = root.getAuth();
+		router.navigate(auth === null ? '/' : uri); // we need to manually go to the correct uri until the router is fixed
+		root.onAuth((auth) => {
+			if (auth === null) root.authAnonymously(() => {});
+		});
 	}
 }
