@@ -2,6 +2,10 @@ language: node_js
 node_js:
     - "0.12"
 
+branches:
+    only:
+        - master
+
 env:
     global:
         - FIREBASE_EMAIL=rolandjitsu@gmail.com
