@@ -5,6 +5,7 @@ var del = require('del');
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
+var sourcemaps = require('gulp-sourcemaps');
 var traceur = require('gulp-traceur');
 var watch = require('gulp-watch');
 
@@ -20,6 +21,7 @@ var PATHS = {
 		'node_modules/angular2/node_modules/zone.js/dist/long-stack-trace-zone.js'
 	],
 	src: {
+		root: 'src',
 		css: 'src/**/*.css',
 		html: 'src/**/*.html',
 		js: 'src/**/*.js'
@@ -71,8 +73,10 @@ gulp.task('js', function () {
 		.src(PATHS.src.js)
 		.pipe(rename({ extname: '' })) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
 		.pipe(plumber())
+		.pipe(sourcemaps.init())
 		.pipe(
 			traceur({
+				sourceMaps: true,
 				modules: 'instantiate',
 				moduleName: true,
 				annotations: true,
@@ -81,6 +85,7 @@ gulp.task('js', function () {
 			})
 		)
 		.pipe(rename({ extname: '.js' })) // hack, see: https://github.com/sindresorhus/gulp-traceur/issues/54
+		.pipe(sourcemaps.write('.', { sourceRoot: PATHS.src.root }))
 		.pipe(gulp.dest('dist'));
 });
 

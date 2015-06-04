@@ -34,6 +34,7 @@
 		"gulp-plumber": "^1.0.1",
 		"gulp-rename": "~1.2.2",
 		"gulp-size": "^1.2.1",
+		"gulp-sourcemaps": "^1.5.2",
 		"gulp-traceur": "^0.17.1",
 		"gulp-watch": "^4.2.4",
 		"systemjs-builder": "^0.10.6"
