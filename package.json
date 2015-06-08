@@ -21,23 +21,33 @@
 		"start": "./node_modules/.bin/gulp play"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.25",
+		"angular2": "2.0.0-alpha.26",
 		"es6-module-loader": "^0.16.6",
 		"reflect-metadata": "^0.1.0",
-		"systemjs": "^0.16.11"
+		"rtts_assert": "2.0.0-alpha.26",
+		"rx": "^2.5.3",
+		"systemjs": "^0.16.11",
+		"traceur": "^0.0.90",
+		"zone.js": "^0.5.0"
 	},
 	"devDependencies": {
 		"bower": "^1.4.1",
 		"del": "^1.2.0",
 		"gulp": "^3.8.10",
+		"gulp-changed": "^1.2.1",
+		"gulp-concat": "^2.5.2",
 		"gulp-connect": "^2.2.0",
 		"gulp-plumber": "^1.0.1",
-		"gulp-rename": "~1.2.2",
+		"gulp-rename": "^1.2.2",
 		"gulp-size": "^1.2.1",
 		"gulp-sourcemaps": "^1.5.2",
-		"gulp-traceur": "^0.17.1",
+		"gulp-util": "^3.0.5",
 		"gulp-watch": "^4.2.4",
-		"systemjs-builder": "^0.10.6"
+		"object-assign": "^3.0.0",
+		"source-map-url": "^0.3.0",
+		"systemjs-builder": "^0.10.6",
+		"through2": "^0.6.5",
+		"vinyl-sourcemaps-apply": "^0.1.4"
 	},
 	"private": true
 }
