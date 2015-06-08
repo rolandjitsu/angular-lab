@@ -102,7 +102,7 @@ gulp.task('js', function () {
 gulp.task('html', function () {
 	return gulp
 		.src(PATHS.src.html)
-		.pipe(changed(PATHS.dist))
+		.pipe(changed(PATHS.dist, { extension: '.html' }))
 		.pipe(size({
 			showFiles: true,
 			gzip: true
@@ -113,7 +113,7 @@ gulp.task('html', function () {
 gulp.task('css', function () {
 	return gulp
 		.src(PATHS.src.css)
-		.pipe(changed(PATHS.dist))
+		.pipe(changed(PATHS.dist, { extension: '.css' }))
 		.pipe(size({
 			showFiles: true,
 			gzip: true

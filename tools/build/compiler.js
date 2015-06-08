@@ -16,7 +16,7 @@ function build (compile, withSourceMaps) {
 	    if (extname.length) dest = dest.replace(filename = path.basename(dest), '')
 	    return gulp
 	        .src(src)
-	        .pipe(changed(dest))
+	        .pipe(changed(dest, { extension: '.js' }))
 	        .pipe(plumber())
 	        .pipe(
 				withSourceMaps // https://www.npmjs.com/package/gulp-sourcemaps#plugin-developers-only-how-to-add-source-map-support-to-plugins
