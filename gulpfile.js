@@ -23,9 +23,9 @@ var PATHS = {
 	],
 	src: {
 		root: '/src',
-		css: 'src/**/*.css',
+		js: 'src/**/*.{js,es6}',
 		html: 'src/**/*.html',
-		js: 'src/**/*.js'
+		css: 'src/**/*.css'
 	},
 	dist: 'dist'
 };
