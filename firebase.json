@@ -6,6 +6,7 @@
         "node_modules",
         "scripts",
         "src",
+        "tools",
         "**/.*",
         "bower.json",
         "firebase.json",
