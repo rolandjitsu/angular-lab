@@ -2,18 +2,15 @@ import { ObservableWrapper } from 'angular2/src/facade/async';
 import { ComponentAnnotation as Component, ViewAnnotation as View, onDestroy } from 'angular2/angular2';
 import { InjectAnnotation as Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
-import { DefaultValueAccessor, CheckboxControlValueAccessor, ControlDirective, ControlGroupDirective, FormBuilder, Validators } from 'angular2/forms';
+import { DefaultValueAccessor, CheckboxControlValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
 
-import { Tasks } from 'services';
+import { Todo } from 'app/services';
 
 @Component({
 	selector: 'task',
-	properties: {
-		'model': 'model'
-	},
+	properties: ['model'],
 	appInjector: [
-		FormBuilder,
-		Tasks
+		Todo
 	],
 	lifecycle: [
 		onDestroy
@@ -21,34 +18,40 @@ import { Tasks } from 'services';
 })
 
 @View({
-	templateUrl: 'components/task/task.html',
+	templateUrl: 'app/components/task/task.html',
 	directives: [
 		DefaultValueAccessor,
 		CheckboxControlValueAccessor,
-		ControlDirective,
-		ControlGroupDirective
+		FormModelDirective,
+		FormControlDirective
 	]
 })
 
 export class Task {
-	constructor(@Inject(FormBuilder) builder, @Inject(Tasks) tasks) {
-		let that = this;
+	task: ControlGroup;
+	status: Control;
+	desc: Control;
+	_todo: Todo;
+	_subs: Array<any>;
+	_model: any;
+	constructor(builder: FormBuilder, todo: Todo) {
+		let that: Task = this;
 		that.task = builder.group({
 			status: [false],
 			desc: ['', Validators.required]
 		});
 		that.status = that.task.controls.status;
 		that.desc = that.task.controls.desc;
-		that._tasks = tasks;
+		that._todo = todo;
 		that._subs = [
 			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
-				that._tasks.update(that.model, {
+				that._todo.update(that.model, {
 					completed: value
 				});
 			}),
 			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
 				if (!that.desc.valid) return;
-				that._tasks.update(that.model, {
+				that._todo.update(that.model, {
 					desc: value
 				});
 			})
@@ -67,7 +70,7 @@ export class Task {
 
 	remove(event) {
 		event.preventDefault();
-		this._tasks.remove(this.model.key);
+		this._todo.remove(this.model.key);
 	}
 	blur(event) {
 		event.preventDefault();

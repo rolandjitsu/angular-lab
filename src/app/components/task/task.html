@@ -1,0 +1,10 @@
+<style>@import "task.css";</style>
+<ul class="task" [class.task--completed]="model.completed" [ng-form-model]="task">
+	<li><input name="status" type="checkbox" [ng-form-control]="status" [value]="model.completed" [checked]="model.completed"></li>
+	<li><input class="task-desc" type="text" [ng-form-control]="desc" [value]="model.desc" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)"></li>
+	<li>
+		<ul class="task-controls">
+			<li><button class="task-control" (click)="remove($event)">&times;</button></li>
+		</ul>
+	</li>
+</ul>

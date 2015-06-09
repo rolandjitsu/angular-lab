@@ -8,28 +8,30 @@
 		<title>NG2 Play</title>
 		<meta name="description" content="">
 		<link rel="stylesheet" href="lib/normalize.css"></script>
+	</head>
+	<body>
+		<app>Abnormal Transclusions</app>
 		<!-- ES6 -->
 		<script src="lib/traceur-runtime.js"></script>
-		<script src="lib/es6-module-loader-sans-promises.src.js"></script>
+		<script src="lib/es6-module-loader-sans-promises.js"></script>
 		<script src="lib/extension-register.js"></script>
 		<script>
 			register(System);
 		</script>
-		<script src="lib/Reflect.js"></script>
 		<!-- Angular -->
+		<script src="lib/reflect.js"></script>
 		<script src="lib/zone.js"></script>
 		<script src="lib/long-stack-trace-zone.js"></script>
+		<script src="lib/rx.js"></script>
 		<script src="lib/angular2.js"></script>
 		<!-- Firebase -->
-		<script src="lib/firebase-debug.js"></script>
-	</head>
-	<body>
-		<app>Abnormal Transclusions</app>
+		<script src="lib/firebase.js"></script>
+		<!-- App -->
 		<script>
 			System
-				.import('bootstrap')
+				.import('app/bootstrap')
 				.catch(
-					console.log.bind(console)
+					console.error.bind(console)
 				);
 		</script>
 	</body>

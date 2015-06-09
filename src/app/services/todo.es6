@@ -1,6 +1,6 @@
-import { FirebaseArray, FIREBASE_TIMESTAMP } from 'services/firebase';
+import { FirebaseArray, FIREBASE_TIMESTAMP } from './firebase';
 
-export class Tasks extends FirebaseArray {
+export class Todo extends FirebaseArray {
 	constructor() {
 		let root =  new Firebase('https://ng2-play.firebaseio.com');
 		let auth = root.getAuth();
@@ -23,14 +23,5 @@ export class Tasks extends FirebaseArray {
 				updated: FIREBASE_TIMESTAMP
 			})
 		);
-	}
-}
-
-
-// TODO: remove bellow
-export class Tests extends FirebaseArray {
-	constructor() {
-		let ref =  new Firebase('https://ng2-play.firebaseio.com/chores');
-		super(ref);
 	}
 }

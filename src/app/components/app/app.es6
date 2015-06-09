@@ -1,8 +1,12 @@
 import { NgFor, NgIf } from 'angular2/directives';
 import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
 import { BrowserLocation } from 'angular2/src/router/browser_location';
-import { RouteConfigAnnotation as RouteConfig, RouterOutlet, RouterLink, Router } from 'angular2/router';
-import { routes } from 'routes';
+import { RouterOutlet, RouterLink, Router } from 'angular2/router';
+// import { RouteConfigAnnotation as RouteConfig } from 'angular2/src/router/route_config_decorator'
+
+import { routes } from 'app/routes';
+
+// console.log(RouteConfig, Router)
 
 @Component({
 	selector: 'app'
@@ -32,9 +36,9 @@ import { routes } from 'routes';
 	]
 })
 
-@RouteConfig(
-	Array.from(routes)
-)
+// @RouteConfig(
+// 	Array.from(routes)
+// )
 
 export class App {
 	routes: routes;
@@ -42,10 +46,11 @@ export class App {
 	constructor(router: Router, browserLocation: BrowserLocation) {
 		this.routes = routes;
 		this.router = Router;
+
 		let uri = browserLocation.path();
 		let root = new Firebase("https://ng2-play.firebaseio.com");
 		let auth = root.getAuth();
-		router.navigate(auth === null ? '/' : uri); // we need to manually go to the correct uri until the router is fixed
+		router.config(Array.from(routes)).then((_) => router.navigate(auth === null ? '/' : uri)); // we need to manually go to the correct uri until the router is fixed
 		root.onAuth((auth) => {
 			if (auth === null) root.authAnonymously(() => {});
 		});

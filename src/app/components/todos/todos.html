@@ -1,0 +1,12 @@
+<article>
+	<h1>Todos</h1>
+	<form [ng-form-model]="todo" (submit)="add($event, desc.value)" novalidate>
+		<input name="desc" type="text" [ng-form-control]="desc" placeholder="Description" required>
+		<button>Add</button>
+	</form>
+	<ul>
+		<li *ng-for="#task of todos">
+			<task [model]="task"></task>
+		</li>
+	</ul>
+</article>

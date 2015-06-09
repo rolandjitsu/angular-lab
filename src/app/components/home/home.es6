@@ -5,7 +5,7 @@ import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angula
 })
 
 @View({
-	templateUrl: 'components/home/home.html',
+	templateUrl: 'app/components/home/home.html',
 	directives: []
 })
 

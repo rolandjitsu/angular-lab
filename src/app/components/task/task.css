@@ -2,7 +2,7 @@
  * Base
  */
 
-task {
+:host {
 	display: inline-block;
 }
 
