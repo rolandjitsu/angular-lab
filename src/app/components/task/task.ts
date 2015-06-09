@@ -1,8 +1,7 @@
-import { ObservableWrapper } from 'angular2/src/facade/async';
-import { ComponentAnnotation as Component, ViewAnnotation as View, onDestroy } from 'angular2/angular2';
-import { InjectAnnotation as Inject } from 'angular2/di';
-import { NgIf } from 'angular2/directives';
+import { Component, View, onDestroy } from 'angular2/angular2';
+import { NgIf } from 'angular2/angular2';
 import { DefaultValueAccessor, CheckboxControlValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
+import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { Todo } from 'app/services';
 

@@ -1,7 +1,13 @@
 import { Home } from './components/home/home';
 import { Todos } from './components/todos/todos';
 
-export var routes: Array<any> = [
+export interface IRoute<T> {
+	component: T,
+	path: string,
+	as?: string
+}
+
+export var routes: Array<IRoute<any>> = [
 	{
 		component: Home,
 		path: '/',

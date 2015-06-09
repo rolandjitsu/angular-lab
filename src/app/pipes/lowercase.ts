@@ -1,5 +1,5 @@
 import { isString, StringWrapper } from 'angular2/src/facade/lang';
-import { Pipe } from 'angular2/change_detection';
+import { Pipe } from 'angular2/angular2';
 
 export class LowerCasePipe extends Pipe {
 	constructor() {

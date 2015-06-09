@@ -1,5 +1,5 @@
-import { ComponentAnnotation as Component, ViewAnnotation as View } from 'angular2/angular2';
-import { NgFor, NgIf } from 'angular2/directives';
+import { Component, View } from 'angular2/angular2';
+import { NgFor, NgIf } from 'angular2/angular2';
 import { DefaultValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
 
 import { Todo } from 'app/services';

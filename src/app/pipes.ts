@@ -1,5 +1,5 @@
 import { PipeRegistry, PipeFactory, NullPipeFactory, defaultPipes } from 'angular2/change_detection';
-import { bind } from 'angular2/di';
+import { bind } from 'angular2/angular2';
 
 import { LowerCaseFactory } from './pipes/lowercase';
 
