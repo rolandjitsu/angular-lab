@@ -16,5 +16,12 @@
     "rewrites": [{
         "source": "**",
         "destination": "/index.html"
+    }],
+    "headers": [{
+        "source" : "**/*.@(js|html|css|map)",
+        "headers" : [{
+            "key" : "Cache-Control",
+            "value" : "max-age=3600"
+        }]
     }]
 }
