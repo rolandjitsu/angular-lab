@@ -6,8 +6,11 @@ var del = require('del');
 var es5 = require('./tools/build/es5');
 var gulp = require('gulp');
 var ng = require('./tools/build/ng');
+var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var size = require('gulp-size');
+var sourcemaps = require('gulp-sourcemaps');
+var ts = require('gulp-typescript');
 var watch = require('gulp-watch');
 
 var PATHS = {
@@ -21,18 +24,26 @@ var PATHS = {
 		'node_modules/zone.js/dist/zone.js',
 		'node_modules/zone.js/dist/long-stack-trace-zone.js'
 	],
+	typings: [
+		'typings/tsd.d.ts'
+	],
 	src: {
 		root: '/src',
-		js: 'src/**/*.{js,es6}',
+		ts: 'src/**/*.ts',
 		html: 'src/**/*.html',
 		css: 'src/**/*.css'
 	},
 	dist: 'dist'
 };
 
+var project = ts.createProject('tsconfig.json', {
+	typescript: require('typescript')
+    // "experimentalDecorators": true
+});
+
 var bundleConfig = {
 	paths: {
-		"rx": "node_modules/rx/dist/rx.js"
+		'rx': 'node_modules/rx/dist/rx.js'
 	},
 	meta: {
 		// auto-detection fails to detect properly here - https://github.com/systemjs/builder/issues/123
@@ -78,7 +89,7 @@ gulp.task('libs', ['bower', 'rx', 'angular2'], function () {
 	return gulp
 		.src(PATHS.lib)
 		.pipe(rename(function (file) {
-			file.basename = file.basename.toLowerCase() // Firebase is case sensitive, thus we lowercase all for ease of access
+			file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
 		}))
 		.pipe(size({
 			showFiles: true,
@@ -87,16 +98,20 @@ gulp.task('libs', ['bower', 'rx', 'angular2'], function () {
 		.pipe(gulp.dest(PATHS.dist + '/lib'));
 });
 
-gulp.task('js', function () {
-	return es5.build(
-		PATHS.src.js,
-		PATHS.dist,
-		{
-			annotations: true,
-			memberVariables: true,
-			types: true
-		}
-	);
+gulp.task('ts', function () {
+	return gulp
+		.src([].concat(PATHS.typings, PATHS.src.ts)) // instead of gulp.src(...), project.src() can be used
+		.pipe(changed(PATHS.dist, { extension: '.js' }))
+		.pipe(plumber())
+		.pipe(sourcemaps.init())
+	    .pipe(ts(project))
+		.js
+		.pipe(sourcemaps.write('.')) // { sourceRoot: '/src/' }
+		.pipe(size({
+			showFiles: true,
+			gzip: true
+		}))
+		.pipe(gulp.dest(PATHS.dist));
 });
 
 gulp.task('html', function () {
@@ -122,8 +137,8 @@ gulp.task('css', function () {
 });
 
 gulp.task('play', ['default'], function () {
-	watch(PATHS.src.js, function () {
-		gulp.start('js');
+	watch(PATHS.src.ts, function () {
+		gulp.start('ts');
 	});
 	watch(PATHS.src.html, function () {
 		gulp.start('html');
@@ -140,7 +155,7 @@ gulp.task('play', ['default'], function () {
 
 gulp.task('default', [
 	'libs',
-	'js',
+	'ts',
 	'html',
 	'css'
 ]);
