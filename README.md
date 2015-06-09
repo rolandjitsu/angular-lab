@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-play.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-play)
 > Minimal setup of Angular 2.0 ([Router](https://github.com/angular/router), [Components](https://angular.io/docs/js/latest/api/annotations/Component-class.html), [Forms](https://angular.io/docs/js/latest/api/forms/), [DI](https://angular.io/docs/js/latest/api/di_annotations/), [Pipes](https://angular.io/docs/js/latest/api/pipes/Pipe-class.html)), [ES6](https://github.com/lukehoban/es6features) and [Firebase](https://firebase.com).
 
-Moreover, all ES6 files are being compiled with [Traceur](https://github.com/google/traceur-compiler) (`annotations` and `types` options enabled) and  loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs) together with [ES6 Module Loader](https://github.com/ModuleLoader/es6-module-loader).
+Moreover, all ES6 files are being compiled with [Traceur](https://github.com/google/traceur-compiler) (`annotations` and `types` options enabled) and  loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs) together with [ES6 Module Loader](https://github.com/ModuleLoader/es6-module-loader). Source maps are also generated for both the app source code and Angular 2 (makes it very easy to debug the app).
 
 
 #### Setup
