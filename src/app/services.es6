@@ -1,4 +1,4 @@
 export * from './services/firebase';
-export * from './services/tasks';
+export * from './services/todo';
 
 export const serviceInjectables: Array<any> = [];
