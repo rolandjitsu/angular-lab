@@ -3,7 +3,6 @@ var bundler = require('./tools/build/bundler');
 var changed = require('gulp-changed');
 var connect = require('gulp-connect');
 var del = require('del');
-var es5 = require('./tools/build/es5');
 var gulp = require('gulp');
 var ng = require('./tools/build/ng');
 var plumber = require('gulp-plumber');
@@ -28,11 +27,12 @@ var PATHS = {
 		'node_modules/zone.js/dist/long-stack-trace-zone.js'
 	],
 	typings: [
+		'src/_typings/custom.d.ts',
 		'typings/tsd.d.ts'
 	],
 	src: {
 		root: '/src',
-		ts: 'src/**/*.ts',
+		ts: ['!src/_typings', 'src/**/*.ts'],
 		html: 'src/**/*.html',
 		css: 'src/**/*.css'
 	},
@@ -74,7 +74,9 @@ gulp.task('tsd', function () {
 	return tsdAPI.readConfig({}, true).then(function () {
 		return tsdAPI.reinstall(
 			tsd.Options.fromJSON({}) // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
-		);
+		).then(function () {
+			return tsdAPI.updateBundle(tsdAPI.context.config.bundle, true);
+		});
 	});
 });
 
@@ -147,7 +149,7 @@ gulp.task('css', function () {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('play', ['default'], function () {
+gulp.task('play', ['bundle'], function () {
 	watch(PATHS.src.ts, function () {
 		gulp.start('ts');
 	});
@@ -164,6 +166,8 @@ gulp.task('play', ['default'], function () {
 	});
 });
 
-gulp.task('default', ['libs'], function (done) {
+gulp.task('bundle', ['libs'], function (done) {
 	runSequence(['ts', 'html', 'css'], done);
 });
+
+gulp.task('default', ['bundle']);
