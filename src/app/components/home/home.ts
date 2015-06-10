@@ -5,8 +5,7 @@ import { Component, View } from 'angular2/angular2';
 })
 
 @View({
-	templateUrl: 'app/components/home/home.html',
-	directives: []
+	templateUrl: 'app/components/home/home.html'
 })
 
 export class Home {

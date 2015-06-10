@@ -1,0 +1,126 @@
+/**
+ * Host Element (<app>)
+ */
+ 
+:host {
+	display: block;
+}
+
+
+/**
+ * Base
+ */
+
+.header,
+.main {
+	width: 60vw;
+	margin-right: auto;
+	margin-left: auto;
+}
+ 
+
+/**
+ * Header
+ */
+ 
+.header {
+	display: table;
+	border-bottom: 2px solid #fff;
+}
+
+.header-payoff,
+nav {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.header-payoff {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 0;
+	font-weight: 300;
+	font-size: 24px;
+}
+
+
+/**
+ * Main
+ */
+ 
+.main {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+
+/**
+ * Animations
+ */
+
+.hidden {
+	opacity: 0;
+}
+
+.invisible,
+.visible {
+	-webkit-animation-fill-mode: forwards;
+			animation-fill-mode: forwards;
+}
+
+.visible {
+	opacity: 1;
+	-webkit-animation: in .5s ease-in;
+		 -o-animation: in .5s ease-in;
+			animation: in .5s ease-in;
+}
+
+.invisible {
+	opacity: 0;
+	-webkit-animation: out .5s ease-in-out;
+		 -o-animation: out .5s ease-in-out;
+			animation: out .5s ease-in-out;
+}
+
+@-webkit-keyframes out {
+	
+	from {
+		opacity: 1;
+	}
+	
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes out {
+	
+	from {
+		opacity: 1;
+	}
+	
+	to {
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes in {
+	
+	from {
+		opacity: 0;
+	}
+	
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes in {
+	
+	from {
+		opacity: 0;
+	}
+	
+	to {
+		opacity: 1;
+	}
+}

@@ -54,13 +54,22 @@ declare module "angular2/change_detection" {
 	var defaultPipes: any;
 }
 
+declare module "angular2/directives" {
+	class NgFor {}
+	class NgIf {}
+}
+
 declare module "angular2/forms" {
 	class DefaultValueAccessor {}
 	class CheckboxControlValueAccessor {}
 	class FormModelDirective {}
+	class NgModelDirective {}
 	class FormControlDirective {}
+	class TemplateDrivenFormDirective {}
+	class ControlNameDirective {}
 	class FormBuilder {
 		group(controls: any): any
+		controls: any;
 	}
 	class Control {
 		constructor(controls: any)
@@ -83,6 +92,7 @@ declare module 'angular2/router' {
 	class Router {
 		navigate(url: string): Promise<any>
 		config(config: any): Promise<any>
+		subscribe(onNext: Function): Promise<any>
 	}
 	var RouterOutlet: any;
 	var RouterLink: any;

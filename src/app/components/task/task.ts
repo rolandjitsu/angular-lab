@@ -1,9 +1,17 @@
 import { Component, View, onDestroy } from 'angular2/angular2';
 import { NgIf } from 'angular2/angular2';
 import { DefaultValueAccessor, CheckboxControlValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
+// import { DefaultValueAccessor, FormModelDirective, FormControlDirective, TemplateDrivenFormDirective, NgModelDirective, ControlNameDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { Todo } from 'app/services';
+
+// class TodoModel {
+// 	// completed: boolean;
+// 	desc: string;
+// 	// created: string;
+// 	// updated: string;
+// }
 
 @Component({
 	selector: 'task',
@@ -23,10 +31,14 @@ import { Todo } from 'app/services';
 		CheckboxControlValueAccessor,
 		FormModelDirective,
 		FormControlDirective
+		// NgModelDirective,
+		// ControlNameDirective,
+		// TemplateDrivenFormDirective,
 	]
 })
 
 export class Task {
+	// model = new TodoModel();
 	task: ControlGroup;
 	status: Control;
 	desc: Control;

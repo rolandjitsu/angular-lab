@@ -1,6 +1,6 @@
 import { Component, View } from 'angular2/angular2';
 import { NgFor, NgIf } from 'angular2/angular2';
-import { DefaultValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
+import { DefaultValueAccessor, FormModelDirective, ControlNameDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
 
 import { Todo } from 'app/services';
 import { Task } from '../task/task';
@@ -19,28 +19,26 @@ import { Task } from '../task/task';
 		NgIf,
 		DefaultValueAccessor,
 		FormModelDirective,
-		FormControlDirective,
+		ControlNameDirective,
 		Task
 	]
 })
 
 export class Todos {
 	todos: Array<any>;
-	todo: ControlGroup;
-	desc: Control;
+	form: FormBuilder;
 	_todo: Todo;
-	constructor(builder: FormBuilder, todo: Todo) {
+	constructor(fb: FormBuilder, todo: Todo) {
 		this._todo = todo;
 		this.todos = todo.entries;
-		this.todo = builder.group({
-			'desc': ['', Validators.required]
-		});
-		this.desc = this.todo.controls.desc;
+		this.form = fb.group({
+			desc: ['', Validators.required]
+		}); 
 	}
-	add(event, value) {
-		event.preventDefault();
+	add(value) {
 		if (!value || !value.length) return;
 		this._todo.add(value);
-		this.desc.updateValue('');
+		this.form.controls.desc.updateValue('');
+		return false;
 	}
 }

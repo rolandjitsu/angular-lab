@@ -1,0 +1,39 @@
+:host {
+	text-align: right;
+}
+
+ul {
+	display: inline-block;
+	padding-left: 0;
+	margin: 0;
+	list-style: none;
+}
+
+li {
+	display: inline-block;
+}
+
+li:not(:first-of-type) {
+	padding-left: 6px;
+}
+
+li:not(:last-of-type) {
+	padding-right: 6px;
+}
+
+a {
+	color: #B0BEC5;
+	font-size: 18px;
+	text-decoration: none;
+	text-transform: uppercase;
+	-webkit-transition: color .15s ease-in-out;
+			transition: color .15s ease-in-out;
+}
+
+a.active {
+	color: #03a9f4;
+}
+
+a:not(.active):hover {
+	color: #fff;
+}

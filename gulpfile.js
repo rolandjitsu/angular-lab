@@ -34,7 +34,8 @@ var PATHS = {
 		root: '/src',
 		ts: ['!src/_typings', 'src/**/*.ts'],
 		html: 'src/**/*.html',
-		css: 'src/**/*.css'
+		css: 'src/**/*.css',
+		static: 'src/**/*.{svg,jpg,png,ico}'
 	},
 	dist: 'dist'
 };
@@ -130,7 +131,7 @@ gulp.task('ts', function () {
 gulp.task('html', function () {
 	return gulp
 		.src(PATHS.src.html)
-		.pipe(changed(PATHS.dist, { extension: '.html' }))
+		.pipe(changed(PATHS.dist))
 		.pipe(size({
 			showFiles: true,
 			gzip: true
@@ -149,6 +150,21 @@ gulp.task('css', function () {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
+gulp.task('static', function () {
+	return gulp
+		.src(PATHS.src.static)
+		.pipe(changed(PATHS.dist))
+		.pipe(size({
+			showFiles: true,
+			gzip: true
+		}))
+		.pipe(gulp.dest(PATHS.dist));
+});
+
+gulp.task('bundle', function (done) {
+	runSequence('clean', 'libs', ['ts', 'html', 'css', 'static'], done);
+});
+
 gulp.task('play', ['bundle'], function () {
 	watch(PATHS.src.ts, function () {
 		gulp.start('ts');
@@ -159,15 +175,14 @@ gulp.task('play', ['bundle'], function () {
 	watch(PATHS.src.css, function () {
 		gulp.start('css');
 	});
+	watch(PATHS.src.static, function () {
+		gulp.start('static');
+	});	
 	connect.server({
 		root: PATHS.dist,
 		port: 8000,
 		fallback: PATHS.dist + '/index.html'
 	});
-});
-
-gulp.task('bundle', ['libs'], function (done) {
-	runSequence(['ts', 'html', 'css'], done);
 });
 
 gulp.task('default', ['bundle']);
