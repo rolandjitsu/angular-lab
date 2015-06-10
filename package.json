@@ -45,6 +45,7 @@
 		"gulp-util": "^3.0.5",
 		"gulp-watch": "^4.2.4",
 		"object-assign": "^3.0.0",
+		"run-sequence": "^1.1.0",
 		"source-map-url": "^0.3.0",
 		"systemjs-builder": "^0.10.6",
 		"through2": "^0.6.5",

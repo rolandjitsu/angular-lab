@@ -1,5 +1,5 @@
-import { Home } from './components/home/home';
-import { Todos } from './components/todos/todos';
+import { Home } from 'app/components/home/home';
+import { Todos } from 'app/components/todos/todos';
 
 export interface IRoute<T> {
 	component: T,

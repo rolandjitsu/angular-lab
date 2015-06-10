@@ -8,8 +8,10 @@ var gulp = require('gulp');
 var ng = require('./tools/build/ng');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
+var runSequence = require('run-sequence');
 var size = require('gulp-size');
 var sourcemaps = require('gulp-sourcemaps');
+var tsd = require('tsd');
 var ts = require('gulp-typescript');
 var watch = require('gulp-watch');
 
@@ -19,6 +21,7 @@ var PATHS = {
 		'bower_components/firebase/firebase.js',
 		'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.*',
 		'node_modules/reflect-metadata/Reflect.js',
+		'node_modules/systemjs/lib/extension-cjs.js',
 		'node_modules/systemjs/lib/extension-register.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/zone.js/dist/zone.js',
@@ -38,7 +41,6 @@ var PATHS = {
 
 var project = ts.createProject('tsconfig.json', {
 	typescript: require('typescript')
-    // "experimentalDecorators": true
 });
 
 var bundleConfig = {
@@ -67,6 +69,15 @@ gulp.task('bower', function (done) {
 		});
 });
 
+gulp.task('tsd', function () {
+	var tsdAPI = tsd.getAPI('tsd.json');
+	return tsdAPI.readConfig({}, true).then(function () {
+		return tsdAPI.reinstall(
+			tsd.Options.fromJSON({}) // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
+		);
+	});
+});
+
 gulp.task('angular2', function () {
 	return ng.build(
 		[
@@ -85,7 +96,7 @@ gulp.task('rx', function () {
 	return bundler.bundle(bundleConfig, 'rx', PATHS.dist + '/lib/rx.js');
 });
 
-gulp.task('libs', ['bower', 'rx', 'angular2'], function () {
+gulp.task('libs', ['bower', 'tsd', 'rx', 'angular2'], function () {
 	return gulp
 		.src(PATHS.lib)
 		.pipe(rename(function (file) {
@@ -153,9 +164,6 @@ gulp.task('play', ['default'], function () {
 	});
 });
 
-gulp.task('default', [
-	'libs',
-	'ts',
-	'html',
-	'css'
-]);
+gulp.task('default', ['libs'], function (done) {
+	runSequence(['ts', 'html', 'css'], done);
+});

@@ -3,7 +3,7 @@ import { NgFor, NgIf } from 'angular2/angular2';
 import { DefaultValueAccessor, FormModelDirective, FormControlDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
 
 import { Todo } from 'app/services';
-import { Task } from 'app/components';
+import { Task } from '../task/task';
 
 @Component({
 	selector: 'todos',
