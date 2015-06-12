@@ -19,8 +19,8 @@
 		"url": "https://github.com/rolandjitsu/ng2-play"
 	},
 	"dependencies": {
-		"firebase": "~2.2.5",
-		"normalize-css": "^3.0.0"
+		"normalize.css": "^3.0.3",
+		"firebase": "^2.2.7"
 	},
 	"private": true
 }
