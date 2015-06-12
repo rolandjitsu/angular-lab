@@ -18,28 +18,13 @@
 				color: #fff;
 				font-family: Roboto;
 			}
-			
-			.preloader {
-				position: absolute;
-				width: 80px;
-				top: 50%;
-				left: 50%;
-				margin-top: -42.5px;
-				margin-left: -40px;
-			}
 		</style>
 	</head>
 	<body>
-		<app><object id="preloader" class="preloader" type="image/svg+xml" data="media/ng.svg"></object></app>
+		<app></app>
 		<!-- ES6 -->
 		<script src="lib/traceur-runtime.js"></script>
-		<script src="lib/es6-module-loader-sans-promises.js"></script>
-		<script src="lib/extension-register.js"></script>
-		<script src="lib/extension-cjs.js"></script>
-		<script>
-			register(System); // rx and angular use `register` format, thus we need this line
-			cjs(System); // typescript compiles using `commonjs`
-		</script>
+		<script src="lib/system.js"></script>
 		<!-- Angular -->
 		<script src="lib/reflect.js"></script>
 		<script src="lib/zone.js"></script>
@@ -48,13 +33,19 @@
 		<script src="lib/angular2.js"></script>
 		<!-- Firebase -->
 		<script src="lib/firebase.js"></script>
+		<!-- Fetch -->
+		<script src="lib/fetch.js"></script>
 		<!-- App -->
 		<script>
-			System
-				.import('app/bootstrap')
-				.catch(
-					console.error.bind(console)
-				);
+			System.config({
+				packages: {
+					'common': { defaultExtension: 'js' },
+					'app': { defaultExtension: 'js'	}
+				}
+			});
+			System.import('app/bootstrap').catch(
+				console.error.bind(console)
+			);
 		</script>
 	</body>
 

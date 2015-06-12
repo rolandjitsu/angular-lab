@@ -17,15 +17,15 @@ var watch = require('gulp-watch');
 var PATHS = {
 	lib: [
 		'bower_components/normalize.css/normalize.css',
-		'bower_components/firebase/firebase.js',
 		'node_modules/whatwg-fetch/fetch.js',
+		'bower_components/firebase/firebase.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
-		'node_modules/systemjs/lib/extension-cjs.js',
-		'node_modules/systemjs/lib/extension-register.js',
-		'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.*',
+		'node_modules/systemjs/dist/system.*',
 		'node_modules/reflect-metadata/Reflect.js',
 		'node_modules/zone.js/dist/zone.js',
 		'node_modules/zone.js/dist/long-stack-trace-zone.js'
+		// 'node_modules/rx/dist/rx.js'
+		// 'node_modules/angular2/**/*.js'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
@@ -82,6 +82,26 @@ gulp.task('tsd', function () {
 	});
 });
 
+// gulp.task('angular2', function () {
+// 	
+// 	return gulp
+// 		.src([
+// 			'!node_modules/angular2/es6/**',
+// 			'!node_modules/angular2/atscript/**',
+// 			'!node_modules/angular2/node_modules/**',
+// 			'!node_modules/angular2/angular2_sfx.*',
+// 			'node_modules/angular2/**/*.js'
+// 		])
+// 		// .pipe(rename(function (file) {
+// 		// 	file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
+// 		// }))
+// 		.pipe(size({
+// 			showFiles: true,
+// 			gzip: true
+// 		}))
+// 		.pipe(gulp.dest(PATHS.dist + '/angular2'));
+// });
+
 gulp.task('angular2', function () {
 	return ng.build(
 		[
@@ -97,6 +117,14 @@ gulp.task('angular2', function () {
 });
 
 gulp.task('rx', function () {
+	// return gulp
+	// 	.src('node_modules/rx/dist/*.js')
+	// 	.pipe(size({
+	// 		showFiles: true,
+	// 		gzip: true
+	// 	}))
+	// 	.pipe(gulp.dest(PATHS.dist + '/lib/rx'));
+	
 	return bundler.bundle(bundleConfig, 'rx', PATHS.dist + '/lib/rx.js');
 });
 
