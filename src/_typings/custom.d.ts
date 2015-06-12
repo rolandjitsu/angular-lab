@@ -9,6 +9,37 @@ declare module 'angular2/render' {
 	class ShadowDomStrategy {}
 }
 
+declare module 'angular2/core' {
+	class Injector {}
+	class RenderViewRef {}
+	class ViewRef {
+		render: RenderViewRef;
+		setLocal(contextName: string, value: any): void;
+	}
+	class ProtoViewRef {}
+	class ViewContainerRef {
+		create(protoViewRef?: ProtoViewRef, atIndex?: number, context?: ElementRef, injector?: Injector): ViewRef;
+		element: ElementRef;
+	}
+	class ElementRef {
+    	boundElementIndex: number;
+    	domElement: any;
+    	getAttribute(name: string): string;
+    	parentView: ViewRef;
+  	}
+	class BaseQueryList<T> {
+		add(obj: any): any;
+		fireCallbacks(): any;
+		onChange(callback: any): any;
+		removeCallback(callback: any): any;
+		reset(newList: any): any;
+	}
+	class QueryList<T> extends  BaseQueryList<T> {
+		onChange(callback: any): any;
+		removeCallback(callback: any): any;
+	}
+}
+
 declare module 'angular2/src/facade/async' {
 	class Observable {
 		observer(generator: any): Object
@@ -39,6 +70,10 @@ declare module 'angular2/src/router/browser_location' {
 	class BrowserLocation {
 		path(): string
 	}
+}
+
+declare module "angular2/annotations" {
+	var Query: any;
 }
 
 declare module "angular2/change_detection" {
