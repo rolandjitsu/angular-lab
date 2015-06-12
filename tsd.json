@@ -19,6 +19,9 @@
 		},
 		"firebase/firebase.d.ts": {
 			"commit": "31ce460184172fbb3c59c9fb03dcb74156014eed"
+		},
+		"whatwg-fetch/whatwg-fetch.d.ts": {
+			"commit": "066819c65ff561ca109955e0b725c253e243f0a2"
 		}
 	}
 }

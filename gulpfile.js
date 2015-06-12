@@ -16,13 +16,14 @@ var watch = require('gulp-watch');
 
 var PATHS = {
 	lib: [
-		'bower_components/normalize-css/normalize.css',
+		'bower_components/normalize.css/normalize.css',
 		'bower_components/firebase/firebase.js',
-		'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.*',
-		'node_modules/reflect-metadata/Reflect.js',
+		'node_modules/whatwg-fetch/fetch.js',
+		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/systemjs/lib/extension-cjs.js',
 		'node_modules/systemjs/lib/extension-register.js',
-		'node_modules/traceur/bin/traceur-runtime.js',
+		'node_modules/es6-module-loader/dist/es6-module-loader-sans-promises.*',
+		'node_modules/reflect-metadata/Reflect.js',
 		'node_modules/zone.js/dist/zone.js',
 		'node_modules/zone.js/dist/long-stack-trace-zone.js'
 	],
