@@ -1,3 +1,4 @@
+var autoprefixer = require('gulp-autoprefixer');
 var bower = require('bower');
 var bundler = require('./tools/build/bundler');
 var changed = require('gulp-changed');
@@ -172,6 +173,10 @@ gulp.task('css', function () {
 	return gulp
 		.src(PATHS.src.css)
 		.pipe(changed(PATHS.dist, { extension: '.css' }))
+		.pipe(plumber())
+        .pipe(sourcemaps.init())
+		.pipe(autoprefixer())
+        .pipe(sourcemaps.write('.'))
 		.pipe(size({
 			showFiles: true,
 			gzip: true
