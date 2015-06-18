@@ -1,15 +1,16 @@
 {
 	"version": "1.5.3",
-    "compilerOptions": {
+	"compilerOptions": {
 		"declaration": false,
+		"module": "commonjs",
+		"target": "es5",
+		"emitDecoratorMetadata": true,
 		"listFiles": true,
-        "module": "commonjs",
 		"noImplicitAny": false,
 		"noLib": false,
 		"removeComments": true,
+		"rootDir": ".",
 		"sourceMap": true,
-        "target": "es5",
-		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true
     }
 }
