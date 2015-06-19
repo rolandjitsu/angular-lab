@@ -1,43 +1,24 @@
-export class DOMParserMIMEType {
-	static isParsable(type: any): boolean {
-		return type === this.html || type === this.xml || type === this.svg; 
-	}
-	static html: string = 'text/html';
-	static xml: string = 'text/xml';
-	static svg: string = 'image/svg+xml';
-}
+import { Response } from 'angular2/src/http/static_response';
 
-
-/**
- * Naive implementation of a [DOMParser]@{https://developer.mozilla.org/en-US/docs/Web/API/DOMParser}.
- */
-
-export class HTTPDOMParser {
+export class HttpResponseParser {
 	
 	/**
-	 * Use this method to parse the body of a [fetch]@{https://github.com/github/fetch} response to a HTMLDocument and return a HTMLElement.
+	 * Use this method to parse the body of a HTTP response to a HTMLDocument and return the parsed value's document element.
 	 * 
 	 * @param {Response} response
-	 * @returns {HTMLElement}
+	 * @returns {Node}
 	 */
 	
-	static parse(response: Response): Promise<HTMLElement> {
-		let parser: DOMParser = new DOMParser();
-		let mimeType: string = response.headers.get('Content-Type');
-		if (!DOMParserMIMEType.isParsable(mimeType)) return Promise.reject(
-			new Error('HTTPDOMParser MIME type cannot pe parsed')
-		);
-		return response
-			.text()
-			.then(body => {
-				let doc: Document = parser.parseFromString(
-					body,
-					mimeType
-				);
-				if (doc.documentElement.nodeName === "parsererror") return Promise.reject(
-					new Error('HTTPDOMParser cannot parse the response body')
-				);
-				else return doc.documentElement;	
-			});
+	static svg(response: Response): Node {
+		return parseResponseAs(response, 'image/svg+xml');
 	}
+}
+
+function parseResponseAs(response: Response, mimeType: string): Node {
+	let parser: DOMParser = new DOMParser();
+	let doc: Document = parser.parseFromString(
+		response.text(),
+		mimeType
+	);
+	return doc.documentElement.cloneNode(true);
 }

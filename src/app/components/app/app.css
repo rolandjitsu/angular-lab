@@ -4,6 +4,38 @@
  
 :host {
 	display: block;
+	height: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	transition: width .075s ease-in-out;
+}
+
+@media (max-width: 599px) {
+	
+	:host {
+		width: 85vw; 
+	}
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+	
+	:host {
+		width: 55vw; 
+	}
+}
+
+@media (min-width: 960px) and (max-width: 1199px) {
+	
+	:host {
+		width: 40vw; 
+	}
+}
+
+@media (min-width: 1200px) {
+	
+	:host {
+		width: 35vw; 
+	}
 }
 
 
@@ -11,35 +43,22 @@
  * Base
  */
 
-.header,
-.main {
-	width: 60vw;
-	margin-right: auto;
-	margin-left: auto;
+:host > .hidden {
+	opacity: 0;
 }
- 
+
+:host > .visible {
+	animation: in .5s ease-in;
+	animation-fill-mode: forwards;
+}
+
 
 /**
  * Header
  */
  
 .header {
-	display: table;
-	border-bottom: 2px solid #fff;
-}
-
-.header-payoff,
-nav {
-	display: table-cell;
-	vertical-align: middle;
-}
-
-.header-payoff {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin: 0;
-	font-weight: 300;
-	font-size: 24px;
+	padding-top: 160px;
 }
 
 
@@ -48,71 +67,34 @@ nav {
  */
  
 .main {
+	opacity: 0;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	animation-delay: .65s;
 }
+
+
+/**
+ * MQ Reference
+ */
+
+/** SMALL SCREEN */
+@media (max-width: 599px) {}
+/** BIGGER THAN SMALL SCREEN */
+@media (min-width: 600px) {}
+/** MEDIUM SCREEN */
+@media (min-width: 600px) and (max-width: 959px) {}
+/** BIGGER THAN MEDIUM SCREEN */
+@media (min-width: 960px) {}
+/** LARGE SCREEN */
+@media (min-width: 960px) and (max-width: 1199px) {}
+/** BIGGER THAN LARGE SCREEN */
+@media (min-width: 1200px) {}
 
 
 /**
  * Animations
  */
-
-.hidden {
-	opacity: 0;
-}
-
-.invisible,
-.visible {
-	-webkit-animation-fill-mode: forwards;
-			animation-fill-mode: forwards;
-}
-
-.visible {
-	opacity: 1;
-	-webkit-animation: in .5s ease-in;
-		 -o-animation: in .5s ease-in;
-			animation: in .5s ease-in;
-}
-
-.invisible {
-	opacity: 0;
-	-webkit-animation: out .5s ease-in-out;
-		 -o-animation: out .5s ease-in-out;
-			animation: out .5s ease-in-out;
-}
-
-@-webkit-keyframes out {
-	
-	from {
-		opacity: 1;
-	}
-	
-	to {
-		opacity: 0;
-	}
-}
-
-@keyframes out {
-	
-	from {
-		opacity: 1;
-	}
-	
-	to {
-		opacity: 0;
-	}
-}
-
-@-webkit-keyframes in {
-	
-	from {
-		opacity: 0;
-	}
-	
-	to {
-		opacity: 1;
-	}
-}
 
 @keyframes in {
 	

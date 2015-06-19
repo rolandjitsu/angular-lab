@@ -40,14 +40,8 @@ function compile (opts) {
                 file.base
             );
 			var sourceMap = file.sourceMap && compiler.getSourceMap();
-            var extname = path.extname(file.path);
-            if (ret) file.contents = new Buffer(
-                sourceMappingURL.removeFrom(ret) // the sourcemap pipe will add this back with the correct path
-            );
+            if (ret) file.contents = new Buffer(ret);
 			if (sourceMap) {
-                sourceMap.sources = file.sourceMap.sources;
-                sourceMap.file = sourceMap.file + extname;
-                sourceMap.sourceRoot = opts.namespace || '.';
                 applySourceMap(file, sourceMap);
             }
 			this.push(file);

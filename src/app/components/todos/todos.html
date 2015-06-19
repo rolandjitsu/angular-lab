@@ -1,13 +1,18 @@
 <article>
-	<h1>Todos</h1>
-	<form [ng-form-model]="form" (submit)="add(form.value.desc)" novalidate>
-		<label for="desc">Task:</label>
-		<input type="text" id="desc" name="desc" ng-control="desc" placeholder="Description" required>
-		<button type="submit" [disabled]="!form.valid">Add</button>
+	<form
+		class="todos-form"
+		[ng-form-model]="form"
+		#todo="form"
+		(ng-submit)="add(form.value.desc)"
+		novalidate>
+		<div class="todos-form-desc">
+			<input type="text" id="desc" name="desc" ng-control="desc" placeholder="Description" autocomplete="off" required autofocus>
+		</div>
+		<div class="todos-form-submit">
+			<button type="submit" [disabled]="!todo.form.valid">
+				<icon src="media/plus.svg"></icon>
+			</button>
+		</div>
 	</form>
-	<ul>
-		<li *ng-for="#task of todos">
-			<task [model]="task"></task>
-		</li>
-	</ul>
+	<todo-list></todo-list>
 </article>

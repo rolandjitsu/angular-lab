@@ -1,6 +1,5 @@
 var autoprefixer = require('gulp-autoprefixer');
 var bower = require('bower');
-var bundler = require('./tools/build/bundler');
 var changed = require('gulp-changed');
 var connect = require('gulp-connect');
 var del = require('del');
@@ -18,15 +17,13 @@ var watch = require('gulp-watch');
 var PATHS = {
 	lib: [
 		'bower_components/normalize.css/normalize.css',
-		'node_modules/whatwg-fetch/fetch.js',
 		'bower_components/firebase/firebase.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/systemjs/dist/system.*',
 		'node_modules/reflect-metadata/Reflect.js',
 		'node_modules/zone.js/dist/zone.js',
-		'node_modules/zone.js/dist/long-stack-trace-zone.js'
-		// 'node_modules/rx/dist/rx.js'
-		// 'node_modules/angular2/**/*.js'
+		'node_modules/zone.js/dist/long-stack-trace-zone.js',
+		'node_modules/rx/dist/rx.js'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
@@ -42,21 +39,9 @@ var PATHS = {
 	dist: 'dist'
 };
 
-var project = ts.createProject('tsconfig.json', {
+var ng2play = ts.createProject('tsconfig.json', {
 	typescript: require('typescript')
 });
-
-var bundleConfig = {
-	paths: {
-		'rx': 'node_modules/rx/dist/rx.js'
-	},
-	meta: {
-		// auto-detection fails to detect properly here - https://github.com/systemjs/builder/issues/123
-		'rx': {
-			format: 'cjs'
-		}
-	}
-};
 
 gulp.task('clean', function (done) {
 	del([PATHS.dist], done);
@@ -83,33 +68,15 @@ gulp.task('tsd', function () {
 	});
 });
 
-// gulp.task('angular2', function () {
-// 	
-// 	return gulp
-// 		.src([
-// 			'!node_modules/angular2/es6/**',
-// 			'!node_modules/angular2/atscript/**',
-// 			'!node_modules/angular2/node_modules/**',
-// 			'!node_modules/angular2/angular2_sfx.*',
-// 			'node_modules/angular2/**/*.js'
-// 		])
-// 		// .pipe(rename(function (file) {
-// 		// 	file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
-// 		// }))
-// 		.pipe(size({
-// 			showFiles: true,
-// 			gzip: true
-// 		}))
-// 		.pipe(gulp.dest(PATHS.dist + '/angular2'));
-// });
-
 gulp.task('angular2', function () {
 	return ng.build(
 		[
-			'!node_modules/angular2/es6/prod/angular2_sfx.es6',
-			'node_modules/angular2/es6/prod/**/*.es6'
+			'!node_modules/angular2/es6/prod/angular2_sfx.js',
+			'!node_modules/angular2/es6/prod/angular2.api.js',
+			'!node_modules/angular2/es6/prod/es5build.js',
+			'node_modules/angular2/es6/prod/**/*.js'
 		],
-		PATHS.dist + '/lib/angular2.js',
+		PATHS.dist + '/lib/angular2',
 		{
 			namespace: 'angular2',
 			traceurOptions: {}
@@ -117,19 +84,7 @@ gulp.task('angular2', function () {
 	);
 });
 
-gulp.task('rx', function () {
-	// return gulp
-	// 	.src('node_modules/rx/dist/*.js')
-	// 	.pipe(size({
-	// 		showFiles: true,
-	// 		gzip: true
-	// 	}))
-	// 	.pipe(gulp.dest(PATHS.dist + '/lib/rx'));
-	
-	return bundler.bundle(bundleConfig, 'rx', PATHS.dist + '/lib/rx.js');
-});
-
-gulp.task('libs', ['bower', 'tsd', 'rx', 'angular2'], function () {
+gulp.task('libs', ['bower', 'tsd', 'angular2'], function () {
 	return gulp
 		.src(PATHS.lib)
 		.pipe(rename(function (file) {
@@ -148,9 +103,9 @@ gulp.task('ts', function () {
 		.pipe(changed(PATHS.dist, { extension: '.js' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-	    .pipe(ts(project))
+	    .pipe(ts(ng2play))
 		.js
-		.pipe(sourcemaps.write('.')) // { sourceRoot: '/src/' }
+		.pipe(sourcemaps.write('.'))
 		.pipe(size({
 			showFiles: true,
 			gzip: true

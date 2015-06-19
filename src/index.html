@@ -25,22 +25,27 @@
 		<!-- ES6 -->
 		<script src="lib/traceur-runtime.js"></script>
 		<script src="lib/system.js"></script>
-		<!-- Angular -->
+		<!-- Angular Deps -->
 		<script src="lib/reflect.js"></script>
 		<script src="lib/zone.js"></script>
 		<script src="lib/long-stack-trace-zone.js"></script>
 		<script src="lib/rx.js"></script>
-		<script src="lib/angular2.js"></script>
 		<!-- Firebase -->
 		<script src="lib/firebase.js"></script>
-		<!-- Fetch -->
-		<script src="lib/fetch.js"></script>
 		<!-- App -->
 		<script>
+			System.defaultJSExtensions = true;
 			System.config({
-				packages: {
-					'common': { defaultExtension: 'js' },
-					'app': { defaultExtension: 'js'	}
+				paths: {
+					'angular2/*': 'lib/angular2/*'
+				},
+				meta: {
+					'lib/rx.js': {
+						format: 'cjs'
+					}
+				},
+				map: {
+				    rx: 'lib/rx.js'
 				}
 			});
 			System.import('app/bootstrap').catch(
@@ -48,5 +53,4 @@
 			);
 		</script>
 	</body>
-
 </html>

@@ -1,8 +1,0 @@
-<style>
-	@import "nav.css";
-</style>
-<ul *ng-if="routes.length > 1">
-	<li *ng-for="#route of routes; #i = index">
-		<a [class.active]="route.path === active" router-link="{{ route.component.name | lowercase }}">{{route.component.name}}</a>
-	</li>
-</ul>

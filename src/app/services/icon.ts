@@ -1,13 +1,19 @@
-import { status, svg } from './fetch';
+import { Inject } from 'angular2/di';
+import { Http } from 'angular2/http';
+
 import { Defer } from 'common/defer';
+import { HttpResponseParser } from 'common/dom_parser';
 
 let cache: Map<string, any> = new Map();
 
 export class IconStore {
 	queue: Map<string, any> = new Map();
-	get(url: string): Promise<any> {
+	constructor(@Inject(Http) private http) {}
+	get(url: string): Promise<Node> {
 		let that: IconStore = this;
-		if (cache.has(url)) return Promise.resolve(cache.get(url).cloneNode(true));
+		if (cache.has(url)) return Promise.resolve(
+			cache.get(url).cloneNode(true)
+		);
 		else {
 			let pending: boolean = this.queue.has(url);
 			let defer = new Defer(); 
@@ -16,15 +22,14 @@ export class IconStore {
 			if (pending) promises.push(defer);
 			else {
 				promises.push(defer);
-				window
-					.fetch(url)
-					.then(status)
-					.then(svg)
-					.then((element) => {
+				this.http
+					.get(url)
+					.map(response => HttpResponseParser.svg(response))
+					.subscribe(element => {
 						cache.set(url, element);
 						promises.forEach(promise => promise.resolve(element.cloneNode(true)));
 						that.queue.delete(url);
-					});	
+					});
 			}
 			return defer.promise;
 		}

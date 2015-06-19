@@ -1,43 +1,44 @@
-import { Component, View } from 'angular2/angular2';
-import { NgFor, NgIf } from 'angular2/angular2';
-import { DefaultValueAccessor, FormModelDirective, ControlNameDirective, FormBuilder, ControlGroup, Control, Validators } from 'angular2/forms';
+import { Component, View } from 'angular2/annotations';
+import { NgIf } from 'angular2/directives';
+import { FormBuilder, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
 
-import { Todo } from 'app/services';
-import { Task } from '../task/task';
+import { TodoStore } from 'app/services';
+import { Autofocus, Icon } from 'app/directives';
+import { TodoList } from '../todo_list/todo_list';
 
 @Component({
-	selector: 'todos',
-	appInjector: [
-		Todo
-	]
+	selector: 'todos'
 })
 
 @View({
 	templateUrl: 'app/components/todos/todos.html',
+	styles: [
+		'@import "todos.css";'
+	],
 	directives: [
-		NgFor,
 		NgIf,
 		DefaultValueAccessor,
-		FormModelDirective,
-		ControlNameDirective,
-		Task
+		NgControlName,
+		NgForm,
+		NgFormModel,
+		Autofocus,
+		Icon,
+		TodoList
 	]
 })
 
 export class Todos {
-	todos: Array<any>;
 	form: FormBuilder;
-	_todo: Todo;
-	constructor(fb: FormBuilder, todo: Todo) {
-		this._todo = todo;
-		this.todos = todo.entries;
+	_store: TodoStore;
+	constructor(fb: FormBuilder, store: TodoStore) {
 		this.form = fb.group({
 			desc: ['', Validators.required]
-		}); 
+		});
+		this._store = store;
 	}
 	add(value) {
 		if (!value || !value.length) return;
-		this._todo.add(value);
+		this._store.add(value);
 		this.form.controls.desc.updateValue('');
 		return false;
 	}

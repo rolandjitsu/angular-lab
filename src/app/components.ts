@@ -1,4 +1,5 @@
 export * from './components/app/app';
-export * from './components/home/home';
-export * from './components/task/task';
+export * from './components/logo/logo';
+export * from './components/todo_list/todo_list';
+export * from './components/todo_item/todo_item';
 export * from './components/todos/todos';

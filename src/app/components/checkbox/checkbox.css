@@ -1,0 +1,27 @@
+:host {
+	box-sizing: border-box;
+	display: inline-block;
+	white-space: nowrap;
+	cursor: pointer;
+	outline: none;
+	user-select: none;
+	fill: #90a4ae;
+	transition: fill .125s ease-in-out;
+}
+
+:host svg {
+	vertical-align: middle;
+}
+
+:host([aria-checked="true"]) {
+    fill: #4caf50;
+}
+
+:host[disabled] {
+    cursor: no-drop;
+}
+
+:host(:focus:not([aria-checked="true"])),
+:host(:hover:not([aria-checked="true"])) {
+	fill: #a5d6a7;	
+}

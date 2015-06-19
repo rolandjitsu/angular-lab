@@ -1,13 +1,6 @@
-<style>
-	@import "app.css";
-</style>
-<header class="header" [class.hidden]="loading" [class.visible]="!loading">
-	<h1 class="header-payoff">Angular 2</h1>
-	<nav [routes]="routes"></nav>
+<header class="header">
+	<logo [move]="!loading"></logo>
 </header>
-<aside [class.invisible]="!loading">
-	<content select="#preloader"></content>
-</aside>
 <main class="main" [class.hidden]="loading" [class.visible]="!loading">
 	<router-outlet></router-outlet>
 </main>

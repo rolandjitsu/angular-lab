@@ -1,49 +1,36 @@
 import { FunctionWrapper, isFunction, isJsObject } from 'angular2/src/facade/lang';
+import { EventEmitter, ObservableWrapper } from 'angular2/src/facade/async';
+
+
+/**
+ * Firebase Timestamp
+ * It's value, when fetched, is a UTC that is assigned when the data is saved on the Firebase servers
+ * (and not when the the user submits the data for save).
+ */
 
 export const FIREBASE_TIMESTAMP = Firebase.ServerValue.TIMESTAMP;
 
 
 /**
- * Firebase Array
+ * Firebase array value interface.
  */
 
-let refs: Map<string, any> = new Map();
-
-function parseForFirebase (data: any): any {
-	if (data && isJsObject(data)) {
-		delete data.key;
-		if (data.hasOwnProperty('value')) data = data.value;
-	}
-	if (data === undefined) data = null;
-	return data;
+export interface IFirebaseArrayValue {
+	key: string;
+	value?: any;
 }
 
-function findKeyPos (list: Array<any>, key: string): number {
-	for (let [i, len] = [0, list.length]; i < len; i++) {
-		if (list[i].key === key) return i;
-	}
-	return -1;
-}
 
-function parseVal (key: string, data: any): any {
-	if (!isJsObject(data) || !data) data = { value: data };
-	data.key = key;
-	return data;
-}
+/**
+ * Firebase references.
+ * It will store all instances of FirebaseArray so that, when an instance with the same reference is to be created,
+ * it will use the stored instance instead of creating a new one.
+ * 
+ * @private
+ */
+ 
+let _refs: Map<string, any> = new Map();
 
-function applyToBase (base: any, data: any): any {
-	if (!isJsObject(base) || !isJsObject(data)) return data;
-	else {
-		let key: string;
-		for (key in base) {
-			if (key !== 'key' && base.hasOwnProperty(key) && !data.hasOwnProperty(key)) delete base[key];
-		}
-		for (key in data) {
-			if (data.hasOwnProperty(key)) base[key] = data[key];
-		}
-		return base;
-	}
-}
 
 /**
  * Expose a singleton like class.
@@ -72,21 +59,27 @@ function applyToBase (base: any, data: any): any {
  */
 
 export class FirebaseArray {
-	entries: Array<any>;
-	_callback: (eventType?: string, key?: string, record?: any) => any;
-	_ref: Firebase;
-	_subs: Array<Array<any>>;
-	constructor(ref: Firebase, callback?: (eventType?: string, key?: string, record?: any) => any) {
+	public entries: Array<any>;
+	private _ref: Firebase;
+	private _emitter: EventEmitter = new EventEmitter();
+	private _subscription: any;
+	private _subs: Array<Array<any>>; 
+	
+	constructor(ref: Firebase, onEvent?: (eventName: string, key: string, record?: any) => void, onError?: (error: any) => void) {
 		let url: string = ref.toString();
-		this._callback = callback;
+		this._subscription = ObservableWrapper.subscribe(
+			this._emitter,
+			value => FunctionWrapper.apply(onEvent || noop, value),
+			error => FunctionWrapper.apply(onError || noop, error)
+		);
 		this._ref = ref;
-		if (refs.has(url)) this._subs = refs.get(url)._subs;
+		if (_refs.has(url)) this._subs = _refs.get(url)._subs;
 		else {
-			refs.set(url, {
+			_refs.set(url, {
 				_entries: [],
 				_subs: []
 			});
-			this._subs = refs.get(url)._subs;
+			this._subs = _refs.get(url)._subs;
 			let events: any = {
 				child_added: this._added,
 				child_changed: this._changed,
@@ -101,7 +94,7 @@ export class FirebaseArray {
 				)
 			]);
 		}
-		this.entries = refs.get(url)._entries;
+		this.entries = _refs.get(url)._entries;
 	}
 
 
@@ -115,8 +108,11 @@ export class FirebaseArray {
 	 * @returns {Number} Index of the record (`-1` if not found).
 	 */
 
-	indexOf(key: string): number {
-		return findKeyPos(this.entries, key);
+	public indexOf(key: string): number {
+		for (let [i, len] = [0, this.entries.length]; i < len; i++) {
+			if (this.entries[i].key === key) return i;
+		}
+		return -1;
 	}
 
 
@@ -135,12 +131,14 @@ export class FirebaseArray {
 	 * @returns {Firebase} A Firebase reference to the data.
 	 */
 
-	add(data: any): Firebase {
+	public add(data: any): Firebase {
 		let key: string = this._ref.push().key();
 		let ref: Firebase = this._ref.child(key);
 		if (arguments.length > 0) ref.set(
 			parseForFirebase(data),
-			this._throw.bind(this, key)
+			error => error && ObservableWrapper.callThrow(this._emitter, [
+				error
+			])
 		);
 		return ref;
 	}
@@ -156,10 +154,12 @@ export class FirebaseArray {
 	 * @param {*} data - Data to add to the array (and sync with Firebase).
 	 */
 
-	set(key: string, data: any): void {
+	public set(key: string, data: any): void {
 		this._ref.child(key).set(
 			parseForFirebase(data),
-			this._throw.bind(this, key)
+			error => error && ObservableWrapper.callThrow(this._emitter, [
+				error
+			])
 		);
 	}
 
@@ -174,7 +174,7 @@ export class FirebaseArray {
  	 * @returns {*} Record.
 	 */
 
-	get(key: string): any {
+	public get(key: string): any {
 		let idx = this.indexOf(key);
 		if (idx === -1) return null;
 		return this.entries[idx];
@@ -191,10 +191,12 @@ export class FirebaseArray {
 	 * @param {*} data - Data to merge into the record (and sync with Firebase).
 	 */
 
-	update(key: string, data: any): void {
+	public update(key: string, data: any): void {
 		this._ref.child(key).update(
 			parseForFirebase(data),
-			this._throw.bind(this, key)
+			error => error && ObservableWrapper.callThrow(this._emitter, [
+				error
+			])
 		);
 	}
 
@@ -209,7 +211,7 @@ export class FirebaseArray {
 	 * @param {(String|Number)} priority - Sort order to be applied.
 	 */
 
-	move(key: string, priority: any): void {
+	public move(key: string, priority: any): void {
 		this._ref.child(key).setPriority(priority);
 	}
 
@@ -223,9 +225,11 @@ export class FirebaseArray {
 	 * @param {String} key - Record key to be removed.
 	 */
 
-	remove(key: string): void {
+	public remove(key: string): void {
 		this._ref.child(key).remove(
-			this._throw.bind(null, key)
+			error => error && ObservableWrapper.callThrow(this._emitter, [
+				error
+			])
 		);
 	}
 
@@ -234,12 +238,14 @@ export class FirebaseArray {
 	 * Unsubscribes from all Firebase [events]@{link https://www.firebase.com/docs/web/api/query/on.html} (`child_added`, `child_changed`, `child_moved`, `child_removed`).
 	 * This means that the changes will still be pushed to Firebase,
 	 * but there will be no callbacks and if data is changed from another client, it will not be reflected on the current client.
-	 *
-	 * @name disconnect
+	 * It also removes the callback functions added on the class instantiation.
+	 * 
+	 * @name dispose
 	 * @memberof FirebaseArray
 	 */
 
-	disconnect(): void {
+	public dispose(): void {
+		ObservableWrapper.dispose(this._subscription);
 		let ref: Firebase = this._ref;
 		this._subs.forEach((sub) => {
 			ref.off(sub[0], sub[1]);
@@ -247,17 +253,48 @@ export class FirebaseArray {
 		this._subs = [];
 	}
 
+	private _move(key: string, record: any, prevKey?: string): void {
+		let pos: number = this._getRecordPos(key, prevKey);
+		this.entries.splice(pos, 0, record);
+	}
+	private _getRecordPos(key: string, prevKey?: string): number {
+		if (prevKey === null) return 0;
+		else {
+			let idx = this.indexOf(prevKey);
+			if (idx === -1) return this.entries.length;
+			else return idx + 1;
+		}
+	}
+	
 
-	_added(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
+	private _added(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
 		let key: string = snapshot.key();
 		let record = parseVal(
 			key,
 			snapshot.val()
 		);
 		this._move(key, record, prevKey);
-		this._tick('child_added', key, record);
+		ObservableWrapper.callNext(this._emitter, [
+			'child_added',
+			key,
+			record
+		]);
 	}
-	_changed(snapshot: FirebaseDataSnapshot): void {
+	private _moved(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
+		let key: string = snapshot.key();
+		let oldPos: number = this.indexOf(key);
+		if(oldPos !== -1) {
+			let record: any = this.entries[oldPos];
+			this.entries.splice(oldPos, 1);
+			this._move(key, record, prevKey);
+			ObservableWrapper.callNext(this._emitter, [
+				'child_moved',
+				key,
+				record
+			]);
+		}
+	}
+	private _changed(snapshot: FirebaseDataSnapshot): void {
 		let key: string = snapshot.key();
 		let pos: number = this.indexOf(key);
 		if (pos !== -1) {
@@ -268,50 +305,53 @@ export class FirebaseArray {
 					snapshot.val()
 				)
 			);
-			this._tick('child_changed', key, this.entries[pos]);
+			ObservableWrapper.callNext(this._emitter, [
+				'child_changed',
+				key,
+				this.entries[pos]
+			]);
 		}
 	}
-	_moved(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
-		let key: string = snapshot.key();
-		let oldPos: number = this.indexOf(key);
-		if( oldPos !== -1 ) {
-			let record: any = this.entries[oldPos];
-			this.entries.splice(oldPos, 1);
-			this._move(key, record, prevKey);
-			this._tick('child_moved', key, record);
-		}
-	}
-	_removed(snapshot: FirebaseDataSnapshot): void {
+	private _removed(snapshot: FirebaseDataSnapshot): void {
 		let key: string = snapshot.key();
 		let pos: number = this.indexOf(key);
 		if (pos !== -1) {
 			this.entries.splice(pos, 1);
-			this._tick('child_removed', key);
+			ObservableWrapper.callNext(this._emitter, [
+				'child_removed',
+				key
+			]);
 		}
-	}
-
-	_getRecordPos(key: string, prevKey?: string): number {
-		if (prevKey === null) return 0;
-		else {
-			let idx = this.indexOf(prevKey);
-			if (idx === -1) return this.entries.length;
-			else return idx + 1;
-		}
-	}
-	_move(key: string, record: any, prevKey?: string): void {
-		let pos: number = this._getRecordPos(key, prevKey);
-		this.entries.splice(pos, 0, record);
-	}
-
-	_tick(eventType: string, key: string, record?: any): void {
-		if (isFunction(this._callback)) FunctionWrapper.apply(
-			this._callback,
-			[eventType, key].concat(
-				record ? [record] : []
-			)
-		);
-	}
-	_throw(key: string, err: any): void {
-		if (err) this._tick('error', key);
 	}
 }
+
+function applyToBase (base: any, data: any): any {
+	if (!isJsObject(base) || !isJsObject(data)) return data;
+	else {
+		let key: string;
+		for (key in base) {
+			if (key !== 'key' && base.hasOwnProperty(key) && !data.hasOwnProperty(key)) delete base[key];
+		}
+		for (key in data) {
+			if (data.hasOwnProperty(key)) base[key] = data[key];
+		}
+		return base;
+	}
+}
+
+function parseForFirebase (data: any): any {
+	if (data && isJsObject(data)) {
+		delete data.key;
+		if (data.hasOwnProperty('value')) data = data.value;
+	}
+	if (data === undefined) data = null;
+	return data;
+}
+
+function parseVal (key: string, data: any): any {
+	if (!isJsObject(data) || !data) data = { value: data };
+	data.key = key;
+	return data;
+}
+
+function noop () {}

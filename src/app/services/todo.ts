@@ -1,6 +1,25 @@
-import { FirebaseArray, FIREBASE_TIMESTAMP } from './firebase';
+import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from './firebase';
 
-export class Todo extends FirebaseArray {
+export interface ITodo extends IFirebaseArrayValue {
+	createdAt: string;
+	updatedAt: string;
+	completedAt?: string;
+	completed: boolean;
+	desc: string;
+}
+
+class Todo implements ITodo {
+	createdAt: string = FIREBASE_TIMESTAMP;
+	updatedAt: string = FIREBASE_TIMESTAMP;
+	completed: boolean = false;
+	desc: string;
+	key: string;
+	constructor(desc: string) {
+		this.desc = desc;
+	}
+}
+
+export class TodoStore extends FirebaseArray {
 	constructor() {
 		let root =  new Firebase('https://ng2-play.firebaseio.com');
 		let auth = root.getAuth();
@@ -8,20 +27,20 @@ export class Todo extends FirebaseArray {
 		super(ref);
 	}
 
-	add(task) {
-		return super.add({
-			created: FIREBASE_TIMESTAMP,
-			updated: FIREBASE_TIMESTAMP,
-			desc: task,
-			completed: false
-		});
+	add(task: string) {
+		return super.add(
+			new Todo(task)
+		);
 	}
 	update(record, data) {
 		super.update(
 			record.key,
 			Object.assign({}, record, data, {
-				updated: FIREBASE_TIMESTAMP
+				updatedAt: FIREBASE_TIMESTAMP
 			})
 		);
+	}
+	remove(record) {
+		super.remove(record.key);
 	}
 }
