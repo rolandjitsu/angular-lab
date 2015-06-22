@@ -26,6 +26,12 @@ npm start # `gulp play` if gulp is installed globally
 ```
 
 
+#### Browser Support
+--------------------
+Even though all source code is compiled/transpiled to ES5 and [SystemJS](https://github.com/systemjs/systemjs) has support for IE8 and up, Angular 2.0 has no official indication of what browsers it supports.
+Therefore, is safe to assume that only [evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers/) browsers are being supported for now.
+
+
 #### Learning Material
 ----------------------
 - [Angular Docs](https://angular.io)
