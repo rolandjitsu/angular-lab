@@ -1,6 +1,10 @@
 <header class="header">
-	<logo [move]="!loading"></logo>
+	<a
+		router-link="todos"
+		class="logo js-logo"
+		[class.js-move]="!loading"
+		logo></a>
 </header>
-<main class="main" [class.hidden]="loading" [class.visible]="!loading">
+<main class="main js-main js-npe" [class.visible]="!loading">
 	<router-outlet></router-outlet>
 </main>
