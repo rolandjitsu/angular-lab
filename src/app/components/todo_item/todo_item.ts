@@ -50,7 +50,6 @@ export class TodoItem {
 		that._store = store;
 		that._subs = [
 			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
-				console.log(value);
 				if (that.model.completed === value) return;
 				that._store.update(that.model, {
 					completed: value

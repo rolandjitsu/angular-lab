@@ -1,10 +1,10 @@
 <ul
 	class="todo-cell"
+	[class.js-completed]="model.completed"
 	[ng-form-model]="form"
-	#todo="form"> <!--[class.todo-item--completed]="model.completed"-->
+	#todo="form">
 	<li class="todo-cell-control">
-		<!--<input type="checkbox" name="status">-->
-		<checkbox ng-control="status"></checkbox> <!--[checked]="model.completed"-->
+		<checkbox ng-control="status"></checkbox>
 	</li>
 	<li class="todo-cell-content" [class.js-edit]="edit" [class.js-av]="av">
 		<div class="todo-cell-label">

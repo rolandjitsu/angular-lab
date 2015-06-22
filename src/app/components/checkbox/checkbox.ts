@@ -1,4 +1,5 @@
 import { NumberWrapper, isPresent } from 'angular2/src/facade/lang';
+import { EventEmitter } from 'angular2/src/facade/async'
 import { KeyboardEvent } from 'angular2/src/facade/browser';
 import { ElementRef } from 'angular2/core';
 import { Renderer } from 'angular2/render';
@@ -10,17 +11,17 @@ import { Icon } from 'app/directives';
 
 @Component({
 	selector: 'checkbox',
+	events: ['change'],
 	properties: [
-		// 'checked',
+		'checked',
 		'disabled'
 	],
 	host: {
 		'(keydown)': 'onKeydown($event)',
-		'(change)': 'onChange($event.target.checked)',
+		'(change)': 'onChange($event)',
 		'(blur)': 'onTouched()',
 		'[checked]': 'checked',
 		'[tabindex]': 'tabindex',
-		'[attr.role]': '"checkbox"',
 		'[attr.aria-checked]': 'checked',
     	'[attr.aria-disabled]': 'disabled',
 		'[class.ng-untouched]': 'cd.control?.untouched == true',
@@ -28,7 +29,8 @@ import { Icon } from 'app/directives';
 		'[class.ng-pristine]': 'cd.control?.pristine == true',
 		'[class.ng-dirty]': 'cd.control?.dirty == true',
 		'[class.ng-valid]': 'cd.control?.valid == true',
-		'[class.ng-invalid]': 'cd.control?.valid == false'
+		'[class.ng-invalid]': 'cd.control?.valid == false',
+		'role': 'checkbox'
 	}
 })
 
@@ -43,20 +45,16 @@ import { Icon } from 'app/directives';
 })
 
 export class Checkbox implements ControlValueAccessor {
-	checked: boolean;
+	checked: boolean = false;
+	change: EventEmitter = new EventEmitter();
+	_disabled: boolean = false;
 	tabindex: number;
-	onChange: Function;
-	onTouched: Function;
-	_disabled: boolean;
+	onChange: Function = (_) => {};
+	onTouched: Function = (_) => {};
 	
 	constructor(private cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
-		this.checked = false;
+		this.cd.valueAccessor = this;
 		this.tabindex = isPresent(tabindex) ? NumberWrapper.parseInt(tabindex, 10) : 0;
-		this.onChange = (_) => {};
-		this.onTouched = (_) => {};
-		cd.valueAccessor = this;
-		this._disabled = false;
-		console.log(renderer, elementRef, cd);
 	}
 	
 	get disabled() {
@@ -70,6 +68,7 @@ export class Checkbox implements ControlValueAccessor {
 	toggle(event) {
 		if (this.disabled) return event.stopPropagation();
 		this.checked = !this.checked;
+		this.change.next(this.checked);		
 	}
 	registerOnChange(fn): void {
 		this.onChange = fn;

@@ -128,6 +128,11 @@ input:-moz-placeholder {
     text-overflow: ellipsis;
 }
 
+.js-completed .todo-cell-label > input {
+	color: #90a4ae;
+	cursor: no-drop;
+}
+
 .todo-cell-label > input:focus {
 	text-overflow: clip;
 }
