@@ -1,25 +1,25 @@
 # Angular 2 Playground
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-play.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-play)
 [![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-play.svg)](https://gemnasium.com/rolandjitsu/ng2-play)
-> Minimal setup of [Angular 2.0](https://angular.io/), [TypeScript](http://www.typescriptlang.org/), [ES6](https://github.com/lukehoban/es6features) and [Firebase](https://firebase.com).
+> Minimal setup of [ES6](https://github.com/lukehoban/es6features), [TypeScript](http://www.typescriptlang.org/), [Angular 2.0](https://angular.io/) and [Firebase](https://firebase.com).
 
-All ES6 files are being compiled with [TypeScript](http://www.typescriptlang.org/) (because most of the code is a combination of ES6 and TypeScript specific syntax) and loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs). Source maps are also generated for both the app source code and Angular 2 (makes it very easy to debug the app).
+All ES6 files are being compiled/transpiled with [TypeScript](http://www.typescriptlang.org/) (because most of the code is a combination of ES6 and TypeScript specific syntax) to ES5 and loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs). Throughout the app, most of the features in Angular 2.0 are being used. Moreover, a fairly simple example of using [three-way](https://www.firebase.com/resources/images/blog/3-way-binding.png) data binding with Firebase written in ES6 (on top of the Firebase [JavaScript API](https://www.firebase.com/docs/web/)) is being illustrated.
 
 
 #### Setup
 ----------
 Clone this repo and setup the following tools on your machine:
 
-- [Node](http://nodejs.org) - if not already installed (used for a variety of things: update/install project dependencies, start a webserver, etc.)
-- [Gulp](http://gulpjs.com/) - optional
+- [Node](http://nodejs.org) (*if not already installed*)
+- [Gulp](http://gulpjs.com/) (*optional*)
 
-Once you have the tools setup install all dependencies by running:
+After you have the above tools setup, install all runtime/dev dependencies by running:
 
 ```shell
 npm install
 ```
 
-Now start the webserver (available at `localhost:8000`) and the build process (runs on file change):
+Now start the webserver and the build process (runs on file change) and navigate to [localhost:8000](http://localhost:8000):
 
 ```shell
 npm start # `gulp play` if gulp is installed globally
@@ -42,7 +42,7 @@ npm start # `gulp play` if gulp is installed globally
 
 #### Credits
 ------------
-In the making of this simple app, I have made use of whatever resources I could find out there (since the docs on some of the Angular 2 features usage is not that extensive and it's constantly changing for the moment), thus it's worth mentioning that the following projects have served as inspiration and help:
+In the making of this simple app, I have made use of whatever resources I could find out there (since the docs on some of the Angular 2 features usage are not that extensive and it's constantly changing for the moment), thus it's worth mentioning that the following projects have served as inspiration and help:
 
 - [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
 - [angular2-webpack-starter](https://github.com/angular-class/angular2-webpack-starter)
