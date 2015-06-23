@@ -1,27 +1,46 @@
-:host {
-	box-sizing: border-box;
+/**
+ * Host Element (<checkbox>)
+ */
+
+:host,
+checkbox {
 	display: inline-block;
-	white-space: nowrap;
 	cursor: pointer;
 	outline: none;
 	user-select: none;
+}
+
+
+/**
+ * Base
+ */
+
+.checkbox {
+	box-sizing: border-box;
+	display: block;
+	white-space: nowrap;
 	fill: #90a4ae;
 	transition: fill .125s ease-in-out;
 }
 
-:host svg {
-	vertical-align: middle;
-}
 
-:host([aria-checked="true"]) {
-    fill: #4caf50;
-}
+/**
+ * States
+ */
 
-:host[disabled] {
+:host([disabled]),
+checkbox[disabled] {
     cursor: no-drop;
 }
 
-:host(:focus:not([aria-checked="true"])),
-:host(:hover:not([aria-checked="true"])) {
+:host(:focus:not([aria-checked="true"])) > .checkbox,
+checkbox:focus:not([aria-checked="true"]) > .checkbox,
+:host(:hover:not([aria-checked="true"])) > .checkbox,
+checkbox:hover:not([aria-checked="true"]) > .checkbox {
 	fill: #a5d6a7;	
+}
+
+:host([aria-checked="true"]) > .checkbox,
+checkbox[aria-checked="true"] > .checkbox {
+    fill: #4caf50;
 }

@@ -2,26 +2,9 @@
  * Host Element (<todo-item>)
  */
 
-:host {
+:host,
+todo-item {
 	display: block;
-}
-
-
-/**
- * Base
- */
-
-::-webkit-input-placeholder {
-	color: #eceff1;
-}
-::-moz-placeholder {
-	color: #eceff1;
-}
-:-ms-input-placeholder {
-	color: #eceff1;
-}
-input:-moz-placeholder {
-	color: #eceff1;
 }
 
 
@@ -48,19 +31,23 @@ input:-moz-placeholder {
 	background-color: #fff;
 }
 
-:host(:first-of-type) .todo-cell-control {
+:host(:first-of-type) .todo-cell-control,
+todo-item:first-of-type .todo-cell-control {
 	border-top-left-radius: 3px;
 }
 
-:host(:first-of-type) .todo-cell-content {
+:host(:first-of-type) .todo-cell-content,
+todo-item:first-of-type .todo-cell-content {
 	border-top-right-radius: 3px;
 }
 
-:host(:last-of-type) .todo-cell-control {
+:host(:last-of-type) .todo-cell-control,
+todo-item:last-of-type .todo-cell-control {
 	border-bottom-left-radius: 3px;
 }
 
-:host(:last-of-type) .todo-cell-content {
+:host(:last-of-type) .todo-cell-content,
+todo-item:last-of-type .todo-cell-content {
 	border-bottom-right-radius: 3px;
 }
 
@@ -93,7 +80,8 @@ input:-moz-placeholder {
 }
 
 
-:host(:last-of-type) .todo-cell-content {
+:host(:last-of-type) .todo-cell-content,
+todo-item:last-of-type .todo-cell-content {
 	border-bottom: none;
 }
 
@@ -126,6 +114,22 @@ input:-moz-placeholder {
 	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.todo-cell-label > input::-webkit-input-placeholder {
+	color: #eceff1;
+}
+
+.todo-cell-label > input::-moz-placeholder {
+	color: #eceff1;
+}
+
+.todo-cell-label > input:-ms-input-placeholder {
+	color: #eceff1;
+}
+
+.todo-cell-label > input:-moz-placeholder {
+	color: #eceff1;
 }
 
 .js-completed .todo-cell-label > input {

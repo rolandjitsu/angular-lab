@@ -1,8 +1,9 @@
 /**
  * Host Element (<app>)
  */
- 
-:host {
+
+:host,
+app {
 	position: relative;
 	display: block;
 	height: 100vh;
@@ -14,28 +15,32 @@
 
 @media (max-width: 599px) {
 	
-	:host {
+	:host,
+	app {
 		width: 85vw; 
 	}
 }
 
 @media (min-width: 600px) and (max-width: 959px) {
 	
-	:host {
+	:host,
+	app {
 		width: 55vw; 
 	}
 }
 
 @media (min-width: 960px) and (max-width: 1199px) {
 	
-	:host {
+	:host,
+	app {
 		width: 40vw; 
 	}
 }
 
 @media (min-width: 1200px) {
 	
-	:host {
+	:host,
+	app {
 		width: 35vw; 
 	}
 }
@@ -45,9 +50,11 @@
  * Base
  */
 
-:host > .visible {
+:host > .visible,
+app > .visible {
 	animation: in .5s ease-in;
 	animation-fill-mode: forwards;
+	animation-delay: .65s;
 }
 
 
@@ -68,7 +75,6 @@
 	padding-top: 20px;
 	padding-bottom: 20px;
 	opacity: 0;
-	animation-delay: .65s;
 }
 
 

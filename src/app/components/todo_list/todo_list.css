@@ -2,6 +2,7 @@
  * Host Element (<todo-list>)
  */
 
-:host {
+:host,
+todo-list {
 	display: block;
 }

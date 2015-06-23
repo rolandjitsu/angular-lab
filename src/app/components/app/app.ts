@@ -77,14 +77,14 @@ export class App {
 			},
 			this
 		);
-		let sub = AnimationEndObserver.subscribe(
+		let logoSub = AnimationEndObserver.subscribe(
 			logo,
 			(event) => {
 				if (event.animationName === 'in') logo.className = logo.className.replace('js-in', 'js-opaque');
 				else if (event.animationName === 'move') {
 					logo.classList.remove('js-move', 'js-opaque');
 					logo.classList.add('js-unfix');
-					sub.disconnect();
+					logoSub.disconnect();
 				}
 			},
 			this

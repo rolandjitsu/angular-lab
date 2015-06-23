@@ -2,7 +2,8 @@
  * Host Element (<todos>)
  */
 
-:host {
+:host,
+todos {
 	display: block;
 }
 
@@ -11,16 +12,19 @@
  * Form
  */
 
-::-webkit-input-placeholder {
+.todos-form-desc > input::-webkit-input-placeholder {
 	color: #eceff1;
 }
-::-moz-placeholder {
+
+.todos-form-desc > input::-moz-placeholder {
 	color: #eceff1;
 }
-:-ms-input-placeholder {
+
+.todos-form-desc > input:-ms-input-placeholder {
 	color: #eceff1;
 }
-input:-moz-placeholder {
+
+.todos-form-desc > input:-moz-placeholder {
 	color: #eceff1;
 }
 

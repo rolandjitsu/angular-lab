@@ -1,18 +1,16 @@
-<article>
-	<form
-		class="todos-form"
-		[ng-form-model]="form"
-		#todo="form"
-		(ng-submit)="add(form.value.desc)"
-		novalidate>
-		<div class="todos-form-desc">
-			<input type="text" id="desc" name="desc" ng-control="desc" placeholder="Description" autocomplete="off" required>
-		</div>
-		<div class="todos-form-submit">
-			<button type="submit" [disabled]="!todo.form.valid">
-				<icon src="media/plus.svg"></icon>
-			</button>
-		</div>
-	</form>
-	<todo-list></todo-list>
-</article>
+<form
+	class="todos-form"
+	[ng-form-model]="form"
+	#todo="form"
+	(ng-submit)="add(form.value.desc)"
+	novalidate>
+	<div class="todos-form-desc">
+		<input type="text" id="desc" name="desc" ng-control="desc" placeholder="Description" autocomplete="off" required>
+	</div>
+	<div class="todos-form-submit">
+		<button type="submit" [disabled]="!todo.form.valid">
+			<icon src="media/plus.svg"></icon>
+		</button>
+	</div>
+</form>
+<todo-list></todo-list>
