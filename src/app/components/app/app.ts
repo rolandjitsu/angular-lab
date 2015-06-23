@@ -20,7 +20,7 @@ interface IRoutes {
 let routes: IRoutes = [
 	{
 		component: Todos,
-		path: '/routefix', // temp fix until router is fixed, when fixed remove fron router.navigate below
+		path: '/routefix', // temp fix until router is fixed, when fixed remove from router.navigate below
 		as: 'todos'
 	}
 ]
