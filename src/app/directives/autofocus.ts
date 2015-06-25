@@ -1,5 +1,5 @@
 import { Directive } from 'angular2/annotations';
-import { ElementRef } from 'angular2/core'
+import { ElementRef } from 'angular2/core';
 
 @Directive({
 	selector: '[autofocus]'
@@ -7,6 +7,6 @@ import { ElementRef } from 'angular2/core'
 
 export class Autofocus {
 	constructor(el: ElementRef) {
-		el.domElement.focus();
+		el.nativeElement.focus();
 	}
 }
