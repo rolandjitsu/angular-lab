@@ -31,8 +31,8 @@ let routes: IRoutes = [
 
 @View({
 	templateUrl: 'app/components/app/app.html',
-	styles: [
-		'@import "app.css";'
+	styleUrls: [
+		'app/components/app/app.css'
 	],
 	directives: [
 		RouterOutlet,

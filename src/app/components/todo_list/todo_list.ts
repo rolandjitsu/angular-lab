@@ -10,8 +10,8 @@ import { TodoItem } from '../todo_item/todo_item';
 
 @View({
 	templateUrl: 'app/components/todo_list/todo_list.html',
-	styles: [
-		'@import "todo_list.css";'
+	styleUrls: [
+		'app/components/todo_list/todo_list.css'
 	],
 	directives: [
 		NgFor,

@@ -35,8 +35,8 @@ import { Icon } from 'app/directives';
 
 @View({
 	templateUrl: 'app/components/checkbox/checkbox.html',
-	styles: [
-		'@import "checkbox.css";'
+	styleUrls: [
+		'app/components/checkbox/checkbox.css'
 	],
 	directives: [
 		Icon

@@ -19,8 +19,8 @@ import { Checkbox } from '../checkbox/checkbox';
 
 @View({
 	templateUrl: 'app/components/todo_item/todo_item.html',
-	styles: [
-		'@import "todo_item.css";'
+	styleUrls: [
+		'app/components/todo_item/todo_item.css'
 	],
 	directives: [
 		DefaultValueAccessor,

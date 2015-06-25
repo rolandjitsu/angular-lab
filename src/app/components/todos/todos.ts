@@ -12,8 +12,8 @@ import { TodoList } from '../todo_list/todo_list';
 
 @View({
 	templateUrl: 'app/components/todos/todos.html',
-	styles: [
-		'@import "todos.css";'
+	styleUrls: [
+		'app/components/todos/todos.css'
 	],
 	directives: [
 		NgIf,
