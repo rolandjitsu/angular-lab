@@ -47,7 +47,7 @@ declare module 'angular2/core' {
 	}
 	class ElementRef {
     	boundElementIndex: number;
-    	domElement: any;
+    	nativeElement: any;
     	getAttribute(name: string): string;
     	parentView: ViewRef;
   	}
@@ -155,8 +155,10 @@ declare module "angular2/forms" {
 		writeValue(obj: any): void;
 	}
 	class DefaultValueAccessor {}
+	
 	class NgControl {
 		valueAccessor: ControlValueAccessor;
+		control: Control;
 	}
 	class NgControlGroup {}
 	class NgControlName {}
@@ -169,12 +171,17 @@ declare module "angular2/forms" {
 		group(controls: any): any
 		controls: any;
 	}
-	class Control {
-		constructor(controls: any)
-		updateValue(value: any)
+	class AbstractControl {
+		dirty: boolean;
+		touched: boolean;
+		untouched: boolean;
 		valueChanges: any;
 		valid: boolean;
 		pristine: boolean;
+	}
+	class Control extends AbstractControl {
+		constructor(controls: any);
+		updateValue(value: any);
 	}
 	class ControlGroup {
 		constructor(controls: any)
