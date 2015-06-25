@@ -20,16 +20,15 @@ import { Icon } from 'app/directives';
 		'(keydown)': 'onKeydown($event)',
 		'(change)': 'onChange($event)',
 		'(blur)': 'onTouched()',
-		'[checked]': 'checked',
 		'[tabindex]': 'tabindex',
 		'[attr.aria-checked]': 'checked',
     	'[attr.aria-disabled]': 'disabled',
-		'[class.ng-untouched]': 'cd.control?.untouched == true',
-		'[class.ng-touched]': 'cd.control?.touched == true',
-		'[class.ng-pristine]': 'cd.control?.pristine == true',
-		'[class.ng-dirty]': 'cd.control?.dirty == true',
-		'[class.ng-valid]': 'cd.control?.valid == true',
-		'[class.ng-invalid]': 'cd.control?.valid == false',
+		'[class.ng-untouched]': 'ngClassUntouched',
+		'[class.ng-touched]': 'ngClassTouched',
+		'[class.ng-pristine]': 'ngClassPristine',
+		'[class.ng-dirty]': 'ngClassDirty',
+		'[class.ng-valid]': 'ngClassValid',
+		'[class.ng-invalid]': 'ngClassInvalid',
 		'role': 'checkbox'
 	}
 })
@@ -57,6 +56,24 @@ export class Checkbox implements ControlValueAccessor {
 		this.tabindex = isPresent(tabindex) ? NumberWrapper.parseInt(tabindex, 10) : 0;
 	}
 	
+	get ngClassUntouched(): boolean {
+		return isPresent(this.cd.control) ? this.cd.control.untouched : false;
+	}
+	get ngClassTouched(): boolean {
+		return isPresent(this.cd.control) ? this.cd.control.touched : false;
+	}
+	get ngClassPristine(): boolean {
+		return isPresent(this.cd.control) ? this.cd.control.pristine : false;
+	}
+	get ngClassDirty(): boolean {
+		return isPresent(this.cd.control) ? this.cd.control.dirty : false;
+	}
+	get ngClassValid(): boolean {
+		return isPresent(this.cd.control) ? this.cd.control.valid : false;
+	}
+	get ngClassInvalid(): boolean {
+		return isPresent(this.cd.control) ? !this.cd.control.valid : false;
+	}
 	get disabled() {
 		return this._disabled;
 	}
@@ -78,12 +95,6 @@ export class Checkbox implements ControlValueAccessor {
 	}
 	writeValue(value) {
 		this.checked = value;
-		this.renderer.setElementProperty(
-			this.elementRef.parentView.render,
-			this.elementRef.boundElementIndex,
-			'checked',
-			value
-		);
 	}
 	
 	onKeydown(event: KeyboardEvent) {
