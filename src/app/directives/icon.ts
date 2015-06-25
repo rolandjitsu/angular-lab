@@ -14,7 +14,7 @@ import { IconStore } from 'app/services';
 export class Icon {
 	el;
 	constructor(private elementRef: ElementRef,	public icon: IconStore) {
-		this.el = this.elementRef.domElement;
+		this.el = this.elementRef.nativeElement;
 	}
 	set src(src: string) {
 		let that: Icon = this;

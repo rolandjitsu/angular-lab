@@ -10,7 +10,7 @@ import { IconStore } from 'app/services';
 
 export class Logo {
 	constructor(private elementRef: ElementRef,	public icon: IconStore) {
-		let el = this.elementRef.domElement;
+		let el = this.elementRef.nativeElement;
 		let that: Logo = this;
 		let root;
 		if (supportsNativeShadowDOM) root = el.createShadowRoot();
