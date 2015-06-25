@@ -45,7 +45,7 @@
 		"source-map-url": "0.3.x",
 		"through2": "2.0.x",
 		"tsd": "0.6.x",
-		"typescript": "Microsoft/TypeScript",
+		"typescript": "Microsoft/TypeScript#release-1.5",
 		"vinyl-sourcemaps-apply": "0.1.x"
 	},
 	"private": true
