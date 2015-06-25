@@ -214,6 +214,9 @@ declare module 'angular2/router' {
 		config(config: any): Promise<any>
 		subscribe(onNext: Function): Promise<any>
 	}
+	class Location {
+		path(): string;
+	}
 	var RouterOutlet: any;
 	var RouterLink: any;
 	var routerInjectables: any;
