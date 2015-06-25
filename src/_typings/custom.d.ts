@@ -16,7 +16,7 @@ declare module 'angular2/render' {
 	class RenderViewRef {}
 	class RenderProtoViewRef {}
 	class ShadowDomStrategy {}
-		class Renderer {
+	class Renderer {
 		attachComponentView(hostViewRef: RenderViewRef, elementIndex: number, componentViewRef: RenderViewRef): any;
 		attachViewInContainer(parentViewRef: RenderViewRef, boundElementIndex: number, atIndex: number, viewRef: RenderViewRef): any;
 		callAction(viewRef: RenderViewRef, elementIndex: number, actionExpression: string, actionArgs: any): any;
@@ -104,12 +104,6 @@ declare module 'angular2/src/facade/lang' {
 	function isString(obj: any): boolean;
 }
 
-declare module 'angular2/src/router/browser_location' {
-	class BrowserLocation {
-		path(): string
-	}
-}
-
 declare module "angular2/annotations" {
 	var Attribute: any;
 	var Parent: any;
@@ -121,11 +115,26 @@ declare module "angular2/annotations" {
 }
 
 declare module "angular2/change_detection" {
-	class Pipe {}
-	class PipeFactory {}
-	class NullPipeFactory extends PipeFactory {}
+	interface Pipe {
+		supports(obj): boolean;
+		onDestroy(): void;
+		transform(value: any): any;
+	}
+	interface PipeFactory {
+		supports(obs): boolean;
+		create(cdRef): Pipe;
+	}
+	class NullPipeFactory implements PipeFactory {
+		supports(obj): boolean;
+		create(cdRef): Pipe;
+	}
 	class PipeRegistry {
 		constructor(pipes: any)
+	}
+	class BasePipe implements Pipe {
+		supports(obj): boolean;
+		onDestroy(): void;
+		transform(value: any): any;
 	}
 	class JitChangeDetection {}
 	class ChangeDetection {}
