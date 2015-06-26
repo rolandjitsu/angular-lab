@@ -4,8 +4,8 @@ import { FormBuilder, Control, ControlGroup, DefaultValueAccessor, NgControlName
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { TodoStore, ITodo } from 'app/services';
-import { Icon } from 'app/directives';
 import { Checkbox } from '../checkbox/checkbox';
+import { Icon } from '../icon/icon';
 
 @Component({
 	selector: 'todo-item',

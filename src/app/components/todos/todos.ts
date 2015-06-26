@@ -3,8 +3,9 @@ import { NgIf } from 'angular2/directives';
 import { FormBuilder, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
 
 import { TodoStore } from 'app/services';
-import { Autofocus, Icon } from 'app/directives';
+import { Autofocus } from 'app/directives';
 import { TodoList } from '../todo_list/todo_list';
+import { Icon } from '../icon/icon';
 
 @Component({
 	selector: 'todos'

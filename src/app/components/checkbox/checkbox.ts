@@ -7,7 +7,7 @@ import { Component, View, Attribute } from 'angular2/annotations';
 import { ControlValueAccessor, NgControl } from 'angular2/forms';
 
 import { KEY_SPACE } from 'common/constants';
-import { Icon } from 'app/directives';
+import { Icon } from '../icon/icon';
 
 @Component({
 	selector: 'checkbox',
