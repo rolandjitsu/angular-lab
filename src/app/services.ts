@@ -4,7 +4,6 @@ import { TodoStore } from './services/todo';
 import { IconStore } from './services/icon';
 
 export * from './services/animation';
-export * from './services/firebase';
 export * from './services/icon';
 export * from './services/todo';
 

@@ -1,4 +1,4 @@
-import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from './firebase';
+import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
 
 export interface ITodo extends IFirebaseArrayValue {
 	createdAt: string;
