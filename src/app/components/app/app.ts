@@ -2,6 +2,7 @@ import { Component, View } from 'angular2/annotations';
 import { ViewContainerRef, ElementRef } from 'angular2/core';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
+import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { Animation, AnimationEndObserver } from 'app/services';
 import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
@@ -67,8 +68,9 @@ export class App {
 		 */
 		
 		let el: HTMLElement = this.elementRef.nativeElement;
-		let main: HTMLElement = <HTMLElement>el.querySelector('* /deep/ .js-main'); // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
-		let logo: HTMLElement = <HTMLElement>el.querySelector('* /deep/ .js-logo');
+		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : '';
+		let main: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-main'); // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+		let logo: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-logo');
 		let mainSub = AnimationEndObserver.subscribe(
 			main,
 			(event) => {

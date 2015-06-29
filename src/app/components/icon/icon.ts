@@ -1,7 +1,7 @@
 import { Component, View } from 'angular2/annotations';
 import { ViewContainerRef } from 'angular2/core';
 
-import { supportsNativeShadowDOM } from 'common/shadow_dom';
+import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'app/services';
 
 @Component({
@@ -26,7 +26,7 @@ export class Icon {
 	set src(src: string) {
 		let that: Icon = this;
 		let root;
-		if (supportsNativeShadowDOM) root = this.el.shadowRoot;
+		if (isNativeShadowDOMSupported) root = this.el.shadowRoot;
 		else root = this.el; 
 		this.icon.get(src).then((svg) => {
 			root.appendChild(svg);
