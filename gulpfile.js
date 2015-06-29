@@ -18,6 +18,7 @@ var PATHS = {
 	lib: [
 		'bower_components/normalize.css/normalize.css',
 		'bower_components/firebase/firebase.js',
+		'node_modules/moment/moment.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/systemjs/dist/system.*',
 		'node_modules/reflect-metadata/Reflect.js',

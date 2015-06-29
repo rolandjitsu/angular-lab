@@ -2,11 +2,14 @@ import { PipeRegistry, PipeFactory, NullPipeFactory, defaultPipes } from 'angula
 import { bind } from 'angular2/angular2';
 
 import { LowerCaseFactory } from './pipes/lowercase';
+import { DateFactory } from './pipes/date';
 
 export var lowercase : Array<PipeFactory> = [new LowerCaseFactory(), new NullPipeFactory()];
+export var date : Array<PipeFactory> = [new DateFactory(), new NullPipeFactory()];
 
 let pipes = Object.assign({}, defaultPipes, {
-	lowercase
+	lowercase,
+	date
 });
 
 export const pipeInjectables: Array<any> = [

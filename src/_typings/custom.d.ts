@@ -89,6 +89,9 @@ declare module 'angular2/src/facade/browser' {
 }
 
 declare module 'angular2/src/facade/lang' {
+	class BaseException {
+		constructor(message: string);
+	}
 	class FunctionWrapper {
 		static apply(fn: Function, posArgs?: Array<any>): any
 	}
@@ -97,7 +100,9 @@ declare module 'angular2/src/facade/lang' {
 	}
 	class NumberWrapper {
 		static parseInt(text: string, radix: number): number;
+		static isNaN(value: any): boolean;
 	}
+	function isBlank (obj: any): boolean;
 	function isJsObject(obj: any): boolean;
 	function isPresent(obj: any): boolean;
 	function isFunction(obj: any): boolean;

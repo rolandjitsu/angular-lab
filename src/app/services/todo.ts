@@ -3,7 +3,6 @@ import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/f
 export interface ITodo extends IFirebaseArrayValue {
 	createdAt: string;
 	updatedAt: string;
-	completedAt?: string;
 	completed: boolean;
 	desc: string;
 }

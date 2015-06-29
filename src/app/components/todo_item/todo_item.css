@@ -146,6 +146,7 @@ todo-item:last-of-type .todo-cell-content {
 	color: #cfd8dc;
 	display: block;
 	font-style: italic;
+	font-weight: 300;
 }
 
 

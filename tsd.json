@@ -19,6 +19,12 @@
 		},
 		"firebase/firebase.d.ts": {
 			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
+		},
+		"moment/moment-node.d.ts": {
+			"commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+		},
+		"moment/moment.d.ts": {
+			"commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
 		}
 	}
 }
