@@ -67,7 +67,7 @@ export class App {
 		 */
 		
 		let el: HTMLElement = this.elementRef.nativeElement;
-		let main: HTMLElement = <HTMLElement>el.querySelector('* /deep/ .js-main');
+		let main: HTMLElement = <HTMLElement>el.querySelector('* /deep/ .js-main'); // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
 		let logo: HTMLElement = <HTMLElement>el.querySelector('* /deep/ .js-logo');
 		let mainSub = AnimationEndObserver.subscribe(
 			main,
