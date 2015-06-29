@@ -169,8 +169,7 @@ gulp.task('play', ['bundle'], function () {
 	});	
 	connect.server({
 		root: PATHS.dist,
-		port: 8000,
-		fallback: PATHS.dist + '/index.html'
+		port: 8000
 	});
 });
 

@@ -214,6 +214,8 @@ declare module 'angular2/router' {
 		config(config: any): Promise<any>
 		subscribe(onNext: Function): Promise<any>
 	}
+	class LocationStrategy {}
+	class HashLocationStrategy {}
 	class Location {
 		path(): string;
 	}
