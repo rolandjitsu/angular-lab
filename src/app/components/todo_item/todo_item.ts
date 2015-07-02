@@ -1,4 +1,5 @@
 import { Component, View, Parent, onDestroy } from 'angular2/annotations';
+import { Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
 import { FormBuilder, Control, ControlGroup, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
 import { ObservableWrapper } from 'angular2/src/facade/async';
@@ -36,10 +37,10 @@ export class TodoItem {
 	form: ControlGroup;
 	status: Control;
 	desc: Control;
-	_store: TodoStore;
+	private ts: TodoStore;
 	_subs: Array<any>;
 	_model: ITodo;
-	constructor(fb: FormBuilder, @Parent() store: TodoStore) {
+	constructor(fb: FormBuilder, @Inject(TodoStore) ts: Promise<TodoStore>) {
 		let that: TodoItem = this;
 		that.form = fb.group({
 			status: [false],
@@ -47,17 +48,17 @@ export class TodoItem {
 		});
 		that.status = that.form.controls.status;
 		that.desc = that.form.controls.desc;
-		that._store = store;
+		ts.then(ts => this.ts = ts);
 		that._subs = [
 			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
 				if (that.model.completed === value) return;
-				that._store.update(that.model, {
+				that.ts.update(that.model, {
 					completed: value
 				});
 			}),
 			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
 				if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
-				that._store.update(that.model, {
+				that.ts.update(that.model, {
 					desc: value
 				});
 			})
@@ -76,7 +77,7 @@ export class TodoItem {
 
 	remove(event) {
 		event.preventDefault();
-		this._store.remove(this.model);
+		this.ts.remove(this.model);
 	}
 	blur(event) {
 		event.preventDefault();

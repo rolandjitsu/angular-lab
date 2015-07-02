@@ -1,4 +1,5 @@
 import { Component, View } from 'angular2/annotations';
+import { Inject } from 'angular2/di';
 import { NgIf } from 'angular2/directives';
 import { FormBuilder, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
 
@@ -30,16 +31,16 @@ import { Icon } from '../icon/icon';
 
 export class Todos {
 	form: FormBuilder;
-	_store: TodoStore;
-	constructor(fb: FormBuilder, store: TodoStore) {
+	private ts: TodoStore;
+	constructor(fb: FormBuilder, @Inject(TodoStore) ts: Promise<TodoStore>) {
 		this.form = fb.group({
 			desc: ['', Validators.required]
 		});
-		this._store = store;
+		ts.then(ts => this.ts = ts);
 	}
 	add(value) {
 		if (!value || !value.length) return;
-		this._store.add(value);
+		this.ts.add(value);
 		this.form.controls.desc.updateValue('');
 		return false;
 	}

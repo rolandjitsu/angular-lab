@@ -58,7 +58,19 @@ let _refs: Map<string, any> = new Map();
  * }
  */
 
-export class FirebaseArray {
+export interface IFirebaseArray {
+	entries: Array<any>;
+	indexOf(key: string): number;
+	add(data: any): Firebase;
+	set(key: string, data: any): void;
+	get(key: string): any;
+	update(key: string, data: any): void;
+	move(key: string, priority: any): void;
+	remove(key: string): void;
+	dispose(): void;
+}
+
+export class FirebaseArray implements IFirebaseArray {
 	public entries: Array<any>;
 	private _ref: Firebase;
 	private _emitter: EventEmitter = new EventEmitter();

@@ -1,5 +1,6 @@
 import { Component, View } from 'angular2/annotations';
-import { NgFor } from 'angular2/angular2';
+import { Inject } from 'angular2/di';
+import { NgFor } from 'angular2/directives';
 
 import { TodoStore, ITodo } from 'app/services';
 import { TodoItem } from '../todo_item/todo_item';
@@ -21,7 +22,7 @@ import { TodoItem } from '../todo_item/todo_item';
 
 export class TodoList {
 	todos: Array<ITodo>;
-	constructor(store: TodoStore) {
-		this.todos = store.entries;
+	constructor(@Inject(TodoStore) ts: Promise<TodoStore>) {
+		ts.then(ts => this.todos = ts.entries);
 	}
 }

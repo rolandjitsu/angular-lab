@@ -19,13 +19,6 @@ class Todo implements ITodo {
 }
 
 export class TodoStore extends FirebaseArray {
-	constructor() {
-		let root =  new Firebase('https://ng2-play.firebaseio.com');
-		let auth = root.getAuth();
-		let ref = root.child('/chores/' + auth.uid);
-		super(ref);
-	}
-
 	add(task: string) {
 		return super.add(
 			new Todo(task)

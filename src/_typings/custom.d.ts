@@ -3,7 +3,9 @@
  */
 
 declare module 'angular2/di' {
+	class Injector {}
 	var Inject: any;
+	var InjectPromise: any;
 }
 
 declare module 'angular2/render' {
@@ -36,6 +38,7 @@ declare module 'angular2/render' {
 
 declare module 'angular2/core' {
 	import { RenderViewRef } from 'angular2/render';
+	class DynamicComponentLoader {}
 	class Injector {}
 	class ViewRef {
 		render: RenderViewRef;
