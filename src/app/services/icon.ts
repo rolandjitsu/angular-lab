@@ -24,6 +24,7 @@ export class IconStore {
 				promises.push(defer);
 				this.http
 					.get(url)
+					.toRx()
 					.map(response => HttpResponseParser.svg(response))
 					.subscribe(element => {
 						cache.set(url, element);
