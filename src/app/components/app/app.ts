@@ -3,7 +3,7 @@ import { ViewContainerRef, ElementRef } from 'angular2/core';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { Animation, AnimationEndObserver } from 'app/services';
+import { Animation, AnimationEndObserver } from 'common/animation';
 import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
 
