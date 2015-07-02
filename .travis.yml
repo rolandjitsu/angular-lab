@@ -17,7 +17,9 @@ install:
   - npm install -g firebase-tools --loglevel silent
 
 before_script: ./scripts/ci/clean.sh
-script: ./scripts/ci/build.sh
+script:
+  - ./scripts/ci/build.sh
+  - ./scripts/ci/test.sh
 after_success: ./scripts/ci/deploy.sh
 after_script: ./scripts/ci/clean.sh
 

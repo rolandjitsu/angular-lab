@@ -10,6 +10,7 @@ var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 var size = require('gulp-size');
 var sourcemaps = require('gulp-sourcemaps');
+var tslint = require('gulp-tslint');
 var tsd = require('tsd');
 var ts = require('gulp-typescript');
 var watch = require('gulp-watch');
@@ -32,7 +33,7 @@ var PATHS = {
 	],
 	src: {
 		root: '/src',
-		ts: ['!src/_typings', 'src/**/*.ts'],
+		ts: ['!src/_typings/custom.d.ts', 'src/**/*.ts'],
 		html: 'src/**/*.html',
 		css: 'src/**/*.css',
 		static: 'src/**/*.{svg,jpg,png,ico}'
@@ -100,7 +101,7 @@ gulp.task('libs', ['bower', 'tsd', 'angular2'], function () {
 
 gulp.task('ts', function () {
 	return gulp
-		.src([].concat(PATHS.typings, PATHS.src.ts)) // instead of gulp.src(...), project.src() can be used
+		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings)) // instead of gulp.src(...), project.src() can be used
 		.pipe(changed(PATHS.dist, { extension: '.js' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
@@ -149,6 +150,16 @@ gulp.task('static', function () {
 			gzip: true
 		}))
 		.pipe(gulp.dest(PATHS.dist));
+});
+
+gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-rules
+	return gulp
+		.src(PATHS.src.ts)
+		.pipe(plumber())
+		.pipe(tslint())
+		.pipe(tslint.report('prose', {
+			emitError: false
+		}));
 });
 
 gulp.task('bundle', function (done) {
