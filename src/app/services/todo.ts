@@ -1,3 +1,5 @@
+import { Injectable } from 'angular2/di';
+
 import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
 
 export interface ITodo extends IFirebaseArrayValue {
@@ -18,6 +20,7 @@ class Todo implements ITodo {
 	}
 }
 
+@Injectable()
 export class TodoStore extends FirebaseArray {
 	add(task: string) {
 		return super.add(

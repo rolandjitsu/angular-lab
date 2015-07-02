@@ -1,4 +1,4 @@
-import { Inject } from 'angular2/di';
+import { Injectable, Inject } from 'angular2/di';
 import { Http } from 'angular2/http';
 
 import { Defer } from 'common/defer';
@@ -6,6 +6,7 @@ import { HttpResponseParser } from 'common/dom_parser';
 
 let cache: Map<string, any> = new Map();
 
+@Injectable()
 export class IconStore {
 	queue: Map<string, any> = new Map();
 	constructor(@Inject(Http) private http) {}

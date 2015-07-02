@@ -4,6 +4,7 @@
 
 declare module 'angular2/di' {
 	class Injector {}
+	var Injectable;
 	var Inject: any;
 	var InjectPromise: any;
 }
