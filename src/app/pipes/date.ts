@@ -15,9 +15,8 @@ export class DatePipe extends BasePipe {
 		return (isString(obj) || !NumberWrapper.isNaN(obj)) && moment(obj).isValid();
 	}
 	transform(value: string, args: Array<any> = null): string {
-		// if (isBlank(args) || args.length == 0) throw new BaseException('date pipe requires one argument');
-		// let format: string = args[0];
-		let format = 'Do of MMMM, YYYY';
+		if (isBlank(args) || args.length == 0) throw new BaseException('date pipe requires one argument');
+		let format: string = args[0];
 		return moment(value).format(format);
 	}
 	supports(obj: any): boolean {
