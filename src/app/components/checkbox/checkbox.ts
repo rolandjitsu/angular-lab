@@ -1,5 +1,5 @@
 import { NumberWrapper, isPresent } from 'angular2/src/facade/lang';
-import { EventEmitter } from 'angular2/src/facade/async'
+import { EventEmitter } from 'angular2/src/facade/async';
 import { KeyboardEvent } from 'angular2/src/facade/browser';
 import { ElementRef } from 'angular2/core';
 import { Renderer } from 'angular2/render';
@@ -46,16 +46,16 @@ import { Icon } from '../icon/icon';
 export class Checkbox implements ControlValueAccessor {
 	checked: boolean = false;
 	change: EventEmitter = new EventEmitter();
-	_disabled: boolean = false;
 	tabindex: number;
-	onChange: Function = (_) => {};
-	onTouched: Function = (_) => {};
-	
+	onChange: Function = () => {};
+	onTouched: Function = () => {};
+	private _disabled: boolean = false;
+
 	constructor(private cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
 		this.cd.valueAccessor = this;
 		this.tabindex = isPresent(tabindex) ? NumberWrapper.parseInt(tabindex, 10) : 0;
 	}
-	
+
 	get ngClassUntouched(): boolean {
 		return isPresent(this.cd.control) ? this.cd.control.untouched : false;
 	}
@@ -81,11 +81,11 @@ export class Checkbox implements ControlValueAccessor {
 	set disabled(value) {
 		this._disabled = isPresent(value) && value !== false;
 	}
-	
+
 	toggle(event) {
 		if (this.disabled) return event.stopPropagation();
 		this.checked = !this.checked;
-		this.change.next(this.checked);		
+		this.change.next(this.checked);
 	}
 	registerOnChange(fn): void {
 		this.onChange = fn;
@@ -96,9 +96,9 @@ export class Checkbox implements ControlValueAccessor {
 	writeValue(value) {
 		this.checked = value;
 	}
-	
+
 	onKeydown(event: KeyboardEvent) {
-		if (event.keyCode != KEY_SPACE) return;
+		if (event.keyCode !== KEY_SPACE) return;
 		event.preventDefault();
 		this.toggle(event);
 	}

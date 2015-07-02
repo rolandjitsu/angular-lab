@@ -17,8 +17,8 @@ export class IconStore {
 		);
 		else {
 			let pending: boolean = this.queue.has(url);
-			let defer = new Defer(); 
-			if (!pending) this.queue.set(url, []); 
+			let defer = new Defer();
+			if (!pending) this.queue.set(url, []);
 			let promises: Defer<Node>[] = this.queue.get(url);
 			if (pending) promises.push(defer);
 			else {

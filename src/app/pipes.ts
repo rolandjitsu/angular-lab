@@ -4,10 +4,10 @@ import { bind } from 'angular2/angular2';
 import { LowerCaseFactory } from './pipes/lowercase';
 import { DateFactory } from './pipes/date';
 
-export var lowercase : Array<PipeFactory> = [new LowerCaseFactory(), new NullPipeFactory()];
-export var date : Array<PipeFactory> = [new DateFactory(), new NullPipeFactory()];
+export const lowercase: Array<PipeFactory> = [new LowerCaseFactory(), new NullPipeFactory()];
+export const date: Array<PipeFactory> = [new DateFactory(), new NullPipeFactory()];
 
-let pipes = Object.assign({}, defaultPipes, {
+let pipes  = Object.assign({}, defaultPipes, {
 	lowercase,
 	date
 });

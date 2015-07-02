@@ -8,14 +8,14 @@ import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
 
 interface IRoute<T> {
-	path: string,
-	component?: T,
-	redirectTo?: string,
-	as?: string
+	path: string;
+	component?: T;
+	redirectTo?: string;
+	as?: string;
 }
 
 interface IRoutes {
-	[index: number]: IRoute<any>
+	[index: number]: IRoute<any>;
 }
 
 let routes: IRoutes = [
@@ -24,7 +24,7 @@ let routes: IRoutes = [
 		path: '/',
 		as: 'todos'
 	}
-]
+];
 
 @Component({
 	selector: 'app'
@@ -48,8 +48,7 @@ export class App {
 	loading: boolean = true;
 	constructor(private viewContainer: ViewContainerRef, private elementRef: ElementRef, router: Router) {
 		let that: App = this;
-		let root: Firebase = new Firebase("https://ng2-play.firebaseio.com");
-		let auth: FirebaseAuthData = root.getAuth();
+		let root: Firebase = new Firebase('https://ng2-play.firebaseio.com');
 
 		root.onAuth(auth => {
 			if (auth === null) root.authAnonymously(() => {});
@@ -61,12 +60,12 @@ export class App {
 				3000
 			);
 		});
-		
-		
+
+
 		/**
 		 * Animations
 		 */
-		
+
 		let el: HTMLElement = this.elementRef.nativeElement;
 		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : '';
 		let main: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-main'); // soon use '>>>' https://www.chromestatus.com/features/6750456638341120

@@ -6,7 +6,7 @@ export class Defer<R> {
 		let that: Defer<R> = this;
 		this.promise = new Promise<R>((resolve, reject) => {
 			that.resolve = resolve;
-	        that.reject = reject;
+			that.reject = reject;
 		});
 	}
 }

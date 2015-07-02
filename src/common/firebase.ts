@@ -1,4 +1,4 @@
-import { FunctionWrapper, isFunction, isJsObject } from 'angular2/src/facade/lang';
+import { FunctionWrapper, isJsObject } from 'angular2/src/facade/lang';
 import { EventEmitter, ObservableWrapper } from 'angular2/src/facade/async';
 
 
@@ -28,7 +28,7 @@ export interface IFirebaseArrayValue {
  * 
  * @private
  */
- 
+
 let _refs: Map<string, any> = new Map();
 
 
@@ -75,13 +75,13 @@ export class FirebaseArray implements IFirebaseArray {
 	private _ref: Firebase;
 	private _emitter: EventEmitter = new EventEmitter();
 	private _subscription: any;
-	private _subs: Array<Array<any>>; 
-	
+	private _subs: Array<Array<any>>;
+
 	constructor(ref: Firebase, onEvent?: (eventName: string, key: string, record?: any) => void, onError?: (error: any) => void) {
 		let url: string = ref.toString();
 		this._subscription = ObservableWrapper.subscribe(
 			this._emitter,
-			value => FunctionWrapper.apply(onEvent || noop, value),
+			value => FunctionWrapper.apply(onEvent || noop, value),
 			error => FunctionWrapper.apply(onError || noop, error)
 		);
 		this._ref = ref;
@@ -183,7 +183,7 @@ export class FirebaseArray implements IFirebaseArray {
 	 * @memberof FirebaseArray
 	 *
 	 * @param {String} key - Record key to be replaced.
- 	 * @returns {*} Record.
+	 * @returns {*} Record.
 	 */
 
 	public get(key: string): any {
@@ -277,7 +277,7 @@ export class FirebaseArray implements IFirebaseArray {
 			else return idx + 1;
 		}
 	}
-	
+
 
 	private _added(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
 		let key: string = snapshot.key();
@@ -295,7 +295,7 @@ export class FirebaseArray implements IFirebaseArray {
 	private _moved(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
 		let key: string = snapshot.key();
 		let oldPos: number = this.indexOf(key);
-		if(oldPos !== -1) {
+		if (oldPos !== -1) {
 			let record: any = this.entries[oldPos];
 			this.entries.splice(oldPos, 1);
 			this._move(key, record, prevKey);

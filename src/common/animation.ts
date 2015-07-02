@@ -2,11 +2,11 @@ import { isFunction } from 'angular2/src/facade/lang';
 
 let time: Function;
 let ns: number;
-let rAF = window['requestAnimationFrame'] || window['webkitRequestAnimationFrame'] || window['mozRequestAnimationFrame'];
-let cAF = window['cancelAnimationFrame'] || window['webkitCancelAnimationFrame'] || window['webkitCancelRequestAnimationFrame'] || window['mozCancelRequestAnimationFrame'];
+let rAF: (callback: Function) => number = window['requestAnimationFrame'] || window['webkitRequestAnimationFrame'] || window['mozRequestAnimationFrame'];
+let cAF: (rAFId: number) => void = window['cancelAnimationFrame'] || window['webkitCancelAnimationFrame'] || window['webkitCancelRequestAnimationFrame'] || window['mozCancelRequestAnimationFrame'];
 
 function getAnimationEndEventName (): string {
-	let fakeEl = document.createElement('fakeelement');
+	let fakeEl: HTMLElement = document.createElement('fakeelement');
 	let animationEndEventNames = {
 		'animation': 'animationend',
 		'-o-animation': 'oAnimationEnd',
@@ -23,10 +23,10 @@ if (!performance || isFunction(performance.now)) {
 	ns = performance.timing.navigationStart;
 	time = function (): number {
 		return performance.now() + ns;
-	}
+	};
 }
 else {
-	time = Date.now
+	time = Date.now;
 }
 
 export class AnimationEndObserver {

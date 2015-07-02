@@ -1,6 +1,5 @@
-import { Component, View, Parent, onDestroy } from 'angular2/annotations';
+import { Component, View, onDestroy } from 'angular2/annotations';
 import { Inject } from 'angular2/di';
-import { NgIf } from 'angular2/directives';
 import { FormBuilder, Control, ControlGroup, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
@@ -38,8 +37,8 @@ export class TodoItem {
 	status: Control;
 	desc: Control;
 	private ts: TodoStore;
-	_subs: Array<any>;
-	_model: ITodo;
+	private _subs: Array<any>;
+	private _model: ITodo;
 	constructor(fb: FormBuilder, @Inject(TodoStore) ts: Promise<TodoStore>) {
 		let that: TodoItem = this;
 		that.form = fb.group({
@@ -57,7 +56,7 @@ export class TodoItem {
 				});
 			}),
 			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
-				if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
+				if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
 				that.ts.update(that.model, {
 					desc: value
 				});

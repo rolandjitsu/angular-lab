@@ -24,10 +24,9 @@ export class Icon {
 		this.el = this.viewContainer.element.nativeElement;
 	}
 	set src(src: string) {
-		let that: Icon = this;
 		let root;
 		if (isNativeShadowDOMSupported) root = this.el.shadowRoot;
-		else root = this.el; 
+		else root = this.el;
 		this.icon.get(src).then((svg) => {
 			root.appendChild(svg);
 		});
