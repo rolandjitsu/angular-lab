@@ -4,7 +4,6 @@ import { Defer } from 'common/defer';
 import { TodoStore } from './services/todo';
 import { IconStore } from './services/icon';
 
-export * from './services/animation';
 export * from './services/icon';
 export * from './services/todo';
 
