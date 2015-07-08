@@ -4,7 +4,6 @@ var changed = require('gulp-changed');
 var connect = require('gulp-connect');
 var del = require('del');
 var gulp = require('gulp');
-var ng = require('./tools/build/ng');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
@@ -71,19 +70,20 @@ gulp.task('tsd', function () {
 });
 
 gulp.task('angular2', function () {
-	return ng.build(
-		[
-			'!node_modules/angular2/es6/prod/angular2_sfx.js',
-			'!node_modules/angular2/es6/prod/angular2.api.js',
-			'!node_modules/angular2/es6/prod/es5build.js',
-			'node_modules/angular2/es6/prod/**/*.js'
-		],
-		PATHS.dist + '/lib/angular2',
-		{
-			namespace: 'angular2',
-			traceurOptions: {}
-		}
-	);
+	return gulp
+		.src([
+			'!node_modules/angular2/es6/**',
+			'!node_modules/angular2/node_modules/**',
+			'!node_modules/angular2/angular2.api.js',
+			'!node_modules/angular2/angular2_sfx.js',
+			'!node_modules/angular2/angular2.api.js',
+			'node_modules/angular2/**/*.js'
+		])
+		.pipe(size({
+			showFiles: true,
+			gzip: true
+		}))
+		.pipe(gulp.dest(PATHS.dist + '/lib/angular2'));
 });
 
 gulp.task('libs', ['bower', 'tsd', 'angular2'], function () {
