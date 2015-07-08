@@ -32,7 +32,6 @@
 		"gulp": "^3.9.0",
 		"gulp-autoprefixer": "2.3.x",
 		"gulp-changed": "1.2.x",
-		"gulp-concat": "2.6.x",
 		"gulp-connect": "2.2.x",
 		"gulp-plumber": "1.0.x",
 		"gulp-rename": "1.2.x",
@@ -40,15 +39,10 @@
 		"gulp-sourcemaps": "1.5.x",
 		"gulp-tslint": "3.1.0-beta",
 		"gulp-typescript": "2.7.x",
-		"gulp-util": "3.0.x",
 		"gulp-watch": "4.2.x",
-		"object-assign": "3.0.x",
 		"run-sequence": "1.1.x",
-		"source-map-url": "0.3.x",
-		"through2": "2.0.x",
 		"tsd": "0.6.x",
-		"typescript": "Microsoft/TypeScript#release-1.5",
-		"vinyl-sourcemaps-apply": "0.1.x"
+		"typescript": "Microsoft/TypeScript#release-1.5"
 	},
 	"private": true
 }
