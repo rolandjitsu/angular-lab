@@ -18,8 +18,7 @@
 		"start": "./node_modules/.bin/gulp play"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.30",
-		"moment": "2.10.x",
+		"angular2": "2.0.0-alpha.31",
 		"reflect-metadata": "0.1.x",
 		"rx": "2.5.x",
 		"systemjs": "0.18.x",

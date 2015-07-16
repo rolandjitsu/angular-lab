@@ -9,7 +9,7 @@
 	<li class="todo-cell-content" [class.js-edit]="edit" [class.js-av]="av">
 		<div class="todo-cell-label">
 			<input type="text" ng-control="desc" [value]="model.desc" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)" (focus)="edit = true" (blur)="edit = false">
-			<small>Last updated on {{ model.updatedAt | date:'Do of MMMM, YYYY' }}</small>
+			<small>Last updated on {{ model.updatedAt | date:'dd of MMMM, y' }}</small> <!-- https://github.com/angular/angular/commit/b716046b -->
 		</div>
 		<ul class="todo-cell-av">
 			<li class="todo-cell-av-delete">

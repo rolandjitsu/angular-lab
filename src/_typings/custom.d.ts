@@ -1,4 +1,36 @@
 /**
+ * ES6
+ * 
+ * Sources:
+ * - [maps]{@link https://github.com/Microsoft/TypeScript/issues/3290}
+ */
+ 
+interface Map<K, V> {
+	delete(key: K): boolean;
+	get(key: K): V;
+	has(key: K): boolean;
+	set(key: K, value: V): Map<K, V>;
+}
+
+declare var Map: {
+	new <K, V>(...items: Array<any>): Map<K, V>;
+	prototype: Map<any, any>;
+}
+
+interface List<T> extends Array<T> {}
+// interface Map<K,V> {}
+interface StringMap<K,V> extends Map<K,V> {}
+ 
+interface ObjectConstructor {
+	assign(target: any, ...sources: any[]): any
+}
+
+interface ArrayConstructor {
+	from(...sources: any[]): any
+}
+
+
+/**
  * Angular 2
  */
 
@@ -124,6 +156,11 @@ declare module "angular2/annotations" {
 }
 
 declare module "angular2/change_detection" {
+	class ChangeDetectorRef {
+		requestCheck(): void;
+		detach(): void;
+		reattach(): void;
+	}
 	interface Pipe {
 		supports(obj): boolean;
 		onDestroy(): void;
@@ -131,14 +168,15 @@ declare module "angular2/change_detection" {
 	}
 	interface PipeFactory {
 		supports(obs): boolean;
-		create(cdRef): Pipe;
+		create(cdRef: ChangeDetectorRef): Pipe;
 	}
 	class NullPipeFactory implements PipeFactory {
 		supports(obj): boolean;
 		create(cdRef): Pipe;
 	}
-	class PipeRegistry {
-		constructor(pipes: any)
+	class Pipes {
+		constructor(config: StringMap<string, PipeFactory[]>);
+		static append(config): any;
 	}
 	class BasePipe implements Pipe {
 		supports(obj): boolean;
@@ -232,35 +270,4 @@ declare module 'angular2/router' {
 	var RouterLink: any;
 	var routerInjectables: any;
 	var RouteConfig: any;
-}
-
-
-/**
- * ES6
- * 
- * Sources:
- * - [maps]{@link https://github.com/Microsoft/TypeScript/issues/3290}
- */
- 
-interface Map<K, V> {
-    clear(): void;
-    delete(key: K): boolean;
-    forEach(callbackfn: (value: V, index: K, map: Map<K, V>) => void, thisArg?: any): void;
-    get(key: K): V;
-    has(key: K): boolean;
-    set(key: K, value: V): Map<K, V>;
-    size: number;
-}
-
-declare var Map: {
-    new <K, V>(...items: Array<any>): Map<K, V>;
-    prototype: Map<any, any>;
-}
- 
-interface ObjectConstructor {
-	assign(target: any, ...sources: any[]): any
-}
-
-interface ArrayConstructor {
-	from(...sources: any[]): any
 }

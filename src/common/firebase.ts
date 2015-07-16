@@ -1,5 +1,6 @@
 import { FunctionWrapper, isJsObject } from 'angular2/src/facade/lang';
 import { EventEmitter, ObservableWrapper } from 'angular2/src/facade/async';
+import * as Firebase from 'firebase';
 
 
 /**

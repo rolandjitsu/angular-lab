@@ -1,19 +1,21 @@
-import { PipeRegistry, PipeFactory, NullPipeFactory, defaultPipes } from 'angular2/change_detection';
+import { Pipes, PipeFactory, NullPipeFactory, defaultPipes } from 'angular2/change_detection';
 import { bind } from 'angular2/angular2';
 
 import { LowerCaseFactory } from './pipes/lowercase';
-import { DateFactory } from './pipes/date';
+// import { DateFactory } from './pipes/date';
 
 export const lowercase: Array<PipeFactory> = [new LowerCaseFactory(), new NullPipeFactory()];
-export const date: Array<PipeFactory> = [new DateFactory(), new NullPipeFactory()];
+// export const date: Array<PipeFactory> = [new DateFactory(), new NullPipeFactory()];
 
-let pipes  = Object.assign({}, defaultPipes, {
-	lowercase,
-	date
-});
+// let pipes: Pipes  = Object.assign({}, defaultPipes, {
+// 	lowercase
+// });
+
 
 export const pipeInjectables: Array<any> = [
-	bind(PipeRegistry).toValue(
-		new PipeRegistry(pipes)
+	bind(Pipes).toValue(
+		Pipes.append({
+			lowercase
+		})
 	)
 ];

@@ -6,25 +6,19 @@
 	"bundle": "typings/tsd.d.ts",
 	"installed": {
 		"es6-promise/es6-promise.d.ts": {
-			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
-		},
-		"rx/rx.d.ts": {
-			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
-		},
-		"rx/rx-lite.d.ts": {
-			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
+			"commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
 		},
 		"angular2/angular2.d.ts": {
-			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
+			"commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
+		},
+		"rx/rx.d.ts": {
+			"commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
+		},
+		"rx/rx-lite.d.ts": {
+			"commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
 		},
 		"firebase/firebase.d.ts": {
-			"commit": "ac3a1f059f655059484d6aa5ba1f0f85908ae06c"
-		},
-		"moment/moment-node.d.ts": {
-			"commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
-		},
-		"moment/moment.d.ts": {
-			"commit": "6f04d25ad38982d372cc3cda62fa4c0eef9e24d7"
+			"commit": "0fff32b558aa91ba24cfca5479aba02e4ef2fafe"
 		}
 	}
 }

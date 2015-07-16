@@ -14,6 +14,6 @@ bootstrap(App, [
 	formInjectables,
 	locationInjectables,
 	shadowDomInjectables,
-	pipeInjectables,
+	// pipeInjectables,
 	serviceInjectables
 ]);

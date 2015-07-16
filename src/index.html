@@ -30,10 +30,6 @@
 		<script src="lib/zone.js"></script>
 		<script src="lib/long-stack-trace-zone.js"></script>
 		<script src="lib/rx.js"></script>
-		<!-- Firebase -->
-		<script src="lib/firebase.js"></script>
-		<!-- Moment -->
-		<script src="lib/moment.js"></script>
 		<!-- App -->
 		<script>
 			System.defaultJSExtensions = true;
@@ -42,12 +38,12 @@
 					'angular2/*': 'lib/angular2/*'
 				},
 				meta: {
-					'lib/rx.js': {
-						format: 'cjs'
-					}
+					'lib/rx.js': { format: 'cjs' },
+					'lib/firebase.js': { format: 'global', exports: 'Firebase' }
 				},
 				map: {
-				    rx: 'lib/rx.js'
+					rx: 'lib/rx.js',
+					firebase: 'lib/firebase.js'
 				}
 			});
 			System.import('app/bootstrap').catch(

@@ -18,7 +18,6 @@ var PATHS = {
 	lib: [
 		'bower_components/normalize.css/normalize.css',
 		'bower_components/firebase/firebase.js',
-		'node_modules/moment/moment.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/systemjs/dist/system.*',
 		'node_modules/reflect-metadata/Reflect.js',
@@ -74,9 +73,7 @@ gulp.task('angular2', function () {
 		.src([
 			'!node_modules/angular2/es6/**',
 			'!node_modules/angular2/node_modules/**',
-			'!node_modules/angular2/angular2.api.js',
 			'!node_modules/angular2/angular2_sfx.js',
-			'!node_modules/angular2/angular2.api.js',
 			'node_modules/angular2/**/*.js'
 		])
 		.pipe(size({
