@@ -186,7 +186,6 @@ declare module "angular2/change_detection" {
 	class JitChangeDetection {}
 	class ChangeDetection {}
 	class DynamicChangeDetection {}
-	var defaultPipes: any;
 }
 
 declare module "angular2/directives" {
