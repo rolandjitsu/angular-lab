@@ -1,9 +1,11 @@
 import { Component, View } from 'angular2/annotations';
+import { Pipes } from 'angular2/change_detection';
 import { ViewContainerRef, ElementRef } from 'angular2/core';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { Animation, AnimationEndObserver } from 'common/animation';
+import { lowercase } from 'app/pipes';
 import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
 
@@ -27,7 +29,12 @@ let routes: IRoutes = [
 ];
 
 @Component({
-	selector: 'app'
+	selector: 'app',
+	viewInjector: [
+		Pipes.append({
+			lowercase
+		})
+	]
 })
 
 @View({
