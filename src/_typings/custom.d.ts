@@ -254,6 +254,21 @@ declare module 'angular2/http' {
 }
 
 declare module 'angular2/router' {
+	interface OnActivate {
+		onActivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
+	}
+	interface OnReuse {
+		onReuse(nextInstruction: Instruction, prevInstruction: Instruction): any;
+	}
+	interface OnDeactivate {
+		onDeactivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
+	}
+	interface CanReuse {
+		canReuse(nextInstruction: Instruction, prevInstruction: Instruction): any;
+	}
+	interface CanDeactivate {
+		canDeactivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
+	}
 	class Instruction {}
 	class Router {
 		navigate(url: string): Promise<any>
