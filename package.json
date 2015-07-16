@@ -36,9 +36,9 @@
 		"gulp-rename": "1.2.x",
 		"gulp-size": "1.2.x",
 		"gulp-sourcemaps": "1.5.x",
-		"gulp-tslint": "3.1.0-beta",
+		"gulp-tslint": "3.1.1-beta",
 		"gulp-typescript": "2.7.x",
-		"gulp-watch": "4.2.x",
+		"gulp-watch": "4.3.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
 		"typescript": "Microsoft/TypeScript#release-1.5"
