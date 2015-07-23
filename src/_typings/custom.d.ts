@@ -176,7 +176,7 @@ declare module "angular2/change_detection" {
 	}
 	class Pipes {
 		constructor(config: StringMap<string, PipeFactory[]>);
-		static append(config): any;
+		static extend(config): any;
 	}
 	class BasePipe implements Pipe {
 		supports(obj): boolean;

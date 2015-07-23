@@ -31,7 +31,7 @@ let routes: IRoutes = [
 @Component({
 	selector: 'app',
 	viewInjector: [
-		Pipes.append({
+		Pipes.extend({
 			lowercase
 		})
 	]

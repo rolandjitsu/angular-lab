@@ -18,11 +18,11 @@
 		"start": "./node_modules/.bin/gulp play"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.31",
+		"angular2": "2.0.0-alpha.32",
 		"reflect-metadata": "0.1.x",
 		"rx": "2.5.x",
 		"systemjs": "0.18.x",
-		"traceur": "^0.0.90",
+		"traceur": "^0.0.91",
 		"zone.js": "0.5.x"
 	},
 	"devDependencies": {
@@ -37,11 +37,11 @@
 		"gulp-size": "1.2.x",
 		"gulp-sourcemaps": "1.5.x",
 		"gulp-tslint": "3.1.1-beta",
-		"gulp-typescript": "2.7.x",
+		"gulp-typescript": "2.8.x",
 		"gulp-watch": "4.3.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
-		"typescript": "Microsoft/TypeScript#release-1.5"
+		"typescript": "1.5.x"
 	},
 	"private": true
 }
