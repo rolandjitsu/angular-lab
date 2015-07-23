@@ -1,5 +1,4 @@
 import { Injectable } from 'angular2/di';
-import * as Firebase from 'firebase';
 
 import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
 

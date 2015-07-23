@@ -39,7 +39,7 @@ export class TodoItem {
 	private ts: TodoStore;
 	private _subs: Array<any>;
 	private _model: ITodo;
-	constructor(fb: FormBuilder, @Inject(TodoStore) ts: Promise<TodoStore>) {
+	constructor(fb: FormBuilder, @Inject(TodoStore) tsp: Promise<TodoStore>) {
 		let that: TodoItem = this;
 		that.form = fb.group({
 			status: [false],
@@ -47,7 +47,7 @@ export class TodoItem {
 		});
 		that.status = that.form.controls.status;
 		that.desc = that.form.controls.desc;
-		ts.then(ts => this.ts = ts);
+		tsp.then(ts => this.ts = ts);
 		that._subs = [
 			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
 				if (that.model.completed === value) return;

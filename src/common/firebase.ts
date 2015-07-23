@@ -83,7 +83,7 @@ export class FirebaseArray implements IFirebaseArray {
 		this._subscription = ObservableWrapper.subscribe(
 			this._emitter,
 			value => FunctionWrapper.apply(onEvent || noop, value),
-			error => FunctionWrapper.apply(onError || noop, error)
+			err => FunctionWrapper.apply(onError || noop, err)
 		);
 		this._ref = ref;
 		if (_refs.has(url)) this._subs = _refs.get(url)._subs;

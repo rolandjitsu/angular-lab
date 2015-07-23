@@ -33,11 +33,11 @@ import { Icon } from '../icon/icon';
 export class Todos implements OnActivate, OnDeactivate {
 	form: FormBuilder;
 	private ts: TodoStore;
-	constructor(fb: FormBuilder, @Inject(TodoStore) ts: Promise<TodoStore>) {
+	constructor(fb: FormBuilder, @Inject(TodoStore) tsp: Promise<TodoStore>) {
 		this.form = fb.group({
 			desc: ['', Validators.required]
 		});
-		ts.then(ts => this.ts = ts);
+		tsp.then(ts => this.ts = ts);
 	}
 	onActivate(next: Instruction, prev: Instruction) {}
 	onDeactivate(next: Instruction, prev: Instruction) {}
