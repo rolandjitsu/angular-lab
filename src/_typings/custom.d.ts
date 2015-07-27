@@ -1,32 +1,5 @@
-/**
- * ES6
- * 
- * Sources:
- * - [maps]{@link https://github.com/Microsoft/TypeScript/issues/3290}
- */
- 
-interface Map<K, V> {
-	delete(key: K): boolean;
-	get(key: K): V;
-	has(key: K): boolean;
-	set(key: K, value: V): Map<K, V>;
-}
-
-declare var Map: {
-	new <K, V>(...items: Array<any>): Map<K, V>;
-	prototype: Map<any, any>;
-}
-
-interface List<T> extends Array<T> {}
-// interface Map<K,V> {}
-interface StringMap<K,V> extends Map<K,V> {}
- 
 interface ObjectConstructor {
 	assign(target: any, ...sources: any[]): any
-}
-
-interface ArrayConstructor {
-	from(...sources: any[]): any
 }
 
 
@@ -34,8 +7,15 @@ interface ArrayConstructor {
  * Angular 2
  */
 
+interface List<T> extends Array<T> {}
+interface StringMap<K,V> extends Map<K,V> {}
+interface Type extends Function {
+	new (...args:any[]):any;
+}
+
 declare module 'angular2/di' {
 	class Injector {}
+	class Binding {}
 	var Injectable;
 	var Inject: any;
 	var InjectPromise: any;
@@ -70,9 +50,9 @@ declare module 'angular2/render' {
 }
 
 declare module 'angular2/core' {
+	import { Injector } from 'angular2/di';
 	import { RenderViewRef } from 'angular2/render';
 	class DynamicComponentLoader {}
-	class Injector {}
 	class ViewRef {
 		render: RenderViewRef;
 	}
@@ -145,7 +125,7 @@ declare module 'angular2/src/facade/lang' {
 	function isString(obj: any): boolean;
 }
 
-declare module "angular2/annotations" {
+declare module 'angular2/annotations' {
 	var Attribute: any;
 	var Parent: any;
 	var Query: any;
@@ -284,4 +264,134 @@ declare module 'angular2/router' {
 	var RouterLink: any;
 	var routerInjectables: any;
 	var RouteConfig: any;
+}
+
+declare module 'angular2/src/facade/collection' {
+	interface Predicate<T> {
+		(value: T, index?: number, array?: T[]): boolean;
+	}
+}
+
+declare module 'angular2/src/core/compiler/view' {
+	class AppView {}
+}
+
+declare module 'angular2/src/debug/debug_element' {
+	import { ElementRef } from 'angular2/core';
+	import { Predicate } from 'angular2/src/facade/collection';
+	import { AppView } from 'angular2/src/core/compiler/view';
+	class DebugElement {
+		componentInstance: any;
+		nativeElement: any;
+		elementRef: ElementRef;
+		children: List<DebugElement>;
+		componentViewChildren: List<DebugElement>;
+		constructor(_parentView: AppView, _boundElementIndex: number);
+		static create(elementRef: ElementRef): DebugElement;
+		getDirectiveInstance(directiveIndex: number): any;
+		triggerEventHandler(eventName: string, eventObj: Event): void;
+		hasDirective(type: Type): boolean;
+		inject(type: Type): any;
+		getLocal(name: string): any;
+		query(predicate: Predicate<DebugElement>, scope: Function): DebugElement;
+		queryAll(predicate: Predicate<DebugElement>, scope: Function): List<DebugElement>;
+	}
+	function inspectElement(elementRef: ElementRef): DebugElement;
+	function asNativeElements(arr: List<DebugElement>): List<any>;
+	class Scope {
+		static all(debugElement: DebugElement): List<DebugElement>;
+		static light(debugElement: DebugElement): List<DebugElement>;
+		static view(debugElement: DebugElement): List<DebugElement>;
+	}
+	export class By {
+		static all(): Function;	
+		static css(selector: string): Predicate<DebugElement>;
+		static directive(type: Type): Predicate<DebugElement>;
+	}
+}
+
+declare module 'angular2/src/core/compiler/dynamic_component_loader' {
+	import { ViewRef, ElementRef } from 'angular2/core';
+	export class ComponentRef {
+		hostView: ViewRef;
+		constructor(location: ElementRef, instance: any, dispose: Function);
+	}
+}
+
+declare module 'angular2/src/core/annotations_impl/view' {
+	class View {}
+}
+
+declare module 'angular2/test_lib' {
+	import { Binding, Injector } from 'angular2/di';
+	import { View } from 'angular2/src/core/annotations_impl/view';
+	import { DebugElement } from 'angular2/src/debug/debug_element';
+	import { ComponentRef } from 'angular2/src/core/compiler/dynamic_component_loader';
+	interface NgMatchers extends jasmine.Matchers {
+		toBe(expected: any): boolean;
+		toEqual(expected: any): boolean;
+		toBePromise(): boolean;
+		toBeAnInstanceOf(expected: any): boolean;
+		toHaveText(expected: any): boolean;
+		toImplement(expected: any): boolean;
+		not: NgMatchers;
+	}
+	var expect: (actual: any) => NgMatchers;
+	class AsyncTestCompleter {
+		constructor(done: Function);
+		done();
+	}
+	function describe (...args);
+	function ddescribe (...args);
+	function xdescribe (...args);
+	function beforeEach (fn);
+	function afterEach ();
+	function beforeEachBindings (fn);
+	function it (name, fn);
+	function xit (name, fn);
+	function iit (name, fn);
+	interface GuinessCompatibleSpy extends jasmine.Spy {
+		andReturn(val: any): void;
+		andCallFake(fn: Function): GuinessCompatibleSpy;
+		reset();
+	}
+	class SpyObject {
+		constructor(type);
+		noSuchMethod(args);
+		spy(name);
+		static stub (object, config, overrides);
+		rttsAssert(value);
+	}
+	function isInInnerZone (): boolean;
+	function createTestInjector(bindings: List<Type | Binding | List<any>>): Injector;
+	function inject(tokens: List<any>, fn: Function): FunctionWithParamTokens;
+	class FunctionWithParamTokens {
+		constructor(tokens: List<any>, fn: Function);
+		execute(injector: Injector): any;
+	}
+	class RootTestComponent extends DebugElement {
+		constructor(componentRef: ComponentRef);
+		detectChanges(): void;
+		destroy(): void;
+	}
+	class TestComponentBuilder {
+		constructor(injector: Injector);
+		overrideTemplate(componentType: Type, template: string): TestComponentBuilder;
+		overrideView(componentType: Type, view: View): TestComponentBuilder;
+		overrideDirective(componentType: Type, from: Type, to: Type): TestComponentBuilder;
+		createAsync(rootComponentType: Type): Promise<RootTestComponent>;
+	}
+	class SpyChangeDetector extends SpyObject {}
+	class SpyProtoChangeDetector extends SpyObject {}
+	class SpyPipe extends SpyObject {}
+	class SpyPipeFactory extends SpyObject {}
+	class SpyDependencyProvider extends SpyObject {}
+}
+
+declare module 'angular2/src/dom/dom_adapter' {
+	var DOM: DomAdapter;
+	class DomAdapter {
+		querySelector(el, selector: string): HTMLElement;
+		querySelectorAll(el, selector: string): List<any>;
+	}
 }

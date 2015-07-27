@@ -12,14 +12,21 @@ env:
     - secure: IFRic2gE1Gg6TqL1BIFBfA7uAFv2Fu2D1Wn+Keljm5jQKH1BI7zAFiv+u02ZuAjtVjrLPjxWFbAkUAlHuQVaR/byvrAd8w3ReC4MDo8cXMRRDa6vG0UsMFHE267jNkxkH9TGJYXz7dCFjLJnjPrSsoL43zbIWivyzLR267nfuOmOdwqMTU5v05VwKw9RwzqUbrprDxMt8bw1ZGPQIYhbzDC/zWxkAlkFDEAPDaif4N8oY4nT3T1Ep2NxEOpI0ycOBOv1TcvbHZP3fQWRLZ6jvzDBThFJvoJCioWa2hgiNd+DBYhTpVuhEQoadFOMAxwUDSrjmBJZWHBpQRIPom56MyDayFDPgQcicVwNtCCSUgk+ok6SVhXMkLXc7IRSJDVhuAq/tfWM7YAsaDocmFiCTNOv5n2aRxciR691pku5wS9Fa13HiMcCNFCjMWWvjxmk6y4p9p144yz8s4dszTGVJTtl/r5PWfD5cS8BG4StNBnCdU+wt54Vu8yqT5oNPa83drD/i60i/zvN7dXhdau3CzQiO9BTlUUYttAIVVZS+j/ifJHX2G6NS2yqHmZqqYcSdNASvn8OlqM8QzDCgT0kl2DAfNUC63K/A3D5pQRUN3Ef5a/WS8lsbmVH+EnolV8aa9x85+89fmpd0XcCWkzoE26HuMIwvB3ev34HMufYWBo=
     - secure: oOmAhYR4Jv2zhcn3Wn6fYbZBdWFMMwr5o6+7iYOPoVoL+aHQFKrM7ahDpEquCKXwTUgsq69IjauPcJWTsJ+uq0KeA3oJEewKB79VGynRZtV1YEWa4aezCFYP6dXmcYzN+zTrHq6HvSl3nMmmvT2ssklo2EW5AN6BZ7THDSNEgEKpWAehH2uZ3AZjukbJt8BsRxM+42ZtQxIGgkcRWJJ7XBAoNRAe8/Epy1oGe5UXFs3JnjwsXb6w4yDJ+J/MllgpxGphTIAUwYzT+MGSeLjGwwuxdZ+v6QTNpOF+IoOnBmYlm9RvkdeYmGseOPA/EjHs55ZmPBMV8c17eUcnINaU8m+g/rsJqFcKBUgydmsh3QdxZJBEx2QY6atRLe6FOxEzypjvXHGkXbotp+T6mB5ZBtuvui+kNzEYNCPMHkVVLg0i/iOEEZ0dbHI3qrlBxS6FUKn9PY926YrUcbD3YZfsfdEbDLgt/d9+7+uaqMG7IyADeolUC4Sa6Mr1FRUme5OIAjtf6ibn6Vqv1/gZ27EjK5LkbfKPCke6mNnlgwAfdMQAgrm17u3jJMXGi1Dv1uwgeiVjqUYWF2VPCPE4V/QE+Hwrlts1LdRVQSiMT2q4YvG7yv3a7BqHAg+IUy097eZT9DPV8Vu7BcFWdUszqw1otBgMRtksxuDeaAyOWqs/HTU=
 
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
 install:
   - npm install --loglevel silent
   - npm install -g firebase-tools --loglevel silent
 
 before_script: ./scripts/ci/clean.sh
+
 script:
   - ./scripts/ci/build.sh
   - ./scripts/ci/test.sh
+
 after_success: ./scripts/ci/deploy.sh
 after_script: ./scripts/ci/clean.sh
 

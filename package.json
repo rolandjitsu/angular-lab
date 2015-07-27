@@ -28,6 +28,8 @@
 	"devDependencies": {
 		"bower": "1.4.x",
 		"del": "1.2.x",
+		"engine.io-client": "1.5.x",
+		"engine.io": "1.5.x",
 		"gulp": "^3.9.0",
 		"gulp-autoprefixer": "2.3.x",
 		"gulp-changed": "1.2.x",
@@ -39,6 +41,14 @@
 		"gulp-tslint": "3.1.1-beta",
 		"gulp-typescript": "2.8.x",
 		"gulp-watch": "4.3.x",
+		"jasmine": "2.3.x",
+		"jasmine-core": "2.3.x",
+		"karma": "0.13.x",
+		"karma-chrome-launcher": "0.2.x",
+		"karma-cli": "0.1.x",
+		"karma-jasmine": "0.3.x",
+		"minimist": "1.1.x",
+		"q": "1.4.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
 		"typescript": "1.5.x"
