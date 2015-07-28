@@ -47,6 +47,7 @@
 		"karma-chrome-launcher": "0.2.x",
 		"karma-cli": "0.1.x",
 		"karma-jasmine": "0.3.x",
+		"karma-sauce-launcher": "0.2.x",
 		"minimist": "1.1.x",
 		"q": "1.4.x",
 		"run-sequence": "1.1.x",

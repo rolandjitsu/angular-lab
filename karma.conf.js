@@ -1,3 +1,7 @@
+/* global process */
+
+var sauceConf = require('./sauce.conf');
+
 module.exports = function (config) {
 	config.set({
 		frameworks: [
@@ -22,18 +26,28 @@ module.exports = function (config) {
 			'test.js'
 		],
 		exclude: [],
-		customLaunchers: {
-			// Use Chromium preinstalled with Travis VM
-			// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
-			CHROME_TRAVIS_CI: {
-				base: 'Chrome',
-				flags: [
-					'--no-sandbox'
-				]
-			}
-		},
+		customLaunchers: sauceConf.launchers,
 		browsers: [
 			'Chrome'
-		]
+		],
+		sauceLabs: {
+			testName: 'NG2 Play - UNIT',
+			startConnect: false,
+			recordVideo: false,
+			recordScreenshots: false,
+			options:  {
+				'selenium-version': '2.45.0',
+				'command-timeout': 600,
+				'idle-timeout': 600,
+				'max-duration': 5400
+			}
+		}
+	});
+	
+	if (process.env.TRAVIS) config.set({
+		sauceLabs: {
+			build: 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')',
+			tunnelIdentifier: process.env.TRAVIS_JOB_NUMBER
+		}
 	});
 };

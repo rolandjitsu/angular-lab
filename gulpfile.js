@@ -23,6 +23,7 @@ var ts = require('gulp-typescript');
 var watch = require('gulp-watch');
 
 var PORT = 1729;
+var sauceConf = require('./sauce.conf');
 
 var PATHS = {
 	lib: [
@@ -215,16 +216,57 @@ gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-
 // Tests
 
 gulp.task('test:unit/ci', function (done) {
+	var browserConf = getBrowsersConfigFromCLI();
 	var config = {
 		configFile: __dirname + '/karma.conf.js',
 		singleRun: true,
 		reporters: [
 			'dots'
 		],
-		browsers: getBrowsersFromCLI()
+		browsers: browserConf.browsers
 	};
 	var server = new karma.Server(config, done);
 	server.start();
+});
+
+gulp.task('test:unit/ci:sauce', function (done) {
+	var server = new karma.Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true,
+		browserNoActivityTimeout: 240000,
+		captureTimeout: 120000,
+		reporters: [
+			'dots',
+			'saucelabs'
+		],
+		browsers: sauceConf.aliases.CI
+	}, function (err) {
+		done();
+		process.exit(err ? 1 : 0);
+	});
+	server.start();
+});
+
+gulp.task('test:unit/sauce', function (done) {
+	var browserConf = getBrowsersConfigFromCLI();
+	if (browserConf.isSauce) {
+		var server = new karma.Server({
+			configFile: __dirname + '/karma.conf.js',
+			singleRun: true,
+			browserNoActivityTimeout: 240000,
+			captureTimeout: 120000,
+			reporters: [
+				'dots'
+			],
+			browsers: browserConf.browsers
+		}, function (err) {
+			done();
+			process.exit(err ? 1 : 0);
+		});
+		server.start();
+	} else {
+		throw new Error('ERROR: no Saucelabs browsers provided, add them with the --browsers option');
+	}
 });
 
 gulp.task('test:unit/karma-server', function () {
@@ -321,11 +363,33 @@ function runKarma (configFile, done) {
 	});
 }
 
-function getBrowsersFromCLI () {
+function getBrowsersConfigFromCLI () {
+	var isSauce = false;
 	var args = minimist(process.argv.slice(2));
-	return [
-		args.browsers ? args.browsers : 'Chrome'
-	]
+	var rawInput = args.browsers ? args.browsers : 'Chrome';
+	var inputList = rawInput.replace(' ', '').split(',');
+	var outputList = [];
+	for (var i = 0; i < inputList.length; i++) {
+		var input = inputList[i];
+		if (sauceConf.launchers.hasOwnProperty(input)) {
+			// Non-sauce browsers case: overrides everything, ignoring other options
+			outputList = [input];
+			isSauce = false;
+			break;
+		} else if (sauceConf.launchers.hasOwnProperty("SL_" + input.toUpperCase())) {
+			isSauce = true;
+			outputList.push("SL_" + input.toUpperCase());
+		} else if (sauceConf.aliases.hasOwnProperty(input.toUpperCase())) {
+			outputList = outputList.concat(sauceConf.aliases[input]);
+			isSauce = true;
+		} else throw new Error('ERROR: unknown browser found in getBrowsersFromCLI()');
+	}
+	return {
+		browsers: outputList.filter(function (item, pos, self) {
+			return self.indexOf(item) == pos;
+		}),
+		isSauce: isSauce
+	}
 }
 
 function buildJs () {
