@@ -4,6 +4,7 @@
 > Minimal setup of [ES6](https://github.com/lukehoban/es6features), [TypeScript](http://www.typescriptlang.org/), [Angular 2.0](https://angular.io/) and [Firebase](https://firebase.com).
 
 All ES6 files are being compiled/transpiled with [TypeScript](http://www.typescriptlang.org/) (because most of the code is a combination of ES6 and TypeScript specific syntax) to ES5 and loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs). Throughout the app, most of the features in Angular 2.0 are being used. Moreover, a fairly simple example of using [three-way](https://www.firebase.com/resources/images/blog/3-way-binding.png) data binding with Firebase written in ES6 (on top of the Firebase [JavaScript API](https://www.firebase.com/docs/web/)) is being illustrated.
+Besides the above, there are a couple of unit tests that can be useful as an example of how to write tests for Angular 2. The tests are ran using [Karma](http://karma-runner.github.io/0.13/index.html), [Jasmine](http://jasmine.github.io/) and some of the Angular 2 internal test libs; all tests ran on the CI are ran in [Saucelabs](https://saucelabs.com/) browsers and configuring that is also being illustrated.
 
 
 #### Setup
