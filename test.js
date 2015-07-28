@@ -1,4 +1,3 @@
-/* global process */
 /* global jasmine */
 /* global __karma__ */
 /* global System */
@@ -7,7 +6,7 @@
 Error.stackTraceLimit = Infinity;
 
 // Jasmine config
-jasmine.DEFAULT_TIMEOUT_INTERVAL = process.env.TRAVIS ? 10000 : 100;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
 
 // Cancel Karma's synchronous start, we will call `__karma__.start()` later, once all the specs are loaded
 __karma__.loaded = function () {};
