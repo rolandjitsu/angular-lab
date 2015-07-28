@@ -366,7 +366,7 @@ function runKarma (configFile, done) {
 function getBrowsersConfigFromCLI () {
 	var isSauce = false;
 	var args = minimist(process.argv.slice(2));
-	var rawInput = args.browsers ? args.browsers : 'Chrome';
+	var rawInput = args.browsers ? args.browsers : 'CHROME_TRAVIS_CI';
 	var inputList = rawInput.replace(' ', '').split(',');
 	var outputList = [];
 	for (var i = 0; i < inputList.length; i++) {
