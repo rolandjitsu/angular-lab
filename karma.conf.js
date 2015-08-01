@@ -8,13 +8,6 @@ module.exports = function (config) {
 			'jasmine'
 		],
 		files: [
-			// Sources and specs
-			// Loaded through the systemjs, in `test.js`
-			{
-				pattern: 'dist/**',
-				included: false,
-				watched: false
-			},
 			// zone-microtask must be included first as it contains a Promise monkey patch
 			'node_modules/zone.js/dist/zone-microtask.js',
 			'node_modules/zone.js/dist/long-stack-trace-zone.js',
@@ -23,6 +16,13 @@ module.exports = function (config) {
 			// Including systemjs because it defines `__eval`, which produces correct stack traces
 			'node_modules/systemjs/dist/system.js',
 			'node_modules/reflect-metadata/Reflect.js',
+			// Sources and specs
+			// Loaded through the systemjs, in `test.js`
+			{
+				pattern: 'dist/**',
+				included: false,
+				watched: false
+			},
 			'test.js'
 		],
 		exclude: [],

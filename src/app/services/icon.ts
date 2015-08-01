@@ -1,5 +1,4 @@
-import { Injectable, Inject } from 'angular2/di';
-import { Http } from 'angular2/http';
+import { Injectable, Inject, Http } from 'angular2/angular2';
 
 import { Defer } from 'common/defer';
 import { HttpResponseParser } from 'common/dom_parser';

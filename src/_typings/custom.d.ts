@@ -2,100 +2,21 @@ interface ObjectConstructor {
 	assign(target: any, ...sources: any[]): any
 }
 
-
-/**
- * Angular 2
- */
-
-interface List<T> extends Array<T> {}
-interface StringMap<K,V> extends Map<K,V> {}
-interface Type extends Function {
-	new (...args:any[]):any;
-}
-
-declare module 'angular2/di' {
-	class Injector {}
-	class Binding {}
-	var Injectable;
-	var Inject: any;
-	var InjectPromise: any;
-}
-
-declare module 'angular2/render' {
-	class NativeShadowDomStrategy {
-		constructor(styleUrlResolver: any)
-	}
-	interface EventDispatcher {
-		dispatchEvent(elementIndex: number, eventName: string, locals: Map<string, any>): any;
-	}
-	class RenderViewRef {}
-	class RenderProtoViewRef {}
-	class ShadowDomStrategy {}
-	class Renderer {
-		attachComponentView(hostViewRef: RenderViewRef, elementIndex: number, componentViewRef: RenderViewRef): any;
-		attachViewInContainer(parentViewRef: RenderViewRef, boundElementIndex: number, atIndex: number, viewRef: RenderViewRef): any;
-		callAction(viewRef: RenderViewRef, elementIndex: number, actionExpression: string, actionArgs: any): any;
-		createRootHostView(hostProtoViewRef: RenderProtoViewRef, hostElementSelector: string): RenderViewRef;
-		createView(protoViewRef: RenderProtoViewRef): RenderViewRef;
-		dehydrateView(viewRef: RenderViewRef): any;
-		destroyView(viewRef: RenderViewRef): any;
-		detachComponentView(hostViewRef: RenderViewRef, boundElementIndex: number, componentViewRef: RenderViewRef): any;
-		detachFreeView(view: RenderViewRef): any;
-		detachViewInContainer(parentViewRef: RenderViewRef, boundElementIndex: number, atIndex: number, viewRef: RenderViewRef): any;
-		hydrateView(viewRef: RenderViewRef): any;
-		setElementProperty(viewRef: RenderViewRef, elementIndex: number, propertyName: string, propertyValue: any): any;	
-		setEventDispatcher(viewRef: RenderViewRef, dispatcher: EventDispatcher): any;
-		setText(viewRef: RenderViewRef, textNodeIndex: number, text: string): any;
-	}
-}
-
-declare module 'angular2/core' {
-	import { Injector } from 'angular2/di';
-	import { RenderViewRef } from 'angular2/render';
-	class DynamicComponentLoader {}
-	class ViewRef {
-		render: RenderViewRef;
-	}
-	class ProtoViewRef {}
-	class ViewContainerRef {
-		create(protoViewRef?: ProtoViewRef, atIndex?: number, context?: ElementRef, injector?: Injector): ViewRef;
-		element: ElementRef;
-	}
-	class ElementRef {
-    	boundElementIndex: number;
-    	nativeElement: any;
-    	getAttribute(name: string): string;
-    	parentView: ViewRef;
-  	}
-	class BaseQueryList<T> {
-		add(obj: any): any;
-		fireCallbacks(): any;
-		onChange(callback: any): any;
-		removeCallback(callback: any): any;
-		reset(newList: any): any;
-	}
-	class QueryList<T> extends  BaseQueryList<T> {
-		onChange(callback: any): any;
-		removeCallback(callback: any): any;
+declare module ng {
+	enum ViewEncapsulation {
+		EMULATED,
+		NATIVE,
+		NONE
 	}
 }
 
 declare module 'angular2/src/facade/async' {
-	class Observable {
-		observer(generator: any): Object
-	}
+	import { EventEmitter, Observable } from 'angular2/angular2';
 	class ObservableWrapper {
 		static subscribe(emitter: Observable, onNext: Function, onThrow?: Function, onReturn?: Function): Object;
 		static dispose(subscription: any): void;
 		static callNext(emitter: EventEmitter, value: any): void;
 		static callThrow(emitter: EventEmitter, error: any): void;
-	}
-	class EventEmitter extends  Observable {
-		next(value: any): any;
-		observer(generator: any): any;
-		return(value: any): any;
-		throw(error: any): any;
-		toRx(): Rx.Observable<any>;
 	}
 }
 
@@ -105,9 +26,6 @@ declare module 'angular2/src/facade/browser' {
 }
 
 declare module 'angular2/src/facade/lang' {
-	class BaseException {
-		constructor(message: string);
-	}
 	class FunctionWrapper {
 		static apply(fn: Function, posArgs?: Array<any>): any
 	}
@@ -125,145 +43,11 @@ declare module 'angular2/src/facade/lang' {
 	function isString(obj: any): boolean;
 }
 
-declare module 'angular2/annotations' {
-	var Attribute: any;
-	var Parent: any;
-	var Query: any;
-	const onDestroy;
-	function Directive(arg: any): (target: any) => any;
-	function Component(arg: any): (target: any) => any;
-	function View(arg: any): (target: any) => any;
-}
-
-declare module "angular2/change_detection" {
-	class ChangeDetectorRef {
-		requestCheck(): void;
-		detach(): void;
-		reattach(): void;
-	}
-	interface Pipe {
-		supports(obj): boolean;
-		onDestroy(): void;
-		transform(value: any): any;
-	}
-	interface PipeFactory {
-		supports(obs): boolean;
-		create(cdRef: ChangeDetectorRef): Pipe;
-	}
-	class NullPipeFactory implements PipeFactory {
-		supports(obj): boolean;
-		create(cdRef): Pipe;
-	}
-	class Pipes {
-		constructor(config: StringMap<string, PipeFactory[]>);
-		static extend(config): any;
-	}
-	class BasePipe implements Pipe {
-		supports(obj): boolean;
-		onDestroy(): void;
-		transform(value: any): any;
-	}
-	class JitChangeDetection {}
-	class ChangeDetection {}
-	class DynamicChangeDetection {}
-}
-
-declare module "angular2/directives" {
-	class NgFor {}
-	class NgIf {}
-}
-
-declare module "angular2/forms" {
-	class CheckboxControlValueAccessor {}
-	interface ControlValueAccessor {
-		registerOnChange(fn: any): void;
-		registerOnTouched(fn: any): void;
-		writeValue(obj: any): void;
-	}
-	class DefaultValueAccessor {}
-	
-	class NgControl {
-		valueAccessor: ControlValueAccessor;
-		control: Control;
-	}
-	class NgControlGroup {}
-	class NgControlName {}
-	class NgForm {}
-	class NgFormControl {}
-	class NgFormModel {}
-	class NgModel {}
-	class NgRequiredValidator {}
-	class FormBuilder {
-		group(controls: any): any
-		controls: any;
-	}
-	class AbstractControl {
-		dirty: boolean;
-		touched: boolean;
-		untouched: boolean;
-		valueChanges: any;
-		valid: boolean;
-		pristine: boolean;
-	}
-	class Control extends AbstractControl {
-		constructor(controls: any);
-		updateValue(value: any);
-	}
-	class ControlGroup {
-		constructor(controls: any)
-		controls: any;
-		valueChanges: any;
-	}
-	class Validators {
-		static required: any;
-	}
-	const formInjectables: any;
-	const formDirectives: any;
-}
-
 declare module 'angular2/src/http/static_response' {
 	class Response {
 		headers: any;
 		text(): string;
 	}
-}
-
-declare module 'angular2/http' {
-	class Http {}
-	const httpInjectables: any;
-}
-
-declare module 'angular2/router' {
-	interface OnActivate {
-		onActivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
-	}
-	interface OnReuse {
-		onReuse(nextInstruction: Instruction, prevInstruction: Instruction): any;
-	}
-	interface OnDeactivate {
-		onDeactivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
-	}
-	interface CanReuse {
-		canReuse(nextInstruction: Instruction, prevInstruction: Instruction): any;
-	}
-	interface CanDeactivate {
-		canDeactivate(nextInstruction: Instruction, prevInstruction: Instruction): any;
-	}
-	class Instruction {}
-	class Router {
-		navigate(url: string): Promise<any>
-		config(config: any): Promise<any>
-		subscribe(onNext: Function): Promise<any>
-	}
-	class LocationStrategy {}
-	class HashLocationStrategy {}
-	class Location {
-		path(): string;
-	}
-	var RouterOutlet: any;
-	var RouterLink: any;
-	var routerInjectables: any;
-	var RouteConfig: any;
 }
 
 declare module 'angular2/src/facade/collection' {
@@ -277,7 +61,7 @@ declare module 'angular2/src/core/compiler/view' {
 }
 
 declare module 'angular2/src/debug/debug_element' {
-	import { ElementRef } from 'angular2/core';
+	import { ElementRef, Type } from 'angular2/angular2';
 	import { Predicate } from 'angular2/src/facade/collection';
 	import { AppView } from 'angular2/src/core/compiler/view';
 	class DebugElement {
@@ -310,23 +94,9 @@ declare module 'angular2/src/debug/debug_element' {
 	}
 }
 
-declare module 'angular2/src/core/compiler/dynamic_component_loader' {
-	import { ViewRef, ElementRef } from 'angular2/core';
-	export class ComponentRef {
-		hostView: ViewRef;
-		constructor(location: ElementRef, instance: any, dispose: Function);
-	}
-}
-
-declare module 'angular2/src/core/annotations_impl/view' {
-	class View {}
-}
-
 declare module 'angular2/test_lib' {
-	import { Binding, Injector } from 'angular2/di';
-	import { View } from 'angular2/src/core/annotations_impl/view';
+	import { Binding, Injector, View, ComponentRef, Type } from 'angular2/angular2';
 	import { DebugElement } from 'angular2/src/debug/debug_element';
-	import { ComponentRef } from 'angular2/src/core/compiler/dynamic_component_loader';
 	interface NgMatchers extends jasmine.Matchers {
 		toBe(expected: any): boolean;
 		toEqual(expected: any): boolean;

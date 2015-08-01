@@ -1,10 +1,17 @@
 import { NumberWrapper, isPresent } from 'angular2/src/facade/lang';
-import { EventEmitter } from 'angular2/src/facade/async';
 import { KeyboardEvent } from 'angular2/src/facade/browser';
-import { ElementRef } from 'angular2/core';
-import { Renderer } from 'angular2/render';
-import { Component, View, Attribute } from 'angular2/annotations';
-import { ControlValueAccessor, NgControl } from 'angular2/forms';
+import {
+	EventEmitter,
+	Renderer,
+	ElementRef,
+	Component,
+	View,
+	Self,
+	Attribute,
+	ViewEncapsulation,
+	ControlValueAccessor,
+	NgControl
+} from 'angular2/angular2';
 
 import { KEY_SPACE } from 'common/constants';
 import { Icon } from '../icon/icon';
@@ -34,6 +41,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
+	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'
@@ -50,8 +58,10 @@ export class Checkbox implements ControlValueAccessor {
 	onChange: Function = () => {};
 	onTouched: Function = () => {};
 	private _disabled: boolean = false;
+	private cd: NgControl;
 
-	constructor(private cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
+	constructor(@Self() cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
+		this.cd = cd;
 		this.cd.valueAccessor = this;
 		this.tabindex = isPresent(tabindex) ? NumberWrapper.parseInt(tabindex, 10) : 0;
 	}
@@ -87,13 +97,13 @@ export class Checkbox implements ControlValueAccessor {
 		this.checked = !this.checked;
 		this.change.next(this.checked);
 	}
-	registerOnChange(fn): void {
+	registerOnChange(fn: (_: any) => {}): void {
 		this.onChange = fn;
 	}
-	registerOnTouched(fn): void {
+	registerOnTouched(fn: () => {}): void {
 		this.onTouched = fn;
 	}
-	writeValue(value) {
+	writeValue(value: any) {
 		this.checked = value;
 	}
 

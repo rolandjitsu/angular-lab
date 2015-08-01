@@ -1,4 +1,4 @@
-import { PipeFactory, NullPipeFactory } from 'angular2/change_detection';
+import { PipeFactory, NullPipeFactory } from 'angular2/angular2';
 
 import { LowerCaseFactory } from './pipes/lowercase';
 

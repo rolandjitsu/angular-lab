@@ -7,22 +7,24 @@ import {
 	it
 } from 'angular2/test_lib';
 import { DOM } from 'angular2/src/dom/dom_adapter';
-import { Component, View } from 'angular2/annotations';
+import { Component, View } from 'angular2/angular2';
 
-import { Autofocus } from './autofocus';
+import { Logo } from 'app/directives';
 
 export function main () {
-	describe('autofocus directive', () => {
-		it('should focus on input', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
-			let html = '<div><input autofocus></div>';
+	describe('logo directive', () => {
+		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
+			let html = '<div><div class="logo" logo></div>';
 			tcb
 				.overrideTemplate(TestComponent, html)
 				.createAsync(TestComponent)
 				.then((rootTC) => {
 					rootTC.detectChanges();
-					let input = DOM.querySelector(rootTC.nativeElement, 'input');
-					let activeEl = document.activeElement;
-					expect(input === activeEl).toBe(true);
+					let logo = DOM.querySelector(rootTC.nativeElement, '.logo');
+					
+					
+					console.log(logo);
+					// expect(input === activeEl).toBe(true);
 					async.done();
 				});
 		}));
@@ -34,7 +36,7 @@ export function main () {
 })
 @View({
 	directives: [
-		Autofocus
+		Logo
 	]
 })
 class TestComponent {

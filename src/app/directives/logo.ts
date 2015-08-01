@@ -1,5 +1,4 @@
-import { Directive } from 'angular2/annotations';
-import { ElementRef } from 'angular2/core';
+import { ElementRef, Directive } from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'app/services';
@@ -18,4 +17,5 @@ export class Logo {
 			root.appendChild(svg);
 		});
 	}
+	
 }

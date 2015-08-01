@@ -1,11 +1,20 @@
-import { Component, View } from 'angular2/annotations';
-import { Inject } from 'angular2/di';
-import { NgIf } from 'angular2/directives';
-import { FormBuilder, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
+import {
+	Inject,
+	ViewEncapsulation,
+	Component,
+	View,
+	NgIf,
+	FormBuilder,
+	DefaultValueAccessor,
+	ControlGroup,
+	NgControlName,
+	NgForm,
+	NgFormModel,
+	Validators
+} from 'angular2/angular2';
 import { Instruction, OnActivate, OnDeactivate } from 'angular2/router';
 
 import { TodoStore } from 'app/services';
-import { Autofocus } from 'app/directives';
 import { TodoList } from '../todo_list/todo_list';
 import { Icon } from '../icon/icon';
 
@@ -14,6 +23,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
+	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/todos/todos.html',
 	styleUrls: [
 		'app/components/todos/todos.css'
@@ -24,14 +34,13 @@ import { Icon } from '../icon/icon';
 		NgControlName,
 		NgForm,
 		NgFormModel,
-		Autofocus,
 		Icon,
 		TodoList
 	]
 })
 
 export class Todos implements OnActivate, OnDeactivate {
-	form: FormBuilder;
+	form: ControlGroup;
 	private ts: TodoStore;
 	constructor(fb: FormBuilder, @Inject(TodoStore) tsp: Promise<TodoStore>) {
 		this.form = fb.group({

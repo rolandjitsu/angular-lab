@@ -1,6 +1,11 @@
-import { Component, View } from 'angular2/annotations';
-import { Pipes } from 'angular2/change_detection';
-import { ViewContainerRef, ElementRef } from 'angular2/core';
+import {
+	ViewContainerRef,
+	ElementRef,
+	Component,
+	View,
+	ViewEncapsulation,
+	Pipes
+} from 'angular2/angular2';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
@@ -38,6 +43,7 @@ let routes: IRoutes = [
 })
 
 @View({
+	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
@@ -74,8 +80,8 @@ export class App {
 		 */
 
 		let el: HTMLElement = this.elementRef.nativeElement;
-		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : '';
-		let main: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-main'); // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+		let main: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-main');
 		let logo: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-logo');
 		let mainSub = AnimationEndObserver.subscribe(
 			main,

@@ -1,5 +1,5 @@
 import { isString, StringWrapper } from 'angular2/src/facade/lang';
-import { ChangeDetectorRef, Pipe, BasePipe, PipeFactory } from 'angular2/change_detection';
+import { ChangeDetectorRef, Pipe, BasePipe, PipeFactory } from 'angular2/angular2';
 
 export class LowerCaseFactory implements PipeFactory {
 	create(): Pipe {

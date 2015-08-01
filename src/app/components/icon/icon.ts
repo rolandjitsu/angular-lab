@@ -1,5 +1,4 @@
-import { Component, View } from 'angular2/annotations';
-import { ViewContainerRef } from 'angular2/core';
+import { ViewContainerRef, Component, View, ViewEncapsulation } from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'app/services';
@@ -12,6 +11,7 @@ import { IconStore } from 'app/services';
 })
 
 @View({
+	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'

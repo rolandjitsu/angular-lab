@@ -5,23 +5,35 @@
 	"path": "typings",
 	"bundle": "typings/tsd.d.ts",
 	"installed": {
-		"es6-promise/es6-promise.d.ts": {
-			"commit": "581563c4684d405afec14260ba79a89a52666c09"
-		},
-		"rx/rx.d.ts": {
-			"commit": "581563c4684d405afec14260ba79a89a52666c09"
-		},
-		"rx/rx-lite.d.ts": {
-			"commit": "581563c4684d405afec14260ba79a89a52666c09"
-		},
-		"angular2/angular2.d.ts": {
-			"commit": "581563c4684d405afec14260ba79a89a52666c09"
-		},
-		"firebase/firebase.d.ts": {
-			"commit": "581563c4684d405afec14260ba79a89a52666c09"
+		"node/node.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
 		},
 		"jasmine/jasmine.d.ts": {
-			"commit": "f6c8ca47193fb67947944a3170912672ac3e908e"
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"selenium-webdriver/selenium-webdriver.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"angular-protractor/angular-protractor.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"es6-promise/es6-promise.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"rx/rx.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"rx/rx-lite.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"angular2/angular2.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"angular2/router.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
+		},
+		"firebase/firebase.d.ts": {
+			"commit": "383a3bc8e654a77eb8bd07d9feb7208735dcb6fa"
 		}
 	}
 }

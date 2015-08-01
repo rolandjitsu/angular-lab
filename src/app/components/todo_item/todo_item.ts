@@ -1,6 +1,19 @@
-import { Component, View, onDestroy } from 'angular2/annotations';
-import { Inject } from 'angular2/di';
-import { FormBuilder, Control, ControlGroup, DefaultValueAccessor, NgControlName, NgForm, NgFormModel, Validators } from 'angular2/forms';
+import {
+	LifecycleEvent,
+	Inject,
+	ViewEncapsulation,
+	Component,
+	View,
+	OnDestroy,
+	FormBuilder,
+	Control,
+	ControlGroup,
+	DefaultValueAccessor,
+	NgControlName,
+	NgForm,
+	NgFormModel,
+	Validators
+} from 'angular2/angular2';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { TodoStore, ITodo } from 'app/services';
@@ -13,11 +26,12 @@ import { Icon } from '../icon/icon';
 		'model'
 	],
 	lifecycle: [
-		onDestroy
+		LifecycleEvent.onDestroy
 	]
 })
 
 @View({
+	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'
@@ -32,7 +46,7 @@ import { Icon } from '../icon/icon';
 	]
 })
 
-export class TodoItem {
+export class TodoItem implements OnDestroy {
 	form: ControlGroup;
 	status: Control;
 	desc: Control;
