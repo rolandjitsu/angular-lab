@@ -1,4 +1,5 @@
 import { ViewContainerRef, Component, View, ViewEncapsulation } from 'angular2/angular2';
+import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'app/services';
@@ -27,7 +28,7 @@ export class Icon {
 		let root;
 		if (isNativeShadowDOMSupported) root = this.el.shadowRoot;
 		else root = this.el;
-		this.icon.get(src).then((svg) => {
+		ObservableWrapper.subscribe(this.icon.get(src), (svg) => {
 			root.appendChild(svg);
 		});
 	}

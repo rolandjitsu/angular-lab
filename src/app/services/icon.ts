@@ -1,6 +1,7 @@
-import { Injectable, Inject, Http } from 'angular2/angular2';
+import { Injectable, Inject, Http, EventEmitter } from 'angular2/angular2';
+import { ObservableWrapper } from 'angular2/src/facade/async';
+import * as Rx from 'rx';
 
-import { Defer } from 'common/defer';
 import { HttpResponseParser } from 'common/dom_parser';
 
 let cache: Map<string, any> = new Map();
@@ -9,30 +10,35 @@ let cache: Map<string, any> = new Map();
 export class IconStore {
 	queue: Map<string, any> = new Map();
 	constructor(@Inject(Http) private http) {}
-	get(url: string): Promise<Node> {
+	get(url: string): EventEmitter {
 		let that: IconStore = this;
-		if (cache.has(url)) return Promise.resolve(
-			cache.get(url).cloneNode(true)
-		);
+		let subject: EventEmitter = new EventEmitter();
+		if (cache.has(url)) {
+			// https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/schedulers/scheduler.md#rxschedulerdefault
+			// delay the next tick until the subject is returned, otherwise the subscriber will not be notified about the next tick if called before return
+			let scheduler: Rx.Scheduler = Rx.Scheduler.default;
+			scheduler.schedule(() => {
+				ObservableWrapper.callNext(subject, cache.get(url).cloneNode(true));
+			});
+		}
 		else {
 			let pending: boolean = this.queue.has(url);
-			let defer = new Defer();
 			if (!pending) this.queue.set(url, []);
-			let promises: Defer<Node>[] = this.queue.get(url);
-			if (pending) promises.push(defer);
+			let subs: EventEmitter[] = this.queue.get(url);
+			if (pending) subs.push(subject);
 			else {
-				promises.push(defer);
+				subs.push(subject);
 				this.http
 					.get(url)
 					.toRx()
-					.map(response => HttpResponseParser.svg(response))
-					.subscribe(element => {
+					.map((response) => HttpResponseParser.svg(response))
+					.subscribe((element) => {
 						cache.set(url, element);
-						promises.forEach(promise => promise.resolve(element.cloneNode(true)));
+						subs.forEach(sub => ObservableWrapper.callNext(sub, element.cloneNode(true)));
 						that.queue.delete(url);
 					});
 			}
-			return defer.promise;
 		}
+		return subject;
 	}
 }

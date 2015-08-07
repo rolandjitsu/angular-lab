@@ -1,5 +1,7 @@
 /* global process */
 
+// Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
+
 var sauceConf = require('./sauce.conf');
 
 module.exports = function (config) {

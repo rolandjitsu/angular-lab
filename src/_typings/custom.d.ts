@@ -2,13 +2,7 @@ interface ObjectConstructor {
 	assign(target: any, ...sources: any[]): any
 }
 
-declare module ng {
-	enum ViewEncapsulation {
-		EMULATED,
-		NATIVE,
-		NONE
-	}
-}
+declare module ng {}
 
 declare module 'angular2/src/facade/async' {
 	import { EventEmitter, Observable } from 'angular2/angular2';
@@ -17,6 +11,8 @@ declare module 'angular2/src/facade/async' {
 		static dispose(subscription: any): void;
 		static callNext(emitter: EventEmitter, value: any): void;
 		static callThrow(emitter: EventEmitter, error: any): void;
+		static callReturn(emitter: EventEmitter): void;
+		static isObservable(obs: any): boolean;
 	}
 }
 
@@ -115,7 +111,7 @@ declare module 'angular2/test_lib' {
 	function ddescribe (...args);
 	function xdescribe (...args);
 	function beforeEach (fn);
-	function afterEach ();
+	function afterEach (fn);
 	function beforeEachBindings (fn);
 	function it (name, fn);
 	function xit (name, fn);
@@ -126,7 +122,6 @@ declare module 'angular2/test_lib' {
 		reset();
 	}
 	class SpyObject {
-		constructor(type);
 		noSuchMethod(args);
 		spy(name);
 		static stub (object, config, overrides);
@@ -163,5 +158,6 @@ declare module 'angular2/src/dom/dom_adapter' {
 	class DomAdapter {
 		querySelector(el, selector: string): HTMLElement;
 		querySelectorAll(el, selector: string): List<any>;
+		createElement(tagName, doc?): HTMLElement;
 	}
 }

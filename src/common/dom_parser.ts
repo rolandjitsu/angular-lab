@@ -4,7 +4,7 @@ export class HttpResponseParser {
 
 	/**
 	 * Use this method to parse the body of a HTTP response to a HTMLDocument and return the parsed value's document element.
-	 * 
+	 *
 	 * @param {Response} response
 	 * @returns {Node}
 	 */
@@ -20,5 +20,6 @@ function parseResponseAs(response: Response, mimeType: string): Node {
 		response.text(),
 		mimeType
 	);
-	return doc.documentElement.cloneNode(true);
+	var svg = doc.querySelector('svg');
+	return svg.cloneNode(true);
 }

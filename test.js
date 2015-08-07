@@ -2,11 +2,13 @@
 /* global __karma__ */
 /* global System */
 
+// Inspired by https://github.com/angular/angular/blob/master/test-main.js
+
 // Tun on full stack traces in errors to help debugging
 Error.stackTraceLimit = Infinity;
 
 // Jasmine config
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 100;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 
 // Cancel Karma's synchronous start, we will call `__karma__.start()` later, once all the specs are loaded
 __karma__.loaded = function () {};
@@ -16,15 +18,16 @@ System.baseURL = '/base/';
 System.defaultJSExtensions = true;
 System.config({
 	paths: {
+		'*': 'dist/*',
 		'angular2/*': 'dist/lib/angular2/*'
 	},
 	meta: {
-		'dist/lib/rx.js': { format: 'cjs' },
-		'dist/lib/firebase.js': { format: 'global', exports: 'Firebase' }
+		'lib/rx.js': { format: 'cjs' },
+		'lib/firebase.js': { format: 'global', exports: 'Firebase' }
 	},
 	map: {
-		rx: 'dist/lib/rx.js',
-		firebase: 'dist/lib/firebase.js'
+		rx: 'lib/rx.js',
+		firebase: 'lib/firebase.js'
 	}
 });
 
