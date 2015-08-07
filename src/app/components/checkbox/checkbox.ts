@@ -13,7 +13,7 @@ import {
 	NgControl
 } from 'angular2/angular2';
 
-import { KEY_SPACE } from 'common/constants';
+import { KEY_CODES } from 'common/key_codes';
 import { Icon } from '../icon/icon';
 
 @Component({
@@ -108,7 +108,7 @@ export class Checkbox implements ControlValueAccessor {
 	}
 
 	onKeydown(event: KeyboardEvent) {
-		if (event.keyCode !== KEY_SPACE) return;
+		if (event.keyCode !== KEY_CODES.SPACE) return;
 		event.preventDefault();
 		this.toggle(event);
 	}
