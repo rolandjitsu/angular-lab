@@ -2,7 +2,7 @@ import { ElementRef, Directive } from 'angular2/angular2';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { IconStore } from 'app/services';
+import { IconStore } from 'common/icon';
 
 @Directive({
 	selector: '[logo]'

@@ -1,10 +1,10 @@
 import { bind } from 'angular2/angular2';
 
 import { Defer } from 'common/defer';
+import { IconStore } from 'common/icon';
 import { TodoStore } from './services/todo';
-import { IconStore } from './services/icon';
 
-export * from './services/icon';
+export * from 'common/icon';
 export * from './services/todo';
 
 let root: Firebase =  new Firebase('https://ng2-play.firebaseio.com');

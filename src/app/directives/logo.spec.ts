@@ -25,7 +25,7 @@ import {
 } from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { IconStore } from 'app/services';
+import { IconStore } from 'common/icon';
 import { Logo } from 'app/directives';
 
 const LOGO_GLYPH_HTML = `

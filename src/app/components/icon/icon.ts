@@ -2,7 +2,7 @@ import { ViewContainerRef, Component, View, ViewEncapsulation } from 'angular2/a
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { IconStore } from 'app/services';
+import { IconStore } from 'common/icon';
 
 @Component({
 	selector: 'icon',
