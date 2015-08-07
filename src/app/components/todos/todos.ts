@@ -14,6 +14,7 @@ import {
 } from 'angular2/angular2';
 import { Instruction, OnActivate, OnDeactivate } from 'angular2/router';
 
+import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { TodoStore } from 'app/services';
 import { TodoList } from '../todo_list/todo_list';
 import { Icon } from '../icon/icon';
@@ -23,7 +24,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/todos/todos.html',
 	styleUrls: [
 		'app/components/todos/todos.css'

@@ -12,7 +12,7 @@ import { IconStore } from 'common/icon';
 })
 
 @View({
-	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'

@@ -16,6 +16,7 @@ import {
 } from 'angular2/angular2';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 
+import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { TodoStore, ITodo } from 'app/services';
 import { Checkbox } from '../checkbox/checkbox';
 import { Icon } from '../icon/icon';
@@ -31,7 +32,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: ViewEncapsulation.NATIVE, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'
