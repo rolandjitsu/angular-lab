@@ -20,7 +20,7 @@
 	"dependencies": {
 		"angular2": "2.0.0-alpha.34",
 		"reflect-metadata": "0.1.x",
-		"rx": "2.5.x",
+		"rx": "3.0.x",
 		"systemjs": "0.18.x",
 		"traceur": "^0.0.91",
 		"zone.js": "0.5.x"
