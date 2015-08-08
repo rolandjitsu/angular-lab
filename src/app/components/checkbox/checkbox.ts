@@ -30,7 +30,7 @@ import { Icon } from '../icon/icon';
 		'(blur)': 'onTouched()',
 		'[tabindex]': 'tabindex',
 		'[attr.aria-checked]': 'checked',
-    	'[attr.aria-disabled]': 'disabled',
+		'[attr.aria-disabled]': 'disabled',
 		'[class.ng-untouched]': 'ngClassUntouched',
 		'[class.ng-touched]': 'ngClassTouched',
 		'[class.ng-pristine]': 'ngClassPristine',
