@@ -19,7 +19,7 @@ function getAnimationEndEventName (): string {
 	return null;
 }
 
-if (!performance || isFunction(performance.now)) {
+if (performance && isFunction(performance.now) && performance.timing) {
 	ns = performance.timing.navigationStart;
 	time = function (): number {
 		return performance.now() + ns;
