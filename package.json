@@ -15,7 +15,8 @@
 		"url": "https://github.com/rolandjitsu/ng2-play"
 	},
 	"scripts": {
-		"start": "./node_modules/.bin/gulp play"
+		"start": "./node_modules/.bin/gulp play",
+		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
 		"angular2": "2.0.0-alpha.34",
@@ -40,6 +41,7 @@
 		"gulp-sourcemaps": "1.5.x",
 		"gulp-tslint": "3.1.x",
 		"gulp-typescript": "2.8.x",
+		"gulp-util": "3.0.x",
 		"gulp-watch": "4.3.x",
 		"jasmine": "2.3.x",
 		"jasmine-core": "2.3.x",
@@ -49,6 +51,7 @@
 		"karma-jasmine": "0.3.x",
 		"karma-sauce-launcher": "0.2.x",
 		"minimist": "1.1.x",
+		"object-assign": "3.0.x",
 		"q": "1.4.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",

@@ -33,9 +33,9 @@ $(npm bin)/npm start # `$(npm bin)/gulp play` if gulp is installed globally
 A full test suite can be run using `gulp test`, which runs unit tests and lints all `.ts` files. Tests can also be run selectively, if preferred, as it follows:
 - `$(npm bin)/gulp test:unit`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
 - `$(npm bin)/gulp lint`: runs [tslint](http://palantir.github.io/tslint/) and checks all `.ts` files according to the `tslint.json` rules file
-- `$(npm bin)/gulp test:unit/ci`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
+- `$(npm bin)/gulp test:unit/single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
 
-**Note**: *When running the app (`$(npm bin)/gulp play`) in a terminal window and running the unit tests (`$(npm bin)/gulp test:unit`) in watch mode in another at the same time, a web server will be started in the background in order to communicate between the two processes so that when the app builds on file change the unit tests won't build again (the unit tests task must bulid the `.ts` files in order to run the tests). Therefore, make sure port `1729` is not used by any other process.*
+**Note**: *When running the app (`$(npm bin)/gulp play`) in a terminal window and running the unit tests (`$(npm bin)/gulp test:unit`) in watch mode in another at the same time (or vice versa), two web socket servers will be started in the background in order to communicate between the two processes so that when the app builds on file change the unit tests won't build again (the unit tests task must bulid the `.ts` files in order to run the tests). Therefore, make sure port `1729` and port `6174` are not used by any other process.*
 
 
 #### Browser Support
