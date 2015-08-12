@@ -12,6 +12,7 @@ import {
 import { DOM } from 'angular2/src/dom/dom_adapter';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 import {
+	EventEmitter,
 	Injector,
 	bind,
 	Component,
@@ -60,32 +61,33 @@ export function main () {
 			])
 		]);
 
-		beforeEach(() => {
-			injector = Injector.resolveAndCreate([
-				MockBackend
-			]);
-			backend = injector.get(MockBackend);
+		beforeEach(inject([MockBackend], (mockBackend) => {
+			backend = mockBackend;
 			response = new Response({ body: LOGO_GLYPH_HTML });
-		});
+		}));
 		
 		afterEach(() => backend.verifyNoPendingRequests());
 		
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
-			let html = '<div class="logo" logo></div>';
+			let html = '<div><div class="logo" logo></div></div>';
+			let ee = new EventEmitter();
 			ObservableWrapper.subscribe(backend.connections, (connection: MockConnection) => {
-				// console.log(connection);
-				connection.mockRespond(response)
+				connection.mockRespond(response);
+				ObservableWrapper.callNext(ee, null);
 			});
 			tcb
 				.overrideTemplate(Test, html)
 				.createAsync(Test)
 				.then((rootTC) => {
 					rootTC.detectChanges();
-					let logo: Element = DOM.querySelector(rootTC.nativeElement, '.logo');
-					let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
-					// console.log(logo.firstChild, prefixSelector);
-					// expect(logo.querySelector(prefixSelector + 'svg')).not.toBe(null);
-					async.done();
+					let rtc = rootTC;
+					ObservableWrapper.subscribe(ee, () => {
+						rtc.detectChanges();
+						let logo: Element = DOM.querySelector(rtc.nativeElement, '.logo');
+						let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+						expect(DOM.querySelector(logo, prefixSelector + 'svg')).not.toBe(null);
+						async.done();
+					});
 				});
 		}));
 	});
