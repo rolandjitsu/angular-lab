@@ -1,5 +1,5 @@
-import { Injectable, Inject, Http, EventEmitter } from 'angular2/angular2';
-import { ObservableWrapper } from 'angular2/src/facade/async';
+import { Injectable, Inject, EventEmitter } from 'angular2/angular2';
+import { Http } from 'http/http';
 import * as Rx from 'rx';
 
 import { HttpResponseParser } from 'common/dom_parser';
@@ -18,7 +18,7 @@ export class IconStore {
 			// delay the next tick until the subject is returned, otherwise the subscriber will not be notified about the next tick if called before return
 			let scheduler: Rx.Scheduler = Rx.Scheduler.default;
 			scheduler.schedule(() => {
-				ObservableWrapper.callNext(subject, cache.get(url).cloneNode(true));
+				subject.next(cache.get(url).cloneNode(true));
 			});
 		}
 		else {
@@ -34,7 +34,7 @@ export class IconStore {
 					.map((response) => HttpResponseParser.svg(response))
 					.subscribe((element) => {
 						cache.set(url, element);
-						subs.forEach(sub => ObservableWrapper.callNext(sub, element.cloneNode(true)));
+						subs.forEach(sub => sub.next(element.cloneNode(true)));
 						that.queue.delete(url);
 					});
 			}

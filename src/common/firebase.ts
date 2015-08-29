@@ -1,7 +1,7 @@
 import { EventEmitter } from 'angular2/angular2';
-import { FunctionWrapper, isJsObject } from 'angular2/src/facade/lang';
-import { ObservableWrapper } from 'angular2/src/facade/async';
 import * as Firebase from 'firebase';
+
+import { isJsObject } from './facade';
 
 
 /**
@@ -81,11 +81,10 @@ export class FirebaseArray implements IFirebaseArray {
 
 	constructor(ref: Firebase, onEvent?: (eventName: string, key: string, record?: any) => void, onError?: (error: any) => void) {
 		let url: string = ref.toString();
-		this._subscription = ObservableWrapper.subscribe(
-			this._emitter,
-			value => FunctionWrapper.apply(onEvent || noop, value),
-			err => FunctionWrapper.apply(onError || noop, err)
-		);
+		this._subscription = this._emitter.observer({
+			next: (value) => (onEvent || noop).call(null, value),
+			throw: (err) => (onError || noop).call(null, err)
+		});
 		this._ref = ref;
 		if (_refs.has(url)) this._subs = _refs.get(url)._subs;
 		else {
@@ -150,7 +149,7 @@ export class FirebaseArray implements IFirebaseArray {
 		let ref: Firebase = this._ref.child(key);
 		if (arguments.length > 0) ref.set(
 			parseForFirebase(data),
-			error => error && ObservableWrapper.callThrow(this._emitter, [
+			error => error && this._emitter.throw([
 				error
 			])
 		);
@@ -171,7 +170,7 @@ export class FirebaseArray implements IFirebaseArray {
 	public set(key: string, data: any): void {
 		this._ref.child(key).set(
 			parseForFirebase(data),
-			error => error && ObservableWrapper.callThrow(this._emitter, [
+			error => error && this._emitter.throw([
 				error
 			])
 		);
@@ -208,7 +207,7 @@ export class FirebaseArray implements IFirebaseArray {
 	public update(key: string, data: any): void {
 		this._ref.child(key).update(
 			parseForFirebase(data),
-			error => error && ObservableWrapper.callThrow(this._emitter, [
+			error => error && this._emitter.throw([
 				error
 			])
 		);
@@ -241,7 +240,7 @@ export class FirebaseArray implements IFirebaseArray {
 
 	public remove(key: string): void {
 		this._ref.child(key).remove(
-			error => error && ObservableWrapper.callThrow(this._emitter, [
+			error => error && this._emitter.throw([
 				error
 			])
 		);
@@ -259,7 +258,7 @@ export class FirebaseArray implements IFirebaseArray {
 	 */
 
 	public dispose(): void {
-		ObservableWrapper.dispose(this._subscription);
+		this._subscription.dispose();
 		let ref: Firebase = this._ref;
 		this._subs.forEach((sub) => {
 			ref.off(sub[0], sub[1]);
@@ -288,7 +287,7 @@ export class FirebaseArray implements IFirebaseArray {
 			snapshot.val()
 		);
 		this._move(key, record, prevKey);
-		ObservableWrapper.callNext(this._emitter, [
+		this._emitter.next([
 			'child_added',
 			key,
 			record
@@ -301,7 +300,7 @@ export class FirebaseArray implements IFirebaseArray {
 			let record: any = this.entries[oldPos];
 			this.entries.splice(oldPos, 1);
 			this._move(key, record, prevKey);
-			ObservableWrapper.callNext(this._emitter, [
+			this._emitter.next([
 				'child_moved',
 				key,
 				record
@@ -319,7 +318,7 @@ export class FirebaseArray implements IFirebaseArray {
 					snapshot.val()
 				)
 			);
-			ObservableWrapper.callNext(this._emitter, [
+			this._emitter.next([
 				'child_changed',
 				key,
 				this.entries[pos]
@@ -331,7 +330,7 @@ export class FirebaseArray implements IFirebaseArray {
 		let pos: number = this.indexOf(key);
 		if (pos !== -1) {
 			this.entries.splice(pos, 1);
-			ObservableWrapper.callNext(this._emitter, [
+			this._emitter.next([
 				'child_removed',
 				key
 			]);

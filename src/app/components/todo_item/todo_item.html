@@ -1,12 +1,12 @@
 <ul
 	class="todo-cell"
-	[class.js-completed]="model.completed"
+	[ng-class.js-completed]="model.completed"
 	[ng-form-model]="form"
 	#todo="form">
 	<li class="todo-cell-control">
 		<checkbox ng-control="status"></checkbox>
 	</li>
-	<li class="todo-cell-content" [class.js-edit]="edit" [class.js-av]="av">
+	<li class="todo-cell-content" [ng-class.js-edit]="edit" [ng-class.js-av]="av">
 		<div class="todo-cell-label">
 			<input type="text" ng-control="desc" [value]="model.desc" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)" (focus)="edit = true" (blur)="edit = false">
 			<small>Last updated on {{ model.updatedAt | date:'dd of MMMM, y' }}</small> <!-- https://github.com/angular/angular/commit/b716046b -->

@@ -12,7 +12,7 @@ import {
 	NgFormModel,
 	Validators
 } from 'angular2/angular2';
-import { Instruction, OnActivate, OnDeactivate } from 'angular2/router';
+import { ComponentInstruction, OnActivate, OnDeactivate } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { TodoStore } from 'app/services';
@@ -49,8 +49,8 @@ export class Todos implements OnActivate, OnDeactivate {
 		});
 		tsp.then(ts => this.ts = ts);
 	}
-	onActivate(next: Instruction, prev: Instruction) {}
-	onDeactivate(next: Instruction, prev: Instruction) {}
+	onActivate(next: ComponentInstruction, prev: ComponentInstruction) {}
+	onDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {}
 	add(value) {
 		if (!value || !value.length) return;
 		this.ts.add(value);

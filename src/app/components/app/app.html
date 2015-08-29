@@ -2,9 +2,9 @@
 	<a
 		[router-link]="['./todos']"
 		class="logo js-logo"
-		[class.js-move]="!loading"
+		[ng-class.js-move]="!loading"
 		logo></a>
 </header>
-<main class="main js-main js-npe" [class.visible]="!loading">
+<main class="main js-main js-npe" [ng-class.visible]="!loading">
 	<router-outlet></router-outlet>
 </main>

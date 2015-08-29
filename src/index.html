@@ -26,23 +26,35 @@
 		<script src="lib/traceur-runtime.js"></script>
 		<script src="lib/system.js"></script>
 		<!-- Angular Deps -->
-		<script src="lib/reflect.js"></script>
-		<script src="lib/zone.js"></script>
-		<script src="lib/long-stack-trace-zone.js"></script>
+		<!--<script src="lib/reflect.js"></script>-->
+		<!--<script src="lib/zone.js"></script>-->
+		<!--<script src="lib/long-stack-trace-zone.js"></script>-->
+		<script src="lib/angular2.js"></script>
+		<script src="lib/router.dev.js"></script>
+		<script src="lib/http.js"></script>
 		<!-- App -->
 		<script>
-			System.defaultJSExtensions = true;
 			System.config({
-				paths: {
-					'angular2/*': 'lib/angular2/*'
-				},
+				// baseURL: '/',
+				defaultJSExtensions: true,
+				// paths: {
+				// 	'angular2/*': 'angular2/*',
+				// 	'http/*': 'http/*'
+				// 	// 'http/*': 'lib/http/*'
+				// },
 				meta: {
+					// 'lib/angular2.js': { format: 'register' },
+					// 'lib/router.dev.js': { format: 'register' },
+					// 'lib/http.js': { format: 'register' },
 					'lib/rx.js': { format: 'cjs' },
 					'lib/firebase.js': { format: 'global', exports: 'Firebase' }
 				},
 				map: {
-					rx: 'lib/rx.js',
-					firebase: 'lib/firebase.js'
+					// 'angular2/angular2': 'lib/angular2.js',
+					// 'angular2/router': 'lib/router.dev.js',
+					// 'http/http': 'lib/http.js',
+					'rx': 'lib/rx.js',
+					'firebase': 'lib/firebase.js'
 				}
 			});
 			System.import('app/bootstrap').catch(

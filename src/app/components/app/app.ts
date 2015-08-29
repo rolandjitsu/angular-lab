@@ -3,14 +3,13 @@ import {
 	ElementRef,
 	Component,
 	View,
-	ViewEncapsulation,
-	Pipes
+	ViewEncapsulation
 } from 'angular2/angular2';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { Animation, AnimationEndObserver } from 'common/animation';
-import { lowercase } from 'app/pipes';
+import { LowerCasePipe } from 'app/pipes';
 import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
 
@@ -34,12 +33,7 @@ let routes: IRoutes = [
 ];
 
 @Component({
-	selector: 'app',
-	viewBindings: [
-		Pipes.extend({
-			lowercase
-		})
-	]
+	selector: 'app'
 })
 
 @View({
@@ -52,6 +46,9 @@ let routes: IRoutes = [
 		RouterOutlet,
 		RouterLink,
 		Logo
+	],
+	pipes: [
+		LowerCasePipe
 	]
 })
 

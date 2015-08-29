@@ -1,5 +1,4 @@
 import { ElementRef, Directive } from 'angular2/angular2';
-import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'common/icon';
@@ -14,8 +13,10 @@ export class Logo {
 		let root;
 		if (isNativeShadowDOMSupported) root = el.createShadowRoot();
 		else root = el;
-		ObservableWrapper.subscribe(icon.get('media/ng.svg'), (svg) => {
-			root.appendChild(svg);
+		icon.get('media/ng.svg').observer({
+			next: (svg) => {
+				root.appendChild(svg);
+			}
 		});
 	}
 }

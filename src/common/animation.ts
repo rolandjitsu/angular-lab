@@ -1,7 +1,7 @@
-import { isFunction } from 'angular2/src/facade/lang';
+import { isFunction } from './facade';
 
 let time: Function;
-let ns: number;
+let ns: number = 0;
 let rAF: (callback: Function) => number = window['requestAnimationFrame'] || window['webkitRequestAnimationFrame'] || window['mozRequestAnimationFrame'];
 let cAF: (rAFId: number) => void = window['cancelAnimationFrame'] || window['webkitCancelAnimationFrame'] || window['webkitCancelRequestAnimationFrame'] || window['mozCancelRequestAnimationFrame'];
 

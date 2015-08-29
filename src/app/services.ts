@@ -1,16 +1,15 @@
 import { bind } from 'angular2/angular2';
 
-import { Defer } from 'common/defer';
+import { Defer } from 'common/async';
 import { IconStore } from 'common/icon';
 import { TodoStore } from './services/todo';
 
-export * from 'common/icon';
 export * from './services/todo';
 
 let root: Firebase =  new Firebase('https://ng2-play.firebaseio.com');
 let firebaseRef = {};
 
-export const serviceInjectables: Array<any> = [
+export const SERVICES_BINDINGS: Array<any> = [
 	bind(TodoStore).toFactory((promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)), [firebaseRef]),
 	bind(firebaseRef).toFactory(
 		() => {

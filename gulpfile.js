@@ -1,4 +1,4 @@
-/// <reference path="typings/node/node.d.ts"/>
+/// <reference path="tsd_typings/node/node.d.ts"/>
 
 var assign = require('object-assign');
 var autoprefixer = require('gulp-autoprefixer');
@@ -44,12 +44,15 @@ var PATHS = {
 		'node_modules/reflect-metadata/Reflect.js.map',
 		'node_modules/zone.js/dist/zone.js',
 		'node_modules/zone.js/dist/long-stack-trace-zone.js',
-		'node_modules/rx/dist/rx.js'
+		'node_modules/rx/dist/rx.js',
+		'node_modules/angular2/bundles/*.js'
 	],
 	typings: [
-		'node_modules/angular2/ts/traceur-runtime.d.ts',
-		'typings/tsd.d.ts',
-		'src/_typings/custom.d.ts'
+		'node_modules/angular2/bundles/typings/angular2/angular2.d.ts',
+		'node_modules/angular2/bundles/typings/angular2/http.d.ts',
+		'node_modules/angular2/bundles/typings/angular2/router.d.ts',
+		'src/_typings/custom.d.ts',
+		'tsd_typings/tsd.d.ts'
 	],
 	src: {
 		root: '/src',
@@ -118,7 +121,7 @@ gulp.task('deps/angular2', function () {
 		.pipe(gulp.dest(angular2Path));
 });
 
-gulp.task('deps', ['bower', 'tsd', 'deps/angular2'], function () {
+gulp.task('deps', ['bower', 'tsd'/*, 'deps/angular2'*/], function () {
 	var libsPath = PATHS.dist + '/lib';
 	return gulp
 		.src(PATHS.lib)

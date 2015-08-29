@@ -1,4 +1,4 @@
-import { Response } from 'angular2/src/http/static_response';
+import { Response } from 'http/http';
 
 export class HttpResponseParser {
 

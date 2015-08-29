@@ -9,21 +9,21 @@ import {
 	inject,
 	it
 } from 'angular2/test_lib';
-import { DOM } from 'angular2/src/dom/dom_adapter';
-import { ObservableWrapper } from 'angular2/src/facade/async';
 import {
 	EventEmitter,
 	Injector,
 	bind,
 	Component,
-	View,
+	View
+} from 'angular2/angular2';
+import {
 	MockBackend,
 	MockConnection,
 	ConnectionBackend,
 	BaseRequestOptions,
 	Response,
 	Http
-} from 'angular2/angular2';
+} from 'http/http';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'common/icon';
@@ -71,9 +71,11 @@ export function main () {
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
 			let html = '<div><div class="logo" logo></div></div>';
 			let ee = new EventEmitter();
-			ObservableWrapper.subscribe(backend.connections, (connection: MockConnection) => {
-				connection.mockRespond(response);
-				ObservableWrapper.callNext(ee, null);
+			backend.connections.observer({
+				next: (connection: MockConnection) => {
+					connection.mockRespond(response);
+					ee.next(null);
+				}
 			});
 			tcb
 				.overrideTemplate(Test, html)
@@ -81,12 +83,14 @@ export function main () {
 				.then((rootTC) => {
 					rootTC.detectChanges();
 					let rtc = rootTC;
-					ObservableWrapper.subscribe(ee, () => {
-						rtc.detectChanges();
-						let logo: Element = DOM.querySelector(rtc.nativeElement, '.logo');
-						let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
-						expect(DOM.querySelector(logo, prefixSelector + 'svg')).not.toBe(null);
-						async.done();
+					ee.observer({
+						next: () => {
+							rtc.detectChanges();
+							let logo: Element = rtc.nativeElement.querySelector('.logo');
+							let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+							expect(logo.querySelector(prefixSelector + 'svg')).not.toBe(null);
+							async.done();
+						}
 					});
 				});
 		}));

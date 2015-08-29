@@ -1,5 +1,3 @@
-import { NumberWrapper, isPresent } from 'angular2/src/facade/lang';
-import { KeyboardEvent } from 'angular2/src/facade/browser';
 import {
 	EventEmitter,
 	Renderer,
@@ -13,6 +11,7 @@ import {
 	NgControl
 } from 'angular2/angular2';
 
+import { isPresent } from 'common/facade';
 import { KEY_CODES } from 'common/key_codes';
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { Icon } from '../icon/icon';
@@ -64,7 +63,7 @@ export class Checkbox implements ControlValueAccessor {
 	constructor(@Self() cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
 		this.cd = cd;
 		this.cd.valueAccessor = this;
-		this.tabindex = isPresent(tabindex) ? NumberWrapper.parseInt(tabindex, 10) : 0;
+		this.tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
 	}
 
 	get ngClassUntouched(): boolean {

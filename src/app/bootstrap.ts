@@ -1,13 +1,14 @@
-import { bootstrap, formInjectables, httpInjectables } from 'angular2/angular2';
+import { bootstrap, FORM_BINDINGS } from 'angular2/angular2';
+import { HTTP_BINDINGS } from 'http/http';
 
-import { locationInjectables } from 'common/location';
-import { serviceInjectables } from 'app/services';
+import { ROUTER_BINDINGS } from 'common/router';
 
+import { SERVICES_BINDINGS } from 'app/services';
 import { App } from 'app/components';
 
 bootstrap(App, [
-	httpInjectables,
-	formInjectables,
-	locationInjectables,
-	serviceInjectables
+	HTTP_BINDINGS,
+	FORM_BINDINGS,
+	ROUTER_BINDINGS,
+	SERVICES_BINDINGS
 ]);

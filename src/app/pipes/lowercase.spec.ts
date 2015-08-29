@@ -19,19 +19,18 @@ export function main () {
 			lower = 'something';
 			upper = 'SOMETHING';
 		});
-		describe('supports', () => {
-			it('should support strings', () => { expect(pipe.supports(str)).toBe(true); });
-			it('should not support other objects', () => {
-				expect(pipe.supports(new Object())).toBe(false);
-				expect(pipe.supports(null)).toBe(false);
+		describe("transform", () => {
+			it("should return lowercase", () => {
+				var val = pipe.transform(upper);
+				expect(val).toEqual(lower);
 			});
-		});
-		describe('transform', () => {
-			it('should return lowercase', () => { expect(pipe.transform(upper)).toEqual(lower); });
-			it('should lowercase when there is a new value', () => {
-				expect(pipe.transform(upper)).toEqual(lower);
-				expect(pipe.transform('WAT')).toEqual('wat');
+			it("should lowercase when there is a new value", () => {
+				var val = pipe.transform(upper);
+				expect(val).toEqual(lower);
+				var val2 = pipe.transform('WAT');
+				expect(val2).toEqual('wat');
 			});
+			it("should not support other objects", () => { expect(() => pipe.transform(new Object())).toThrowError(); });
 		});
 	});
 }

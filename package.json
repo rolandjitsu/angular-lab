@@ -19,15 +19,15 @@
 		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.34",
+		"angular2": "2.0.0-alpha.35",
 		"reflect-metadata": "0.1.x",
-		"rx": "3.0.x",
+		"rx": "3.1.x",
 		"systemjs": "0.18.x",
 		"traceur": "^0.0.91",
 		"zone.js": "0.5.x"
 	},
 	"devDependencies": {
-		"bower": "1.4.x",
+		"bower": "1.5.x",
 		"del": "1.2.x",
 		"engine.io-client": "1.5.x",
 		"engine.io": "1.5.x",
@@ -37,7 +37,7 @@
 		"gulp-connect": "2.2.x",
 		"gulp-plumber": "1.0.x",
 		"gulp-rename": "1.2.x",
-		"gulp-size": "1.3.x",
+		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.5.x",
 		"gulp-tslint": "3.2.x",
 		"gulp-typescript": "2.8.x",
@@ -50,8 +50,8 @@
 		"karma-cli": "0.1.x",
 		"karma-jasmine": "0.3.x",
 		"karma-sauce-launcher": "0.2.x",
-		"minimist": "1.1.x",
-		"object-assign": "3.0.x",
+		"minimist": "1.2.x",
+		"object-assign": "4.0.x",
 		"q": "1.4.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",

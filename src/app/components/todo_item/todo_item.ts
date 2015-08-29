@@ -14,7 +14,6 @@ import {
 	NgFormModel,
 	Validators
 } from 'angular2/angular2';
-import { ObservableWrapper } from 'angular2/src/facade/async';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { TodoStore, ITodo } from 'app/services';
@@ -64,17 +63,21 @@ export class TodoItem implements OnDestroy {
 		that.desc = that.form.controls.desc;
 		tsp.then(ts => this.ts = ts);
 		that._subs = [
-			ObservableWrapper.subscribe(that.status.valueChanges, function (value) {
-				if (that.model.completed === value) return;
-				that.ts.update(that.model, {
-					completed: value
-				});
+			that.status.valueChanges.observer({
+				next: (value) => {
+					if (that.model.completed === value) return;
+					that.ts.update(that.model, {
+						completed: value
+					});
+				}
 			}),
-			ObservableWrapper.subscribe(that.desc.valueChanges, function (value) {
-				if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
-				that.ts.update(that.model, {
-					desc: value
-				});
+			that.desc.valueChanges.observer({
+				next: (value) => {
+					if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
+					that.ts.update(that.model, {
+						desc: value
+					});
+				}
 			})
 		];
 	}
@@ -100,7 +103,7 @@ export class TodoItem implements OnDestroy {
 
 	onDestroy() {
 		for (let sub of this._subs) {
-			ObservableWrapper.dispose(sub);
+			sub.dispose();
 		}
 	}
 }

@@ -1,23 +1,15 @@
-import { isString, StringWrapper } from 'angular2/src/facade/lang';
-import { ChangeDetectorRef, Pipe, BasePipe, PipeFactory } from 'angular2/angular2';
+import { Injectable, Pipe, PipeTransform } from 'angular2/angular2';
 
-export class LowerCaseFactory implements PipeFactory {
-	create(): Pipe {
-		return new LowerCasePipe();
-	}
-	supports(str): boolean {
-		return isString(str);
-	}
-}
+import { isBlank, isString } from 'common/facade';
 
-export class LowerCasePipe extends BasePipe implements PipeFactory {
-	transform(value: string): string {
-		return StringWrapper.toLowerCase(value);
-	}
-	supports(str): boolean {
-		return isString(str);
-	}
-	create(cdRef: ChangeDetectorRef): Pipe {
-		return this;
+@Pipe({ name: 'lowercase' })
+@Injectable()
+export class LowerCasePipe implements PipeTransform {
+	transform(value: string, args: List<any> = null): string {
+		if (isBlank(value)) return value;
+		if (!isString(value)) {
+			// throw new InvalidPipeArgumentException(LowerCasePipe, value);
+		}
+		return value.toLowerCase();
 	}
 }
