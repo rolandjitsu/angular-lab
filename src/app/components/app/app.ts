@@ -3,6 +3,7 @@ import {
 	ElementRef,
 	Component,
 	View,
+	NgClass,
 	ViewEncapsulation
 } from 'angular2/angular2';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
@@ -43,6 +44,7 @@ let routes: IRoutes = [
 		'app/components/app/app.css'
 	],
 	directives: [
+		NgClass,
 		RouterOutlet,
 		RouterLink,
 		Logo

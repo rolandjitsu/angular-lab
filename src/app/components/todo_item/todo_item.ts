@@ -4,6 +4,7 @@ import {
 	ViewEncapsulation,
 	Component,
 	View,
+	NgClass,
 	OnDestroy,
 	FormBuilder,
 	Control,
@@ -37,6 +38,7 @@ import { Icon } from '../icon/icon';
 		'app/components/todo_item/todo_item.css'
 	],
 	directives: [
+		NgClass,
 		DefaultValueAccessor,
 		NgControlName,
 		NgForm,
