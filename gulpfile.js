@@ -48,16 +48,13 @@ var PATHS = {
 		'node_modules/angular2/bundles/*.js'
 	],
 	typings: [
-		'node_modules/angular2/bundles/typings/angular2/angular2.d.ts',
-		'node_modules/angular2/bundles/typings/angular2/http.d.ts',
-		'node_modules/angular2/bundles/typings/angular2/router.d.ts',
 		'src/_typings/custom.d.ts',
 		'tsd_typings/tsd.d.ts'
 	],
 	src: {
 		root: '/src',
 		ts: [
-			'!src/_typings/custom.d.ts',
+			'!src/_typings/*.d.ts',
 			'src/**/*.ts'
 		],
 		html: 'src/**/*.html',
@@ -92,13 +89,23 @@ gulp.task('bower', function (done) {
 });
 
 gulp.task('tsd', function () {
-	var tsdAPI = tsd.getAPI('tsd.json');
-	return tsdAPI.readConfig({}, true).then(function () {
-		return tsdAPI.reinstall(
-			tsd.Options.fromJSON({}) // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
-		).then(function () {
-			return tsdAPI.updateBundle(tsdAPI.context.config.bundle, true);
+	var config = './tsd.json';
+	var api = tsd.getAPI(config);
+	return api.readConfig(config, true).then(function () {
+		var opts = tsd.Options.fromJSON(); // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
+		var query = new tsd.Query();
+		opts.saveBundle = true;
+		opts.overwriteFiles = true;
+		opts.resolveDependencies = true;
+		api.context.config.getInstalled().forEach(function (install) {
+			var def = tsd.Def.getFrom(install.path);
+			query.addNamePattern(def.project + '/' + def.name);
 		});
+		query.versionMatcher = new tsd.VersionMatcher('latest');
+		return api.select(query, opts).then(function (selection) {
+			return api.install(selection, opts);
+		});
+		return api.reinstall(opts);
 	});
 });
 

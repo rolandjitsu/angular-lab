@@ -5,14 +5,20 @@
 	"path": "tsd_typings",
 	"bundle": "tsd_typings/tsd.d.ts",
 	"installed": {
-		"node/node.d.ts": {
-			"commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+		"angular2/angular2.d.ts": {
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		},
-		"jasmine/jasmine.d.ts": {
-			"commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+		"angular2/router.d.ts": {
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		},
 		"firebase/firebase.d.ts": {
-			"commit": "8efeb01304406a7ef0b49e449630e1bfaefe52ba"
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+		},
+		"jasmine/jasmine.d.ts": {
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+		},
+		"node/node.d.ts": {
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		}
 	}
 }
