@@ -24,7 +24,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/todos/todos.html',
 	styleUrls: [
 		'app/components/todos/todos.css'

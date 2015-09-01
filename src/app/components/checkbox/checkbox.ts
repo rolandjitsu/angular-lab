@@ -41,7 +41,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'

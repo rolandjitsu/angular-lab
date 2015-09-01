@@ -37,7 +37,7 @@ let routes: IRoutes = [
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
