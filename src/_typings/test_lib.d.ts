@@ -34,23 +34,21 @@ declare module ngTestLib {
 		rttsAssert(value);
 	}
 	function isInInnerZone (): boolean;
-	function createTestInjector(bindings: List<Type | Binding | List<any>>): Injector;
+	function createTestInjector(bindings: List<ng.Type | ng.Binding | List<any>>): ng.Injector;
 	function inject(tokens: List<any>, fn: Function): FunctionWithParamTokens;
 	class FunctionWithParamTokens {
 		constructor(tokens: List<any>, fn: Function);
-		execute(injector: Injector): any;
+		execute(injector: ng.Injector): any;
 	}
-	class RootTestComponent extends DebugElement {
-		constructor(componentRef: ComponentRef);
+	class RootTestComponent extends ng.DebugElement {
+		constructor(componentRef: ng.ComponentRef);
 		detectChanges(): void;
 		destroy(): void;
 	}
 	class TestComponentBuilder {
-		constructor(injector: Injector);
-		overrideTemplate(componentType: Type, template: string): TestComponentBuilder;
-		overrideView(componentType: Type, view: View): TestComponentBuilder;
-		overrideDirective(componentType: Type, from: Type, to: Type): TestComponentBuilder;
-		createAsync(rootComponentType: Type): Promise<RootTestComponent>;
+		constructor(injector: ng.Injector);
+		overrideTemplate(componentType: ng.Type, template: string): TestComponentBuilder;
+		createAsync(rootComponentType: ng.Type): Promise<RootTestComponent>;
 	}
 	class SpyChangeDetector extends SpyObject {}
 	class SpyProtoChangeDetector extends SpyObject {}
