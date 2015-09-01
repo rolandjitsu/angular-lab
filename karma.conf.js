@@ -27,26 +27,26 @@ module.exports = function (config) {
 		],
 		files: [
 			// zone-microtask must be included first as it contains a Promise monkey patch
-			'node_modules/zone.js/dist/zone-microtask.js',
-			'node_modules/zone.js/dist/long-stack-trace-zone.js',
-			'node_modules/zone.js/dist/jasmine-patch.js',
+			'node_modules/angular2/node_modules/zone.js/dist/zone-microtask.js',
+			'node_modules/angular2/node_modules/zone.js/dist/long-stack-trace-zone.js',
+			'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
 			'node_modules/traceur/bin/traceur-runtime.js',
 			'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+			'node_modules/angular2/node_modules/reflect-metadata/Reflect.js',
 			{
 				pattern: 'node_modules/angular2/**',
 				included: false,
 				watched: false
 			},
-			// 'node_modules/angular2/bundles/http.js',
-			'node_modules/reflect-metadata/Reflect.js',
 			// Sources and specs
-			// Loaded through the systemjs, in `test.js`
+			// Loaded through systemjs, in `test.js`
 			{
 				pattern: 'dist/**',
 				included: false,
 				watched: false
 			},
 			'test.js'
+			// 'node_modules/angular2/bundles/http.js'
 		],
 		exclude: [],
 		customLaunchers: sauceConf.launchers,

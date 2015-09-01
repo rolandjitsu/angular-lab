@@ -19,15 +19,16 @@ System.defaultJSExtensions = true;
 System.config({
 	paths: {
 		'*': 'dist/*',
+		'node_modules/angular2/node_modules/rx/dist/rx.js': 'node_modules/angular2/node_modules/rx/dist/rx.js',
 		'angular2/*': 'node_modules/angular2/*',
-		'http/*': 'http/*'
+		// 'http/*': 'http/*'
 	},
 	meta: {
-		'lib/rx.js': { format: 'cjs' },
+		'node_modules/angular2/node_modules/rx/dist/rx.js': { format: 'cjs' },
 		'lib/firebase.js': { format: 'global', exports: 'Firebase' }
 	},
 	map: {
-		rx: 'lib/rx.js',
+		rx: 'node_modules/angular2/node_modules/rx/dist/rx.js',
 		firebase: 'lib/firebase.js'
 	}
 });
