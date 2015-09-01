@@ -72,7 +72,9 @@ var ng2play = ts.createProject('tsconfig.json', {
 });
 
 gulp.task('clean', function (done) {
-	del([PATHS.dist], done);
+	del([PATHS.dist]).then(function () {
+		done();
+	});
 });
 
 

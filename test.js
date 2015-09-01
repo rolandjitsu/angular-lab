@@ -19,7 +19,8 @@ System.defaultJSExtensions = true;
 System.config({
 	paths: {
 		'*': 'dist/*',
-		'angular2/*': 'dist/lib/angular2/*'
+		'angular2/*': 'node_modules/angular2/*',
+		'http/*': 'http/*'
 	},
 	meta: {
 		'lib/rx.js': { format: 'cjs' },

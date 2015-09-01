@@ -1,8 +1,24 @@
-/* global process */
-
+/// <reference path="tsd_typings/node/node.d.ts"/>
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
 
 var sauceConf = require('./sauce.conf');
+var sauceLabsConfig = {
+	testName: 'NG2 Play - UNIT',
+	startConnect: false,
+	recordVideo: false,
+	recordScreenshots: false,
+	options:  {
+		'selenium-version': '2.45.0',
+		'command-timeout': 600,
+		'idle-timeout': 600,
+		'max-duration': 5400
+	}
+};
+
+if (process.env.TRAVIS) {
+	sauceLabsConfig.build = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+	sauceLabsConfig.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+}
 
 module.exports = function (config) {
 	config.set({
@@ -15,8 +31,13 @@ module.exports = function (config) {
 			'node_modules/zone.js/dist/long-stack-trace-zone.js',
 			'node_modules/zone.js/dist/jasmine-patch.js',
 			'node_modules/traceur/bin/traceur-runtime.js',
-			// Including systemjs because it defines `__eval`, which produces correct stack traces
-			'node_modules/systemjs/dist/system.js',
+			'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+			{
+				pattern: 'node_modules/angular2/**',
+				included: false,
+				watched: false
+			},
+			// 'node_modules/angular2/bundles/http.js',
 			'node_modules/reflect-metadata/Reflect.js',
 			// Sources and specs
 			// Loaded through the systemjs, in `test.js`
@@ -32,22 +53,6 @@ module.exports = function (config) {
 		browsers: [
 			'Chrome'
 		],
-		sauceLabs: {
-			testName: 'NG2 Play - UNIT',
-			startConnect: false,
-			recordVideo: false,
-			recordScreenshots: false,
-			options:  {
-				'selenium-version': '2.45.0',
-				'command-timeout': 600,
-				'idle-timeout': 600,
-				'max-duration': 5400
-			}
-		}
+		sauceLabs: sauceLabsConfig 
 	});
-	
-	if (process.env.TRAVIS) {
-		config.sauceLabs.build = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
-		config.sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
-	}
 };

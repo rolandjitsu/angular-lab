@@ -1,4 +1,10 @@
-import { ViewContainerRef, Component, View, ViewEncapsulation } from 'angular2/angular2';
+import {
+	ElementRef,
+	Component,
+	View,
+	ViewEncapsulation,
+	OnDestroy
+} from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { IconStore } from 'common/icon';
@@ -11,26 +17,29 @@ import { IconStore } from 'common/icon';
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED (default), NATIVE, NONE
+	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'
 	]
 })
 
-export class Icon {
+export class Icon implements OnDestroy {
 	el;
-	constructor(private viewContainer: ViewContainerRef, public icon: IconStore) {
-		this.el = this.viewContainer.element.nativeElement;
+	constructor(private elementRef: ElementRef, public icon: IconStore) {
+		this.el = this.elementRef.nativeElement;
+		if (isNativeShadowDOMSupported) this.el = this.el.shadowRoot;
 	}
 	set src(src: string) {
-		let root;
-		if (isNativeShadowDOMSupported) root = this.el.shadowRoot;
-		else root = this.el;
+		let that: Icon = this;
 		this.icon.get(src).observer({
 			next: (svg) => {
-				root.appendChild(svg);
+				that.el.appendChild(svg);
 			}
 		});
+	}
+	onDestroy() {
+		let svg = this.el.querySelector('svg');
+		if (svg) this.el.removeChild(svg);
 	}
 }

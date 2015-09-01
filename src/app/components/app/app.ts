@@ -1,5 +1,4 @@
 import {
-	ViewContainerRef,
 	ElementRef,
 	Component,
 	View,
@@ -58,7 +57,7 @@ let routes: IRoutes = [
 
 export class App {
 	loading: boolean = true;
-	constructor(private viewContainer: ViewContainerRef, private elementRef: ElementRef, router: Router) {
+	constructor(private elementRef: ElementRef, router: Router) {
 		let that: App = this;
 		let root: Firebase = new Firebase('https://ng2-play.firebaseio.com');
 

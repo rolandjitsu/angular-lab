@@ -2,7 +2,7 @@
 	"version": "1.5.3",
 	"compilerOptions": {
 		"declaration": false,
-		"module": "commonjs",
+		"module": "system",
 		"target": "es5",
 		"emitDecoratorMetadata": true,
 		"listFiles": true,
