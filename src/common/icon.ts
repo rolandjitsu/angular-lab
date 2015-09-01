@@ -1,4 +1,4 @@
-import { Injectable, Inject, EventEmitter } from 'angular2/angular2';
+import { Injectable, EventEmitter } from 'angular2/angular2';
 import { Http } from 'http/http';
 import * as Rx from 'rx';
 
@@ -9,7 +9,7 @@ let cache: Map<string, any> = new Map();
 @Injectable()
 export class IconStore {
 	queue: Map<string, any> = new Map();
-	constructor(@Inject(Http) private http) {}
+	constructor(private http: Http) {}
 	get(url: string): EventEmitter {
 		let that: IconStore = this;
 		let subject: EventEmitter = new EventEmitter();
