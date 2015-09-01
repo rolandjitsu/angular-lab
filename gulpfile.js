@@ -40,12 +40,9 @@ var PATHS = {
 		'bower_components/firebase/firebase.js',
 		'node_modules/traceur/bin/traceur-runtime.js',
 		'node_modules/systemjs/dist/system.*',
-		'node_modules/reflect-metadata/Reflect.js',
-		'node_modules/reflect-metadata/Reflect.js.map',
-		'node_modules/zone.js/dist/zone.js',
-		'node_modules/zone.js/dist/long-stack-trace-zone.js',
-		'node_modules/rx/dist/rx.js',
-		'node_modules/angular2/bundles/*.js'
+		'node_modules/angular2/bundles/angular2.js',
+		'node_modules/angular2/bundles/router.dev.js',
+		'node_modules/angular2/bundles/http.js'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
@@ -111,26 +108,7 @@ gulp.task('tsd', function () {
 	});
 });
 
-gulp.task('deps/angular2', function () {
-	var angular2Path = PATHS.dist + '/lib/angular2';
-	return gulp
-		.src([
-			'!node_modules/angular2/es6/**',
-			'!node_modules/angular2/node_modules/**',
-			'!node_modules/angular2/angular2_sfx.js',
-			'!node_modules/angular2/angular2_sfx.js.map',
-			'node_modules/angular2/**/*.js',
-			'node_modules/angular2/**/*.map'
-		])
-		.pipe(changed(angular2Path))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
-		.pipe(gulp.dest(angular2Path));
-});
-
-gulp.task('deps', ['bower', 'tsd'/*, 'deps/angular2'*/], function () {
+gulp.task('deps', ['bower', 'tsd'], function () {
 	var libsPath = PATHS.dist + '/lib';
 	return gulp
 		.src(PATHS.lib)
