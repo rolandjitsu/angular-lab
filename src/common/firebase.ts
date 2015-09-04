@@ -17,7 +17,7 @@ export const FIREBASE_TIMESTAMP = Firebase.ServerValue.TIMESTAMP;
  * Firebase array value interface.
  */
 
-export interface IFirebaseArrayValue {
+export interface FirebaseArrayValue {
 	key: string;
 	value?: any;
 }

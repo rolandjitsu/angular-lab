@@ -1,7 +1,7 @@
 import { Inject, Component, View, ViewEncapsulation, NgFor } from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { TodoStore, ITodo } from 'app/services';
+import { TodoStore, Todo } from 'app/services';
 import { TodoItem } from '../todo_item/todo_item';
 
 @Component({
@@ -21,7 +21,7 @@ import { TodoItem } from '../todo_item/todo_item';
 })
 
 export class TodoList {
-	todos: Array<ITodo>;
+	todos: Array<Todo>;
 	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
 		tsp.then(ts => this.todos = ts.entries);
 	}

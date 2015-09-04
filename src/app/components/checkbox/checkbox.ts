@@ -62,8 +62,8 @@ export class Checkbox implements ControlValueAccessor {
 
 	constructor(@Self() cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
 		this.cd = cd;
-		this.cd.valueAccessor = this;
 		this.tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
+		cd.valueAccessor = this;
 	}
 
 	get ngClassUntouched(): boolean {

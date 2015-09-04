@@ -1,6 +1,7 @@
 import {
 	ElementRef,
 	Component,
+	ViewMetadata,
 	View,
 	NgClass,
 	ViewEncapsulation
@@ -20,23 +21,11 @@ interface IRoute<T> {
 	as?: string;
 }
 
-interface IRoutes {
-	[index: number]: IRoute<any>;
-}
-
-let routes: IRoutes = [
-	{
-		component: Todos,
-		path: '/',
-		as: 'todos'
-	}
-];
-
 @Component({
 	selector: 'app'
 })
 
-@View({
+@View(<ViewMetadata>{
 	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
@@ -53,7 +42,13 @@ let routes: IRoutes = [
 	]
 })
 
-@RouteConfig(routes)
+@RouteConfig([
+	{
+		component: Todos,
+		path: '/',
+		as: 'todos'
+	}
+])
 
 export class App {
 	loading: boolean = true;
@@ -77,10 +72,10 @@ export class App {
 		 * Animations
 		 */
 
-		let el: HTMLElement = this.elementRef.nativeElement;
+		let el: Element = this.elementRef.nativeElement;
 		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
-		let main: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-main');
-		let logo: HTMLElement = <HTMLElement>el.querySelector(prefixSelector + '.js-logo');
+		let main: Element = el.querySelector(prefixSelector + '.js-main');
+		let logo: Element = el.querySelector(prefixSelector + '.js-logo');
 		let mainSub = AnimationEndObserver.subscribe(
 			main,
 			(event) => {

@@ -1,23 +1,18 @@
 import {
-	LifecycleEvent,
 	Inject,
 	ViewEncapsulation,
 	Component,
 	View,
 	NgClass,
-	OnDestroy,
-	FormBuilder,
-	Control,
-	ControlGroup,
-	DefaultValueAccessor,
 	NgControlName,
+	NgModel,
 	NgForm,
-	NgFormModel,
-	Validators
+	DefaultValueAccessor,
+	NgRequiredValidator
 } from 'angular2/angular2';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { TodoStore, ITodo } from 'app/services';
+import { TodoStore, Todo, TodoModel } from 'app/services';
 import { Checkbox } from '../checkbox/checkbox';
 import { Icon } from '../icon/icon';
 
@@ -25,9 +20,6 @@ import { Icon } from '../icon/icon';
 	selector: 'todo-item',
 	properties: [
 		'model'
-	],
-	lifecycle: [
-		LifecycleEvent.onDestroy
 	]
 })
 
@@ -39,55 +31,27 @@ import { Icon } from '../icon/icon';
 	],
 	directives: [
 		NgClass,
-		DefaultValueAccessor,
 		NgControlName,
+		NgModel,
 		NgForm,
-		NgFormModel,
+		DefaultValueAccessor,
+		NgRequiredValidator,
 		Icon,
 		Checkbox
 	]
 })
 
-export class TodoItem implements OnDestroy {
-	form: ControlGroup;
-	status: Control;
-	desc: Control;
+export class TodoItem {
 	private ts: TodoStore;
 	private _subs: Array<any>;
-	private _model: ITodo;
-	constructor(fb: FormBuilder, @Inject(TodoStore) tsp: Promise<TodoStore>) {
-		let that: TodoItem = this;
-		that.form = fb.group({
-			status: [false],
-			desc: ['', Validators.required]
-		});
-		that.status = that.form.controls.status;
-		that.desc = that.form.controls.desc;
+	private _model: Todo;
+	
+	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
 		tsp.then(ts => this.ts = ts);
-		that._subs = [
-			that.status.valueChanges.observer({
-				next: (value) => {
-					if (that.model.completed === value) return;
-					that.ts.update(that.model, {
-						completed: value
-					});
-				}
-			}),
-			that.desc.valueChanges.observer({
-				next: (value) => {
-					if (that.desc.pristine || !that.desc.valid || that.model.desc === value) return;
-					that.ts.update(that.model, {
-						desc: value
-					});
-				}
-			})
-		];
 	}
 
-	set model(model: ITodo) {
-		this._model = model;
-		this.status.updateValue(model.completed);
-		this.desc.updateValue(model.desc);
+	set model(model: Todo) {
+		this._model = TodoModel.fromModel(model);
 	}
 
 	get model() {
@@ -103,9 +67,14 @@ export class TodoItem implements OnDestroy {
 		event.target.blur();
 	}
 
-	onDestroy() {
-		for (let sub of this._subs) {
-			sub.dispose();
-		}
+	onStatusChange(status) {
+		this.ts.update(this.model, <Todo>{	
+			completed: !this.model.completed
+		});
+	}
+	onDescChange() {
+		this.ts.update(this.model, <Todo>{
+			desc: this.model.desc
+		});
 	}
 }

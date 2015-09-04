@@ -4,20 +4,22 @@ import {
 	Component,
 	View,
 	NgIf,
-	FormBuilder,
-	DefaultValueAccessor,
-	ControlGroup,
 	NgControlName,
+	NgModel,
 	NgForm,
-	NgFormModel,
-	Validators
+	DefaultValueAccessor,
+	NgRequiredValidator
 } from 'angular2/angular2';
 import { ComponentInstruction, OnActivate, OnDeactivate } from 'angular2/router';
 
 import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { TodoStore } from 'app/services';
+import { TodoStore, TodoModel } from 'app/services';
 import { TodoList } from '../todo_list/todo_list';
 import { Icon } from '../icon/icon';
+
+class TodosFormModel {
+	desc: string;
+}
 
 @Component({
 	selector: 'todos'
@@ -31,30 +33,29 @@ import { Icon } from '../icon/icon';
 	],
 	directives: [
 		NgIf,
-		DefaultValueAccessor,
 		NgControlName,
+		NgModel,
 		NgForm,
-		NgFormModel,
+		DefaultValueAccessor,
+		NgRequiredValidator,
 		Icon,
 		TodoList
 	]
 })
 
 export class Todos implements OnActivate, OnDeactivate {
-	form: ControlGroup;
+	model: TodosFormModel = new TodosFormModel();
 	private ts: TodoStore;
-	constructor(fb: FormBuilder, @Inject(TodoStore) tsp: Promise<TodoStore>) {
-		this.form = fb.group({
-			desc: ['', Validators.required]
-		});
+	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
 		tsp.then(ts => this.ts = ts);
 	}
 	onActivate(next: ComponentInstruction, prev: ComponentInstruction) {}
 	onDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {}
-	add(value) {
-		if (!value || !value.length) return;
-		this.ts.add(value);
-		this.form.controls.desc.updateValue('');
+	add() {
+		this.ts.add(
+			new TodoModel(this.model.desc)
+		);
+		this.model.desc = '';
 		return false;
 	}
 }

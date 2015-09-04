@@ -1,4 +1,5 @@
 import {
+	LifecycleEvent,
 	ElementRef,
 	Component,
 	View,
@@ -13,6 +14,9 @@ import { IconStore } from 'common/icon';
 	selector: 'icon',
 	properties: [
 		'src'
+	],
+	lifecycle: [
+		LifecycleEvent.onDestroy
 	]
 })
 

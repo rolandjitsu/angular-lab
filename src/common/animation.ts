@@ -30,15 +30,15 @@ else {
 }
 
 export class AnimationEndObserver {
-	element: HTMLElement;
+	element: Element;
 	event: string = getAnimationEndEventName();
 	handler: EventListener;
-	constructor(element: HTMLElement, handler: EventListener) {
+	constructor(element: Element, handler: EventListener) {
 		this.element = element;
 		this.handler = handler;
 		this.element.addEventListener(this.event, this.handler, false);
 	}
-	static subscribe(element: HTMLElement, done: Function, context?: any): AnimationEndObserver {
+	static subscribe(element: Element, done: Function, context?: any): AnimationEndObserver {
 		return new AnimationEndObserver(element, event => {
 			done.apply(context, [event]);
 		});

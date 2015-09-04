@@ -1,11 +1,10 @@
 <form
 	class="todos-form"
-	[ng-form-model]="form"
 	#todo="form"
-	(ng-submit)="add(form.value.desc)"
+	(ng-submit)="add()"
 	novalidate>
 	<div class="todos-form-desc">
-		<input type="text" id="desc" name="desc" ng-control="desc" placeholder="Description" autocomplete="off" required>
+		<input type="text" id="desc" name="desc" ng-control="desc" [(ng-model)]="model.desc" placeholder="Description" autocomplete="off" required>
 	</div>
 	<div class="todos-form-submit">
 		<button type="submit" [disabled]="!todo.form.valid">

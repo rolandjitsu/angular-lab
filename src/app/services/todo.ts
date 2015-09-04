@@ -1,36 +1,47 @@
 import { Injectable } from 'angular2/angular2';
+import { isString, isNumber } from 'common/facade';
 
-import { FirebaseArray, IFirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
+import { FirebaseArray, FirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
 
-export interface ITodo extends IFirebaseArrayValue {
-	createdAt: string;
-	updatedAt: string;
+export interface Todo extends FirebaseArrayValue {
+	createdAt: number | string;
+	updatedAt: number | string;
 	completed: boolean;
 	desc: string;
 }
 
-class Todo implements ITodo {
-	createdAt: string = FIREBASE_TIMESTAMP;
-	updatedAt: string = FIREBASE_TIMESTAMP;
+export class TodoModel implements Todo {
+	createdAt: number | string = FIREBASE_TIMESTAMP;
+	updatedAt: number | string = FIREBASE_TIMESTAMP;
 	completed: boolean = false;
 	desc: string;
 	key: string;
-	constructor(desc: string) {
-		this.desc = desc;
+	constructor(desc?: string, completed?: boolean, key?: string, createdAt?: number | string, updatedAt?: number | string) {
+		if (isString(desc)) this.desc = desc;
+		if (completed !== undefined) this.completed = completed;
+		if (isString(key)) this.key = key;
+		if (isNumber(createdAt)) this.createdAt = createdAt;
+		if (isNumber(updatedAt)) this.updatedAt = updatedAt;
+	}
+	static fromModel(model: Todo): TodoModel {
+		return new TodoModel(model.desc, model.completed, model.key, model.createdAt, model.updatedAt);
+	}
+	static assign(model: Todo, ...sources: Todo[]): TodoModel {
+		return TodoModel.fromModel(
+			Object.assign.apply(null, [].concat([model], sources))
+		);
 	}
 }
 
 @Injectable()
 export class TodoStore extends FirebaseArray {
-	add(task: string) {
-		return super.add(
-			new Todo(task)
-		);
+	add(todo: Todo) {
+		return super.add(todo);
 	}
-	update(record, data) {
+	update(record, data: Todo) {
 		super.update(
 			record.key,
-			Object.assign({}, record, data, {
+			TodoModel.assign(<Todo>{}, record, data, <Todo>{
 				updatedAt: FIREBASE_TIMESTAMP
 			})
 		);

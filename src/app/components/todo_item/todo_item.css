@@ -212,7 +212,7 @@ todo-item:last-of-type .todo-cell-content {
 	clear: both;
 }
 
-.todo-cell-av > li {
+.todo-cell-av-delete {
 	display: block;
 	float: left;
 	padding-top: 17px;
