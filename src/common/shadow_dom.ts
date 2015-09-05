@@ -1,1 +1,0 @@
-export const isNativeShadowDOMSupported: boolean = Boolean(document && document.body && document.body.createShadowRoot); // http://caniuse.com/#feat=shadowdom

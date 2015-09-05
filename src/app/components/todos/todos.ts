@@ -12,7 +12,7 @@ import {
 } from 'angular2/angular2';
 import { ComponentInstruction, OnActivate, OnDeactivate } from 'angular2/router';
 
-import { isNativeShadowDOMSupported } from 'common/shadow_dom';
+import { isNativeShadowDomSupported } from 'common/lang';
 import { TodoStore, TodoModel } from 'app/services';
 import { TodoList } from '../todo_list/todo_list';
 import { Icon } from '../icon/icon';
@@ -26,7 +26,7 @@ class TodosFormModel {
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/todos/todos.html',
 	styleUrls: [
 		'app/components/todos/todos.css'

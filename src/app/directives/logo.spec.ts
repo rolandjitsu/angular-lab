@@ -25,7 +25,7 @@ import {
 	Http
 } from 'http/http';
 
-import { isNativeShadowDOMSupported } from 'common/shadow_dom';
+import { isNativeShadowDomSupported } from 'common/lang';
 import { IconStore } from 'common/icon';
 import { Logo } from 'app/directives';
 
@@ -87,7 +87,7 @@ export function main () {
 						next: () => {
 							rtc.detectChanges();
 							let logo: Element = rtc.nativeElement.querySelector('.logo');
-							let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+							let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
 							expect(logo.querySelector(prefixSelector + 'svg')).not.toBe(null);
 							async.done();
 						}

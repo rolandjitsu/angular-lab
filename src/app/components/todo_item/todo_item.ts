@@ -11,7 +11,7 @@ import {
 	NgRequiredValidator
 } from 'angular2/angular2';
 
-import { isNativeShadowDOMSupported } from 'common/shadow_dom';
+import { isNativeShadowDomSupported } from 'common/lang';
 import { TodoStore, Todo, TodoModel } from 'app/services';
 import { Checkbox } from '../checkbox/checkbox';
 import { Icon } from '../icon/icon';
@@ -24,7 +24,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'

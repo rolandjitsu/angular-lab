@@ -1,5 +1,5 @@
 import { Injectable } from 'angular2/angular2';
-import { isString, isNumber } from 'common/facade';
+import { isString, isNumber } from 'common/lang';
 
 import { FirebaseArray, FirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
 

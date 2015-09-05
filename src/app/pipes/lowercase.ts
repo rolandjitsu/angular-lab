@@ -1,6 +1,6 @@
 import { Injectable, Pipe, PipeTransform } from 'angular2/angular2';
 
-import { isBlank, isString } from 'common/facade';
+import { isBlank, isString } from 'common/lang';
 
 @Pipe({ name: 'lowercase' })
 @Injectable()

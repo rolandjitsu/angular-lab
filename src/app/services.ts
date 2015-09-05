@@ -10,7 +10,10 @@ let root: Firebase =  new Firebase('https://ng2-play.firebaseio.com');
 let firebaseRef = {};
 
 export const SERVICES_BINDINGS: Array<any> = [
-	bind(TodoStore).toFactory((promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)), [firebaseRef]),
+	bind(IconStore).toClass(IconStore),
+	bind(TodoStore).toFactory((promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)), [
+		firebaseRef
+	]),
 	bind(firebaseRef).toFactory(
 		() => {
 			let defer: Defer<Firebase> = new Defer();
@@ -24,6 +27,5 @@ export const SERVICES_BINDINGS: Array<any> = [
 			root.onAuth(authHandler);
 			return defer.promise;
 		}
-	),
-	bind(IconStore).toClass(IconStore)
+	)
 ];

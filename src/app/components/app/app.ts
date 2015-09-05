@@ -8,25 +8,18 @@ import {
 } from 'angular2/angular2';
 import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
 
-import { isNativeShadowDOMSupported } from 'common/shadow_dom';
-import { Animation, AnimationEndObserver } from 'common/animation';
+import { isNativeShadowDomSupported } from 'common/lang';
+import { Animation, AnimationEndObservable } from 'common/animation';
 import { LowerCasePipe } from 'app/pipes';
 import { Logo } from 'app/directives';
 import { Todos } from '../todos/todos';
-
-interface IRoute<T> {
-	path: string;
-	component?: T;
-	redirectTo?: string;
-	as?: string;
-}
 
 @Component({
 	selector: 'app'
 })
 
 @View(<ViewMetadata>{
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
@@ -73,25 +66,25 @@ export class App {
 		 */
 
 		let el: Element = this.elementRef.nativeElement;
-		let prefixSelector = isNativeShadowDOMSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
 		let main: Element = el.querySelector(prefixSelector + '.js-main');
 		let logo: Element = el.querySelector(prefixSelector + '.js-logo');
-		let mainSub = AnimationEndObserver.subscribe(
+		let mainSub = AnimationEndObservable.subscribe(
 			main,
 			(event) => {
 				main.classList.remove('js-npe');
-				mainSub.disconnect();
+				mainSub.dispose();
 			},
 			this
 		);
-		let logoSub = AnimationEndObserver.subscribe(
+		let logoSub = AnimationEndObservable.subscribe(
 			logo,
 			(event) => {
 				if (event.animationName === 'in') logo.className = logo.className.replace('js-in', 'js-opaque');
 				else if (event.animationName === 'move') {
 					logo.classList.remove('js-move', 'js-opaque');
 					logo.classList.add('js-unfix');
-					logoSub.disconnect();
+					logoSub.dispose();
 				}
 			},
 			this

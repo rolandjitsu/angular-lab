@@ -1,8 +1,6 @@
 import { Injectable, EventEmitter } from 'angular2/angular2';
-import { Http } from 'http/http';
+import { Http, Response } from 'http/http';
 import * as Rx from 'rx';
-
-import { HttpResponseParser } from 'common/dom_parser';
 
 let cache: Map<string, any> = new Map();
 
@@ -31,7 +29,7 @@ export class IconStore {
 				this.http
 					.get(url)
 					.toRx()
-					.map((response) => HttpResponseParser.svg(response))
+					.map((response) => svg(response))
 					.subscribe((element) => {
 						cache.set(url, element);
 						subs.forEach(sub => sub.next(element.cloneNode(true)));
@@ -41,4 +39,14 @@ export class IconStore {
 		}
 		return subject;
 	}
+}
+
+function svg (response: Response): Node {
+	let parser: DOMParser = new DOMParser();
+	let doc: Document = parser.parseFromString(
+		response.text(),
+		'image/svg+xml'
+	);
+	var svg = doc.querySelector('svg');
+	return svg.cloneNode(true);
 }

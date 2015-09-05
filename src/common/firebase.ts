@@ -1,7 +1,7 @@
 import { EventEmitter } from 'angular2/angular2';
 import * as Firebase from 'firebase';
 
-import { isJsObject } from './facade';
+import { isObject } from './lang';
 
 
 /**
@@ -27,7 +27,7 @@ export interface FirebaseArrayValue {
  * Firebase references.
  * It will store all instances of FirebaseArray so that, when an instance with the same reference is to be created,
  * it will use the stored instance instead of creating a new one.
- * 
+ *
  * @private
  */
 
@@ -60,19 +60,7 @@ let _refs: Map<string, any> = new Map();
  * }
  */
 
-export interface IFirebaseArray {
-	entries: Array<any>;
-	indexOf(key: string): number;
-	add(data: any): Firebase;
-	set(key: string, data: any): void;
-	get(key: string): any;
-	update(key: string, data: any): void;
-	move(key: string, priority: any): void;
-	remove(key: string): void;
-	dispose(): void;
-}
-
-export class FirebaseArray implements IFirebaseArray {
+export class FirebaseArray {
 	public entries: Array<any>;
 	private _ref: Firebase;
 	private _emitter: EventEmitter = new EventEmitter();
@@ -252,7 +240,7 @@ export class FirebaseArray implements IFirebaseArray {
 	 * This means that the changes will still be pushed to Firebase,
 	 * but there will be no callbacks and if data is changed from another client, it will not be reflected on the current client.
 	 * It also removes the callback functions added on the class instantiation.
-	 * 
+	 *
 	 * @name dispose
 	 * @memberof FirebaseArray
 	 */
@@ -339,7 +327,7 @@ export class FirebaseArray implements IFirebaseArray {
 }
 
 function applyToBase (base: any, data: any): any {
-	if (!isJsObject(base) || !isJsObject(data)) return data;
+	if (!isObject(base) || !isObject(data)) return data;
 	else {
 		let key: string;
 		for (key in base) {
@@ -353,7 +341,7 @@ function applyToBase (base: any, data: any): any {
 }
 
 function parseForFirebase (data: any): any {
-	if (data && isJsObject(data)) {
+	if (data && isObject(data)) {
 		delete data.key;
 		if (data.hasOwnProperty('value')) data = data.value;
 	}
@@ -362,7 +350,7 @@ function parseForFirebase (data: any): any {
 }
 
 function parseVal (key: string, data: any): any {
-	if (!isJsObject(data) || !data) data = { value: data };
+	if (!isObject(data) || !data) data = { value: data };
 	data.key = key;
 	return data;
 }

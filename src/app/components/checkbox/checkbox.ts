@@ -11,9 +11,8 @@ import {
 	NgControl
 } from 'angular2/angular2';
 
-import { isPresent } from 'common/facade';
+import { isPresent, isNativeShadowDomSupported } from 'common/lang';
 import { KEY_CODES } from 'common/key_codes';
-import { isNativeShadowDOMSupported } from 'common/shadow_dom';
 import { Icon } from '../icon/icon';
 
 @Component({
@@ -41,7 +40,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	encapsulation: isNativeShadowDOMSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'

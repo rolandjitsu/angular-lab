@@ -1,50 +1,40 @@
-import { isFunction } from './facade';
+import { isFunction } from './lang';
 
-let time: Function;
-let ns: number = 0;
 let rAF: (callback: Function) => number = window['requestAnimationFrame'] || window['webkitRequestAnimationFrame'] || window['mozRequestAnimationFrame'];
 let cAF: (rAFId: number) => void = window['cancelAnimationFrame'] || window['webkitCancelAnimationFrame'] || window['webkitCancelRequestAnimationFrame'] || window['mozCancelRequestAnimationFrame'];
 
-function getAnimationEndEventName (): string {
-	let fakeEl: HTMLElement = document.createElement('fakeelement');
+let ns: number = 0;
+if (performance && isFunction(performance.now) && performance.timing) ns = performance.timing.navigationStart;
+
+let animationEndEventName = (() => {
+	let fakeEl: HTMLElement = document.createElement('fake-el');
 	let animationEndEventNames = {
-		'animation': 'animationend',
-		'-o-animation': 'oAnimationEnd',
+		'-webkit-animation': 'webkitAnimationEnd',
 		'-moz-animation': 'animationend',
-		'-webkit-animation': 'webkitAnimationEnd'
+		'-o-animation': 'oAnimationEnd',
+		'animation': 'animationend'
 	};
 	for (let eventName in animationEndEventNames) {
 		if (typeof fakeEl.style[eventName] !== 'undefined') return animationEndEventNames[eventName];
 	}
 	return null;
-}
+})();
 
-if (performance && isFunction(performance.now) && performance.timing) {
-	ns = performance.timing.navigationStart;
-	time = function (): number {
-		return performance.now() + ns;
-	};
-}
-else {
-	time = Date.now;
-}
-
-export class AnimationEndObserver {
+export class AnimationEndObservable {
 	element: Element;
-	event: string = getAnimationEndEventName();
 	handler: EventListener;
 	constructor(element: Element, handler: EventListener) {
 		this.element = element;
 		this.handler = handler;
-		this.element.addEventListener(this.event, this.handler, false);
+		this.element.addEventListener(animationEndEventName, this.handler, false);
 	}
-	static subscribe(element: Element, done: Function, context?: any): AnimationEndObserver {
-		return new AnimationEndObserver(element, event => {
+	static subscribe(element: Element, done: Function, context?: any): AnimationEndObservable {
+		return new AnimationEndObservable(element, event => {
 			done.apply(context, [event]);
 		});
 	}
-	disconnect() {
-		this.element.removeEventListener(this.event, this.handler);
+	dispose() {
+		this.element.removeEventListener(animationEndEventName, this.handler);
 	}
 }
 
