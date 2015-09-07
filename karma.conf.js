@@ -26,18 +26,13 @@ module.exports = function (config) {
 			'jasmine'
 		],
 		files: [
-			// zone-microtask must be included first as it contains a Promise monkey patch
-			'node_modules/angular2/node_modules/zone.js/dist/zone-microtask.js',
-			'node_modules/angular2/node_modules/zone.js/dist/long-stack-trace-zone.js',
-			'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
 			'node_modules/traceur/bin/traceur-runtime.js',
 			'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
-			'node_modules/angular2/node_modules/reflect-metadata/Reflect.js',
-			{
-				pattern: 'node_modules/angular2/**',
-				included: false,
-				watched: false
-			},
+			'node_modules/angular2/bundles/angular2.js',
+			'node_modules/angular2/bundles/router.dev.js',
+			'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
+			'node_modules/angular2/bundles/http.js',
+			'node_modules/angular2/bundles/test_lib.dev.js',
 			// Sources and specs
 			// Loaded through systemjs, in `test.js`
 			{
@@ -46,7 +41,6 @@ module.exports = function (config) {
 				watched: false
 			},
 			'test.js'
-			// 'node_modules/angular2/bundles/http.js'
 		],
 		exclude: [],
 		customLaunchers: sauceConf.launchers,

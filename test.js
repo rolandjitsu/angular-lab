@@ -14,21 +14,23 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 __karma__.loaded = function () {};
 
 // System config
-System.baseURL = '/base/';
-System.defaultJSExtensions = true;
 System.config({
+	packages: {
+		common: {
+			defaultExtension: 'js'
+		},
+		app: {
+			defaultExtension: 'js'
+		}
+	},
 	paths: {
-		'*': 'dist/*',
-		'node_modules/angular2/node_modules/rx/dist/rx.js': 'node_modules/angular2/node_modules/rx/dist/rx.js',
-		'angular2/*': 'node_modules/angular2/*',
-		// 'http/*': 'http/*'
+		'common/*': '/base/dist/common/*',
+		'app/*': '/base/dist/app/*'
 	},
 	meta: {
-		'node_modules/angular2/node_modules/rx/dist/rx.js': { format: 'cjs' },
 		'lib/firebase.js': { format: 'global', exports: 'Firebase' }
 	},
 	map: {
-		rx: 'node_modules/angular2/node_modules/rx/dist/rx.js',
 		firebase: 'lib/firebase.js'
 	}
 });

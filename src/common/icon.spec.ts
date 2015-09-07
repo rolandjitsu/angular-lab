@@ -7,7 +7,7 @@ import {
 	inject,
 	it,
 	SpyObject
-} from 'angular2/test_lib';
+} from 'angular2/test';
 import {
 	Injector,
 	bind

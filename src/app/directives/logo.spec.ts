@@ -8,7 +8,7 @@ import {
 	expect,
 	inject,
 	it
-} from 'angular2/test_lib';
+} from 'angular2/test';
 import {
 	EventEmitter,
 	Injector,

@@ -57,6 +57,6 @@ declare module ngTestLib {
 	class SpyDependencyProvider extends SpyObject {}
 }
 
-declare module "angular2/test_lib" {
+declare module "angular2/test" {
 	export = ngTestLib;
 }
