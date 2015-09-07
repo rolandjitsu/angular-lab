@@ -1,8 +1,8 @@
 # Angular 2 Playground
 
-[![Join the chat at https://gitter.im/rolandjitsu/ng2-play](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-play?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-play.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-play)
 [![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-play.svg)](https://gemnasium.com/rolandjitsu/ng2-play)
+[![Join the chat at https://gitter.im/rolandjitsu/ng2-play](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-play?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 > Minimal setup of [ES6](https://github.com/lukehoban/es6features), [TypeScript](http://www.typescriptlang.org/), [Angular 2.0](https://angular.io/) and [Firebase](https://firebase.com).
 
 All ES6 files are being compiled/transpiled with [TypeScript](http://www.typescriptlang.org/) (because most of the code is a combination of ES6 and TypeScript specific syntax) to ES5 and loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs). Throughout the app, most of the features in Angular 2.0 are being used. Moreover, a fairly simple example of using [three-way](https://www.firebase.com/resources/images/blog/3-way-binding.png) data binding with Firebase written in ES6 (on top of the Firebase [JavaScript API](https://www.firebase.com/docs/web/)) is being illustrated.
