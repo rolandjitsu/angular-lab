@@ -24,7 +24,7 @@ export function isBlank (obj: any): boolean {
 }
 
 export function isString (obj: any): boolean {
-	return typeof obj === "string";
+	return typeof obj === 'string';
 }
 
 export function isFunction (obj: any): boolean {

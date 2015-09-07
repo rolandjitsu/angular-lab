@@ -11,7 +11,6 @@ import {
 } from 'angular2/test';
 import {
 	EventEmitter,
-	Injector,
 	bind,
 	Component,
 	View
@@ -43,10 +42,9 @@ const LOGO_GLYPH_HTML = `
 
 export function main () {
 	describe('logo', () => {
-		var injector: Injector;
 		var backend: MockBackend;
 		var response;
-		
+
 		beforeEachBindings(() => [
 			BaseRequestOptions,
 			MockBackend,
@@ -65,9 +63,9 @@ export function main () {
 			backend = mockBackend;
 			response = new Response({ body: LOGO_GLYPH_HTML });
 		}));
-		
+
 		afterEach(() => backend.verifyNoPendingRequests());
-		
+
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
 			let html = '<div><div class="logo" logo></div></div>';
 			let ee = new EventEmitter();

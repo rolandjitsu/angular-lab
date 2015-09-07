@@ -3,7 +3,6 @@
 		"class-name": true,
 		"forin": true,
 		"indent": [true, 4],
-		"interface-name": true,
 		"jsdoc-format": true,
 		"member-ordering": [
 			true,

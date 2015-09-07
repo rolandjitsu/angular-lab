@@ -43,9 +43,8 @@ import { Icon } from '../icon/icon';
 
 export class TodoItem {
 	private ts: TodoStore;
-	private _subs: Array<any>;
 	private _model: Todo;
-	
+
 	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
 		tsp.then(ts => this.ts = ts);
 	}
@@ -68,7 +67,7 @@ export class TodoItem {
 	}
 
 	onStatusChange(status) {
-		this.ts.update(this.model, <Todo>{	
+		this.ts.update(this.model, <Todo>{
 			completed: !this.model.completed
 		});
 	}
