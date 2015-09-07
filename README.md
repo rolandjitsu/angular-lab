@@ -1,4 +1,6 @@
 # Angular 2 Playground
+
+[![Join the chat at https://gitter.im/rolandjitsu/ng2-play](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-play?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-play.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-play)
 [![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-play.svg)](https://gemnasium.com/rolandjitsu/ng2-play)
 > Minimal setup of [ES6](https://github.com/lukehoban/es6features), [TypeScript](http://www.typescriptlang.org/), [Angular 2.0](https://angular.io/) and [Firebase](https://firebase.com).
