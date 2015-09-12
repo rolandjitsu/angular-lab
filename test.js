@@ -1,6 +1,7 @@
-/* global jasmine */
-/* global __karma__ */
 /* global System */
+/* global __karma__ */
+/* global jasmine */
+/* global window */
 
 // Inspired by https://github.com/angular/angular/blob/master/test-main.js
 
@@ -59,8 +60,7 @@ System
 			__karma__.start();
 		},
 		function (error) {
-			console.error(error.stack || error);
-			__karma__.start();
+			__karma__.error(error.stack || error);
 		}
 	);
 
