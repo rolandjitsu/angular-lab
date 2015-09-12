@@ -1,4 +1,10 @@
-import { Inject, Component, View, ViewEncapsulation, NgFor } from 'angular2/angular2';
+import {
+	Inject,
+	Component,
+	View,
+	ViewEncapsulation,
+	NgFor
+} from 'angular2/angular2';
 
 import { isNativeShadowDomSupported } from 'common/lang';
 import { TodoStore, Todo } from 'app/services';
@@ -9,7 +15,7 @@ import { TodoItem } from '../todo_item/todo_item';
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/todo_list/todo_list.html',
 	styleUrls: [
 		'app/components/todo_list/todo_list.css'

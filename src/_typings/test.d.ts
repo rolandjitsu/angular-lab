@@ -34,10 +34,10 @@ declare module ngTestLib {
 		rttsAssert(value);
 	}
 	function isInInnerZone (): boolean;
-	function createTestInjector(bindings: List<ng.Type | ng.Binding | List<any>>): ng.Injector;
-	function inject(tokens: List<any>, fn: Function): FunctionWithParamTokens;
+	function createTestInjector(bindings: Array<ng.Type | ng.Binding | any[]>): ng.Injector;
+	function inject(tokens: any[], fn: Function): FunctionWithParamTokens;
 	class FunctionWithParamTokens {
-		constructor(tokens: List<any>, fn: Function);
+		constructor(tokens: any[], fn: Function);
 		execute(injector: ng.Injector): any;
 	}
 	class RootTestComponent extends ng.DebugElement {

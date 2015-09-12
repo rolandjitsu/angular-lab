@@ -19,7 +19,7 @@ import {
 	BaseRequestOptions,
 	Response,
 	Http
-} from 'http/http';
+} from 'angular2/http';
 
 import { isObservable } from './lang';
 import { IconStore } from './icon';

@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from 'angular2/angular2';
-import { Http, Response } from 'http/http';
+import { Http, Response } from 'angular2/http';
 import * as Rx from 'rx';
 
 let cache: Map<string, any> = new Map();

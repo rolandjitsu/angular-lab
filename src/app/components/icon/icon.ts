@@ -16,12 +16,12 @@ import { IconStore } from 'common/icon';
 		'src'
 	],
 	lifecycle: [
-		LifecycleEvent.onDestroy
+		LifecycleEvent.OnDestroy
 	]
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.NATIVE : ViewEncapsulation.EMULATED, // EMULATED, NATIVE, NONE (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'

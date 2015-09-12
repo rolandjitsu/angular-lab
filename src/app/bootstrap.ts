@@ -1,5 +1,5 @@
 import { bootstrap, FORM_BINDINGS } from 'angular2/angular2';
-import { HTTP_BINDINGS } from 'http/http';
+import { HTTP_BINDINGS } from 'angular2/http';
 
 import { ROUTER_BINDINGS } from 'common/router';
 

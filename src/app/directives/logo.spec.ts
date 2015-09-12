@@ -22,7 +22,7 @@ import {
 	BaseRequestOptions,
 	Response,
 	Http
-} from 'http/http';
+} from 'angular2/http';
 
 import { isNativeShadowDomSupported } from 'common/lang';
 import { IconStore } from 'common/icon';

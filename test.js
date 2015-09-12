@@ -37,7 +37,7 @@ System.config({
 
 // Import all the specs, execute their `main()` method and kick off Karma (Jasmine)
 System
-	.import('angular2/src/dom/browser_adapter')
+	.import('angular2/src/core/dom/browser_adapter')
 	.then(function (browser_adapter) {
 		browser_adapter.BrowserDomAdapter.makeCurrent();
 	})
