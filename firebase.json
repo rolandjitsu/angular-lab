@@ -1,5 +1,5 @@
 {
-    "firebase": "ng2-play",
+    "firebase": "ng2-lab",
     "public": "dist",
     "ignore": [
         "bower_components",

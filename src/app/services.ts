@@ -6,7 +6,7 @@ import { TodoStore } from './services/todo';
 
 export * from './services/todo';
 
-let root: Firebase =  new Firebase('https://ng2-play.firebaseio.com');
+let root: Firebase =  new Firebase('https://ng2-lab.firebaseio.com');
 let firebaseRef = {};
 
 export const SERVICES_BINDINGS: Array<any> = [

@@ -47,7 +47,7 @@ export class App {
 	loading: boolean = true;
 	constructor(private elementRef: ElementRef, router: Router) {
 		let that: App = this;
-		let root: Firebase = new Firebase('https://ng2-play.firebaseio.com');
+		let root: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 
 		root.onAuth(auth => {
 			if (auth === null) root.authAnonymously(() => {});

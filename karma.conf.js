@@ -1,8 +1,8 @@
-/// <reference path="tsd_typings/node/node.d.ts"/>
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
 
-var sauceConf = require('./sauce.conf');
-var sauceLabsConfig = {
+import { SAUCE_LAUNCHERS } from './sauce.conf';
+
+let sauceLabsConfig = {
 	testName: 'NG2 Play - UNIT',
 	startConnect: false,
 	recordVideo: false,
@@ -20,7 +20,7 @@ if (process.env.TRAVIS) {
 	sauceLabsConfig.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
 }
 
-module.exports = function (config) {
+export default function (config) {
 	config.set({
 		frameworks: [
 			'jasmine'
@@ -43,7 +43,7 @@ module.exports = function (config) {
 			'test.js'
 		],
 		exclude: [],
-		customLaunchers: sauceConf.launchers,
+		customLaunchers: SAUCE_LAUNCHERS,
 		browsers: [
 			'Chrome'
 		],

@@ -1,9 +1,9 @@
 {
-	"name": "ng2-play",
+	"name": "ng2-lab",
 	"version": "0.0.0",
 	"description": "Angular 2 Playground",
 	"keywords": [],
-	"homepage": "https://ng2-play.firebaseapp.com",
+	"homepage": "https://ng2-lab.firebaseapp.com",
 	"license": "MIT",
 	"author": {
 		"name": "Roland Groza",
@@ -12,7 +12,7 @@
 	"main": "",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/rolandjitsu/ng2-play"
+		"url": "https://github.com/rolandjitsu/ng2-lab"
 	},
 	"scripts": {
 		"play": "./node_modules/.bin/gulp play",
