@@ -49,15 +49,13 @@ Therefore, is safe to assume that only [evergreen](http://eisenbergeffect.bluesp
 #### Learning Material
 ----------------------
 - [Angular Docs](https://angular.io)
-- Angular 2 - [Routing](http://blog.thoughtram.io/angularjs/2015/02/19/futuristic-routing-in-angular.html)
-- Angular 2 - [Template Syntax](http://victorsavkin.com/post/119943127151/angular-2-template-syntax)
-- Angular 2 - [Forms](https://ngforms.firebaseapp.com)
-- ECMAScript (*Offical Strawman*) - [Types](http://wiki.ecmascript.org/doku.php?id=strawman:types&s=types)
-- Firebase - [Synchronized Arrays](https://www.firebase.com/blog/2014-05-06-synchronized-arrays.html)
-- Traceur - [ES6 Language Features](https://github.com/google/traceur-compiler/wiki/LanguageFeatures)
+- [Routing](http://blog.thoughtram.io/angularjs/2015/02/19/futuristic-routing-in-angular.html)
+- [Template Syntax](http://victorsavkin.com/post/119943127151/angular-2-template-syntax)
+- [Forms](https://ngforms.firebaseapp.com)
+- [DI](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
 - [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM)
 - [Angular 2 Education](https://github.com/timjacobi/angular2-education)
-- [Dependency Injection in Angular 2](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
+- [Awsome Angular 2](https://github.com/angular-class/awesome-angular2)
 
 
 #### Credits
