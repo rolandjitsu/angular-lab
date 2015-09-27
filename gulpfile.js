@@ -206,7 +206,6 @@ gulp.task('bundle/!ipsr', function (done) { // Bundle if play server is not runn
 
 
 // Code integrity
-
 gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-rules
 	return gulp
 		.src(PATHS.src.ts)
@@ -325,8 +324,16 @@ gulp.task('test', ['bundle/!ipsr'], function (done) {
 });
 
 
-// Play
+// Web server
+gulp.task('server', function () {
+	connect.server({
+		root: PATHS.dist,
+		port: 8000
+	});
+});
 
+
+// Play
 gulp.task('play', function (done) {
 	isEngineIOServerRunning(PLAY_SERVER_PORT).then(
 		function () {
@@ -361,6 +368,8 @@ gulp.task('play', function (done) {
 	);
 });
 
+
+// Default task
 gulp.task('default', [
 	'play'
 ]);
