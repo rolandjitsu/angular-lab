@@ -15,6 +15,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 2000;
 __karma__.loaded = function () {};
 
 // System config
+System.warnings = true;
 System.config({
 	packages: {
 		common: {

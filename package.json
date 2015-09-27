@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"angular2": "2.0.0-alpha.37",
-		"systemjs": "0.18.x",
+		"systemjs": "0.19.x",
 		"traceur": "^0.0.91"
 	},
 	"devDependencies": {
@@ -36,8 +36,8 @@
 		"gulp-rename": "1.2.x",
 		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.5.x",
-		"gulp-tslint": "3.2.x",
-		"gulp-typescript": "2.8.x",
+		"gulp-tslint": "3.3.x",
+		"gulp-typescript": "2.9.x",
 		"gulp-util": "3.0.x",
 		"gulp-watch": "4.3.x",
 		"jasmine": "2.3.x",
