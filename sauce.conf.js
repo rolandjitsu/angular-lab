@@ -10,7 +10,7 @@ var launchers = {
 	'SL_CHROME': {
 		base: 'SauceLabs',
 		browserName: 'chrome',
-		version: '43'
+		version: '44'
 	},
 	'SL_CHROME_BETA': {
 		base: 'SauceLabs',
@@ -59,7 +59,7 @@ var launchers = {
 		base: 'SauceLabs',
 		browserName: 'iphone',
 		platform: 'OS X 10.10',
-		version: '8.2'
+		version: '8.4'
 	},
 	'SL_IE_9': {
 		base: 'SauceLabs',
@@ -135,21 +135,21 @@ var aliases = {
 	'BETA': ['SL_CHROME_BETA', 'SL_FIREFOX_BETA'],
 	'DEV': ['SL_CHROME_DEV', 'SL_FIREFOX_DEV'],
 	'CI': [
-		'SL_CHROME',
-		'SL_SAFARI_7',
-		'SL_SAFARI_8',
-		'SL_IOS_7',
-		'SL_IOS_8',
-		'SL_FIREFOX',
-		'SL_IE_9',
-		'SL_IE_10',
-		'SL_IE_11',
-		'SL_EDGE',
-		'SL_ANDROID_4.1',
-		'SL_ANDROID_4.2',
-		'SL_ANDROID_4.3',
-		'SL_ANDROID_4.4',
-		'SL_ANDROID_5.1'
+		'SL_CHROME'
+		// 'SL_SAFARI_7',
+		// 'SL_SAFARI_8',
+		// 'SL_IOS_7',
+		// 'SL_IOS_8',
+		// 'SL_FIREFOX',
+		// 'SL_IE_9',
+		// 'SL_IE_10',
+		// 'SL_IE_11',
+		// 'SL_EDGE',
+		// 'SL_ANDROID_4.1',
+		// 'SL_ANDROID_4.2',
+		// 'SL_ANDROID_4.3',
+		// 'SL_ANDROID_4.4',
+		// 'SL_ANDROID_5.1'
 	]
 };
 
