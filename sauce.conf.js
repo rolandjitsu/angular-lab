@@ -79,29 +79,16 @@ var launchers = {
 		platform: 'Windows 8.1',
 		version: '11'
 	},
-	'SL_ANDROID_5.1': {
+	'SL_EDGE': {
 		base: 'SauceLabs',
-		browserName: 'android',
-		platform: 'Linux',
-		version: '5.1'
+		browserName: 'microsoftedge',
+		platform: 'Windows 10'
 	},
-	'SL_ANDROID_4.4': {
+	'SL_ANDROID_4.0': {
 		base: 'SauceLabs',
 		browserName: 'android',
 		platform: 'Linux',
-		version: '4.4'
-	},
-	'SL_ANDROI_D4.3': {
-		base: 'SauceLabs',
-		browserName: 'android',
-		platform: 'Linux',
-		version: '4.3'
-	},
-	'SL_ANDROID_4.2': {
-		base: 'SauceLabs',
-		browserName: 'android',
-		platform: 'Linux',
-		version: '4.2'
+		version: '4.0'
 	},
 	'SL_ANDROID_4.1': {
 		base: 'SauceLabs',
@@ -109,11 +96,29 @@ var launchers = {
 		platform: 'Linux',
 		version: '4.1'
 	},
-	'SL_ANDROID_4.0': {
+	'SL_ANDROID_4.2': {
 		base: 'SauceLabs',
 		browserName: 'android',
 		platform: 'Linux',
-		version: '4.0'
+		version: '4.2'
+	},
+	'SL_ANDROID_4.3': {
+		base: 'SauceLabs',
+		browserName: 'android',
+		platform: 'Linux',
+		version: '4.3'
+	},
+	'SL_ANDROID_4.4': {
+		base: 'SauceLabs',
+		browserName: 'android',
+		platform: 'Linux',
+		version: '4.4'
+	},
+	'SL_ANDROID_5.1': {
+		base: 'SauceLabs',
+		browserName: 'android',
+		platform: 'Linux',
+		version: '5.1'
 	}
 };
 
@@ -121,7 +126,7 @@ var aliases = {
 	'ALL': Object.keys(launchers).filter(function (item) {
 		return launchers[item].base == 'SauceLabs';
 	}),
-	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE_9', 'SL_IE_10', 'SL_IE_11', 'SL_SAFARI_7', 'SL_SAFARI_8'],
+	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE_9', 'SL_IE_10', 'SL_IE_11', 'SL_EDGE', 'SL_SAFARI_7', 'SL_SAFARI_8'],
 	'MOBILE': ['SL_ANDROID_4.0', 'SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1', 'SL_IOS_7', 'SL_IOS_8'],
 	'ANDROID': ['SL_ANDROID_4.0', 'SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1'],
 	'IE': ['SL_IE_9', 'SL_IE_10', 'SL_IE_11'],
@@ -129,7 +134,23 @@ var aliases = {
 	'SAFARI': ['SL_SAFARI_7', 'SL_SAFARI_8'],
 	'BETA': ['SL_CHROME_BETA', 'SL_FIREFOX_BETA'],
 	'DEV': ['SL_CHROME_DEV', 'SL_FIREFOX_DEV'],
-	'CI': ['SL_CHROME', 'SL_FIREFOX']
+	'CI': [
+		'SL_CHROME',
+		'SL_SAFARI_7',
+		'SL_SAFARI_8',
+		'SL_IOS_7',
+		'SL_IOS_8',
+		'SL_FIREFOX',
+		'SL_IE_9',
+		'SL_IE_10',
+		'SL_IE_11',
+		'SL_EDGE',
+		'SL_ANDROID_4.1',
+		'SL_ANDROID_4.2',
+		'SL_ANDROID_4.3',
+		'SL_ANDROID_4.4',
+		'SL_ANDROID_5.1'
+	]
 };
 
 module.exports = {
