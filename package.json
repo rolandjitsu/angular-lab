@@ -54,7 +54,7 @@
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
 		"typescript": "next",
-		"yargs": "3.24.x"
+		"yargs": "3.26.x"
 	},
 	"private": true
 }
