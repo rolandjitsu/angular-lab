@@ -15,7 +15,7 @@
 		"url": "https://github.com/rolandjitsu/ng2-play"
 	},
 	"scripts": {
-		"start": "./node_modules/.bin/gulp play",
+		"play": "./node_modules/.bin/gulp play",
 		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
@@ -24,6 +24,7 @@
 		"traceur": "^0.0.91"
 	},
 	"devDependencies": {
+		"babel-core": "5.8.x",
 		"bower": "1.5.x",
 		"del": "2.0.x",
 		"engine.io-client": "1.5.x",

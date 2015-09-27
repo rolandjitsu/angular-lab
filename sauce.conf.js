@@ -1,4 +1,4 @@
-var launchers = {
+export const SAUCE_LAUNCHERS = {
 	// Use Chromium preinstalled with Travis VM
 	// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
 	'CHROME_TRAVIS_CI': {
@@ -122,9 +122,9 @@ var launchers = {
 	}
 };
 
-var aliases = {
-	'ALL': Object.keys(launchers).filter(function (item) {
-		return launchers[item].base == 'SauceLabs';
+export const SAUCE_ALIASES = {
+	'ALL': Object.keys(SAUCE_LAUNCHERS).filter(function (item) {
+		return SAUCE_LAUNCHERS[item].base == 'SauceLabs';
 	}),
 	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE_9', 'SL_IE_10', 'SL_IE_11', 'SL_EDGE', 'SL_SAFARI_7', 'SL_SAFARI_8'],
 	'MOBILE': ['SL_ANDROID_4.0', 'SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1', 'SL_IOS_7', 'SL_IOS_8'],
@@ -152,8 +152,3 @@ var aliases = {
 		// 'SL_ANDROID_5.1'
 	]
 };
-
-module.exports = {
-	launchers: launchers,
-	aliases: aliases
-}
