@@ -57,5 +57,8 @@
 		"typescript": "next",
 		"yargs": "3.26.x"
 	},
+	"engines": {
+		"node": "0.12.x"
+	},
 	"private": true
 }
