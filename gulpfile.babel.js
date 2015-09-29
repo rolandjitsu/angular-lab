@@ -241,7 +241,9 @@ gulp.task('test:unit/single', (done) => { // Run unit tests once in local env
 	let config = assign({}, karmaConf, {
 		singleRun: true
 	});
-	let server = new karma.Server(config, done);
+	let server = new karma.Server(config, () => {
+		done();
+	});
 	server.start();
 });
 
