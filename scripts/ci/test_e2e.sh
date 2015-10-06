@@ -19,4 +19,4 @@ if [[ -n "$E2E_BROWSERS" ]]; then
 	OPTIONS="--browsers=$E2E_BROWSERS";
 fi
 
-./node_modules/.bin/protractor protractor.conf.js
+./node_modules/.bin/protractor protractor.config.js

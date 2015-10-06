@@ -3,14 +3,10 @@ import {
 	ViewEncapsulation,
 	Component,
 	View,
-	NgIf,
-	NgControlName,
-	NgModel,
-	NgForm,
-	DefaultValueAccessor,
-	NgRequiredValidator
+	CORE_DIRECTIVES,
+	FORM_DIRECTIVES
 } from 'angular2/angular2';
-import { ComponentInstruction, OnActivate, OnDeactivate } from 'angular2/router';
+import { ComponentInstruction, OnActivate, OnDeactivate, CanActivate } from 'angular2/router';
 
 import { isNativeShadowDomSupported } from 'common/lang';
 import { TodoStore, TodoModel } from 'app/services';
@@ -26,21 +22,22 @@ class TodosFormModel {
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/todos/todos.html',
 	styleUrls: [
 		'app/components/todos/todos.css'
 	],
 	directives: [
-		NgIf,
-		NgControlName,
-		NgModel,
-		NgForm,
-		DefaultValueAccessor,
-		NgRequiredValidator,
+		CORE_DIRECTIVES,
+		FORM_DIRECTIVES,
 		Icon,
 		TodoList
 	]
+})
+
+@CanActivate(() => {
+	return true;
 })
 
 export class Todos implements OnActivate, OnDeactivate {

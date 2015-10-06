@@ -1,4 +1,5 @@
 import {
+	RootTestComponent,
 	AsyncTestCompleter,
 	TestComponentBuilder,
 	afterEach,
@@ -8,7 +9,7 @@ import {
 	expect,
 	inject,
 	it
-} from 'angular2/test';
+} from 'angular2/test_lib';
 import {
 	EventEmitter,
 	bind,
@@ -20,6 +21,7 @@ import {
 	MockConnection,
 	ConnectionBackend,
 	BaseRequestOptions,
+	ResponseOptions,
 	Response,
 	Http
 } from 'angular2/http';
@@ -54,14 +56,21 @@ export function main () {
 				MockBackend,
 				BaseRequestOptions
 			]),
-			bind(IconStore).toClass(IconStore, [
-				Http
-			])
+			bind(IconStore).toFactory(
+				(http: Http) => {
+					return new IconStore(http);
+				},
+				[
+					Http
+				]
+			)
 		]);
 
 		beforeEach(inject([MockBackend], (mockBackend) => {
 			backend = mockBackend;
-			response = new Response({ body: LOGO_GLYPH_HTML });
+			response = new Response(
+				new ResponseOptions({ body: LOGO_GLYPH_HTML })
+			);
 		}));
 
 		afterEach(() => backend.verifyNoPendingRequests());
@@ -78,14 +87,15 @@ export function main () {
 			tcb
 				.overrideTemplate(Test, html)
 				.createAsync(Test)
-				.then((rootTC) => {
+				.then((rootTC: RootTestComponent) => {
 					rootTC.detectChanges();
-					let rtc = rootTC;
+					let rtc: RootTestComponent = rootTC;
 					ee.observer({
 						next: () => {
 							rtc.detectChanges();
-							let logo: Element = rtc.nativeElement.querySelector('.logo');
-							let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : ''; // soon use '>>>' https://www.chromestatus.com/features/6750456638341120
+							let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
+							// let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
+							let prefixSelector = '';
 							expect(logo.querySelector(prefixSelector + 'svg')).not.toBe(null);
 							async.done();
 						}

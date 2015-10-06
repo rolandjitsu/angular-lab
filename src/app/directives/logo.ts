@@ -1,5 +1,5 @@
 import {
-	LifecycleEvent,
+	Inject,
 	ElementRef,
 	Directive,
 	OnDestroy
@@ -9,18 +9,15 @@ import { isNativeShadowDomSupported } from 'common/lang';
 import { IconStore } from 'common/icon';
 
 @Directive({
-	selector: '[logo]',
-	lifecycle: [
-		LifecycleEvent.OnDestroy
-	]
+	selector: '[logo]'
 })
 
 export class Logo implements OnDestroy {
 	el;
-	constructor(private elementRef: ElementRef,	public icon: IconStore) {
+	constructor(@Inject(ElementRef) private elementRef,	public icon: IconStore) {
 		let that: Logo = this;
 		this.el = this.elementRef.nativeElement;
-		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
+		// if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
 		icon.get('media/ng.svg').observer({
 			next: (svg) => {
 				that.el.appendChild(svg);

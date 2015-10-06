@@ -1,46 +1,47 @@
 import {
+	Input,
+	Output,
+	HostBinding,
+	HostListener,
 	EventEmitter,
-	Renderer,
-	ElementRef,
 	Component,
 	View,
 	Self,
 	Attribute,
 	ViewEncapsulation,
 	ControlValueAccessor,
-	NgControl
+	NgControl,
+	OpaqueToken,
+	forwardRef,
+	Binding
 } from 'angular2/angular2';
 
 import { isPresent, isNativeShadowDomSupported } from 'common/lang';
 import { KEY_CODES } from 'common/key_codes';
 import { Icon } from '../icon/icon';
 
-@Component({
-	selector: 'checkbox',
-	events: ['change'],
-	properties: [
-		'checked',
-		'disabled'
-	],
-	host: {
-		'(keydown)': 'onKeydown($event)',
-		'(change)': 'onChange($event)',
-		'(blur)': 'onTouched()',
-		'[tabindex]': 'tabindex',
-		'[attr.aria-checked]': 'checked',
-		'[attr.aria-disabled]': 'disabled',
-		'[class.ng-untouched]': 'ngClassUntouched',
-		'[class.ng-touched]': 'ngClassTouched',
-		'[class.ng-pristine]': 'ngClassPristine',
-		'[class.ng-dirty]': 'ngClassDirty',
-		'[class.ng-valid]': 'ngClassValid',
-		'[class.ng-invalid]': 'ngClassInvalid',
-		'role': 'checkbox'
+const NG_VALUE_ACCESSOR: OpaqueToken = new OpaqueToken('NgValueAccessor');
+const CHECKBOX_VALUE_ACCESSOR = new Binding(
+	NG_VALUE_ACCESSOR,
+	{
+		toAlias: forwardRef(() => Checkbox),
+		multi: true
 	}
+);
+
+@Component({
+	selector: 'checkbox[ng-control], checkbox[ng-form-control], checkbox[ng-model]',
+	bindings: [
+		CHECKBOX_VALUE_ACCESSOR
+	],
+	inputs: [
+		'disabled'
+	]
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'
@@ -51,40 +52,45 @@ import { Icon } from '../icon/icon';
 })
 
 export class Checkbox implements ControlValueAccessor {
-	checked: boolean = false;
-	change: EventEmitter = new EventEmitter();
-	tabindex: number;
-	onChange: Function = () => {};
+	@Input('checked') _checked: boolean = false;
+	@Output() change: EventEmitter = new EventEmitter();
+
+	@HostListener('change', [
+		'$event.target.value'
+	])
+	onChange: Function = (_) => {};
+
+	@HostListener('blur', [
+		'$event'
+	])
 	onTouched: Function = () => {};
+
+	private _tabindex: number;
 	private _disabled: boolean = false;
-	private cd: NgControl;
 
-	constructor(@Self() cd: NgControl, private renderer: Renderer, private elementRef: ElementRef, @Attribute('tabindex') tabindex: string) {
-		this.cd = cd;
-		this.tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
-		cd.valueAccessor = this;
+	constructor(@Self() cd: NgControl, @Attribute('tabindex') tabindex: string) {
+		this._tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
+		cd.valueAccessor = this; // validation will not work if we don't set the control's value accessor
 	}
 
-	get ngClassUntouched(): boolean {
-		return isPresent(this.cd.control) ? this.cd.control.untouched : false;
+	@HostBinding('attr.tabindex')
+	get tabindex(): number {
+		return this._tabindex;
 	}
-	get ngClassTouched(): boolean {
-		return isPresent(this.cd.control) ? this.cd.control.touched : false;
+
+	@HostBinding('attr.aria-checked')
+	get checked(): boolean {
+		return this._checked;
 	}
-	get ngClassPristine(): boolean {
-		return isPresent(this.cd.control) ? this.cd.control.pristine : false;
-	}
-	get ngClassDirty(): boolean {
-		return isPresent(this.cd.control) ? this.cd.control.dirty : false;
-	}
-	get ngClassValid(): boolean {
-		return isPresent(this.cd.control) ? this.cd.control.valid : false;
-	}
-	get ngClassInvalid(): boolean {
-		return isPresent(this.cd.control) ? !this.cd.control.valid : false;
-	}
+
+	@HostBinding('attr.aria-disabled')
 	get disabled() {
 		return this._disabled;
+	}
+
+	@HostBinding('attr.role')
+	get role(): string {
+		return 'checkbox';
 	}
 
 	set disabled(value) {
@@ -93,19 +99,23 @@ export class Checkbox implements ControlValueAccessor {
 
 	toggle(event) {
 		if (this.disabled) return event.stopPropagation();
-		this.checked = !this.checked;
-		this.change.next(this.checked);
+		this._checked = !this._checked;
+		// this.onChange(this._checked);
+		this.change.next(this._checked); // throws exception, will be fixed in next alpha version
 	}
-	registerOnChange(fn: (_: any) => {}): void {
+	registerOnChange(fn: (_: any) => void): void {
 		this.onChange = fn;
 	}
-	registerOnTouched(fn: () => {}): void {
+	registerOnTouched(fn: () => void): void {
 		this.onTouched = fn;
 	}
-	writeValue(value: any) {
-		this.checked = value;
+	writeValue(value: any): void {
+		this._checked = value;
 	}
 
+	@HostListener('keydown', [
+		'$event'
+	])
 	onKeydown(event: KeyboardEvent) {
 		if (event.keyCode !== KEY_CODES.SPACE) return;
 		event.preventDefault();

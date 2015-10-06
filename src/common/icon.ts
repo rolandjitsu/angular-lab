@@ -1,21 +1,20 @@
-import { Injectable, EventEmitter } from 'angular2/angular2';
+import { EventEmitter } from 'angular2/angular2';
 import { Http, Response } from 'angular2/http';
-import * as Rx from 'rx';
 
-let cache: Map<string, any> = new Map();
+import { Animation } from './animation';
 
-@Injectable()
+let cache: Map<any, any> = new Map();
+
 export class IconStore {
-	queue: Map<string, any> = new Map();
+	queue: Map<any, any> = new Map();
 	constructor(private http: Http) {}
 	get(url: string): EventEmitter {
 		let that: IconStore = this;
 		let subject: EventEmitter = new EventEmitter();
 		if (cache.has(url)) {
-			// https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/schedulers/scheduler.md#rxschedulerdefault
 			// delay the next tick until the subject is returned, otherwise the subscriber will not be notified about the next tick if called before return
-			let scheduler: Rx.Scheduler = Rx.Scheduler.default;
-			scheduler.schedule(() => {
+			// TODO: make sure that this happens after the promise has been returned
+			Animation.rAF(function () {
 				subject.next(cache.get(url).cloneNode(true));
 			});
 		}
@@ -28,7 +27,6 @@ export class IconStore {
 				subs.push(subject);
 				this.http
 					.get(url)
-					.toRx()
 					.map((response) => svg(response))
 					.subscribe((element) => {
 						cache.set(url, element);

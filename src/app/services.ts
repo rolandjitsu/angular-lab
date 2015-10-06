@@ -1,4 +1,5 @@
 import { bind } from 'angular2/angular2';
+import { Http } from 'angular2/http';
 
 import { Defer } from 'common/async';
 import { IconStore } from 'common/icon';
@@ -10,7 +11,12 @@ let root: Firebase =  new Firebase('https://ng2-lab.firebaseio.com');
 let firebaseRef = {};
 
 export const SERVICES_BINDINGS: Array<any> = [
-	bind(IconStore).toClass(IconStore),
+	bind(IconStore).toFactory(
+		(http: Http) => {
+			return new IconStore(http);
+		},
+		[Http]
+	),
 	bind(TodoStore).toFactory((promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)), [
 		firebaseRef
 	]),

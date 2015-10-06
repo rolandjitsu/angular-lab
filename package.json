@@ -1,7 +1,7 @@
 {
 	"name": "ng2-lab",
 	"version": "0.0.0",
-	"description": "Angular 2 Playground",
+	"description": "Angular 2 Laboratory",
 	"keywords": [],
 	"homepage": "https://ng2-lab.firebaseapp.com",
 	"license": "MIT",
@@ -15,13 +15,13 @@
 		"url": "https://github.com/rolandjitsu/ng2-lab"
 	},
 	"scripts": {
-		"play": "./node_modules/.bin/gulp play",
+		"start": "./node_modules/.bin/gulp start",
 		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.37",
+		"angular2": "2.0.0-alpha.38",
 		"systemjs": "0.19.x",
-		"traceur": "^0.0.91"
+		"es6-shim": "0.33.x"
 	},
 	"devDependencies": {
 		"babel-core": "5.8.x",
@@ -50,7 +50,7 @@
 		"karma-sauce-launcher": "0.2.x",
 		"minimist": "1.2.x",
 		"object-assign": "4.0.x",
-		"protractor": "2.3.x",
+		"protractor": "2.4.x",
 		"q": "1.4.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",

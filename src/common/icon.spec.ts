@@ -7,7 +7,7 @@ import {
 	inject,
 	it,
 	SpyObject
-} from 'angular2/test';
+} from 'angular2/test_lib';
 import {
 	Injector,
 	bind
@@ -17,6 +17,7 @@ import {
 	MockConnection,
 	ConnectionBackend,
 	BaseRequestOptions,
+	ResponseOptions,
 	Response,
 	Http
 } from 'angular2/http';
@@ -45,13 +46,20 @@ export function main () {
 					MockBackend,
 					BaseRequestOptions
 				]),
-				bind(IconStore).toClass(IconStore, [
-					Http
-				])
+				bind(IconStore).toFactory(
+					(http: Http) => {
+						return new IconStore(http);
+					},
+					[
+						Http
+					]
+				)
 			]);
 			backend = injector.get(MockBackend);
 			store = injector.get(IconStore);
-			response = new Response({ body: SVG_GLYPH_HTML });
+			response = new Response(
+				new ResponseOptions({ body: SVG_GLYPH_HTML })
+			);
 			glyph = createGlyphNode();
 		});
 
@@ -95,7 +103,7 @@ export function main () {
 }
 
 class BackendConnectionSpy extends SpyObject {
-	onEstablish: jasmine.Spy;
+	onEstablish: any;
 	constructor() {
 		super();
 		this.onEstablish = this.spy('onEstablish');

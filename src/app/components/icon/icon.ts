@@ -1,5 +1,5 @@
 import {
-	LifecycleEvent,
+	Inject,
 	ElementRef,
 	Component,
 	View,
@@ -12,16 +12,14 @@ import { IconStore } from 'common/icon';
 
 @Component({
 	selector: 'icon',
-	properties: [
+	inputs: [
 		'src'
-	],
-	lifecycle: [
-		LifecycleEvent.OnDestroy
 	]
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'
@@ -30,9 +28,9 @@ import { IconStore } from 'common/icon';
 
 export class Icon implements OnDestroy {
 	el;
-	constructor(private elementRef: ElementRef, public icon: IconStore) {
+	constructor(@Inject(ElementRef) private elementRef, public icon: IconStore) {
 		this.el = this.elementRef.nativeElement;
-		if (isNativeShadowDomSupported) this.el = this.el.shadowRoot;
+		// if (isNativeShadowDomSupported) this.el = this.el.shadowRoot;
 	}
 	set src(src: string) {
 		let that: Icon = this;

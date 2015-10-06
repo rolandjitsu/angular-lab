@@ -1,6 +1,6 @@
 export class Defer<R> {
 	promise: Promise<R>;
-	resolve: (value?: R | Thenable<R>) => void;
+	resolve: (value?: R | PromiseLike<R>) => void;
 	reject: (error?: any) => void;
 	constructor() {
 		let that: Defer<R> = this;

@@ -1,6 +1,6 @@
-/// <reference path="tsd_typings/angular-protractor/angular-protractor.d.ts"/>
+import yargs from 'yargs';
 
-var argv = require('yargs')
+let argv = yargs
 	.usage('Angular e2e test options.')
 	.options({
 		'browsers': {
@@ -12,16 +12,16 @@ var argv = require('yargs')
 	.wrap(40)
 	.argv
 
-var browsers = argv['browsers'].split(',');
+let browsers = argv['browsers'].split(',');
 
-var CHROME_OPTIONS = {
+const CHROME_OPTIONS = {
 	'args': ['--js-flags=--expose-gc'],
 	'perfLoggingPrefs': {
 		'traceCategories': 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
 	}
 };
 
-var CHROME_MOBILE_EMULATION = {
+const CHROME_MOBILE_EMULATION = {
 	// Can't use 'deviceName':'Google Nexus 7 2'
 	// as this would yield wrong orientation,
 	// so we specify facts explicitly
@@ -32,7 +32,7 @@ var CHROME_MOBILE_EMULATION = {
 	}
 };
 
-var BROWSER_CAPS = {
+const BROWSER_CAPS = {
 	ChromeDesktop: {
 		browserName: 'chrome',
 		chromeOptions: merge(CHROME_OPTIONS, {
@@ -69,10 +69,10 @@ var BROWSER_CAPS = {
 	}
 };
 
-exports.config = {
+let config = {
 	baseUrl: 'http://localhost:8000/',
 	// restartBrowserBetweenTests: true,
-	onPrepare: function () {
+	onPrepare: () => {
 		// remove this hack and use the config option
 		// restartBrowserBetweenTests once that is not hanging.
 		// See https://github.com/angular/protractor/issues/1983
@@ -82,10 +82,10 @@ exports.config = {
 		'dist/**/*.e2e.js'
 	],
 	exclude: [],
-	multiCapabilities: browsers.map(function (browserName) {
-		var caps = BROWSER_CAPS[browserName];
+	multiCapabilities: browsers.map((browserName) => {
+		let caps = BROWSER_CAPS[browserName];
 		console.log('Testing against', browserName);
-		if (!caps) throw new Error('Not configured browser name: '+browserName);
+		if (!caps) throw new Error('Not configured browser name: ' + browserName);
 		return caps;
 	}),
 	framework: 'jasmine2',
@@ -95,22 +95,40 @@ exports.config = {
 	}
 };
 
+export { config };
+
 
 // Disable waiting for Angular as there isn't an integration layer yet.
 // Wait for a proper debugging API implementation for Ng2.0, remove this here
 // and the sleeps in all tests.
 function patchProtractorWait (browser) {
 	browser.ignoreSynchronization = true;
-	var _get = browser.get;
-	var sleepInterval = process.env.TRAVIS ? 14000 : 8000;
-	browser.get = function () {
-		var result = _get.apply(this, arguments);
-		browser.driver.wait(protractor.until.elementLocated(By.js('var cs = document.body.children; var isLoading = false; for (var i = 0; i < cs.length; i++) {if (cs[i].textContent.indexOf("Loading...") > -1) isLoading = true; } return !isLoading ? document.body.children : null')), sleepInterval);
+	// Benchmarks never need to wait for Angular 2 to be ready
+	let _get = browser.get;
+	let sleepInterval = process.env.TRAVIS ? 14000 : 8000;
+	browser.get = () => {
+		let result = _get.apply(this, arguments);
+		browser.driver.wait(
+			protractor.until.elementLocated(By.js(() => {
+				let isLoading = true;
+				if (window.getAllAngularTestabilities) {
+					let testabilities = window.getAllAngularTestabilities();
+					if (testabilities && testabilities.length > 0) {
+						isLoading = false;
+						testabilities.forEach((testability) => {
+							if (!testability.isStable()) isLoading = true;
+						});
+					}
+				}
+				return !isLoading ? document.body.children : null;
+			})),
+			sleepInterval
+		);
 		return result;
 	}
 }
 
 function merge (src, target) {
-	for (var prop in src) target[prop] = src[prop];
+	for (let prop in src) target[prop] = src[prop];
 	return target;
 }

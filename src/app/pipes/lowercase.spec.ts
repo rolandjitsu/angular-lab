@@ -3,7 +3,7 @@ import {
 	it,
 	expect,
 	beforeEach
-} from 'angular2/test';
+} from 'angular2/test_lib';
 
 import { LowerCasePipe } from './lowercase';
 

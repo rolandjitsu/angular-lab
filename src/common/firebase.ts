@@ -31,7 +31,7 @@ export interface FirebaseArrayValue {
  * @private
  */
 
-let _refs: Map<string, any> = new Map();
+let _refs: Map<any, any> = new Map();
 
 
 /**

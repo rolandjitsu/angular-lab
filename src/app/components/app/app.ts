@@ -1,12 +1,12 @@
 import {
+	Inject,
 	ElementRef,
 	Component,
-	ViewMetadata,
 	View,
-	NgClass,
+	CORE_DIRECTIVES,
 	ViewEncapsulation
 } from 'angular2/angular2';
-import { Router, RouteConfig, RouterOutlet, RouterLink } from 'angular2/router';
+import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { isNativeShadowDomSupported } from 'common/lang';
 import { Animation, AnimationEndObservable } from 'common/animation';
@@ -18,16 +18,16 @@ import { Todos } from '../todos/todos';
 	selector: 'app'
 })
 
-@View(<ViewMetadata>{
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+@View({
+	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
 	],
 	directives: [
-		NgClass,
-		RouterOutlet,
-		RouterLink,
+		CORE_DIRECTIVES,
+		ROUTER_DIRECTIVES,
 		Logo
 	],
 	pipes: [
@@ -39,13 +39,13 @@ import { Todos } from '../todos/todos';
 	{
 		component: Todos,
 		path: '/',
-		as: 'todos'
+		as: 'Todos'
 	}
 ])
 
 export class App {
 	loading: boolean = true;
-	constructor(private elementRef: ElementRef, router: Router) {
+	constructor(@Inject(ElementRef) private elementRef, router: Router) {
 		let that: App = this;
 		let root: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 
@@ -66,7 +66,8 @@ export class App {
 		 */
 
 		let el: Element = this.elementRef.nativeElement;
-		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
+		// let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
+		let prefixSelector = '';
 		let main: Element = el.querySelector(prefixSelector + '.js-main');
 		let logo: Element = el.querySelector(prefixSelector + '.js-logo');
 		let mainSub = AnimationEndObservable.subscribe(

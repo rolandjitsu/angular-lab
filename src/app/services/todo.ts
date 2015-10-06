@@ -1,4 +1,3 @@
-import { Injectable } from 'angular2/angular2';
 import { isString, isNumber } from 'common/lang';
 
 import { FirebaseArray, FirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
@@ -33,7 +32,6 @@ export class TodoModel implements Todo {
 	}
 }
 
-@Injectable()
 export class TodoStore extends FirebaseArray {
 	add(todo: Todo) {
 		return super.add(todo);

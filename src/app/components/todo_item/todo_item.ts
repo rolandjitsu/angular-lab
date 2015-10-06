@@ -3,12 +3,8 @@ import {
 	ViewEncapsulation,
 	Component,
 	View,
-	NgClass,
-	NgControlName,
-	NgModel,
-	NgForm,
-	DefaultValueAccessor,
-	NgRequiredValidator
+	CORE_DIRECTIVES,
+	FORM_DIRECTIVES
 } from 'angular2/angular2';
 
 import { isNativeShadowDomSupported } from 'common/lang';
@@ -18,24 +14,21 @@ import { Icon } from '../icon/icon';
 
 @Component({
 	selector: 'todo-item',
-	properties: [
+	inputs: [
 		'model'
 	]
 })
 
 @View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'
 	],
 	directives: [
-		NgClass,
-		NgControlName,
-		NgModel,
-		NgForm,
-		DefaultValueAccessor,
-		NgRequiredValidator,
+		CORE_DIRECTIVES,
+		FORM_DIRECTIVES,
 		Icon,
 		Checkbox
 	]
@@ -66,7 +59,7 @@ export class TodoItem {
 		event.target.blur();
 	}
 
-	onStatusChange(status) {
+	onStatusChange() {
 		this.ts.update(this.model, <Todo>{
 			completed: !this.model.completed
 		});

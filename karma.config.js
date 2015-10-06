@@ -1,9 +1,9 @@
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
 
-import { SAUCE_LAUNCHERS } from './sauce.conf';
+import { SAUCE_LAUNCHERS } from './sauce.config';
 
 let sauceLabsConfig = {
-	testName: 'NG2 Play - UNIT',
+	testName: 'NG2 Lab - UNIT',
 	startConnect: false,
 	recordVideo: false,
 	recordScreenshots: false,
@@ -26,12 +26,12 @@ export default function (config) {
 			'jasmine'
 		],
 		files: [
-			'node_modules/traceur/bin/traceur-runtime.js',
+			'node_modules/es6-shim/es6-shim.js',
 			'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
-			'node_modules/angular2/bundles/angular2.js',
+			'node_modules/angular2/bundles/angular2.dev.js',
 			'node_modules/angular2/bundles/router.dev.js',
 			'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
-			'node_modules/angular2/bundles/http.js',
+			'node_modules/angular2/bundles/http.dev.js',
 			'node_modules/angular2/bundles/test_lib.dev.js',
 			// Sources and specs
 			// Loaded through systemjs, in `test.js`
