@@ -19,8 +19,7 @@ import { Todos } from '../todos/todos';
 })
 
 @View({
-	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
@@ -66,8 +65,7 @@ export class App {
 		 */
 
 		let el: Element = this.elementRef.nativeElement;
-		// let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-		let prefixSelector = '';
+		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
 		let main: Element = el.querySelector(prefixSelector + '.js-main');
 		let logo: Element = el.querySelector(prefixSelector + '.js-logo');
 		let mainSub = AnimationEndObservable.subscribe(

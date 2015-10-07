@@ -40,8 +40,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Binding(
 })
 
 @View({
-	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'

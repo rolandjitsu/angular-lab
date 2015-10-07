@@ -94,8 +94,7 @@ export function main () {
 						next: () => {
 							rtc.detectChanges();
 							let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
-							// let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-							let prefixSelector = '';
+							let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
 							expect(logo.querySelector(prefixSelector + 'svg')).not.toBe(null);
 							async.done();
 						}

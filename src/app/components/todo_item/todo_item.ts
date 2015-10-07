@@ -20,8 +20,7 @@ import { Icon } from '../icon/icon';
 })
 
 @View({
-	// encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	encapsulation: ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'

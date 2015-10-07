@@ -17,7 +17,7 @@ export class Logo implements OnDestroy {
 	constructor(@Inject(ElementRef) private elementRef,	public icon: IconStore) {
 		let that: Logo = this;
 		this.el = this.elementRef.nativeElement;
-		// if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
+		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
 		icon.get('media/ng.svg').observer({
 			next: (svg) => {
 				that.el.appendChild(svg);
