@@ -222,7 +222,7 @@ gulp.task('lint', () => { // https://github.com/palantir/tslint#supported-rules
 		.pipe(plumber())
 		.pipe(tslint())
 		.pipe(tslint.report('prose', {
-			emitError: false
+			emitError: true
 		}));
 });
 
