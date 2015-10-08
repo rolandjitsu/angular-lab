@@ -66,3 +66,9 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [angular2-webpack-starter](https://github.com/angular-class/angular2-webpack-starter)
 - [angular2-authentication-sample](https://github.com/auth0/angular2-authentication-sample)
 - [ng2do](https://github.com/davideast/ng2do)
+
+
+#### TODO/Roadmap
+----------------------
+- [ ] E2E Tests
+- [ ] Saas
