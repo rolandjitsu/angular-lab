@@ -82,7 +82,7 @@ export function main () {
 				});
 			}));
 			it('should only fire one request for the same path and resolve from cache', inject([AsyncTestCompleter], (async) => {
-				let url = 'ofor/' + FAKE_URL;
+				let url = `ofor/${FAKE_URL}`;
 				let bc = new BackendConnectionSpy();
 				backend.connections.observer({
 					next: (connection: MockConnection) => {

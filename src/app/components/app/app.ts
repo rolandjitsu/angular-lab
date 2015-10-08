@@ -68,8 +68,8 @@ export class App {
 
 		let el: Element = elementRef.nativeElement;
 		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-		let main: Element = el.querySelector(prefixSelector + '.js-main');
-		let logo: Element = el.querySelector(prefixSelector + '.js-logo');
+		let main: Element = el.querySelector(`${prefixSelector}.js-main`);
+		let logo: Element = el.querySelector(`${prefixSelector}.js-logo`);
 		let mainSub = AnimationEndObservable.subscribe(
 			main,
 			(event) => {

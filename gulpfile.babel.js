@@ -27,16 +27,16 @@ import { SAUCE_LAUNCHERS, SAUCE_ALIASES } from './sauce.config';
 
 
 const KARMA_CONFIG = {
-	configFile: __dirname + '/karma.config.js'
+	configFile: `${__dirname}/karma.config.js`
 };
 
 const ENGINE_IO_BASE_SOCKET_ADDRESS = 'ws://localhost:';
 
 const LAB_JS_BUILD_SERVER_PORT = 6174; // Kaprekar's constant
-const LAB_JS_BUILD_SERVER_ADDRESS = ENGINE_IO_BASE_SOCKET_ADDRESS + LAB_JS_BUILD_SERVER_PORT;
+const LAB_JS_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${LAB_JS_BUILD_SERVER_PORT}`;
 
 const LAB_BUILD_SERVER_PORT = 1729; // Hardy–Ramanujan number
-const LAB_BUILD_SERVER_ADDRESS = ENGINE_IO_BASE_SOCKET_ADDRESS + LAB_BUILD_SERVER_PORT;
+const LAB_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${LAB_BUILD_SERVER_PORT}`;
 
 const LAB_WEB_SERVER_PORT = 3000;
 
@@ -108,7 +108,7 @@ gulp.task('tsd', () => {
 		opts.resolveDependencies = true;
 		api.context.config.getInstalled().forEach((install) => {
 			let def = tsd.Def.getFrom(install.path);
-			query.addNamePattern(def.project + '/' + def.name);
+			query.addNamePattern(`${def.project}/${def.name}`);
 		});
 		query.versionMatcher = new tsd.VersionMatcher('latest');
 		return api.select(query, opts).then((selection) => {
@@ -119,7 +119,7 @@ gulp.task('tsd', () => {
 });
 
 gulp.task('deps', ['bower', 'tsd'], () => {
-	let libsPath = PATHS.dist + '/lib';
+	let libsPath = `${PATHS.dist}/lib`;
 	return gulp
 		.src(PATHS.lib)
 		.pipe(changed(libsPath))
@@ -417,9 +417,9 @@ function getBrowsersConfigFromCLI () {
 			outputList = [input];
 			isSauce = false;
 			break;
-		} else if (SAUCE_LAUNCHERS.hasOwnProperty("SL_" + input.toUpperCase())) {
+		} else if (SAUCE_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
 			isSauce = true;
-			outputList.push("SL_" + input.toUpperCase());
+			outputList.push(`SL_${input.toUpperCase()}`);
 		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
 			outputList = outputList.concat(SAUCE_ALIASES[input]);
 			isSauce = true;
@@ -451,7 +451,7 @@ function buildJS () {
 
 function createBuildServer () {
 	let server = createEngineIOServer(LAB_BUILD_SERVER_PORT, () => {
-		gutil.log(gutil.colors.green('Lab build server started ' + LAB_BUILD_SERVER_ADDRESS));
+		gutil.log(gutil.colors.green(`Lab build server started ${LAB_BUILD_SERVER_ADDRESS}`));
 	});
 	process.on('exit', () => {
 		server.close();
@@ -468,7 +468,7 @@ function createJsBuildServer (onShutdown) {
 					if (typeof onShutdown === 'function') onShutdown();
 				});
 			});
-			gutil.log(gutil.colors.yellow('JS build server already running on ' + LAB_JS_BUILD_SERVER_ADDRESS));
+			gutil.log(gutil.colors.yellow(`JS build server already running on ${LAB_JS_BUILD_SERVER_ADDRESS}`));
 			defer.resolve();
 		},
 		() => {
@@ -476,7 +476,7 @@ function createJsBuildServer (onShutdown) {
 				runSequence('build/js');
 			});
 			let server = createEngineIOServer(LAB_JS_BUILD_SERVER_PORT, () => {
-				gutil.log(gutil.colors.green('JS build server started ' + LAB_JS_BUILD_SERVER_ADDRESS));
+				gutil.log(gutil.colors.green(`JS build server started ${LAB_JS_BUILD_SERVER_ADDRESS}`));
 				defer.resolve();
 			});
 			server.on('connection', (socket) => {
@@ -509,7 +509,7 @@ function createEngineIOServer (port, done) {
 
 function isEngineIOServerRunning (port, timeout) {
 	let defer = Q.defer();
-	let client = engineIoClient(ENGINE_IO_BASE_SOCKET_ADDRESS + port);
+	let client = engineIoClient(`${ENGINE_IO_BASE_SOCKET_ADDRESS}${port}`);
 	let timer = setTimeout(() => {
 		defer.reject();
 		client.close();

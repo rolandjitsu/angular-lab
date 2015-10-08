@@ -85,7 +85,7 @@ let config = {
 	multiCapabilities: browsers.map((browserName) => {
 		let caps = BROWSER_CAPS[browserName];
 		console.log('Testing against', browserName);
-		if (!caps) throw new Error('Not configured browser name: ' + browserName);
+		if (!caps) throw new Error(`Not configured browser name: ${browserName}`);
 		return caps;
 	}),
 	framework: 'jasmine2',

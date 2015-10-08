@@ -26,7 +26,7 @@ export const SERVICES_BINDINGS: Array<any> = [
 			let authHandler = (auth: FirebaseAuthData) => {
 				if (auth !== null) {
 					root.offAuth(authHandler);
-					let ref: Firebase = root.child('/chores/' + auth.uid);
+					let ref: Firebase = root.child(`/chores/${auth.uid}`);
 					defer.resolve(ref);
 				}
 			};

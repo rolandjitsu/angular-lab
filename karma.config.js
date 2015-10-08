@@ -18,7 +18,7 @@ let sauceLabsConfig = {
 };
 
 if (process.env.TRAVIS) {
-	sauceLabsConfig.build = 'TRAVIS #' + process.env.TRAVIS_BUILD_NUMBER + ' (' + process.env.TRAVIS_BUILD_ID + ')';
+	sauceLabsConfig.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
 	sauceLabsConfig.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
 	// TODO: remove once SauceLabs supports websockets.
 	// This speeds up the capturing a bit, as browsers don't even try to use websocket.
