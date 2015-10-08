@@ -29,6 +29,7 @@ export class Icon implements OnDestroy {
 	el;
 	private _icon: IconStore;
 	constructor(@Inject(ElementRef) elementRef, icon: IconStore) {
+		this._icon = icon;
 		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.shadowRoot;
 	}
