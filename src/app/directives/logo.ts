@@ -14,9 +14,9 @@ import { IconStore } from 'common/icon';
 
 export class Logo implements OnDestroy {
 	el;
-	constructor(@Inject(ElementRef) private elementRef,	public icon: IconStore) {
+	constructor(@Inject(ElementRef) elementRef,	icon: IconStore) {
 		let that: Logo = this;
-		this.el = this.elementRef.nativeElement;
+		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
 		icon.get('media/ng.svg').observer({
 			next: (svg) => {

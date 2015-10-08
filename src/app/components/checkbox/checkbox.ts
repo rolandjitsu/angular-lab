@@ -57,19 +57,19 @@ export class Checkbox implements ControlValueAccessor {
 	@HostListener('change', [
 		'$event.target.value'
 	])
-	onChange: Function = (_) => {};
+	onChange;
 
 	@HostListener('blur', [
 		'$event'
 	])
-	onTouched: Function = () => {};
+	onTouched;
 
 	private _tabindex: number;
 	private _disabled: boolean = false;
 
 	constructor(@Self() cd: NgControl, @Attribute('tabindex') tabindex: string) {
 		this._tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
-		cd.valueAccessor = this; // validation will not work if we don't set the control's value accessor
+		cd.valueAccessor = this; // Validation will not work if we don't set the control's value accessor
 	}
 
 	@HostBinding('attr.tabindex')
@@ -99,8 +99,8 @@ export class Checkbox implements ControlValueAccessor {
 	toggle(event) {
 		if (this.disabled) return event.stopPropagation();
 		this._checked = !this._checked;
-		// this.onChange(this._checked);
-		this.change.next(this._checked); // throws exception, will be fixed in next alpha version
+		// Not sure if this should be done: this.onChange(this._checked);
+		this.change.next(this._checked); // Throws exception, will be fixed in next alpha version
 	}
 	registerOnChange(fn: (_: any) => void): void {
 		this.onChange = fn;

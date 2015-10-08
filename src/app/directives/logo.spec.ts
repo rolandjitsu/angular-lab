@@ -44,18 +44,21 @@ const LOGO_GLYPH_HTML = `
 
 export function main () {
 	describe('logo', () => {
-		var backend: MockBackend;
-		var response;
+		let backend: MockBackend;
+		let response;
 
 		beforeEachBindings(() => [
 			BaseRequestOptions,
 			MockBackend,
-			bind(Http).toFactory((connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-				return new Http(connectionBackend, defaultOptions);
-			}, [
-				MockBackend,
-				BaseRequestOptions
-			]),
+			bind(Http).toFactory(
+				(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+					return new Http(connectionBackend, defaultOptions);
+				},
+				[
+					MockBackend,
+					BaseRequestOptions
+				]
+			),
 			bind(IconStore).toFactory(
 				(http: Http) => {
 					return new IconStore(http);
@@ -112,6 +115,4 @@ export function main () {
 		Logo
 	]
 })
-class Test {
-	constructor() {}
-}
+class Test {}

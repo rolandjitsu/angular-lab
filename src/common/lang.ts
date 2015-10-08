@@ -5,7 +5,7 @@ import { Observable } from 'angular2/angular2';
 export function isObservable (obs: any): boolean {
 	return obs instanceof Observable;
 }
-export const isNativeShadowDomSupported: boolean = Boolean(document && document.body && document.body.createShadowRoot); // http://caniuse.com/#feat=shadowdom
+export const isNativeShadowDomSupported: boolean = Boolean(document && document.body && document.body.createShadowRoot); // See Shadow DOM support: http://caniuse.com/#feat=shadowdom
 
 export function isObject (obj: any): boolean {
 	return obj !== null && (typeof obj === 'function' || typeof obj === 'object');

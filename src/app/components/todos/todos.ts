@@ -45,8 +45,12 @@ export class Todos implements OnActivate, OnDeactivate {
 	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
 		tsp.then(ts => this.ts = ts);
 	}
-	onActivate(next: ComponentInstruction, prev: ComponentInstruction) {}
-	onDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {}
+	onActivate(next: ComponentInstruction, prev: ComponentInstruction) {
+		// Here we can do something when the component gets activated
+	}
+	onDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {
+		// Here we can do something when the component gets deactivated
+	}
 	add() {
 		this.ts.add(
 			new TodoModel(this.model.desc)

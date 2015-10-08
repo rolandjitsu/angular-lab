@@ -19,7 +19,7 @@ import { IconStore } from 'common/icon';
 
 @View({
 	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	templateUrl: 'app/components/icon/icon.html', // remove once the relative resolve of styles will work properly
+	templateUrl: 'app/components/icon/icon.html', // Remove once the relative resolve of styles will work properly
 	styleUrls: [
 		'app/components/icon/icon.css'
 	]
@@ -27,13 +27,14 @@ import { IconStore } from 'common/icon';
 
 export class Icon implements OnDestroy {
 	el;
-	constructor(@Inject(ElementRef) private elementRef, public icon: IconStore) {
-		this.el = this.elementRef.nativeElement;
+	private _icon: IconStore;
+	constructor(@Inject(ElementRef) elementRef, icon: IconStore) {
+		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.shadowRoot;
 	}
 	set src(src: string) {
 		let that: Icon = this;
-		this.icon.get(src).observer({
+		this._icon.get(src).observer({
 			next: (svg) => {
 				that.el.appendChild(svg);
 			}

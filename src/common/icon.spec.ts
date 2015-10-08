@@ -30,22 +30,25 @@ const FAKE_URL = 'glyph.svg';
 
 export function main () {
 	describe('IconStore', () => {
-		var injector: Injector;
-		var store: IconStore;
-		var backend: MockBackend;
-		var glyph: Node;
-		var response;
+		let injector: Injector;
+		let store: IconStore;
+		let backend: MockBackend;
+		let glyph: Node;
+		let response;
 
 		beforeEach(() => {
 			injector = Injector.resolveAndCreate([
 				BaseRequestOptions,
 				MockBackend,
-				bind(Http).toFactory((connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-					return new Http(connectionBackend, defaultOptions);
-				}, [
-					MockBackend,
-					BaseRequestOptions
-				]),
+				bind(Http).toFactory(
+					(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+						return new Http(connectionBackend, defaultOptions);
+					},
+					[
+						MockBackend,
+						BaseRequestOptions
+					]
+				),
 				bind(IconStore).toFactory(
 					(http: Http) => {
 						return new IconStore(http);

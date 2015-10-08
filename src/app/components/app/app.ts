@@ -44,12 +44,14 @@ import { Todos } from '../todos/todos';
 
 export class App {
 	loading: boolean = true;
-	constructor(@Inject(ElementRef) private elementRef, router: Router) {
+	constructor(@Inject(ElementRef) elementRef, router: Router) {
 		let that: App = this;
 		let root: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 
 		root.onAuth(auth => {
-			if (auth === null) root.authAnonymously(() => {});
+			if (auth === null) root.authAnonymously(() => {
+				// Successful auth
+			});
 		});
 		router.subscribe((path) => {
 			if (!that.loading) return;
@@ -64,7 +66,7 @@ export class App {
 		 * Animations
 		 */
 
-		let el: Element = this.elementRef.nativeElement;
+		let el: Element = elementRef.nativeElement;
 		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
 		let main: Element = el.querySelector(prefixSelector + '.js-main');
 		let logo: Element = el.querySelector(prefixSelector + '.js-logo');

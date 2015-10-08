@@ -355,4 +355,6 @@ function parseVal (key: string, data: any): any {
 	return data;
 }
 
-function noop () {}
+function noop () {
+	// No operation function
+}
