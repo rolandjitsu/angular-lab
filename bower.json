@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"normalize.css": "3.0.x",
-		"firebase": "2.2.x"
+		"firebase": "2.3.x"
 	},
 	"private": true
 }
