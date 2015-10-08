@@ -87,7 +87,7 @@ gulp.task('clean', (done) => {
 
 // Dependecies
 
-gulp.task('bower', (done) => {
+gulp.task('install/bower', (done) => {
 	bower
 		.commands
 		.install(null, { save: true }, { interactive: false })
@@ -97,7 +97,7 @@ gulp.task('bower', (done) => {
 		});
 });
 
-gulp.task('tsd', () => {
+gulp.task('install/tsd', () => {
 	let config = './tsd.json';
 	let api = tsd.getAPI(config);
 	return api.readConfig(config, true).then(() => {
@@ -118,7 +118,7 @@ gulp.task('tsd', () => {
 	});
 });
 
-gulp.task('deps', ['bower', 'tsd'], () => {
+gulp.task('deps', ['install/bower', 'install/tsd'], () => {
 	let libsPath = `${PATHS.dist}/lib`;
 	return gulp
 		.src(PATHS.lib)
@@ -204,13 +204,13 @@ gulp.task('serve/static', () => {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('bundle', (done) => {
+gulp.task('build', (done) => {
 	runSequence('deps', ['build/js', 'serve/html', 'build/css', 'serve/static'], done);
 });
 
-gulp.task('bundle/!ilbsr', (done) => { // Bundle if lab build server is not running
+gulp.task('build/!ilbsr', (done) => { // Build if lab build server is not running
 	isEngineIOServerRunning(LAB_BUILD_SERVER_PORT).then(() => { done(); }, () => {
-		runSequence('bundle', done);
+		runSequence('build', done);
 	});
 }),
 
@@ -273,7 +273,7 @@ gulp.task('test:unit/ci:sauce', (done) => {
 	server.start();
 });
 
-gulp.task('test:unit/sauce', ['bundle/!ilbsr'], (done) => {
+gulp.task('test:unit/sauce', ['build/!ilbsr'], (done) => {
 	let browserConf = getBrowsersConfigFromCLI();
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true,
@@ -307,7 +307,7 @@ gulp.task('test:unit/karma-run', (done) => {
 	runKarma('karma.config.js', done);
 });
 
-gulp.task('test:unit', ['bundle/!ilbsr'], (done) => {
+gulp.task('test:unit', ['build/!ilbsr'], (done) => {
 	runSequence(
 		'test:unit/karma-server',
 		() => {
@@ -327,7 +327,7 @@ gulp.task('test:unit', ['bundle/!ilbsr'], (done) => {
 	);
 });
 
-gulp.task('test', ['bundle/!ilbsr'], (done) => {
+gulp.task('test', ['build/!ilbsr'], (done) => {
 	runSequence(
 		'test:unit/single',
 		'lint',
@@ -351,7 +351,7 @@ gulp.task('start', (done) => {
 			process.exit(1);
 		},
 		() => {
-			runSequence('bundle', () => {
+			runSequence('build', () => {
 				// Create a build server to avoid parallel js builds when running unit tests in another process
 				// If the js build server is shut down from some other process (the same process that started it), restart it here
 				createJsBuildServer(() => {
