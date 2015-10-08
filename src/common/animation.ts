@@ -1,8 +1,5 @@
 import { isFunction } from './lang';
 
-let rAF: (callback: Function) => number = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
-let cAF: (rAFId: number) => void = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame || window.mozCancelRequestAnimationFrame;
-
 let ns: number = 0;
 if (performance && isFunction(performance.now) && performance.timing) ns = performance.timing.navigationStart;
 
@@ -40,9 +37,9 @@ export class AnimationEndObservable {
 
 export class Animation {
 	static rAF(fn: Function, context?: any): number {
-		return rAF(timestamp => fn.apply(context, [timestamp + ns]));
+		return requestAnimationFrame(timestamp => fn.apply(context, [timestamp + ns]));
 	}
 	static cAF (id: number): void {
-		cAF(id);
+		cancelAnimationFrame(id);
 	}
 }
