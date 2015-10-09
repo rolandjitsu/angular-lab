@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-./node_modules/.bin/gulp bundle
+./node_modules/.bin/gulp build
