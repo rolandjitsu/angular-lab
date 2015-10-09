@@ -73,32 +73,24 @@ export function main () {
 				expect(isObservable(store.get(FAKE_URL))).toBe(true);
 			});
 			it('return value should be an SVG element', inject([AsyncTestCompleter], (async) => {
-				backend.connections.observer({ next: (connection: MockConnection) => connection.mockRespond(response) });
-				store.get(FAKE_URL).observer({
-					next: (svg) => {
-						expect(svg.isEqualNode(glyph)).toBe(true);
-						async.done();
-					}
+				backend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
+				store.get(FAKE_URL).subscribe((svg) => {
+					expect(svg.isEqualNode(glyph)).toBe(true);
+					async.done();
 				});
 			}));
 			it('should only fire one request for the same path and resolve from cache', inject([AsyncTestCompleter], (async) => {
 				let url = `ofor/${FAKE_URL}`;
 				let bc = new BackendConnectionSpy();
-				backend.connections.observer({
-					next: (connection: MockConnection) => {
-						bc.onEstablish();
-						connection.mockRespond(response);
-					}
+				backend.connections.subscribe((connection: MockConnection) => {
+					bc.onEstablish();
+					connection.mockRespond(response);
 				});
-				store.get(url).observer({
-					next: () => {
-						store.get(url).observer({
-							next: () => {
-								expect(bc.onEstablish.calls.count()).toEqual(1);
-								async.done();
-							}
-						});
-					}
+				store.get(url).subscribe(() => {
+					store.get(url).subscribe(() => {
+						expect(bc.onEstablish.calls.count()).toEqual(1);
+						async.done();
+					});
 				});
 			}));
 		});

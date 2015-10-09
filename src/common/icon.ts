@@ -11,9 +11,10 @@ export class IconStore {
 	constructor(http: Http) {
 		this._http = http;
 	}
-	get(url: string): EventEmitter {
+	get(url: string): any {
 		let that: IconStore = this;
 		let subject: EventEmitter = new EventEmitter();
+		subject = subject.toRx();
 		if (cache.has(url)) {
 			// Delay the next tick until the subject is returned, otherwise the subscriber will not be notified about the next tick if called before return
 			// TODO: make sure that this happens after the promise has been returned
@@ -23,7 +24,7 @@ export class IconStore {
 		} else {
 			let pending: boolean = this.queue.has(url);
 			if (!pending) this.queue.set(url, []);
-			let subs: EventEmitter[] = this.queue.get(url);
+			let subs: any[] = this.queue.get(url);
 			if (pending) subs.push(subject);
 			else {
 				subs.push(subject);
@@ -32,7 +33,7 @@ export class IconStore {
 					.map((response) => svg(response))
 					.subscribe((element) => {
 						cache.set(url, element);
-						subs.forEach(sub => sub.next(element.cloneNode(true)));
+						subs.forEach((sub) => sub.next(element.cloneNode(true)));
 						that.queue.delete(url);
 					});
 			}

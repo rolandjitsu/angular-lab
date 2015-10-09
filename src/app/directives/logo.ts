@@ -18,10 +18,8 @@ export class Logo implements OnDestroy {
 		let that: Logo = this;
 		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
-		icon.get('media/ng.svg').observer({
-			next: (svg) => {
-				that.el.appendChild(svg);
-			}
+		icon.get('media/ng.svg').subscribe((svg) => {
+			that.el.appendChild(svg);
 		});
 	}
 	onDestroy() {

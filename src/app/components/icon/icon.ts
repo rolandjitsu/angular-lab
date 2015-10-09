@@ -35,10 +35,8 @@ export class Icon implements OnDestroy {
 	}
 	set src(src: string) {
 		let that: Icon = this;
-		this._icon.get(src).observer({
-			next: (svg) => {
-				that.el.appendChild(svg);
-			}
+		this._icon.get(src).subscribe((svg) => {
+			that.el.appendChild(svg);
 		});
 	}
 	onDestroy() {

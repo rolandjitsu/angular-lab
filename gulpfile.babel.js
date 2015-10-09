@@ -49,7 +49,7 @@ const PATHS = {
 		'node_modules/angular2/bundles/angular2.js',
 		'node_modules/angular2/bundles/router.dev.js',
 		'node_modules/angular2/bundles/http.js',
-		'node_modules/angular2/bundles/test_lib.dev.js'
+		'node_modules/angular2/bundles/test_lib.js'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',

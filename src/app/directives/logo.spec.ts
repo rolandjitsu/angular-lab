@@ -81,11 +81,9 @@ export function main () {
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
 			let html = '<div><div class="logo" logo></div></div>';
 			let ee = new EventEmitter();
-			backend.connections.observer({
-				next: (connection: MockConnection) => {
-					connection.mockRespond(response);
-					ee.next(null);
-				}
+			backend.connections.subscribe((connection: MockConnection) => {
+				connection.mockRespond(response);
+				ee.next(null);
 			});
 			tcb
 				.overrideTemplate(Test, html)
@@ -93,14 +91,12 @@ export function main () {
 				.then((rootTC: RootTestComponent) => {
 					rootTC.detectChanges();
 					let rtc: RootTestComponent = rootTC;
-					ee.observer({
-						next: () => {
-							rtc.detectChanges();
-							let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
-							let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-							expect(logo.querySelector(`${prefixSelector}svg`)).not.toBe(null);
-							async.done();
-						}
+					ee.toRx().subscribe(() => {
+						rtc.detectChanges();
+						let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
+						let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
+						expect(logo.querySelector(`${prefixSelector}svg`)).not.toBe(null);
+						async.done();
 					});
 				});
 		}));
