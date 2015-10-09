@@ -1,6 +1,6 @@
 import { isFunction } from './lang';
 
-let ns: number = 0;
+let ns = 0;
 if (performance && isFunction(performance.now) && performance.timing) ns = performance.timing.navigationStart;
 
 let animationEndEventName = (() => {
