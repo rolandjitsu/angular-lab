@@ -80,7 +80,8 @@ export function main () {
 
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
 			let html = '<div><div class="logo" logo></div></div>';
-			let ee = new EventEmitter();
+			let ee: any = new EventEmitter();
+			ee = ee.toRx();
 			backend.connections.subscribe((connection: MockConnection) => {
 				connection.mockRespond(response);
 				ee.next(null);
@@ -91,7 +92,7 @@ export function main () {
 				.then((rootTC: RootTestComponent) => {
 					rootTC.detectChanges();
 					let rtc: RootTestComponent = rootTC;
-					ee.toRx().subscribe(() => {
+					ee.subscribe(() => {
 						rtc.detectChanges();
 						let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
 						let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
