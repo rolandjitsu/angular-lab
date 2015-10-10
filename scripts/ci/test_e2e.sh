@@ -6,7 +6,7 @@ function killServer () {
 }
 
 ./node_modules/.bin/webdriver-manager update # update selenium webdriver
-./node_modules/.bin/gulp bundle # bundle the app
+./node_modules/.bin/gulp build # bundle the app
 ./node_modules/.bin/gulp server & serverPid=$! # start the web server required by protractor and save PID so that on exit gets closed
 
 trap killServer EXIT
@@ -19,4 +19,4 @@ if [[ -n "$E2E_BROWSERS" ]]; then
 	OPTIONS="--browsers=$E2E_BROWSERS";
 fi
 
-./node_modules/.bin/protractor protractor.config.js
+./node_modules/.bin/protractor protractor.config.js $OPTIONS
