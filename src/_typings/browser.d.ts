@@ -1,4 +1,3 @@
-
 interface Element {
 	createShadowRoot(): any;
 }
