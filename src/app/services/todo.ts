@@ -1,7 +1,7 @@
 import * as Firebase from 'firebase';
 
 import { isString, isNumber } from 'common/lang';
-import { FirebaseArray, FirebaseArrayValue } from 'common/firebase';
+import { FirebaseArray, FirebaseArrayValue } from 'common/firebase_array';
 
 export interface Todo extends FirebaseArrayValue {
 	createdAt: number | string;
