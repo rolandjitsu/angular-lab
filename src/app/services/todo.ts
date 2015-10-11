@@ -1,6 +1,7 @@
-import { isString, isNumber } from 'common/lang';
+import * as Firebase from 'firebase';
 
-import { FirebaseArray, FirebaseArrayValue, FIREBASE_TIMESTAMP } from 'common/firebase';
+import { isString, isNumber } from 'common/lang';
+import { FirebaseArray, FirebaseArrayValue } from 'common/firebase';
 
 export interface Todo extends FirebaseArrayValue {
 	createdAt: number | string;
@@ -10,8 +11,8 @@ export interface Todo extends FirebaseArrayValue {
 }
 
 export class TodoModel implements Todo {
-	createdAt: number | string = FIREBASE_TIMESTAMP;
-	updatedAt: number | string = FIREBASE_TIMESTAMP;
+	createdAt: number | string = Firebase.ServerValue.TIMESTAMP;
+	updatedAt: number | string = Firebase.ServerValue.TIMESTAMP;
 	completed: boolean = false;
 	desc: string;
 	key: string;
@@ -33,18 +34,18 @@ export class TodoModel implements Todo {
 }
 
 export class TodoStore extends FirebaseArray {
-	add(todo: Todo) {
+	add(todo: Todo): Promise<Firebase> {
 		return super.add(todo);
 	}
-	update(record, data: Todo) {
-		super.update(
+	update(record, data: Todo): Promise<Firebase> {
+		return super.update(
 			record.key,
 			TodoModel.assign(<Todo>{}, record, data, <Todo>{
-				updatedAt: FIREBASE_TIMESTAMP
+				updatedAt: Firebase.ServerValue.TIMESTAMP
 			})
 		);
 	}
-	remove(record) {
-		super.remove(record.key);
+	remove(record): Promise<any> {
+		return super.remove(record.key);
 	}
 }

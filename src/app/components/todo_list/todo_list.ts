@@ -27,8 +27,8 @@ import { TodoItem } from '../todo_item/todo_item';
 })
 
 export class TodoList {
-	todos: Array<Todo>;
+	todos: TodoStore;
 	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
-		tsp.then(ts => this.todos = ts.entries);
+		tsp.then(ts => this.todos = ts);
 	}
 }
