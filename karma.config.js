@@ -37,6 +37,7 @@ assign(karmaConfig, {
 		'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
 		'node_modules/angular2/bundles/http.dev.js',
 		'node_modules/angular2/bundles/test_lib.js',
+		'bower_components/firebase/firebase.js',
 		// Sources and specs
 		// Loaded through systemjs, in `test.js`
 		{

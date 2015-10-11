@@ -27,15 +27,7 @@
 		<script src="lib/system.js"></script>
 		<script>
 			System.warnings = true;
-			System.config({
-				defaultJSExtensions: true,
-				meta: {
-					'lib/firebase.js': { format: 'global', exports: 'Firebase' }
-				},
-				map: {
-					'firebase': 'lib/firebase.js'
-				}
-			});
+			System.defaultJSExtensions = true;
 			System.import('app/bootstrap').catch(
 				console.error.bind(console)
 			);
@@ -44,5 +36,6 @@
 		<script src="lib/angular2.js"></script>
 		<script src="lib/router.dev.js"></script>
 		<script src="lib/http.js"></script>
+		<script src="lib/firebase.js"></script>
 	</body>
 </html>

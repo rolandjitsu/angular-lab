@@ -28,12 +28,6 @@ System.config({
 	paths: {
 		'common/*': '/base/dist/common/*',
 		'app/*': '/base/dist/app/*'
-	},
-	meta: {
-		'lib/firebase.js': { format: 'global', exports: 'Firebase' }
-	},
-	map: {
-		firebase: 'lib/firebase.js'
 	}
 });
 
