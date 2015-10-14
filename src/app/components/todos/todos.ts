@@ -8,6 +8,7 @@ import {
 } from 'angular2/angular2';
 import { ComponentInstruction, OnActivate, OnDeactivate, CanActivate } from 'angular2/router';
 
+import { isUserAuthenticated } from 'common/authentication';
 import { isNativeShadowDomSupported } from 'common/lang';
 import { TodoStore, TodoModel } from 'app/services';
 import { TodoList } from '../todo_list/todo_list';
@@ -35,9 +36,7 @@ class TodosFormModel {
 	]
 })
 
-@CanActivate(() => {
-	return true;
-})
+@CanActivate(isUserAuthenticated)
 
 export class Todos implements OnActivate, OnDeactivate {
 	model: TodosFormModel = new TodosFormModel();

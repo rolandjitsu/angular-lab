@@ -8,10 +8,13 @@ import {
 } from 'angular2/angular2';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 
+import { AuthenticationObservable } from 'common/authentication';
 import { isNativeShadowDomSupported } from 'common/lang';
 import { Animation, AnimationEndObservable } from 'common/animation';
 import { LowerCasePipe } from 'app/pipes';
 import { Logo } from 'app/directives';
+import { Login } from '../login/login';
+import { Register } from '../register/register';
 import { Todos } from '../todos/todos';
 
 @Component({
@@ -39,26 +42,43 @@ import { Todos } from '../todos/todos';
 		component: Todos,
 		path: '/',
 		as: 'Todos'
+	},
+	{
+		component: Login,
+		path: '/login/...',
+		as: 'Login'
+	},
+	{
+		component: Register,
+		path: '/register',
+		as: 'Register'
 	}
 ])
 
 export class App {
 	loading: boolean = true;
 	constructor(@Inject(ElementRef) elementRef, router: Router) {
-		let that: App = this;
-		let root: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 
-		root.onAuth(auth => {
-			if (auth === null) root.authAnonymously(() => {
-				// Successful auth
-			});
-		});
+		let that: App = this;
+		let timeout;
 		router.subscribe((path) => {
-			if (!that.loading) return;
-			setTimeout(
+			if (!this.loading || timeout) return;
+			timeout = setTimeout(
 				(_) => that.loading = false,
 				3000
 			);
+		});
+
+
+		/**
+		 * Authentication
+		 */
+
+		AuthenticationObservable.subscribe((auth: FirebaseAuthData) => {
+			let instruction;
+			if (auth) instruction = router.generate(['/Todos']);
+			else instruction = router.generate(['/Login/Home']);
+			router.navigateByInstruction(instruction);
 		});
 
 

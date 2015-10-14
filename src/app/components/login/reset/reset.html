@@ -1,0 +1,26 @@
+<h1>Reset Password</h1>
+
+<form
+	class="reset-form"
+	#reset="form"
+	*ng-if="!isResetAttemptSuccessful"
+	(ng-submit)="submit()"
+	novalidate>
+	<div class="reset-form-email">
+		<label for="email">Email</label>
+		<input type="email" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" placeholder="Email" autocomplete="off" required>
+	</div>
+	<div class="reset-form-submit">
+		<button type="submit" [disabled]="!reset.form.valid || isResetting">
+			Reset
+		</button>
+	</div>
+</form>
+
+<a [router-link]="['/Login/Home']">Back</a>
+
+<div *ng-if="isResetAttemptSuccessful">Your password was successfully reset. You will receive an email with further instructions.</div>
+<div *ng-if="isResetAttemptFailed">
+	{{ error || 'Could not reset your password, try again later.' }}
+</div>
+<div *ng-if="isResetting">Trying to reset your password ...</div>

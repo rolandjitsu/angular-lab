@@ -1,0 +1,28 @@
+<h1>Register</h1>
+
+<form
+	class="register-form"
+	#register="form"
+	(ng-submit)="submit()"
+	novalidate>
+	<div class="register-form-email">
+		<label for="email">Email</label>
+		<input type="email" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" placeholder="Email" autocomplete="off" required>
+	</div>
+	<div class="register-form-password">
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password" ng-control="password" [(ng-model)]="credentials.password" placeholder="Password" autocomplete="off" required>
+	</div>
+	<div class="register-form-submit">
+		<button type="submit" [disabled]="!register.form.valid || isRegistering">
+			Register
+		</button>
+	</div>
+</form>
+
+<a [router-link]="['/Login/Home']">Back</a>
+
+<div *ng-if="isRegistrationFailed">
+	{{ error || 'The registration, please try again later.' }}
+</div>
+<div *ng-if="isRegistering">Trying to register ...</div>
