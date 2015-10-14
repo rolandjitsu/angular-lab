@@ -1,21 +1,27 @@
-import { bind, bootstrap, FORM_BINDINGS } from 'angular2/angular2';
-import { HTTP_BINDINGS } from 'angular2/http';
-import { ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF, ROUTER_BINDINGS as NG_ROUTER_BINDINGS, LocationStrategy, HashLocationStrategy } from 'angular2/router';
+import { provide, bootstrap, FORM_PROVIDERS } from 'angular2/angular2';
+import { HTTP_PROVIDERS } from 'angular2/http';
+import { ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF, ROUTER_PROVIDERS as NG_ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router';
 
 import { SERVICES_BINDINGS } from 'app/services';
 import { App } from 'app/components';
 
-const ROUTER_BINDINGS: Array<any> = [
-	NG_ROUTER_BINDINGS,
-	bind(ROUTER_PRIMARY_COMPONENT).toValue(App),
-	bind(LocationStrategy).toClass(HashLocationStrategy),
-	bind(APP_BASE_HREF).toValue('/')
+const ROUTER_PROVIDERS: Array<any> = [
+	NG_ROUTER_PROVIDERS,
+	provide(ROUTER_PRIMARY_COMPONENT, {
+		useValue: App
+	}),
+	provide(LocationStrategy, {
+		useClass: HashLocationStrategy
+	}),
+	provide(APP_BASE_HREF, {
+		useValue: '/'
+	})
 ];
 
 const APP_BINDINGS: Array<any> = [
-	HTTP_BINDINGS,
-	FORM_BINDINGS,
-	ROUTER_BINDINGS,
+	HTTP_PROVIDERS,
+	FORM_PROVIDERS,
+	ROUTER_PROVIDERS,
 	SERVICES_BINDINGS
 ];
 

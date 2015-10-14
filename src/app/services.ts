@@ -1,4 +1,4 @@
-import { bind, OpaqueToken } from 'angular2/angular2';
+import { provide, OpaqueToken } from 'angular2/angular2';
 import { Http } from 'angular2/http';
 
 import { AuthenticationObservable } from 'common/authentication';
@@ -11,17 +11,18 @@ export * from './services/todo';
 const ROOT_FIREBASE_REF: OpaqueToken = new OpaqueToken('RootFirebaseRef');
 
 export const SERVICES_BINDINGS: Array<any> = [
-	bind(IconStore).toFactory(
-		(http: Http) => {
+	provide(IconStore, {
+		useFactory: (http: Http) => {
 			return new IconStore(http);
 		},
-		[Http]
-	),
-	bind(TodoStore).toFactory((promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)), [
-		ROOT_FIREBASE_REF
-	]),
-	bind(ROOT_FIREBASE_REF).toFactory(
-		() => {
+		deps: [Http] 
+	}),
+	provide(TodoStore, {
+		useFactory: (promise: Promise<Firebase>) => promise.then((ref: Firebase) => new TodoStore(ref)),
+		deps: [ROOT_FIREBASE_REF]
+	}),
+	provide(ROOT_FIREBASE_REF, {
+		useFactory: () => {
 			let defer: Defer<Firebase> = new Defer();
 			var authObservable = AuthenticationObservable.subscribe(setChoresFirebaseRef);
 			function setChoresFirebaseRef (auth: FirebaseAuthData, rootFirebaseRef: Firebase) {
@@ -32,6 +33,6 @@ export const SERVICES_BINDINGS: Array<any> = [
 				}
 			}
 			return defer.promise;
-		}
-	)
+		} 
+	})
 ];

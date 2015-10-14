@@ -49,10 +49,12 @@ const PATHS = {
 		'node_modules/angular2/bundles/angular2.js',
 		'node_modules/angular2/bundles/router.dev.js',
 		'node_modules/angular2/bundles/http.js',
-		'node_modules/angular2/bundles/test_lib.js'
+		'node_modules/angular2/bundles/testing.js'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
+		'node_modules/angular2/bundles/typings/es6-shim/*.d.ts',
+		'node_modules/angular2/bundles/typings/jasmine/*.d.ts',
 		'node_modules/angular2/bundles/typings/angular2/*.d.ts',
 		'tsd_typings/tsd.d.ts'
 	],

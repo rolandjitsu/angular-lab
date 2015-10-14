@@ -3,16 +3,16 @@ import {
 	AsyncTestCompleter,
 	TestComponentBuilder,
 	afterEach,
-	beforeEachBindings,
+	beforeEachProviders,
 	beforeEach,
 	describe,
 	expect,
 	inject,
 	it
-} from 'angular2/test_lib';
+} from 'angular2/testing';
 import {
 	EventEmitter,
-	bind,
+	provide,
 	Component,
 	View
 } from 'angular2/angular2';
@@ -47,26 +47,26 @@ export function main () {
 		let backend: MockBackend;
 		let response;
 
-		beforeEachBindings(() => [
+		beforeEachProviders(() => [
 			BaseRequestOptions,
 			MockBackend,
-			bind(Http).toFactory(
-				(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+			provide(Http, {
+				useFactory: (connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
 					return new Http(connectionBackend, defaultOptions);
 				},
-				[
+				deps: [
 					MockBackend,
 					BaseRequestOptions
 				]
-			),
-			bind(IconStore).toFactory(
-				(http: Http) => {
+			}),
+			provide(IconStore, {
+				useFactory: (http: Http) => {
 					return new IconStore(http);
 				},
-				[
+				deps: [
 					Http
 				]
-			)
+			})
 		]);
 
 		beforeEach(inject([MockBackend], (mockBackend) => {

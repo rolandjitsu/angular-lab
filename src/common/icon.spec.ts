@@ -7,10 +7,10 @@ import {
 	inject,
 	it,
 	SpyObject
-} from 'angular2/test_lib';
+} from 'angular2/testing';
 import {
 	Injector,
-	bind
+	provide
 } from 'angular2/angular2';
 import {
 	MockBackend,
@@ -39,23 +39,23 @@ export function main () {
 			injector = Injector.resolveAndCreate([
 				BaseRequestOptions,
 				MockBackend,
-				bind(Http).toFactory(
-					(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+				provide(Http, {
+					useFactory: (connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
 						return new Http(connectionBackend, defaultOptions);
 					},
-					[
+					deps: [
 						MockBackend,
 						BaseRequestOptions
 					]
-				),
-				bind(IconStore).toFactory(
-					(http: Http) => {
+				}),
+				provide(IconStore, {
+					useFactory: (http: Http) => {
 						return new IconStore(http);
 					},
-					[
+					deps: [
 						Http
 					]
-				)
+				})
 			]);
 			backend = injector.get(MockBackend);
 			store = injector.get(IconStore);

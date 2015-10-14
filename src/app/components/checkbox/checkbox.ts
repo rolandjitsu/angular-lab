@@ -13,7 +13,7 @@ import {
 	NgControl,
 	OpaqueToken,
 	forwardRef,
-	Binding
+	Provider
 } from 'angular2/angular2';
 
 import { isPresent, isNativeShadowDomSupported } from 'common/lang';
@@ -21,17 +21,17 @@ import { KEY_CODES } from 'common/key_codes';
 import { Icon } from '../icon/icon';
 
 const NG_VALUE_ACCESSOR: OpaqueToken = new OpaqueToken('NgValueAccessor');
-const CHECKBOX_VALUE_ACCESSOR = new Binding(
+const CHECKBOX_VALUE_ACCESSOR = new Provider(
 	NG_VALUE_ACCESSOR,
 	{
-		toAlias: forwardRef(() => Checkbox),
+		useExisting: forwardRef(() => Checkbox),
 		multi: true
 	}
 );
 
 @Component({
 	selector: 'checkbox[ng-control], checkbox[ng-form-control], checkbox[ng-model]',
-	bindings: [
+	providers: [
 		CHECKBOX_VALUE_ACCESSOR
 	],
 	inputs: [
