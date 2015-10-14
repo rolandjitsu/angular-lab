@@ -71,5 +71,6 @@ In the making of this simple app, I have made use of whatever resources I could 
 #### TODO/Roadmap
 -----------------
 - [ ] Authentication
+- [ ] User Account/Dashboard
 - [ ] E2E Tests
 - [ ] Saas/Less
