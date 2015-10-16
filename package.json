@@ -19,7 +19,7 @@
 		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.42",
+		"angular2": "2.0.0-alpha.44",
 		"systemjs": "0.19.x",
 		"es6-shim": "0.33.x"
 	},
