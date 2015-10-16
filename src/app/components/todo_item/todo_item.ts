@@ -58,14 +58,14 @@ export class TodoItem {
 		event.target.blur();
 	}
 
-	onStatusChange() {
+	onStatusChange(value) {
 		this.ts.update(this.model, <Todo>{
-			completed: !this.model.completed
+			completed: value
 		});
 	}
-	onDescChange() {
+	onDescChange(value) {
 		this.ts.update(this.model, <Todo>{
-			desc: this.model.desc
+			desc: value
 		});
 	}
 }

@@ -2,6 +2,7 @@ import {
 	Input,
 	Output,
 	HostBinding,
+	ElementRef,
 	HostListener,
 	EventEmitter,
 	Component,
@@ -52,10 +53,10 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
 
 export class Checkbox implements ControlValueAccessor {
 	@Input('checked') _checked: boolean = false;
-	@Output() change: EventEmitter = new EventEmitter();
+	@Output() update: EventEmitter = new EventEmitter();
 
 	@HostListener('change', [
-		'$event.target.value'
+		'$event'
 	])
 	onChange;
 
@@ -64,11 +65,13 @@ export class Checkbox implements ControlValueAccessor {
 	])
 	onTouched;
 
+	elementRef: ElementRef;
 	private _tabindex: number;
 	private _disabled: boolean = false;
 
-	constructor(@Self() cd: NgControl, @Attribute('tabindex') tabindex: string) {
+	constructor(elementRef: ElementRef, @Self() cd: NgControl, @Attribute('tabindex') tabindex: string) {
 		this._tabindex = isPresent(tabindex) ? parseInt(tabindex, 10) : 0;
+		this.elementRef = elementRef;
 		cd.valueAccessor = this; // Validation will not work if we don't set the control's value accessor
 	}
 
@@ -76,7 +79,7 @@ export class Checkbox implements ControlValueAccessor {
 	get tabindex(): number {
 		return this._tabindex;
 	}
-
+	
 	@HostBinding('attr.aria-checked')
 	get checked(): boolean {
 		return this._checked;
@@ -99,11 +102,17 @@ export class Checkbox implements ControlValueAccessor {
 	toggle(event) {
 		if (this.disabled) return event.stopPropagation();
 		this._checked = !this._checked;
-		// Not sure if this should be done: this.onChange(this._checked);
-		this.change.next(this._checked); // Throws exception, will be fixed in next alpha version
+		// This will make sure that NgControl picks up on the change
+		// Custom elements don't have `change` events, so we emulate it
+		// https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events
+		let ev = new Event('change');
+		this.elementRef.nativeElement.dispatchEvent(ev);
+		this.update.next(this._checked);
 	}
 	registerOnChange(fn: (_: any) => void): void {
-		this.onChange = fn;
+		this.onChange = (...args) => {
+			fn.apply(null, args);
+		};
 	}
 	registerOnTouched(fn: () => void): void {
 		this.onTouched = fn;

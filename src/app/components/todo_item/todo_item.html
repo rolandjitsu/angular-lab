@@ -3,11 +3,11 @@
 	[ng-class]="{ 'js-completed': model.completed }"
 	#todo="form">
 	<div class="todo-cell-control">
-		<checkbox ng-control="status" [(ng-model)]="model.completed" (change)="onStatusChange()"></checkbox>
+		<checkbox ng-control="status" [(ng-model)]="model.completed" (update)="onStatusChange()"></checkbox>
 	</div>
 	<div class="todo-cell-content" [ng-class]="{ 'js-edit': edit, 'js-av': av }">
 		<div class="todo-cell-label">
-			<input type="text" ng-control="desc" [(ng-model)]="model.desc" (change)="onDescChange()" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)" (focus)="edit = true" (blur)="edit = false">
+			<input type="text" ng-control="desc" [(ng-model)]="model.desc" (change)="onDescChange($event.target.value)" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)" (focus)="edit = true" (blur)="edit = false">
 			<small>Last updated on {{ model.updatedAt | date:'dd of MMMM, y' }}</small>
 		</div>
 		<div class="todo-cell-av">
