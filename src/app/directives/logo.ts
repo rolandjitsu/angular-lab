@@ -1,5 +1,4 @@
 import {
-	Inject,
 	ElementRef,
 	Directive,
 	OnDestroy
@@ -14,7 +13,7 @@ import { IconStore } from 'common/icon';
 
 export class Logo implements OnDestroy {
 	el;
-	constructor(@Inject(ElementRef) elementRef,	icon: IconStore) {
+	constructor(elementRef: ElementRef,	icon: IconStore) {
 		let that: Logo = this;
 		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
