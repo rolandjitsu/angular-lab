@@ -1,5 +1,4 @@
 import {
-	Inject,
 	ElementRef,
 	Component,
 	View,
@@ -57,7 +56,7 @@ import { Todos } from '../todos/todos';
 
 export class App {
 	loading: boolean = true;
-	constructor(@Inject(ElementRef) elementRef, router: Router) {
+	constructor(elementRef: ElementRef, router: Router) {
 
 		let that: App = this;
 		let timeout;
