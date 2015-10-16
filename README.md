@@ -72,5 +72,6 @@ In the making of this simple app, I have made use of whatever resources I could 
 -----------------
 - [ ] Authentication
 - [ ] User Account/Dashboard
+- [ ] Using Change Detection
 - [ ] E2E Tests
 - [ ] Saas/Less
