@@ -8,7 +8,7 @@ import {
 import { RouterOutlet, Router, ComponentInstruction } from 'angular2/router';
 
 import { AuthClient } from '../services';
-import { Auth, Login, Register, Change, Reset } from '../components';
+import { Login, Register, ChangePassword, ResetPassword } from '../components';
 
 @Directive({
 	selector: 'auth-outlet'
@@ -25,12 +25,11 @@ export class AuthOutlet extends RouterOutlet {
 	activate(nextInstruction: ComponentInstruction): Promise<any> {
 		let component = nextInstruction.componentType;
 		let isAllowed = this._client.isAuthenticated()
-			|| (component instanceof Auth
 			|| component instanceof Login
-			|| component instanceof Reset
-			|| component instanceof Change
-			|| component instanceof Register);
-		console.log(nextInstruction.componentType, component instanceof Auth);
+			|| component instanceof ResetPassword
+			|| component instanceof ChangePassword
+			|| component instanceof Register;
+		// console.log(nextInstruction.componentType, component instanceof Login);
 		if (isAllowed) this._router.navigateByUrl('/login');
 		return super.activate(nextInstruction);
 	}

@@ -46,9 +46,19 @@ import { Home } from '../home/home';
 		as: 'Home'
 	},
 	{
-		component: Auth,
-		path: '/login/...',
-		as: 'Auth'
+		component: Login,
+		path: '/login',
+		as: 'Login'
+	},
+	{
+		component: ResetPassword,
+		path: '/login/reset',
+		as: 'ResetPassword'
+	},
+	{
+		component: ChangePassword,
+		path: '/login/change',
+		as: 'ChangePassword'
 	},
 	{
 		component: Register,
@@ -78,7 +88,7 @@ export class App {
 		client.observe((auth: FirebaseAuthData) => {
 			let instruction;
 			if (auth) instruction = router.generate(['/Home']);
-			else instruction = router.generate(['/Auth/Login']);
+			else instruction = router.generate(['/Login']);
 			router.navigateByInstruction(instruction);
 		});
 
