@@ -12,7 +12,6 @@ import gutil from 'gulp-util';
 import karma from 'karma';
 import minimist from 'minimist';
 import plumber from 'gulp-plumber';
-import Q from 'q';
 import rename from 'gulp-rename';
 import runSequence from 'run-sequence';
 import size from 'gulp-size';
@@ -20,7 +19,6 @@ import sourcemaps from 'gulp-sourcemaps';
 import tslint from 'gulp-tslint';
 import tsd from 'tsd';
 import ts from 'gulp-typescript';
-import typescript from 'typescript';
 import watch from 'gulp-watch';
 
 import { SAUCE_LAUNCHERS, SAUCE_ALIASES } from './sauce.config';
@@ -46,10 +44,10 @@ const PATHS = {
 		'bower_components/firebase/firebase.js',
 		'node_modules/es6-shim/es6-shim.*',
 		'node_modules/systemjs/dist/system.*',
-		'node_modules/angular2/bundles/angular2.js',
-		'node_modules/angular2/bundles/router.dev.js',
-		'node_modules/angular2/bundles/http.js',
-		'node_modules/angular2/bundles/testing.js'
+		'node_modules/angular2/bundles/angular2.*',
+		'node_modules/angular2/bundles/router.*',
+		'node_modules/angular2/bundles/http.*',
+		'node_modules/angular2/bundles/testing.*'
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
@@ -74,9 +72,7 @@ const PATHS = {
 	dist: 'dist'
 };
 
-let ng2LabTSProject = ts.createProject('tsconfig.json', {
-	typescript: typescript
-});
+let ng2LabTSProject = ts.createProject('tsconfig.json');
 
 
 // Clean
@@ -461,38 +457,38 @@ function createBuildServer () {
 }
 
 function createJsBuildServer (onShutdown) {
-	let defer = Q.defer();
-	isEngineIOServerRunning(LAB_JS_BUILD_SERVER_PORT).then(
-		() => {
-			let client = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
-			client.on('open', () => {
-				client.on('close', (msg) => {
-					if (typeof onShutdown === 'function') onShutdown();
+	return new Promise((resolve, reject) => {
+		isEngineIOServerRunning(LAB_JS_BUILD_SERVER_PORT).then(
+			() => {
+				let client = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
+				client.on('open', () => {
+					client.on('close', (msg) => {
+						if (typeof onShutdown === 'function') onShutdown();
+					});
 				});
-			});
-			gutil.log(gutil.colors.yellow(`JS build server already running on ${LAB_JS_BUILD_SERVER_ADDRESS}`));
-			defer.resolve();
-		},
-		() => {
-			let watcher = watch(PATHS.src.ts, () => {
-				runSequence('build/js');
-			});
-			let server = createEngineIOServer(LAB_JS_BUILD_SERVER_PORT, () => {
-				gutil.log(gutil.colors.green(`JS build server started ${LAB_JS_BUILD_SERVER_ADDRESS}`));
-				defer.resolve();
-			});
-			server.on('connection', (socket) => {
-				socket.on('message', (msg) => {
-					server.broadcast(msg, socket.id);
+				gutil.log(gutil.colors.yellow(`JS build server already running on ${LAB_JS_BUILD_SERVER_ADDRESS}`));
+				resolve();
+			},
+			() => {
+				let watcher = watch(PATHS.src.ts, () => {
+					runSequence('build/js');
 				});
-			});
-			process.on('exit', () => {
-				watcher.close();
-				server.close();
-			});
-		}
-	);
-	return defer.promise;
+				let server = createEngineIOServer(LAB_JS_BUILD_SERVER_PORT, () => {
+					gutil.log(gutil.colors.green(`JS build server started ${LAB_JS_BUILD_SERVER_ADDRESS}`));
+					resolve();
+				});
+				server.on('connection', (socket) => {
+					socket.on('message', (msg) => {
+						server.broadcast(msg, socket.id);
+					});
+				});
+				process.on('exit', () => {
+					watcher.close();
+					server.close();
+				});
+			}
+		);
+	});
 }
 
 function createEngineIOServer (port, done) {
@@ -510,22 +506,22 @@ function createEngineIOServer (port, done) {
 }
 
 function isEngineIOServerRunning (port, timeout) {
-	let defer = Q.defer();
-	let client = engineIoClient(`${ENGINE_IO_BASE_SOCKET_ADDRESS}${port}`);
-	let timer = setTimeout(() => {
-		defer.reject();
-		client.close();
-	}, timeout || 500);
-	client.on('open', () => {
-		clearTimeout(timer);
-		defer.resolve();
-		client.close();
+	return new Promise((resolve, reject) => {
+		let client = engineIoClient(`${ENGINE_IO_BASE_SOCKET_ADDRESS}${port}`);
+		let timer = setTimeout(() => {
+			reject();
+			client.close();
+		}, timeout || 500);
+		client.on('open', () => {
+			clearTimeout(timer);
+			resolve();
+			client.close();
+		});
+		client.on('close', () => {
+			clearTimeout(timer);
+			reject();
+		});
 	});
-	client.on('close', () => {
-		clearTimeout(timer);
-		defer.reject();
-	});
-	return defer.promise;
 }
 
 function noop () {}

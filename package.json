@@ -51,10 +51,8 @@
 		"minimist": "1.2.x",
 		"object-assign": "4.0.x",
 		"protractor": "2.5.x",
-		"q": "1.4.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
-		"typescript": "1.6.x",
 		"yargs": "3.27.x"
 	},
 	"engines": {
