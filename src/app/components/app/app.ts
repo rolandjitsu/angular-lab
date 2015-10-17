@@ -7,14 +7,16 @@ import {
 } from 'angular2/angular2';
 import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { AuthenticationObservable } from 'common/authentication';
-import { isNativeShadowDomSupported } from 'common/lang';
-import { Animation, AnimationEndObservable } from 'common/animation';
-import { LowerCasePipe } from 'app/pipes';
-import { Logo } from 'app/directives';
+import { AuthClient } from '../../services';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { Animation, AnimationEndObservable } from '../../../common/animation';
+import { LowerCasePipe } from '../../pipes';
+import { Logo, AuthOutlet } from '../../directives';
 import { Login } from '../login/login';
+import { ResetPassword } from '../reset_password/reset_password';
+import { ChangePassword } from '../change_password/change_password';
 import { Register } from '../register/register';
-import { Todos } from '../todos/todos';
+import { Home } from '../home/home';
 
 @Component({
 	selector: 'app'
@@ -29,6 +31,7 @@ import { Todos } from '../todos/todos';
 	directives: [
 		CORE_DIRECTIVES,
 		ROUTER_DIRECTIVES,
+		AuthOutlet,
 		Logo
 	],
 	pipes: [
@@ -38,14 +41,14 @@ import { Todos } from '../todos/todos';
 
 @RouteConfig([
 	{
-		component: Todos,
+		component: Home,
 		path: '/',
-		as: 'Todos'
+		as: 'Home'
 	},
 	{
-		component: Login,
+		component: Auth,
 		path: '/login/...',
-		as: 'Login'
+		as: 'Auth'
 	},
 	{
 		component: Register,
@@ -56,14 +59,13 @@ import { Todos } from '../todos/todos';
 
 export class App {
 	loading: boolean = true;
-	constructor(elementRef: ElementRef, router: Router) {
+	constructor(elementRef: ElementRef, router: Router, client: AuthClient) {
 
-		let that: App = this;
 		let timeout;
 		router.subscribe((path) => {
 			if (!this.loading || timeout) return;
 			timeout = setTimeout(
-				(_) => that.loading = false,
+				(_) => this.loading = false,
 				3000
 			);
 		});
@@ -73,10 +75,10 @@ export class App {
 		 * Authentication
 		 */
 
-		AuthenticationObservable.subscribe((auth: FirebaseAuthData) => {
+		client.observe((auth: FirebaseAuthData) => {
 			let instruction;
-			if (auth) instruction = router.generate(['/Todos']);
-			else instruction = router.generate(['/Login/Home']);
+			if (auth) instruction = router.generate(['/Home']);
+			else instruction = router.generate(['/Auth/Login']);
 			router.navigateByInstruction(instruction);
 		});
 

@@ -7,10 +7,10 @@ import {
 	FORM_DIRECTIVES
 } from 'angular2/angular2';
 
-import { isNativeShadowDomSupported } from 'common/lang';
-import { TodoStore, Todo, TodoModel } from 'app/services';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { Todos, Todo, TodoModel } from '../../services';
+import { Glyph } from '../../directives';
 import { Checkbox } from '../checkbox/checkbox';
-import { Icon } from '../icon/icon';
 
 @Component({
 	selector: 'todo-item',
@@ -28,16 +28,16 @@ import { Icon } from '../icon/icon';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		Icon,
+		Glyph,
 		Checkbox
 	]
 })
 
 export class TodoItem {
-	private ts: TodoStore;
+	private ts: Todos;
 	private _model: Todo;
 
-	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
+	constructor(@Inject(Todos) tsp: Promise<Todos>) {
 		tsp.then(ts => this.ts = ts);
 	}
 

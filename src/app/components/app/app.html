@@ -1,10 +1,10 @@
 <header class="header">
 	<a
-		[router-link]="['./Todos']"
+		[router-link]="['./Home']"
 		class="logo js-logo"
 		[ng-class]="{ 'js-move': !loading }"
 		logo></a>
 </header>
 <main class="main js-main js-npe" [ng-class]="{ 'visible': !loading }">
-	<router-outlet></router-outlet>
+	<auth-outlet></auth-outlet>
 </main>

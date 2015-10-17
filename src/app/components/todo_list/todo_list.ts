@@ -6,8 +6,8 @@ import {
 	CORE_DIRECTIVES
 } from 'angular2/angular2';
 
-import { isNativeShadowDomSupported } from 'common/lang';
-import { TodoStore, Todo } from 'app/services';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { Todos, Todo } from '../../services';
 import { TodoItem } from '../todo_item/todo_item';
 
 @Component({
@@ -27,8 +27,8 @@ import { TodoItem } from '../todo_item/todo_item';
 })
 
 export class TodoList {
-	todos: TodoStore;
-	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
+	todos: Todos;
+	constructor(@Inject(Todos) tsp: Promise<Todos>) {
 		tsp.then((ts) => this.todos = ts);
 	}
 }

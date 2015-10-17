@@ -7,18 +7,18 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { resetLogin } from 'common/authentication';
-import { isNativeShadowDomSupported } from 'common/lang';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { AuthClient } from '../../services';
 
 @Component({
-	selector: 'reset'
+	selector: 'reset-password'
 })
 
 @View({
 	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	templateUrl: 'app/components/login/reset/reset.html',
+	templateUrl: 'app/components/reset_password/reset_password.html',
 	styleUrls: [
-		'app/components/login/reset/reset.css'
+		'app/components/reset_password/reset_password.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
@@ -28,19 +28,23 @@ import { isNativeShadowDomSupported } from 'common/lang';
 })
 
 
-export class Reset {
+export class ResetPassword {
 	isResetAttemptFailed: boolean = false;
 	isResetAttemptSuccessful: boolean = false;
 	error: string = null;
 	isResetting: boolean = false;
-	private credentials: FirebaseResetPasswordCredentials = {
+	credentials: FirebaseResetPasswordCredentials = {
 		email: ''
 	};
+	private _client: AuthClient;
+	constructor(client: AuthClient) {
+		this._client = client;
+	}
 	submit() {
 		this.isResetAttemptFailed = false;
 		this.error = null;
 		this.isResetting = true; 
-		resetLogin(this.credentials).then(
+		this._client.resetPassword(this.credentials).then(
 			() => {
 				this.isResetAttemptSuccessful = true;
 				this.isResetting = false;

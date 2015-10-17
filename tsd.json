@@ -8,9 +8,6 @@
 		"firebase/firebase.d.ts": {
 			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		},
-		"angular-protractor/angular-protractor.d.ts": {
-			"commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
-		},
 		"node/node.d.ts": {
 			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		}

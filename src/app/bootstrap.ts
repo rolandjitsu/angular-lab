@@ -2,8 +2,8 @@ import { provide, bootstrap, FORM_PROVIDERS } from 'angular2/angular2';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF, ROUTER_PROVIDERS as NG_ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router';
 
-import { SERVICES_BINDINGS } from 'app/services';
-import { App } from 'app/components';
+import { SERVICES_BINDINGS } from './services';
+import { App } from './components';
 
 const ROUTER_PROVIDERS: Array<any> = [
 	NG_ROUTER_PROVIDERS,

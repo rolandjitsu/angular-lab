@@ -8,15 +8,22 @@ import { isNativeShadowDomSupported } from '../../common/lang';
 import { Icon } from '../services';
 
 @Directive({
-	selector: '[logo]'
+	selector: 'glyph',
+	inputs: [
+		'src'
+	]
 })
 
-export class Logo implements OnDestroy {
+export class Glyph implements OnDestroy {
 	el;
-	constructor(elementRef: ElementRef,	icon: Icon) {
+	private _icon: Icon;
+	constructor(elementRef: ElementRef, icon: Icon) {
 		this.el = elementRef.nativeElement;
 		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
-		icon.get('media/ng.svg').subscribe((svg) => {
+		this._icon = icon;
+	}
+	set src(src: string) {
+		this._icon.get(src).subscribe((svg) => {
 			this.el.appendChild(svg);
 		});
 	}

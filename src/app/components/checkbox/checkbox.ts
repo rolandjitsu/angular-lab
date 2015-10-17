@@ -17,9 +17,9 @@ import {
 	Provider
 } from 'angular2/angular2';
 
-import { isPresent, isNativeShadowDomSupported } from 'common/lang';
-import { KEY_CODES } from 'common/key_codes';
-import { Icon } from '../icon/icon';
+import { isPresent, isNativeShadowDomSupported } from '../../../common/lang';
+import { KEY_CODES } from '../../../common/key_codes';
+import { Glyph } from '../../directives';
 
 const NG_VALUE_ACCESSOR: OpaqueToken = new OpaqueToken('NgValueAccessor');
 const CHECKBOX_VALUE_ACCESSOR = new Provider(
@@ -47,7 +47,7 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
 		'app/components/checkbox/checkbox.css'
 	],
 	directives: [
-		Icon
+		Glyph
 	]
 })
 

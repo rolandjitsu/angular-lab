@@ -8,40 +8,40 @@ import {
 } from 'angular2/angular2';
 import { ComponentInstruction, OnActivate, OnDeactivate, CanActivate } from 'angular2/router';
 
-import { isUserAuthenticated } from 'common/authentication';
-import { isNativeShadowDomSupported } from 'common/lang';
-import { TodoStore, TodoModel } from 'app/services';
+// import { isUserAuthenticated } from '../../../common/authentication';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { Todos, TodoModel } from '../../services';
+import { Glyph } from '../../directives';
 import { TodoList } from '../todo_list/todo_list';
-import { Icon } from '../icon/icon';
 
 class TodosFormModel {
 	desc: string;
 }
 
 @Component({
-	selector: 'todos'
+	selector: 'home'
 })
 
 @View({
 	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
-	templateUrl: 'app/components/todos/todos.html',
+	templateUrl: 'app/components/home/home.html',
 	styleUrls: [
-		'app/components/todos/todos.css'
+		'app/components/home/home.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		Icon,
+		Glyph,
 		TodoList
 	]
 })
 
-@CanActivate(isUserAuthenticated)
+// @CanActivate(isUserAuthenticated)
 
-export class Todos implements OnActivate, OnDeactivate {
+export class Home implements OnActivate, OnDeactivate {
 	model: TodosFormModel = new TodosFormModel();
-	private ts: TodoStore;
-	constructor(@Inject(TodoStore) tsp: Promise<TodoStore>) {
+	private ts: Todos;
+	constructor(@Inject(Todos) tsp: Promise<Todos>) {
 		tsp.then(ts => this.ts = ts);
 	}
 	onActivate(next: ComponentInstruction, prev: ComponentInstruction) {

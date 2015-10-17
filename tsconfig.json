@@ -1,15 +1,16 @@
 {
-	"version": "1.5.3",
 	"compilerOptions": {
-		"declaration": false,
-		"module": "system",
-		"target": "es5",
 		"emitDecoratorMetadata": true,
-		"listFiles": true,
+		"experimentalDecorators": true,
+		"module": "system",
+		"moduleResolution": "node",
 		"noImplicitAny": false,
-		"noLib": false,
-		"removeComments": true,
+		"outDir": "dist",
+		"rootDir": "./src",
 		"sourceMap": true,
-		"experimentalDecorators": true
-	}
+		"target": "es5"
+	},
+	"exclude": [
+		"node_modules"
+	]
 }

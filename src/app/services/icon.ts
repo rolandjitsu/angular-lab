@@ -1,11 +1,11 @@
 import { EventEmitter } from 'angular2/angular2';
 import { Http, Response } from 'angular2/http';
 
-import { Animation } from './animation';
+import { Animation } from '../../common/animation';
 
 let cache: Map<any, any> = new Map();
 
-export class IconStore {
+export class Icon {
 	queue: Map<any, any> = new Map();
 	private _http: Http;
 	constructor(http: Http) {
@@ -15,8 +15,8 @@ export class IconStore {
 		let subject: EventEmitter = new EventEmitter();
 		subject = subject.toRx();
 		if (cache.has(url)) {
-			// Delay the next tick until the subject is returned, otherwise the subscriber will not be notified about the next tick if called before return
-			// TODO: make sure that this happens after the promise has been returned
+			// Delay the next tick until the subject is returned,
+			// otherwise the subscriber will not be notified about the next tick if called before return
 			Animation.rAF(function () {
 				subject.next(cache.get(url).cloneNode(true));
 			});

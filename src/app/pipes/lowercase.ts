@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from 'angular2/angular2';
 
-import { isBlank } from 'common/lang';
+import { isBlank } from '../../common/lang';
 
 @Pipe({ name: 'lowercase' })
 export class LowerCasePipe implements PipeTransform {

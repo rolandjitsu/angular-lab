@@ -1,9 +1,9 @@
 /**
- * Host Element (<todos>)
+ * Host Element (<home>)
  */
 
 :host,
-todos {
+home {
 	display: block;
 }
 

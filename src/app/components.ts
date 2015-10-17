@@ -1,10 +1,9 @@
 export * from './components/app/app';
+export * from './components/change_password/change_password';
 export * from './components/checkbox/checkbox';
-export * from './components/icon/icon';
+export * from './components/home/home';
 export * from './components/login/login';
-// export * from './components/login/forgot_password/forgot_password';
-// export * from './components/login/reset_password/reset_password';
 export * from './components/register/register';
-export * from './components/todo_list/todo_list';
+export * from './components/reset_password/reset_password';
 export * from './components/todo_item/todo_item';
-export * from './components/todos/todos';
+export * from './components/todo_list/todo_list';

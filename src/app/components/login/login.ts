@@ -5,12 +5,10 @@ import {
 	Component,
 	View
 } from 'angular2/angular2';
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { isNativeShadowDomSupported } from 'common/lang';
-import { Home } from './home/home';
-import { Reset } from './reset/reset';
-import { Change } from './change/change';
+import { isNativeShadowDomSupported } from '../../../common/lang';
+import { AuthClient } from '../../services';
 
 @Component({
 	selector: 'login'
@@ -29,22 +27,24 @@ import { Change } from './change/change';
 	]
 })
 
-@RouteConfig([
-	{
-		component: Home,
-		path: '/',
-		as: 'Home'
-	},
-	{
-		component: Reset,
-		path: '/reset',
-		as: 'Reset'
-	},
-	{
-		component: Change,
-		path: '/change',
-		as: 'Change'
-	},
-])
-
-export class Login {}
+export class Login {
+	isAuthenticationFailed: boolean = false;
+	isAuthenticating: boolean = false;
+	credentials: FirebaseCredentials = {
+		email: '',
+		password: ''
+	};
+	private _client: AuthClient;
+	constructor(client: AuthClient) {
+		this._client = client;
+	}
+	submit() {
+		this.isAuthenticationFailed = false;
+		this.isAuthenticating = true;
+		this._client.login(this.credentials).then(null, (error) => {
+				this.isAuthenticationFailed = true;
+				this.isAuthenticating = false;
+			}
+		);
+	}
+}

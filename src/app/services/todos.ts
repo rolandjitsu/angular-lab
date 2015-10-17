@@ -1,5 +1,5 @@
-import { isString, isNumber } from 'common/lang';
-import { FirebaseArray, FirebaseArrayValue } from 'common/firebase_array';
+import { isString, isNumber } from '../../common/lang';
+import { FirebaseArray, FirebaseArrayValue } from '../../common/firebase_array';
 
 export interface Todo extends FirebaseArrayValue {
 	createdAt: number | string;
@@ -31,7 +31,7 @@ export class TodoModel implements Todo {
 	}
 }
 
-export class TodoStore extends FirebaseArray {
+export class Todos extends FirebaseArray {
 	add(todo: Todo): Promise<Firebase> {
 		return super.add(todo);
 	}

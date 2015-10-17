@@ -51,9 +51,6 @@ const PATHS = {
 	],
 	typings: [
 		'src/_typings/custom.d.ts',
-		'node_modules/angular2/bundles/typings/es6-shim/*.d.ts',
-		'node_modules/angular2/bundles/typings/jasmine/*.d.ts',
-		'node_modules/angular2/bundles/typings/angular2/*.d.ts',
 		'tsd_typings/tsd.d.ts'
 	],
 	src: {

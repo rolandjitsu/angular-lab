@@ -26,9 +26,9 @@ import {
 	Http
 } from 'angular2/http';
 
-import { isNativeShadowDomSupported } from 'common/lang';
-import { IconStore } from 'common/icon';
-import { Logo } from 'app/directives';
+import { isNativeShadowDomSupported } from '../../common/lang';
+import { Icon } from '../services';
+import { Logo } from './logo';
 
 const LOGO_GLYPH_HTML = `
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="166px" height="176px" viewBox="0 0 166 176">
@@ -59,9 +59,9 @@ export function main () {
 					BaseRequestOptions
 				]
 			}),
-			provide(IconStore, {
+			provide(Icon, {
 				useFactory: (http: Http) => {
-					return new IconStore(http);
+					return new Icon(http);
 				},
 				deps: [
 					Http
