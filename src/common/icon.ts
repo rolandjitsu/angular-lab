@@ -12,7 +12,6 @@ export class IconStore {
 		this._http = http;
 	}
 	get(url: string): any {
-		let that: IconStore = this;
 		let subject: EventEmitter = new EventEmitter();
 		subject = subject.toRx();
 		if (cache.has(url)) {
@@ -34,7 +33,7 @@ export class IconStore {
 					.subscribe((element) => {
 						cache.set(url, element);
 						subs.forEach((sub) => sub.next(element.cloneNode(true)));
-						that.queue.delete(url);
+						this.queue.delete(url);
 					});
 			}
 		}
