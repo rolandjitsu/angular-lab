@@ -31,7 +31,7 @@ assign(karmaConfig, {
 	],
 	files: [
 		'node_modules/es6-shim/es6-shim.js',
-		'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+		'node_modules/systemjs/dist/system.src.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
 		'node_modules/angular2/bundles/angular2.dev.js',
 		'node_modules/angular2/bundles/router.dev.js',
 		'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
