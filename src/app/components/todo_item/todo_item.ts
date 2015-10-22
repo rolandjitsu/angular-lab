@@ -1,26 +1,19 @@
 import {
-	Inject,
-	ViewEncapsulation,
-	Component,
-	View,
 	CORE_DIRECTIVES,
-	FORM_DIRECTIVES
+	FORM_DIRECTIVES,
+	Inject,
+	Component,
+	ViewEncapsulation
 } from 'angular2/angular2';
 
-import { isNativeShadowDomSupported } from '../../../common/lang';
-import { Todos, Todo, TodoModel } from '../../services';
-import { Glyph } from '../../directives';
+import { Chores, Chore, ChoreModel } from '../../services';
+import { Glyph } from '../glyph/glyph';
 import { Checkbox } from '../checkbox/checkbox';
 
 @Component({
+	// moduleId: module.id, // CommonJS standard
 	selector: 'todo-item',
-	inputs: [
-		'model'
-	]
-})
-
-@View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/todo_item/todo_item.html',
 	styleUrls: [
 		'app/components/todo_item/todo_item.css'
@@ -30,19 +23,23 @@ import { Checkbox } from '../checkbox/checkbox';
 		FORM_DIRECTIVES,
 		Glyph,
 		Checkbox
+	],
+	inputs: [
+		'model'
 	]
 })
 
 export class TodoItem {
-	private ts: Todos;
-	private _model: Todo;
+	isEditMode: boolean = false;
+	private ts: Chores;
+	private _model: Chore;
 
-	constructor(@Inject(Todos) tsp: Promise<Todos>) {
+	constructor(@Inject(Chores) tsp: Promise<Chores>) {
 		tsp.then(ts => this.ts = ts);
 	}
 
-	set model(model: Todo) {
-		this._model = TodoModel.fromModel(model);
+	set model(model: Chore) {
+		this._model = model;
 	}
 
 	get model() {
@@ -53,18 +50,19 @@ export class TodoItem {
 		event.preventDefault();
 		this.ts.remove(this.model);
 	}
-	blur(event) {
+	toggleEditMode(event, input) {
 		event.preventDefault();
-		event.target.blur();
+		this.isEditMode = !this.isEditMode;
+		input.setSelectionRange(0, input.value.length);
 	}
 
 	onStatusChange(value) {
-		this.ts.update(this.model, <Todo>{
+		this.ts.update(this.model, <Chore>{
 			completed: value
 		});
 	}
-	onDescChange(value) {
-		this.ts.update(this.model, <Todo>{
+	onNameChange(value) {
+		this.ts.update(this.model, <Chore>{
 			desc: value
 		});
 	}

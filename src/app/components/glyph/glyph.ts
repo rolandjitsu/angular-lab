@@ -1,30 +1,38 @@
 import {
 	ElementRef,
-	Directive,
+	Component,
+	ViewEncapsulation,
 	OnDestroy
 } from 'angular2/angular2';
 
-import { isNativeShadowDomSupported } from '../../common/lang';
-import { Icon } from '../services';
+import { Icon } from '../../services';
 
-@Directive({
+@Component({
 	selector: 'glyph',
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
+	template: '',
+	styleUrls: [
+		'app/components/glyph/glyph.css'
+	],
+	directives: [
+		Glyph
+	],
 	inputs: [
 		'src'
 	]
 })
 
 export class Glyph implements OnDestroy {
-	el;
+	el: HTMLElement;
 	private _icon: Icon;
 	constructor(elementRef: ElementRef, icon: Icon) {
 		this.el = elementRef.nativeElement;
-		if (isNativeShadowDomSupported) this.el = this.el.createShadowRoot();
 		this._icon = icon;
 	}
 	set src(src: string) {
 		this._icon.get(src).subscribe((svg) => {
-			this.el.appendChild(svg);
+			if (this.el.children.length) this.el.replaceChild(svg, this.el.firstChild);
+			else this.el.appendChild(svg);
 		});
 	}
 	onDestroy() {

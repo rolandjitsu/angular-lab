@@ -1,0 +1,34 @@
+<form
+	class="change-form center-block m-t-lg"
+	#change="form"
+	(ng-submit)="submit()"
+	novalidate>
+	<label for="email" class="sr-only">Email</label>
+	<input type="email" class="form-control change-form-email" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" [disabled]="isChanging" placeholder="Email" autocomplete="off" required>
+	<label for="old-password" class="sr-only">Current Password</label>
+	<input type="password" class="form-control change-form-oldpassword" id="old-password" name="oldPassword" ng-control="oldPassword" [(ng-model)]="credentials.oldPassword" [disabled]="isChanging" placeholder="Current Password" autocomplete="off" required>
+	<label for="new-password" class="sr-only">New Password</label>
+	<input type="password" class="form-control change-form-newpassword" id="new-password" name="newPassword" ng-control="newPassword" [(ng-model)]="credentials.newPassword" [disabled]="isChanging" placeholder="New Password" autocomplete="off" required>
+	<button type="submit" class="btn btn-block btn-primary" [disabled]="!change.form.valid || isChanging">
+		Change Password
+	</button>
+	<div class="text-right">
+		<a [router-link]="['/Todos']">
+			Back
+		</a>
+	</div>
+</form>
+
+<div
+	*ng-if="isChangeAttemptSuccessful"
+	class="alert alert-success center-block"
+	role="alert">
+	Successfuly changed your password.
+</div>
+
+<div
+	*ng-if="isChangeAttemptFailed"
+	class="alert alert-danger center-block"
+	role="alert">
+	{{ error || 'Could not change your password, try again later.' }}
+</div>

@@ -8,6 +8,8 @@ checkbox {
 	cursor: pointer;
 	outline: none;
 	user-select: none;
+	width: 24px;
+	height: 24px;
 }
 
 
@@ -15,12 +17,10 @@ checkbox {
  * Base
  */
 
-.checkbox {
-	box-sizing: border-box;
+.box {
 	display: block;
-	white-space: nowrap;
-	fill: #90a4ae;
-	transition: fill .125s ease-in-out;
+	color: #90a4ae;
+	transition: color .125s ease-in-out;
 }
 
 
@@ -30,17 +30,17 @@ checkbox {
 
 :host([disabled]),
 checkbox[disabled] {
-    cursor: no-drop;
+	cursor: no-drop;
 }
 
-:host(:focus:not([aria-checked="true"])) > .checkbox,
-checkbox:focus:not([aria-checked="true"]) > .checkbox,
-:host(:hover:not([aria-checked="true"])) > .checkbox,
-checkbox:hover:not([aria-checked="true"]) > .checkbox {
-	fill: #a5d6a7;	
+:host(:focus:not([aria-checked="true"])) > .box,
+checkbox:focus:not([aria-checked="true"]) > .box,
+:host(:hover:not([aria-checked="true"])) > .box,
+checkbox:hover:not([aria-checked="true"]) > .box {
+	color: #a5d6a7;	
 }
 
-:host([aria-checked="true"]) > .checkbox,
-checkbox[aria-checked="true"] > .checkbox {
-    fill: #4caf50;
+:host([aria-checked="true"]) > .box,
+checkbox[aria-checked="true"] > .box {
+	color: #4caf50;
 }

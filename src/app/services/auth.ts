@@ -3,6 +3,9 @@ export class AuthClient {
 	constructor(firebaseRef: Firebase) {
 		this._firebaseRef = firebaseRef;
 	}
+	get session(): FirebaseAuthData {
+		return this._firebaseRef.getAuth();
+	}
 	register(credentials: FirebaseCredentials): Promise<FirebaseAuthData | any> {
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.createUser(credentials, (error, auth: FirebaseAuthData) => {
@@ -15,7 +18,7 @@ export class AuthClient {
 	}
 	login(credentials: FirebaseCredentials, remember?: boolean): Promise<FirebaseAuthData | any> {
 		let opts = {
-			remember: typeof remember === 'boolean' && !remember ? 'none': 'default'
+			remember: typeof remember === 'boolean' && !remember ? 'sessionOnly': 'default'
 		};
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.authWithPassword(
@@ -51,7 +54,7 @@ export class AuthClient {
 		};
 	}
 	isAuthenticated(): boolean {
-		return this._firebaseRef.getAuth() !== null;
+		return this.session !== null;
 	}
 	logout(): void {
 		this._firebaseRef.unauth();

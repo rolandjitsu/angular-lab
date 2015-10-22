@@ -2,20 +2,15 @@ import {
 	CORE_DIRECTIVES,
 	FORM_DIRECTIVES,
 	ViewEncapsulation,
-	Component,
-	View
+	Component
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { isNativeShadowDomSupported } from '../../../common/lang';
 import { AuthClient } from '../../services';
 
 @Component({
-	selector: 'register'
-})
-
-@View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	selector: 'register',
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/register/register.html',
 	styleUrls: [
 		'app/components/register/register.css'
@@ -26,7 +21,6 @@ import { AuthClient } from '../../services';
 		ROUTER_DIRECTIVES
 	]
 })
-
 
 export class Register {
 	isRegistrationFailed: boolean = false;

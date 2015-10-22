@@ -7,15 +7,11 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { isNativeShadowDomSupported } from '../../../common/lang';
 import { AuthClient } from '../../services';
 
 @Component({
-	selector: 'reset-password'
-})
-
-@View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	selector: 'reset-password',
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/reset_password/reset_password.html',
 	styleUrls: [
 		'app/components/reset_password/reset_password.css'
@@ -26,7 +22,6 @@ import { AuthClient } from '../../services';
 		ROUTER_DIRECTIVES
 	]
 })
-
 
 export class ResetPassword {
 	isResetAttemptFailed: boolean = false;
@@ -55,7 +50,7 @@ export class ResetPassword {
 				if (error) {
 					switch (error.code) {
 						case 'INVALID_USER':
-							this.error = 'The specified user account does not exist.';
+							this.error = 'Specified user account does not exist.';
 							break;
 						default:
 							break;

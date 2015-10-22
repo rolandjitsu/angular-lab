@@ -1,38 +1,29 @@
 import {
-	ElementRef,
-	Component,
-	View,
 	CORE_DIRECTIVES,
-	ViewEncapsulation
+	ViewEncapsulation,
+	Component
 } from 'angular2/angular2';
-import { Router, RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction } from 'angular2/router';
 
 import { AuthClient } from '../../services';
-import { isNativeShadowDomSupported } from '../../../common/lang';
-import { Animation, AnimationEndObservable } from '../../../common/animation';
 import { LowerCasePipe } from '../../pipes';
-import { Logo, AuthOutlet } from '../../directives';
+import { Auth } from '../auth/auth';
 import { Login } from '../login/login';
 import { ResetPassword } from '../reset_password/reset_password';
-import { ChangePassword } from '../change_password/change_password';
 import { Register } from '../register/register';
-import { Home } from '../home/home';
+import { Account } from '../account/account';
+import { Todos } from '../todos/todos';
 
 @Component({
-	selector: 'app'
-})
-
-@View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	selector: 'app',
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/app/app.html',
 	styleUrls: [
 		'app/components/app/app.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
-		ROUTER_DIRECTIVES,
-		AuthOutlet,
-		Logo
+		ROUTER_DIRECTIVES
 	],
 	pipes: [
 		LowerCasePipe
@@ -41,89 +32,44 @@ import { Home } from '../home/home';
 
 @RouteConfig([
 	{
-		component: Home,
+		component: Todos,
 		path: '/',
-		as: 'Home'
+		as: 'Todos'
 	},
 	{
-		component: Login,
-		path: '/login',
-		as: 'Login'
+		component: Account,
+		path: '/account',
+		as: 'Account'
 	},
 	{
-		component: ResetPassword,
-		path: '/login/reset',
-		as: 'ResetPassword'
-	},
-	{
-		component: ChangePassword,
-		path: '/login/change',
-		as: 'ChangePassword'
-	},
-	{
-		component: Register,
-		path: '/register',
-		as: 'Register'
+		component: Auth,
+		path: '/login/...',
+		as: 'Auth'
 	}
 ])
 
 export class App {
-	loading: boolean = true;
-	constructor(elementRef: ElementRef, router: Router, client: AuthClient) {
-
-		let timeout;
-		router.subscribe((path) => {
-			if (!this.loading || timeout) return;
-			timeout = setTimeout(
-				(_) => this.loading = false,
-				3000
-			);
-		});
-
-
-		/**
-		 * Authentication
-		 */
-
+	constructor(router: Router, location: Location, client: AuthClient) {
 		client.observe((auth: FirebaseAuthData) => {
-			let instruction;
-			if (auth) instruction = router.generate(['/Home']);
-			else instruction = router.generate(['/Login']);
-			router.navigateByInstruction(instruction);
+			router.recognize(location.path()).then((instruction: Instruction) => {
+				if (auth && isAuthComponent(instruction)) router.navigate(['/Todos']);
+				else if (!auth && !isAuthComponent(instruction)) router.navigate(['/Auth/Login']);
+			});
 		});
-
-
-		/**
-		 * Animations
-		 */
-
-		let el: Element = elementRef.nativeElement;
-		let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-		let main: Element = el.querySelector(`${prefixSelector}.js-main`);
-		let logo: Element = el.querySelector(`${prefixSelector}.js-logo`);
-		let mainSub = AnimationEndObservable.subscribe(
-			main,
-			(event) => {
-				main.classList.remove('js-npe');
-				mainSub.dispose();
-			},
-			this
-		);
-		let logoSub = AnimationEndObservable.subscribe(
-			logo,
-			(event) => {
-				if (event.animationName === 'in') logo.className = logo.className.replace('js-in', 'js-opaque');
-				else if (event.animationName === 'move') {
-					logo.classList.remove('js-move', 'js-opaque');
-					logo.classList.add('js-unfix');
-					logoSub.dispose();
-				}
-			},
-			this
-		);
-		Animation.rAF(
-			(_) => logo.classList.add('js-in'),
-			this
-		);
+		// TODO: eventually this will be handled by `@CanActivate` hook
+		router.subscribe((path) => {
+			router.recognize(path).then((instruction: Instruction) => {
+				if (!client.session && !isAuthComponent(instruction)) router.navigate(['/Auth/Login']);
+			});
+		});
 	}
+}
+
+function isAuthComponent(instruction: Instruction): boolean {
+	if (!instruction) return false;
+	let component = instruction.component.componentType;
+	return component === Auth
+		|| component === Login
+		|| component === ResetPassword
+		|| component === Register;
 }

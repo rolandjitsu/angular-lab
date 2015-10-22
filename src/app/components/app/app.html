@@ -1,10 +1,1 @@
-<header class="header">
-	<a
-		[router-link]="['./Home']"
-		class="logo js-logo"
-		[ng-class]="{ 'js-move': !loading }"
-		logo></a>
-</header>
-<main class="main js-main js-npe" [ng-class]="{ 'visible': !loading }">
-	<auth-outlet></auth-outlet>
-</main>
+<router-outlet></router-outlet>

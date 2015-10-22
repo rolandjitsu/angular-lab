@@ -3,15 +3,14 @@ import { Http } from 'angular2/http';
 
 import { AuthClient } from './services/auth';
 import { Icon } from './services/icon';
-import { Todos } from './services/todos';
+import { Chores } from './services/chores';
 
 export * from './services/auth';
 export * from './services/icon';
-export * from './services/todos';
+export * from './services/chores';
 
 const ROOT_FIREBASE_REF: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 const TODOS_FIREBASE_REF: OpaqueToken = new OpaqueToken('TodosFirebaseRef');
-let resolvedTodosFirebaseRef;
 
 export const SERVICES_BINDINGS: Array<any> = [
 	provide(Icon, {
@@ -20,18 +19,17 @@ export const SERVICES_BINDINGS: Array<any> = [
 		},
 		deps: [Http] 
 	}),
-	provide(Todos, {
-		useFactory: (promise: Promise<Firebase>) => promise.then((ref: Firebase) => new Todos(ref)),
+	provide(Chores, {
+		useFactory: (promise: Promise<Firebase>) => promise.then((ref: Firebase) => new Chores(ref)),
 		deps: [TODOS_FIREBASE_REF]
 	}),
 	provide(TODOS_FIREBASE_REF, {
 		useFactory: (client) => {
 			return new Promise((resolve) => {
-				if (resolvedTodosFirebaseRef) resolve(resolvedTodosFirebaseRef);
 				// Authenticate firebase and then create the reference based on the uid returned from Firebase after auth
 				let unobserve = client.observe((auth: FirebaseAuthData) => {
 					if (auth !== null) {
-						resolve(resolvedTodosFirebaseRef = ROOT_FIREBASE_REF.child(`/chores/${auth.uid}`));
+						resolve(ROOT_FIREBASE_REF.child(`/chores/${auth.uid}`));
 						unobserve();
 					}
 				});

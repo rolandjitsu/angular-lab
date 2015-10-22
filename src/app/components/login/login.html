@@ -1,27 +1,35 @@
-<h1>Login</h1>
-
 <form
-	class="login-form"
+	class="login-form center-block"
 	#login="form"
 	(ng-submit)="submit()"
 	novalidate>
-	<div class="login-form-email">
-		<label for="email">Email</label>
-		<input type="email" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" placeholder="Email" autocomplete="off" required>
+	<label for="email" class="sr-only">Email</label>
+	<input type="email" class="login-form-email form-control" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" [disabled]="isAuthenticating" placeholder="Email" autocomplete="off" required>
+	<label for="password" class="sr-only">Password</label>
+	<input type="password" class="login-form-password form-control" id="password" name="password" ng-control="password" [(ng-model)]="credentials.password" [disabled]="isAuthenticating" placeholder="Password" autocomplete="off" required>
+	<div class="clearfix">
+		<small class="checkbox pull-left">
+			<label for="remember">
+				<input type="checkbox" id="remember" name="remember" ng-control="remember" [(ng-model)]="remember"> Remember me
+			</label>
+		</small>
+		<small class="pull-right">
+			<a [router-link]="['../Reset']">Forgot your password?</a>
+		</small>
 	</div>
-	<div class="login-form-password">
-		<label for="password">Password</label>
-		<input type="password" id="password" name="password" ng-control="password" [(ng-model)]="credentials.password" placeholder="Password" autocomplete="off" required>
-	</div>
-	<div class="login-form-submit">
-		<button type="submit" [disabled]="!login.form.valid || isAuthenticating">
-			Login
-		</button>
+	<button type="submit" class="btn btn-primary btn-block" [disabled]="!login.form.valid || isAuthenticating">
+		Login
+	</button>
+	<div class="text-right">
+		<a [router-link]="['../Register']">
+			Signup
+		</a>
 	</div>
 </form>
 
-<a [router-link]="['/Register']">Signup</a>
-<a [router-link]="['../Reset']">Reset Password</a>
-
-<div *ng-if="isAuthenticationFailed">The credentials are incorrect.</div>
-<div *ng-if="isAuthenticating">Trying to authenticate ...</div>
+<div
+	*ng-if="isAuthenticationFailed"
+	class="alert alert-danger center-block"
+	role="alert">
+	The credentials are incorrect.
+</div>

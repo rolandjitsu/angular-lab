@@ -1,0 +1,37 @@
+<nav class="nav">
+	<ul class="list-inline">
+		<li>
+			<a [router-link]="['/Account']"><glyph src="media/settings.svg"></glyph></a>
+		</li>
+		<li>
+			<a [router-link]="['/Auth', 'Login']" (click)="logout($event)"><glyph src="media/lock.svg"></glyph></a>
+		</li>
+	</ul>
+</nav>
+<main class="container">
+	<div class="logo center-block text-center">
+		<ng2-logo></ng2-logo>
+	</div>
+	<div class="todos-form center-block">
+		<form
+			class="text-center"
+			#todo="form"
+			(ng-submit)="add()"
+			novalidate>
+			<fieldset class="form-group">
+				<label for="name" class="sr-only">Name/Title</label>
+				<input type="text" class="form-control" id="name" name="name" ng-control="name" [(ng-model)]="model.desc" placeholder="Name/Title" autocomplete="off" required>
+			</fieldset>
+			<button type="submit" [disabled]="!todo.form.valid">
+				<glyph src="media/plus.svg"></glyph>
+			</button>
+		</form>
+	</div>
+	<div class="todos-list center-block">
+		<ul class="list-group">
+			<li class="list-group-item" *ng-for="#todo of todos">
+				<todo-item [model]="todo"></todo-item>
+			</li>
+		</ul>
+	</div>
+</main>

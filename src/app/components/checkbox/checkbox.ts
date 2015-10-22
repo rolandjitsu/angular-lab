@@ -6,7 +6,6 @@ import {
 	HostListener,
 	EventEmitter,
 	Component,
-	View,
 	Self,
 	Attribute,
 	ViewEncapsulation,
@@ -17,9 +16,9 @@ import {
 	Provider
 } from 'angular2/angular2';
 
-import { isPresent, isNativeShadowDomSupported } from '../../../common/lang';
+import { isPresent } from '../../../common/lang';
 import { KEY_CODES } from '../../../common/key_codes';
-import { Glyph } from '../../directives';
+import { Glyph } from '../glyph/glyph';
 
 const NG_VALUE_ACCESSOR: OpaqueToken = new OpaqueToken('NgValueAccessor');
 const CHECKBOX_VALUE_ACCESSOR = new Provider(
@@ -32,22 +31,19 @@ const CHECKBOX_VALUE_ACCESSOR = new Provider(
 
 @Component({
 	selector: 'checkbox[ng-control], checkbox[ng-form-control], checkbox[ng-model]',
-	providers: [
-		CHECKBOX_VALUE_ACCESSOR
-	],
-	inputs: [
-		'disabled'
-	]
-})
-
-@View({
-	encapsulation: isNativeShadowDomSupported ? ViewEncapsulation.Native : ViewEncapsulation.Emulated, // Emulated, Native, None (default)
+	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [
 		'app/components/checkbox/checkbox.css'
 	],
+	providers: [
+		CHECKBOX_VALUE_ACCESSOR
+	],
 	directives: [
 		Glyph
+	],
+	inputs: [
+		'disabled'
 	]
 })
 

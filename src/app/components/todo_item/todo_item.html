@@ -1,21 +1,30 @@
 <form
 	class="todo-cell"
-	[ng-class]="{ 'js-completed': model.completed }"
-	#todo="form">
+	[ng-class]="{ 'js-complete': model.completed }"
+	#todo="form"
+	novalidate>
 	<div class="todo-cell-control">
-		<checkbox ng-control="status" [(ng-model)]="model.completed" (update)="onStatusChange()"></checkbox>
+		<checkbox ng-control="status" [(ng-model)]="model.completed" (update)="onStatusChange($event)"></checkbox>
 	</div>
-	<div class="todo-cell-content" [ng-class]="{ 'js-edit': edit, 'js-av': av }">
-		<div class="todo-cell-label">
-			<input type="text" ng-control="desc" [(ng-model)]="model.desc" (change)="onDescChange($event.target.value)" [disabled]="model.completed" placeholder="Description" (keyup.enter)="blur($event)" (focus)="edit = true" (blur)="edit = false">
-			<small>Last updated on {{ model.updatedAt | date:'dd of MMMM, y' }}</small>
+	<div class="todo-cell-content" [ng-class]="{ 'js-edit-mode': isEditMode }">
+		<div class="todo-cell-content-input">
+			<label for="name" class="sr-only">Name/Title</label>
+			<input #input type="text" id="name" name="name" ng-control="title" [(ng-model)]="model.desc" (change)="onNameChange($event.target.value)" (keyup.enter)="toggleEditMode($event, input)" [disabled]="model.completed" placeholder="Name/Title" autocomplete="off">
 		</div>
-		<div class="todo-cell-av">
-			<div class="todo-cell-av-delete">
-				<button (click)="remove($event)" (focus)="av = true" (blur)="av = false">
+		<div class="todo-cell-content-text">{{model.desc}}</div>
+	</div>
+	<div class="todo-cell-av">
+		<ul class="list-unstyled">
+			<li>
+				<a class="todo-cell-av-edit" (click)="toggleEditMode($event, input)">
+					<glyph src="{{ isEditMode ? 'media/pencil-off.svg' : 'media/pencil.svg'}}"></glyph>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="todo-cell-av-delete" (click)="remove($event)">
 					<glyph src="media/delete.svg"></glyph>
-				</button>
-			</div>
-		</div>
+				</a>
+			</li>
+		</ul>
 	</div>
 </form>

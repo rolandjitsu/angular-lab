@@ -40,7 +40,6 @@ const LAB_WEB_SERVER_PORT = 3000;
 
 const PATHS = {
 	lib: [
-		'bower_components/normalize.css/normalize.css',
 		'bower_components/firebase/firebase.js',
 		'node_modules/es6-shim/es6-shim.*',
 		'node_modules/systemjs/dist/system.*',

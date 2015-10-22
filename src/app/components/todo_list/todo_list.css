@@ -1,8 +1,0 @@
-/**
- * Host Element (<todo-list>)
- */
-
-:host,
-todo-list {
-	display: block;
-}

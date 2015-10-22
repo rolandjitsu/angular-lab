@@ -73,5 +73,6 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [ ] Authentication
 - [ ] User Account/Dashboard
 - [ ] Using Change Detection
+- [ ] Fix Unit Tests (`injectAsync`/`SpyObject`, [#4715](https://github.com/angular/angular/issues/4715))
 - [ ] E2E Tests
 - [ ] Saas/Less

@@ -28,7 +28,7 @@ import {
 
 import { isNativeShadowDomSupported } from '../../common/lang';
 import { Icon } from '../services';
-import { Logo } from './logo';
+import { Ng2Logo } from './ng2_logo';
 
 const LOGO_GLYPH_HTML = `
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="166px" height="176px" viewBox="0 0 166 176">
@@ -43,7 +43,7 @@ const LOGO_GLYPH_HTML = `
 `;
 
 export function main () {
-	describe('logo', () => {
+	describe('ng2_logo', () => {
 		let backend: MockBackend;
 		let response;
 
@@ -79,7 +79,7 @@ export function main () {
 		afterEach(() => backend.verifyNoPendingRequests());
 
 		it('should append an svg as child of self', inject([TestComponentBuilder, AsyncTestCompleter], (tcb: TestComponentBuilder, async) => {
-			let html = '<div><div class="logo" logo></div></div>';
+			let html = '<div><ng2-logo class="logo"></ng2-logo></div>';
 			let ee: any = new EventEmitter();
 			ee = ee.toRx();
 			backend.connections.subscribe((connection: MockConnection) => {
@@ -95,8 +95,9 @@ export function main () {
 					ee.subscribe(() => {
 						rtc.detectChanges();
 						let logo: Element = rtc.debugElement.nativeElement.querySelector('.logo');
-						let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
-						expect(logo.querySelector(`${prefixSelector}svg`)).not.toBe(null);
+						// let prefixSelector = isNativeShadowDomSupported ? '* /deep/ ' : '';
+						// expect(logo.querySelector(`${prefixSelector}svg`)).not.toBe(null);
+						expect(logo.querySelector('svg')).not.toBe(null);
 						async.done();
 					});
 				});
