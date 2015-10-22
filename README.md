@@ -70,6 +70,8 @@ In the making of this simple app, I have made use of whatever resources I could 
 
 #### TODO/Roadmap
 -----------------
+- [ ] Document Firebase Setup
+- [ ] Todos Priority
 - [ ] Authentication
 - [ ] User Account/Dashboard
 - [ ] Using Change Detection
