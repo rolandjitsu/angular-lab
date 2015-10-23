@@ -121,7 +121,7 @@ export class FirebaseArray {
 
 	set(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) reject();
+			if (!keyExists(key)) return reject();
 			let ref: Firebase = this._ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) reject(error);
@@ -144,7 +144,7 @@ export class FirebaseArray {
 	get(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
 			if (!keyExists(key)) reject();
-			this._ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
+			else this._ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
 		});
 	}
 
@@ -162,7 +162,7 @@ export class FirebaseArray {
 
 	update(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) reject();
+			if (!keyExists(key)) return reject();
 			let ref: Firebase = this._ref.child(key);
 			ref.update(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) reject(error);
@@ -185,7 +185,9 @@ export class FirebaseArray {
 
 	move(key: string, priority: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key) || isPriorityValid(priority)) reject();
+			/* tslint: disable */
+			if (!keyExists(key) || isPriorityValid(priority)) return reject();
+			/* tslint: enable */
 			let ref: Firebase = this._ref.child(key);
 			ref.setPriority(priority, (error) => {
 				if (error) reject(error);
@@ -207,7 +209,7 @@ export class FirebaseArray {
 
 	remove(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) reject();
+			if (!keyExists(key)) return reject();
 			this._ref.child(key).remove((error) => {
 				if (error) reject(error);
 				else resolve();
@@ -256,8 +258,8 @@ export class FirebaseArray {
 		let pos: number = this._indexOfKey(snapshot.key());
 		if (pos !== -1) this._entries.splice(pos, 1);
 	}
-	
-	
+
+
 	private _indexOfKey(key: string): number {
 		for (let [i, len] = [0, this._entries.length]; i < len; i++) {
 			if (this._entries[i].key === key) return i;
@@ -317,8 +319,4 @@ function parseFirebaseArrayValue (key: string, data: any): any {
 	if (!isJsObject(data) || !data) data = { value: data };
 	data.key = key;
 	return data;
-}
-
-function noop () {
-	// No operation function
 }

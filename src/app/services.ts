@@ -17,7 +17,7 @@ export const SERVICES_BINDINGS: Array<any> = [
 		useFactory: (http: Http) => {
 			return new Icon(http);
 		},
-		deps: [Http] 
+		deps: [Http]
 	}),
 	provide(Chores, {
 		useFactory: (promise: Promise<Firebase>) => promise.then((ref: Firebase) => new Chores(ref)),

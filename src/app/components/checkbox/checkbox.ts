@@ -75,7 +75,7 @@ export class Checkbox implements ControlValueAccessor {
 	get tabindex(): number {
 		return this._tabindex;
 	}
-	
+
 	@HostBinding('attr.aria-checked')
 	get checked(): boolean {
 		return this._checked;

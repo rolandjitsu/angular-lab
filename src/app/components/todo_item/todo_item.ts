@@ -6,7 +6,7 @@ import {
 	ViewEncapsulation
 } from 'angular2/angular2';
 
-import { Chores, Chore, ChoreModel } from '../../services';
+import { Chores, Chore } from '../../services';
 import { Glyph } from '../glyph/glyph';
 import { Checkbox } from '../checkbox/checkbox';
 

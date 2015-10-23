@@ -8,17 +8,17 @@ export class AuthClient {
 	}
 	register(credentials: FirebaseCredentials): Promise<FirebaseAuthData | any> {
 		return new Promise((resolve, reject) => {
-			this._firebaseRef.createUser(credentials, (error, auth: FirebaseAuthData) => {
+			this._firebaseRef.createUser(credentials, (error) => {
 				if (error) reject(error);
 				else this.login(credentials).then((auth: FirebaseAuthData) => {
 					resolve(auth);
-				})
+				});
 			});
 		});
 	}
 	login(credentials: FirebaseCredentials, remember?: boolean): Promise<FirebaseAuthData | any> {
 		let opts = {
-			remember: typeof remember === 'boolean' && !remember ? 'sessionOnly': 'default'
+			remember: typeof remember === 'boolean' && !remember ? 'sessionOnly' : 'default'
 		};
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.authWithPassword(

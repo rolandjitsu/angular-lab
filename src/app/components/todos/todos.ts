@@ -5,7 +5,7 @@ import {
 	Component,
 	ViewEncapsulation
 } from 'angular2/angular2';
-import { ROUTER_DIRECTIVES, CanActivate } from 'angular2/router';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { AuthClient, Chores, ChoreModel } from '../../services';
 import { Ng2Logo } from '../ng2_logo/ng2_logo';

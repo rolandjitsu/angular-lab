@@ -13,7 +13,7 @@ import { Icon } from '../../services';
 	template: '',
 	styleUrls: [
 		'app/components/ng2_logo/ng2_logo.css'
-	],
+	]
 })
 
 export class Ng2Logo implements OnDestroy {

@@ -41,7 +41,7 @@ export class Account {
 		this.isChangeAttemptFailed = false;
 		this.isChangeAttemptSuccessful = false;
 		this.error = null;
-		this.isChanging = true; 
+		this.isChanging = true;
 		this._client.changePassword(this.credentials).then(
 			() => {
 				this.isChangeAttemptSuccessful = true;

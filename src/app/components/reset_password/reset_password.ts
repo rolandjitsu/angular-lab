@@ -2,8 +2,7 @@ import {
 	CORE_DIRECTIVES,
 	FORM_DIRECTIVES,
 	ViewEncapsulation,
-	Component,
-	View
+	Component
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
@@ -38,7 +37,7 @@ export class ResetPassword {
 	submit() {
 		this.isResetAttemptFailed = false;
 		this.error = null;
-		this.isResetting = true; 
+		this.isResetting = true;
 		this._client.resetPassword(this.credentials).then(
 			() => {
 				this.isResetAttemptSuccessful = true;

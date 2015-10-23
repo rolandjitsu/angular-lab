@@ -37,7 +37,7 @@ export class Register {
 	submit() {
 		this.isRegistrationFailed = false;
 		this.error = null;
-		this.isRegistering = true; 
+		this.isRegistering = true;
 		this._client.register(this.credentials).then(null, (error) => {
 			this.isRegistrationFailed = true;
 			this.isRegistering = false;
