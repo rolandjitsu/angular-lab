@@ -1,6 +1,6 @@
-import { EventEmitter } from 'angular2/angular2';
 import { Http, Response } from 'angular2/http';
 
+import { Defer } from '../../common/async';
 import { Animation } from '../../common/animation';
 
 let cache: Map<any, any> = new Map();
@@ -11,33 +11,29 @@ export class Icon {
 	constructor(http: Http) {
 		this._http = http;
 	}
-	get(url: string): any {
-		let subject: EventEmitter = new EventEmitter();
-		subject = subject.toRx();
+	get(url: string): Promise<SVGElement> {
+		let defer: Defer<SVGElement> = new Defer();
 		if (cache.has(url)) {
-			// Delay the next tick until the subject is returned,
-			// otherwise the subscriber will not be notified about the next tick if called before return
+			// Delay the next tick until the defer is returned,
+			// otherwise the subscriber will not be notified about the resolution if called before return
 			Animation.rAF(function () {
-				subject.next(cache.get(url).cloneNode(true));
+				defer.resolve(cache.get(url).cloneNode(true));
 			});
 		} else {
 			let pending: boolean = this.queue.has(url);
 			if (!pending) this.queue.set(url, []);
-			let subs: any[] = this.queue.get(url);
-			if (pending) subs.push(subject);
-			else {
-				subs.push(subject);
-				this._http
-					.get(url)
-					.map((response) => svg(response))
-					.subscribe((element) => {
-						cache.set(url, element);
-						subs.forEach((sub) => sub.next(element.cloneNode(true)));
-						this.queue.delete(url);
-					});
-			}
+			let queue: any[] = this.queue.get(url);
+			queue.push(defer);
+			if (!pending) this._http
+				.get(url)
+				.map((response) => svg(response))
+				.subscribe((element) => {
+					cache.set(url, element);
+					queue.forEach((item) => item.resolve(element.cloneNode(true)));
+					this.queue.delete(url);
+				});
 		}
-		return subject;
+		return defer.promise;
 	}
 }
 

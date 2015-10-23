@@ -30,7 +30,7 @@ export class Glyph implements OnDestroy {
 		this._icon = icon;
 	}
 	set src(src: string) {
-		this._icon.get(src).subscribe((svg) => {
+		this._icon.get(src).then((svg) => {
 			if (this.el.children.length) this.el.replaceChild(svg, this.el.firstChild);
 			else this.el.appendChild(svg);
 		});

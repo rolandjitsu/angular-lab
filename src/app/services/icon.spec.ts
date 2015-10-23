@@ -1,12 +1,10 @@
 import {
-	AsyncTestCompleter,
 	afterEach,
 	beforeEach,
 	describe,
 	expect,
-	inject,
-	it,
-	SpyObject
+	injectAsync,
+	it
 } from 'angular2/testing';
 import {
 	Injector,
@@ -28,7 +26,7 @@ const SVG_GLYPH_HTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="htt
 const FAKE_URL = 'glyph.svg';
 
 export function main () {
-	describe('IconStore', () => {
+	describe('Icon', () => {
 		let injector: Injector;
 		let store: Icon;
 		let backend: MockBackend;
@@ -68,37 +66,36 @@ export function main () {
 		afterEach(() => backend.verifyNoPendingRequests());
 
 		describe('.get', () => {
-			it('return value should be an SVG element', inject([AsyncTestCompleter], (async) => {
+			it('return value should be an SVG element', injectAsync([], () => {
 				backend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
-				store.get(FAKE_URL).subscribe((svg) => {
-					expect(svg.isEqualNode(glyph)).toBe(true);
-					async.done();
+				return new Promise((resolve) => {
+					store.get(FAKE_URL).then((svg) => {
+						expect(svg.isEqualNode(glyph)).toBe(true);
+						resolve();
+					});
 				});
 			}));
-			it('should only fire one request for the same path and resolve from cache', inject([AsyncTestCompleter], (async) => {
+			it('should only fire one request for the same path and resolve from cache', injectAsync([], () => {
 				let url = `ofor/${FAKE_URL}`;
-				let bc = new BackendConnectionSpy();
+				let spy = jasmine.createSpy('onEstablish');
+				let bc = {
+					onEstablish: spy
+				};
 				backend.connections.subscribe((connection: MockConnection) => {
 					bc.onEstablish();
 					connection.mockRespond(response);
 				});
-				store.get(url).subscribe(() => {
-					store.get(url).subscribe(() => {
-						expect(bc.onEstablish.calls.count()).toEqual(1);
-						async.done();
+				return new Promise((resolve) => {
+					store.get(url).then(() => {
+						store.get(url).then(() => {
+							expect(bc.onEstablish.calls.count()).toEqual(1);
+							resolve();
+						});
 					});
 				});
 			}));
 		});
 	});
-}
-
-class BackendConnectionSpy extends SpyObject {
-	onEstablish: any;
-	constructor() {
-		super();
-		this.onEstablish = this.spy('onEstablish');
-	}
 }
 
 function createGlyphNode (): Node {
