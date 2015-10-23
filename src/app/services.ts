@@ -30,7 +30,8 @@ export const SERVICES_BINDINGS: Array<any> = [
 				let unobserve = client.observe((auth: FirebaseAuthData) => {
 					if (auth !== null) {
 						resolve(ROOT_FIREBASE_REF.child(`/chores/${auth.uid}`));
-						unobserve();
+						// TODO: fix this not being a function 
+						// unobserve();
 					}
 				});
 			});
