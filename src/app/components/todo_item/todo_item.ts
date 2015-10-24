@@ -3,7 +3,8 @@ import {
 	FORM_DIRECTIVES,
 	Inject,
 	Component,
-	ViewEncapsulation
+	ViewEncapsulation,
+	Input
 } from 'angular2/angular2';
 
 import { Chores, Chore } from '../../services';
@@ -23,27 +24,16 @@ import { Checkbox } from '../checkbox/checkbox';
 		FORM_DIRECTIVES,
 		Glyph,
 		Checkbox
-	],
-	inputs: [
-		'model'
 	]
 })
 
 export class TodoItem {
+	@Input('model') model: Chore;
 	isEditMode: boolean = false;
 	private ts: Chores;
-	private _model: Chore;
 
 	constructor(@Inject(Chores) tsp: Promise<Chores>) {
 		tsp.then(ts => this.ts = ts);
-	}
-
-	set model(model: Chore) {
-		this._model = model;
-	}
-
-	get model() {
-		return this._model;
 	}
 
 	remove(event) {
@@ -63,7 +53,7 @@ export class TodoItem {
 	}
 	onNameChange(value) {
 		this.ts.update(this.model, <Chore>{
-			desc: value
+			name: value
 		});
 	}
 }

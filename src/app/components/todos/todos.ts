@@ -7,13 +7,13 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { AuthClient, Chores, ChoreModel } from '../../services';
+import { AuthClient, Chores } from '../../services';
 import { Ng2Logo } from '../ng2_logo/ng2_logo';
 import { Glyph } from '../glyph/glyph';
 import { TodoItem } from '../todo_item/todo_item';
 
 class TodosFormModel {
-	desc: string;
+	name: string;
 }
 
 @Component({
@@ -40,7 +40,7 @@ export class Todos {
 	todos: Chores;
 	private _client: AuthClient;
 	constructor(@Inject(Chores) tsp: Promise<Chores>, _client: AuthClient) {
-		tsp.then(ts => this.todos = ts);
+		tsp.then((ts) => this.todos = ts);
 		this._client = _client;
 	}
 	logout(event) {
@@ -48,10 +48,8 @@ export class Todos {
 		this._client.logout();
 	}
 	add() {
-		this.todos.add(
-			new ChoreModel(this.model.desc)
-		);
-		this.model.desc = '';
+		this.todos.add(this.model.name);
+		this.model.name = '';
 		return false;
 	}
 }

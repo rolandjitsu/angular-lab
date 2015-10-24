@@ -9,9 +9,9 @@
 	<div class="todo-cell-content" [ng-class]="{ 'js-edit-mode': isEditMode }">
 		<div class="todo-cell-content-input">
 			<label for="name" class="sr-only">Name/Title</label>
-			<input #input type="text" id="name" name="name" ng-control="title" [(ng-model)]="model.desc" (change)="onNameChange($event.target.value)" (keyup.enter)="toggleEditMode($event, input)" [disabled]="model.completed" placeholder="Name/Title" autocomplete="off">
+			<input #input type="text" id="name" name="name" ng-control="title" [(ng-model)]="model.name" (change)="onNameChange($event.target.value)" (keyup.enter)="toggleEditMode($event, input)" [disabled]="model.completed" placeholder="Name/Title" autocomplete="off">
 		</div>
-		<div class="todo-cell-content-text">{{model.desc}}</div>
+		<div class="todo-cell-content-text">{{model.name}}</div>
 	</div>
 	<div class="todo-cell-av">
 		<ul class="list-unstyled">
