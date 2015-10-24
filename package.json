@@ -37,7 +37,7 @@
 		"gulp-rename": "1.2.x",
 		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.6.x",
-		"gulp-tslint": "3.3.x",
+		"gulp-tslint": "3.4.x",
 		"gulp-typescript": "2.9.x",
 		"gulp-util": "3.0.x",
 		"gulp-watch": "4.3.x",
@@ -47,13 +47,13 @@
 		"karma-chrome-launcher": "0.2.x",
 		"karma-cli": "0.1.x",
 		"karma-jasmine": "0.3.x",
-		"karma-sauce-launcher": "0.2.x",
+		"karma-sauce-launcher": "0.3.x",
 		"minimist": "1.2.x",
 		"object-assign": "4.0.x",
 		"protractor": "2.5.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
-		"yargs": "3.27.x"
+		"yargs": "3.29.x"
 	},
 	"engines": {
 		"node": "0.12.x"
