@@ -12,7 +12,7 @@ export * from './services/chores';
 const ROOT_FIREBASE_REF: Firebase = new Firebase('https://ng2-lab.firebaseio.com');
 const TODOS_FIREBASE_REF: OpaqueToken = new OpaqueToken('TodosFirebaseRef');
 
-export const SERVICES_BINDINGS: Array<any> = [
+export const SERVICES_PROVIDERS: Array<any> = [
 	provide(Icon, {
 		useFactory: (http: Http) => {
 			return new Icon(http);
