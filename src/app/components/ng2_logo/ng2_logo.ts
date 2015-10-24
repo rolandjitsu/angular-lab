@@ -21,7 +21,8 @@ export class Ng2Logo implements OnDestroy {
 	constructor(elementRef: ElementRef,	icon: Icon) {
 		this.el = elementRef.nativeElement;
 		icon.get('assets/glyphs/ng2.svg').then((svg) => {
-			this.el.appendChild(svg);
+			if (this.el.children.length) this.el.replaceChild(svg, this.el.firstChild);
+			else this.el.appendChild(svg);
 		});
 	}
 	onDestroy() {
