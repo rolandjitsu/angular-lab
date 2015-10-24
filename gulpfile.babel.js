@@ -215,8 +215,9 @@ gulp.task('lint', () => { // https://github.com/palantir/tslint#supported-rules
 		.src(PATHS.src.ts)
 		.pipe(plumber())
 		.pipe(tslint())
-		.pipe(tslint.report('prose', {
-			emitError: false
+		.pipe(tslint.report('verbose', {
+			summarizeFailureOutput: true,
+			emitError: true
 		}));
 });
 
