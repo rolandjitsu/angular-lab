@@ -3,11 +3,18 @@
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-lab.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-lab)
 [![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-lab.svg)](https://gemnasium.com/rolandjitsu/ng2-lab)
 [![Join the chat at https://gitter.im/rolandjitsu/ng2-lab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-lab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-> A lab setup for [Angular 2.0](https://angular.io/) using [TypeScript](http://www.typescriptlang.org/), [ES6 Shim](https://github.com/paulmillr/es6-shim), [SystemJS](https://github.com/systemjs/systemjs) and [Firebase](https://firebase.com).
+> Playground for experimenting with some of the core features of [Angular 2.0](https://angular.io) and integration with other software and services.
 
-All ES6 files are being compiled/transpiled with [TypeScript](http://www.typescriptlang.org/) to ES5 (using `"system"` as `"module"`, thus only compatible with [SystemJS](https://github.com/systemjs/systemjs)) and loaded in the browser using [SystemJS](https://github.com/systemjs/systemjs). Throughout the app, most of the features in Angular 2.0 are being used. Moreover, a fairly simple example of using [three-way](https://www.firebase.com/resources/images/blog/3-way-binding.png) data binding with Firebase written in ES6 (on top of the Firebase [JavaScript API](https://www.firebase.com/docs/web/)) is being illustrated.
-
-Besides the above, there are a couple of unit tests that can be useful as an example of how to write tests for Angular 2. The tests are ran using [Karma](http://karma-runner.github.io/0.13/index.html), [Jasmine](http://jasmine.github.io/) and some of the Angular 2 internal test libs; all tests ran on the CI are ran in [Saucelabs](https://saucelabs.com/) browsers.
+This setup is using:
+- [TypeScript](http://www.typescriptlang.org)
+- [ES6 Shim](https://github.com/paulmillr/es6-shim) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features
+- [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
+- [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
+- [Karma](http://karma-runner.github.io)
+- [Jasmine](http://jasmine.github.io) - assertion lib for the app unit tests
+- [Protractor](https://angular.github.io/protractor) - e2e test framework
+- [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
+- [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
 
 
 #### Setup
@@ -28,6 +35,15 @@ Now start the webserver and the build process (runs on file change) and navigate
 ```shell
 $(npm bin)/npm start # `$(npm bin)/gulp start`
 ```
+
+
+#### Firebase Setup
+-------------------
+If you wish to have your own Firebase account used with this setup you have to change the `ROOT_FIREBASE_REF` located in `src/app/services.ts` to your own Firebase app link:
+![Firebase App Link](media/firebase_app_link.png)
+Furthermore, the authentication implementation uses Firebase as well, so you will have to make sure that **Email & Password** authentication is enabled from the **Login & Auth** tab in your app's Firebase dashboard.
+![Firebase App Link](media/firebase_auth_tab.png)
+Finally, if you want to use Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you also have to change the `"firebase": "ng2-lab"` value to the name of you Firebase app.
 
 
 #### Running Tests
@@ -70,14 +86,18 @@ In the making of this simple app, I have made use of whatever resources I could 
 
 #### TODO/Roadmap
 -----------------
-- [ ] Fix Todos Change Detection
-- [ ] Document Firebase Setup
+- [ ] Fix Todos Rendering/Change Detection
+- [x] Document Firebase Setup
 - [ ] Todos Priority
-- [ ] Authentication
+- [ ] Document Travis CI Setup (Saucelabs, Firebase)
+- [x] Basic Authentication
+- [ ] OAuth Authentication (Google, Github)
 - [ ] User Account/Dashboard
-- [ ] Using Change Detection
-- [ ] Fix Unit Tests (`injectAsync`/`SpyObject`, [#4715](https://github.com/angular/angular/issues/4715))
+- [ ] Using Change Detection ([#4746](https://github.com/angular/angular/issues/4746))
+- [ ] Fix Unit Tests
+- [x] Use `injectAsync` ([#4715](https://github.com/angular/angular/issues/4715))
 - [ ] E2E Tests
 - [ ] Performance Tests
 - [ ] Use [Fakes](https://www.youtube.com/watch?v=CbmPe0FTmcY)
 - [ ] Saas/Less
+- [ ] Cleanup Gulpfile
