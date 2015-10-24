@@ -40,10 +40,14 @@ $(npm bin)/npm start # `$(npm bin)/gulp start`
 #### Firebase Setup
 -------------------
 If you wish to have your own Firebase account used with this setup you have to change the `ROOT_FIREBASE_REF` located in `src/app/services.ts` to your own Firebase app link:
+
 ![Firebase App Link](media/firebase_app_link.png)
-Furthermore, the authentication implementation uses Firebase as well, so you will have to make sure that **Email & Password** authentication is enabled from the **Login & Auth** tab in your app's Firebase dashboard.
+
+Furthermore, the authentication implementation uses Firebase as well, so you will have to make sure that **Email & Password** authentication is enabled from the **Login & Auth** tab in your app's Firebase dashboard:
+
 ![Firebase App Link](media/firebase_auth_tab.png)
-Finally, if you want to use Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you also have to change the `"firebase": "ng2-lab"` value to the name of you Firebase app.
+
+Finally, if you want to use Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you also have to change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
 
 
 #### Running Tests
