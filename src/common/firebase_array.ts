@@ -41,18 +41,18 @@ let _refs: Map<any, any> = new Map();
  * // or let fa = new FirebaseArray(ref);
  */
 
-export class FirebaseArray {
-	private _entries: Array<any>;
-	private _ref: Firebase;
+export class FirebaseArray extends Array {
+	ref: Firebase;
 	private _subs: Array<Array<any>>;
 
 	constructor(ref: Firebase) {
+		super();
 		let url: string = ref.toString();
-		this._ref = ref;
+		this.ref = ref;
 		if (_refs.has(url)) this._subs = _refs.get(url)._subs;
 		else {
 			_refs.set(url, {
-				_entries: [],
+				entries: [],
 				_subs: []
 			});
 			this._subs = _refs.get(url)._subs;
@@ -64,20 +64,16 @@ export class FirebaseArray {
 			};
 			for (let name of Object.keys(events)) this._subs.push([
 				name,
-				this._ref.on(
+				this.ref.on(
 					name,
 					events[name].bind(this)
 				)
 			]);
 		}
-		this._entries = _refs.get(url)._entries;
-	}
-
-
-	// Using `Symbol.iterator` as a class member will allow users to iterate over the class
-	// See [Classes]@{link http://2ality.com/2015/02/es6-classes-final.html} for more info on how it works
-	[Symbol.iterator]() {
-		return this._entries.values();
+		let entries = _refs.get(url).entries;
+		for (let entry of entries) {
+			this.push(entry);
+		}
 	}
 
 
@@ -98,8 +94,8 @@ export class FirebaseArray {
 
 	add(data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			let key: string = this._ref.push().key();
-			let ref: Firebase = this._ref.child(key);
+			let key: string = this.ref.push().key();
+			let ref: Firebase = this.ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) reject(error);
 				else resolve(ref);
@@ -122,7 +118,7 @@ export class FirebaseArray {
 	set(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
 			if (!keyExists(key)) return reject();
-			let ref: Firebase = this._ref.child(key);
+			let ref: Firebase = this.ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) reject(error);
 				else resolve(ref);
@@ -144,7 +140,7 @@ export class FirebaseArray {
 	get(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
 			if (!keyExists(key)) reject();
-			else this._ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
+			else this.ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
 		});
 	}
 
@@ -163,7 +159,7 @@ export class FirebaseArray {
 	update(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
 			if (!keyExists(key)) return reject();
-			let ref: Firebase = this._ref.child(key);
+			let ref: Firebase = this.ref.child(key);
 			ref.update(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) reject(error);
 				else resolve(ref);
@@ -188,7 +184,7 @@ export class FirebaseArray {
 			/* tslint:disable */
 			if (!keyExists(key) || isPriorityValid(priority)) return reject();
 			/* tslint:enable */
-			let ref: Firebase = this._ref.child(key);
+			let ref: Firebase = this.ref.child(key);
 			ref.setPriority(priority, (error) => {
 				if (error) reject(error);
 				else resolve(ref);
@@ -210,7 +206,7 @@ export class FirebaseArray {
 	remove(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
 			if (!keyExists(key)) return reject();
-			this._ref.child(key).remove((error) => {
+			this.ref.child(key).remove((error) => {
 				if (error) reject(error);
 				else resolve();
 			});
@@ -229,7 +225,7 @@ export class FirebaseArray {
 
 	dispose(): void {
 		this._subs.forEach((sub) => {
-			this._ref.off(sub[0], sub[1]);
+			this.ref.off(sub[0], sub[1]);
 		});
 		this._subs = [];
 	}
@@ -243,37 +239,37 @@ export class FirebaseArray {
 	private _onChanged(snapshot: FirebaseDataSnapshot): void {
 		let key: string = snapshot.key();
 		let pos: number = this._indexOfKey(key);
-		if (pos !== -1) this._entries[pos] = extendFirebaseArrayValue(this._entries[pos], parseFirebaseArrayValue(key, snapshot.val()));
+		if (pos !== -1) this[pos] = extendFirebaseArrayValue(this[pos], parseFirebaseArrayValue(key, snapshot.val()));
 	}
 	private _onMoved(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
 		let key: string = snapshot.key();
 		let oldPos: number = this._indexOfKey(key);
 		if (oldPos !== -1) {
-			let record: any = this._entries[oldPos];
-			this._entries.splice(oldPos, 1);
+			let record: any = this[oldPos];
+			this.splice(oldPos, 1);
 			this._move(key, record, prevKey);
 		}
 	}
 	private _onRemoved(snapshot: FirebaseDataSnapshot): void {
 		let pos: number = this._indexOfKey(snapshot.key());
-		if (pos !== -1) this._entries.splice(pos, 1);
+		if (pos !== -1) this.splice(pos, 1);
 	}
 
 
 	private _indexOfKey(key: string): number {
-		for (let [i, len] = [0, this._entries.length]; i < len; i++) {
-			if (this._entries[i].key === key) return i;
+		for (let [i, len] = [0, this.length]; i < len; i++) {
+			if (this[i].key === key) return i;
 		}
 		return -1;
 	}
 	private _move(key: string, record: any, prevKey?: string): void {
-		this._entries.splice(this._getRecordPos(key, prevKey), 0, record);
+		this.splice(this._getRecordPos(key, prevKey), 0, record);
 	}
 	private _getRecordPos(key: string, prevKey?: string): number {
 		if (prevKey === null) return 0;
 		else {
 			let idx = this._indexOfKey(prevKey);
-			if (idx === -1) return this._entries.length;
+			if (idx === -1) return this.length;
 			else return idx + 1;
 		}
 	}
