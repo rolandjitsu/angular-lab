@@ -1,0 +1,10 @@
+// Host Element (<ng2-logo>)
+:host {
+	display: inline-block;
+	vertical-align: middle;
+	
+	& > svg {
+		pointer-events: none;
+		display: block;
+	}
+}

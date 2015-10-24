@@ -1,11 +1,10 @@
-/* Host Element (<register>) */
-:host,
-login {
+// Host Element (<register>)
+:host {
 	display: block;
 }
 
 
-/* Form */
+// Form
 
 .register-form,
 .alert {
@@ -21,10 +20,10 @@ login {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	margin-bottom: -1px;
-}
-
-.register-form-email:focus {
-	z-index: 2;
+	
+	&:focus {
+		z-index: 2;
+	}
 }
 
 .register-form-password {

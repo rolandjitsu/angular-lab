@@ -1,6 +1,0 @@
-/* Host Element (<app>) */
-:host,
-app {
-	display: block;
-	height: 100vh;
-}

@@ -1,0 +1,47 @@
+@import "../../vars";
+@import "../../mixins";
+
+
+// Host Element (<checkbox>)
+:host {
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	user-select: none;
+	@include square(24px);
+}
+
+
+// Box
+.box {
+	display: block;
+	color: $grey;
+	transition: color .125s ease-in-out;
+}
+
+
+// States
+
+:host[disabled] {
+	cursor: no-drop;
+}
+
+:host {
+	
+	&:focus,
+	&:hover {
+		&:not([aria-checked="true"]) {
+			
+			& > .box {
+				color: $green;
+			}
+		}
+	}
+}
+
+:host[aria-checked="true"] {
+	
+	& > .box {
+		color: $green;
+	}
+}

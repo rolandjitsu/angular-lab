@@ -1,11 +1,11 @@
-/* Host Element (<account>) */
-:host,
-account {
+// Host Element (<account>)
+:host {
 	display: block;
 	height: 100vh;
 }
 
-/* Form */
+
+// Form
 
 .change-form,
 .alert {
@@ -26,11 +26,10 @@ account {
 .change-form-email,
 .change-form-oldpassword {
 	margin-bottom: -1px;
-}
-
-.change-form-email:focus,
-.change-form-oldpassword:focus {
-	z-index: 2;
+	
+	&:focus {
+		z-index: 2;
+	}
 }
 
 .change-form-oldpassword {

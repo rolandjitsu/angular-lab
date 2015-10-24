@@ -14,6 +14,7 @@ import minimist from 'minimist';
 import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
 import runSequence from 'run-sequence';
+import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import tslint from 'gulp-tslint';
@@ -59,7 +60,11 @@ const PATHS = {
 			'src/**/*.ts'
 		],
 		html: 'src/**/*.html',
-		css: 'src/**/*.css',
+		scss: [
+			'!src/app/vars.scss',
+			'!src/app/mixins.scss',
+			'src/**/*.scss'
+		],
 		static: 'src/**/*.{svg,jpg,png,ico}',
 		spec: [
 			'src/**/*.spec.ts'
@@ -173,11 +178,21 @@ gulp.task('serve/html', () => {
 });
 
 gulp.task('build/css', () => {
+	let sassConfig = {
+		includePaths: [
+			`${PATHS.src.root}/app`
+		],
+		outputStyle: 'compressed', // nested (default), expanded, compact, compressed
+		indentType: 'tab',
+		indentWidth: 1,
+		linefeed: 'lf'
+	};
 	return gulp
-		.src(PATHS.src.css)
+		.src(PATHS.src.scss)
 		.pipe(changed(PATHS.dist, { extension: '.css' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
+		.pipe(sass(sassConfig).on('error', sass.logError))
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size({
@@ -358,7 +373,7 @@ gulp.task('start', (done) => {
 				watch(PATHS.src.html, () => {
 					runSequence('serve/html');
 				});
-				watch(PATHS.src.css, () => {
+				watch(PATHS.src.scss, () => {
 					runSequence('build/css');
 				});
 				watch(PATHS.src.static, () => {

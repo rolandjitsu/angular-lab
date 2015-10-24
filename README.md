@@ -103,6 +103,6 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [ ] E2E Tests
 - [ ] Performance Tests
 - [ ] Use [Fakes](https://www.youtube.com/watch?v=CbmPe0FTmcY)
-- [ ] Saas/Less
+- [x] Saas/Less
 - [ ] Cleanup Gulpfile
 - [ ] Fix TSLint Error ([#36](https://github.com/panuhorsmalahti/gulp-tslint/issues/36)) 

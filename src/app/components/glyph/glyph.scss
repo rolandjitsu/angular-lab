@@ -1,0 +1,17 @@
+@import "../../vars";
+@import "../../mixins";
+
+
+// Host Element (<glyph>)
+:host {
+	display: inline-block;
+	vertical-align: middle;
+	fill: currentColor;
+	color: inherit;
+	@include square(24px);
+	
+	& > svg {
+		pointer-events: none;
+		display: block;
+	}
+}

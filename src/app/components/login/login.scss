@@ -1,10 +1,9 @@
-/* Host Element (<login>) */
-:host,
-login {
+// Host Element (<login>)
+:host {
 	display: block;
 }
 
-/* Form */
+// Form
 
 .login-form,
 .alert {
@@ -20,10 +19,10 @@ login {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	margin-bottom: -1px;
-}
-
-.login-form-email:focus {
-	z-index: 2;
+	
+	&:focus {
+		z-index: 2;
+	}
 }
 
 .login-form-password {
