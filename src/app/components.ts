@@ -7,4 +7,6 @@ export * from './components/login/login';
 export * from './components/ng2_logo/ng2_logo';
 export * from './components/register/register';
 export * from './components/reset_password/reset_password';
+export * from './components/todo_list/todo_list';
+export * from './components/todo_list_item/todo_list_item';
 export * from './components/todos/todos';

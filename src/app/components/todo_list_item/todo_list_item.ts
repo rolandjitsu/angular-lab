@@ -13,11 +13,11 @@ import { Checkbox } from '../checkbox/checkbox';
 
 @Component({
 	// moduleId: module.id, // CommonJS standard
-	selector: 'todo-item',
+	selector: '[todo-list-item]',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/todo_item/todo_item.html',
+	templateUrl: 'app/components/todo_list_item/todo_list_item.html',
 	styleUrls: [
-		'app/components/todo_item/todo_item.css'
+		'app/components/todo_list_item/todo_list_item.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
@@ -27,18 +27,18 @@ import { Checkbox } from '../checkbox/checkbox';
 	]
 })
 
-export class TodoItem {
-	@Input('model') model: Chore;
+export class TodoListItem {
+	@Input('todoListItem') model: Chore;
 	isEditMode: boolean = false;
-	private ts: Chores;
+	private cs: Chores;
 
-	constructor(@Inject(Chores) tsp: Promise<Chores>) {
-		tsp.then(ts => this.ts = ts);
+	constructor(@Inject(Chores) csp: Promise<Chores>) {
+		csp.then((cs) => this.cs = cs);
 	}
 
 	remove(event) {
 		event.preventDefault();
-		this.ts.remove(this.model);
+		this.cs.remove(this.model);
 	}
 	toggleEditMode(event, input) {
 		event.preventDefault();
@@ -47,12 +47,12 @@ export class TodoItem {
 	}
 
 	onStatusChange(value) {
-		this.ts.update(this.model, <Chore>{
+		this.cs.update(this.model, <Chore>{
 			completed: value
 		});
 	}
 	onNameChange(value) {
-		this.ts.update(this.model, <Chore>{
+		this.cs.update(this.model, <Chore>{
 			name: value
 		});
 	}

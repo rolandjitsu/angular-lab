@@ -46,7 +46,6 @@ export class FirebaseArray extends Array {
 	private _subs: Array<Array<any>>;
 
 	constructor(ref: Firebase) {
-		super();
 		let url: string = ref.toString();
 		this.ref = ref;
 		if (_refs.has(url)) this._subs = _refs.get(url)._subs;
@@ -71,8 +70,9 @@ export class FirebaseArray extends Array {
 			]);
 		}
 		let entries = _refs.get(url).entries;
-		for (let entry of entries) {
-			this.push(entry);
+		super(entries.length);
+		for (let [entry, idx] of entries) {
+			this[idx] = entry;
 		}
 	}
 

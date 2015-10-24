@@ -10,9 +10,9 @@ import { ROUTER_DIRECTIVES } from 'angular2/router';
 import { AuthClient, Chores } from '../../services';
 import { Ng2Logo } from '../ng2_logo/ng2_logo';
 import { Glyph } from '../glyph/glyph';
-import { TodoItem } from '../todo_item/todo_item';
+import { TodoList } from '../todo_list/todo_list';
 
-class TodosFormModel {
+class Form {
 	name: string;
 }
 
@@ -29,18 +29,18 @@ class TodosFormModel {
 		ROUTER_DIRECTIVES,
 		Glyph,
 		Ng2Logo,
-		TodoItem
+		TodoList
 	]
 })
 
 // @CanActivate()
 
 export class Todos {
-	model: TodosFormModel = new TodosFormModel();
-	todos: Chores;
+	form: Form = new Form();
+	private _chores: Chores;
 	private _client: AuthClient;
-	constructor(@Inject(Chores) tsp: Promise<Chores>, _client: AuthClient) {
-		tsp.then((ts) => this.todos = ts);
+	constructor(@Inject(Chores) csp: Promise<Chores>, _client: AuthClient) {
+		csp.then((cs) => this._chores = cs);
 		this._client = _client;
 	}
 	logout(event) {
@@ -48,8 +48,8 @@ export class Todos {
 		this._client.logout();
 	}
 	add() {
-		this.todos.add(this.model.name);
-		this.model.name = '';
+		this._chores.add(this.form.name);
+		this.form.name = '';
 		return false;
 	}
 }

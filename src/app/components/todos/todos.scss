@@ -9,7 +9,7 @@
 
 // Base
 .todos-form,
-.todos-list,
+todo-list,
 .logo {
 	max-width: 450px;
 }
@@ -48,15 +48,6 @@
 				color: $white;
 			}
 		}
-	}
-}
-
-// Bootstrap
-.list-group-item {
-	
-	&:first-of-type {
-		border-top-left-radius: .25rem;
-		border-top-right-radius: .25rem;
 	}
 }
 

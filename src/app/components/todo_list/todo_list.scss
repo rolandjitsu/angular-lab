@@ -1,0 +1,13 @@
+// Host Element (<todo-list>)
+:host {
+	display: block;
+}
+
+// Bootstrap
+.list-group-item {
+	
+	&:first-of-type {
+		border-top-left-radius: .25rem;
+		border-top-right-radius: .25rem;
+	}
+}
