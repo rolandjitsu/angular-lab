@@ -2,7 +2,6 @@ import { provide, OpaqueToken } from 'angular2/angular2';
 import { Http } from 'angular2/http';
 
 import { Animation } from '../common/animation';
-
 import { AuthClient } from './services/auth';
 import { Chores } from './services/chores';
 import { Icon } from './services/icon';
