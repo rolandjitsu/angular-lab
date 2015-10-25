@@ -11,7 +11,7 @@ export * from './services/auth';
 export * from './services/chores';
 export * from './services/icon';
 
-const FIREBASE_APP_LINK: string = 'https://ng2-lab.firebaseio.com';
+const FIREBASE_APP_LINK = 'https://ng2-lab.firebaseio.com';
 const TODOS_FIREBASE_REF: OpaqueToken = new OpaqueToken('TodosFirebaseRef');
 
 export const SERVICES_PROVIDERS: Array<any> = [
