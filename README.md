@@ -107,3 +107,4 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [ ] Cleanup Gulpfile
 - [ ] Fix TSLint Error ([#36](https://github.com/panuhorsmalahti/gulp-tslint/issues/36))
 - [x] Fix Auth Subscriber
+- [ ] Web Workers
