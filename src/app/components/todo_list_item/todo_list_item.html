@@ -1,5 +1,5 @@
 <form
-	class="todo-cell"
+	class="todo-cell clearfix"
 	[ng-class]="{ 'js-complete': model.completed }"
 	#todo="form"
 	novalidate>
@@ -26,5 +26,10 @@
 				</a>
 			</li>
 		</ul>
+	</div>
+	<div class="todo-cell-status">
+		<span class="label label-pill label-success">
+			Done
+		</span>
 	</div>
 </form>
