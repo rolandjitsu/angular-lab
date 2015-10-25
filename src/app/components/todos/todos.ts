@@ -10,6 +10,7 @@ import { ROUTER_DIRECTIVES } from 'angular2/router';
 import { AuthClient, Chores } from '../../services';
 import { Ng2Logo } from '../ng2_logo/ng2_logo';
 import { Glyph } from '../glyph/glyph';
+import { TodosCount } from '../todos_count/todos_count';
 import { TodoList } from '../todo_list/todo_list';
 
 class Form {
@@ -29,6 +30,7 @@ class Form {
 		ROUTER_DIRECTIVES,
 		Glyph,
 		Ng2Logo,
+		TodosCount,
 		TodoList
 	]
 })

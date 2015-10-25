@@ -97,7 +97,7 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [x] Basic Authentication
 - [ ] OAuth Authentication (Google, Github)
 - [ ] User Account/Dashboard
-- [ ] Using Change Detection ([#4746](https://github.com/angular/angular/issues/4746))
+- [x] Using Change Detection ([#4746](https://github.com/angular/angular/issues/4746))
 - [ ] Fix Unit Tests
 - [x] Use `injectAsync` ([#4715](https://github.com/angular/angular/issues/4715))
 - [ ] E2E Tests

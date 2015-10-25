@@ -8,28 +8,30 @@ import {
 } from 'angular2/angular2';
 
 import { Chores } from '../../services';
-import { TodoListItem } from '../todo_list_item/todo_list_item';
+import { Glyph } from '../glyph/glyph';
 
 @Component({
-	selector: 'todo-list',
+	selector: 'todos-count',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	changeDetection: ChangeDetectionStrategy.Detached,
-	templateUrl: 'app/components/todo_list/todo_list.html',
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	templateUrl: 'app/components/todos_count/todos_count.html',
 	styleUrls: [
-		'app/components/todo_list/todo_list.css'
+		'app/components/todos_count/todos_count.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
-		TodoListItem
+		Glyph
 	]
 })
 
-export class TodoList {
-	chores: Chores;
+export class TodosCount {
+	count: number = 0;
 	constructor(@Inject(Chores) csp: Promise<Chores>, cdRef: ChangeDetectorRef) {
 		csp.then((cs) => {
-			this.chores = cs;
-			cdRef.reattach();
+			cs.observe((snapshot: FirebaseDataSnapshot) => {
+				this.count = cs.length;
+				cdRef.markForCheck();
+			});
 		});
 	}
 }

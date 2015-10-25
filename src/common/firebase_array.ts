@@ -215,6 +215,24 @@ export class FirebaseArray extends Array {
 
 
 	/**
+	 * Observe the Firebase reference for data changes.
+	 *
+	 * @name observe
+	 * @memberof FirebaseArray
+	 *
+	 * @param {Function} callback
+	 * @returns {Function} Use to unobserve.
+	 */
+
+	observe(callback: (snapshot?: FirebaseDataSnapshot) => void): Function {
+		this.ref.on('value', callback);
+		return () => {
+			this.ref.off('value', callback);
+		};
+	}
+
+
+	/**
 	 * Unsubscribes from all Firebase [events]@{link https://www.firebase.com/docs/web/api/query/on.html} (`child_added`, `child_changed`, `child_moved`, `child_removed`).
 	 * This means that the changes will still be pushed to Firebase,
 	 * but there will be no callbacks and if data is changed from another client, it will not be reflected on the current client.

@@ -56,4 +56,8 @@ todo-list,
 	position: fixed;
 	top: 20px;
 	right: 20px;
+	
+	li:first-of-type {
+		padding-right: 16px;
+	}
 }
