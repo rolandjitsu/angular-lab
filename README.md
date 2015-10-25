@@ -90,7 +90,7 @@ In the making of this simple app, I have made use of whatever resources I could 
 
 #### TODO/Roadmap
 -----------------
-- [ ] Fix Todos Rendering/Change Detection
+- [x] Fix Todos Rendering/Change Detection
 - [x] Document Firebase Setup
 - [ ] Todos Priority
 - [ ] Document Travis CI Setup (Saucelabs, Firebase)
@@ -106,4 +106,4 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [x] Saas/Less
 - [ ] Cleanup Gulpfile
 - [ ] Fix TSLint Error ([#36](https://github.com/panuhorsmalahti/gulp-tslint/issues/36))
-- [ ] Fix Auth Subscriber
+- [x] Fix Auth Subscriber
