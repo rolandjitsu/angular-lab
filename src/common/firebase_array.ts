@@ -77,6 +77,33 @@ export class FirebaseArray extends Array {
 	}
 
 
+	// TODO:
+	// On instance create, we need to check if the Firebase `ref` exists and if it is compatible with an FirebaseArray;
+	// Implement remaining Array [methods]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}.
+	// Keep in mind that for methods like `.every()`, if a primitive is passed,
+	// we need to check the `.value` because we store pimitives as `{ value: <primitive>, key: <string> }`.
+	// Alternatively, we need to figure out what to do when similar methods are called on the array, perhaps just documenting that primite values are not stored as primitives.
+	// The same thing applies for `.filter()`, `.find()`, `.findIndex()`, `.forEach()`, `.map()`, `.reduce()`,
+	// `.reduceRight()`, `.some()`.
+	// Whereas methods like `.includes()`, `.indexOf()`, `.lastIndexOf()` just need to check if it is a primitive and if so check the `.value` is the value searched for.
+	// FirebaseArray.from
+	// FirebaseArray.of
+	// FirebaseArray.observe
+	// FirebaseArray.prototype.concat - decide if it should return an instance of `Array` or `FirebaseArray`,
+	// and if the former happens, we need to make sure if there are primitives, we return those instead of objects.
+	// Same with `.slice()`, `.copyWithin()`.
+	// FirebaseArray.prototype.fill
+	// FirebaseArray.prototype.join - need to decide what to do with this
+	// FirebaseArray.prototype.pop - if last element is a primitive we need to return that instead of the object we have stored
+	// FirebaseArray.prototype.push - we already have this in place (`.add()`)
+	// FirebaseArray.prototype.reverse
+	// FirebaseArray.prototype.shift - same as `.pop()`
+	// FirebaseArray.prototype.sort
+	// FirebaseArray.prototype.splice
+	// FirebaseArray.prototype.unshift
+	// [Symbol.iterator]() - maybe this can solve our primitive issue
+
+
 	/**
 	 * Adds a record to Firebase and returns the reference in a promise.
 	 * To obtain its key, use `ref.key()`, assuming `ref` is the variable assigned to the return value.
