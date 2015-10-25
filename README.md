@@ -39,7 +39,7 @@ $(npm bin)/npm start # `$(npm bin)/gulp start`
 
 #### Firebase Setup
 -------------------
-If you wish to have your own Firebase account used with this setup you have to change the `ROOT_FIREBASE_REF` located in `src/app/services.ts` to your own Firebase app link:
+If you wish to have your own Firebase account used with this setup you have to change the `FIREBASE_APP_LINK` located in `src/app/services.ts` to your own Firebase app link:
 
 ![Firebase App Link](media/firebase_app_link.png)
 
