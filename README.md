@@ -43,10 +43,12 @@ If you wish to have your own Firebase account used with this setup you have to c
 
 ![Firebase App Link](media/firebase_app_link.png)
 
-Furthermore, the authentication implementation uses Firebase as well, thus you need to follow the next steps if you decide to use your own Firebase account:
-- enable **Email & Password** authentication from the **Login & Auth** tab in your app's Firebase dashboard
+Furthermore, the authentication implementation uses Firebase as well, thus you need to follow a few steps if you decide to use your own Firebase account.
+Enable **Email & Password** authentication from the **Login & Auth** tab in your app's Firebase dashboard.
+
 ![Firebase App Link](media/firebase_auth_tab.png)
-- enable **Github** and **Google** from the same **Login & Auth** tab and follow the instructions in the [Github](https://www.firebase.com/docs/web/guide/login/github.html) and [Google](https://www.firebase.com/docs/web/guide/login/google.html) guides
+
+Enable **Github** and **Google** auth from the same **Login & Auth** tab and follow the instructions in the [Github](https://www.firebase.com/docs/web/guide/login/github.html) and [Google](https://www.firebase.com/docs/web/guide/login/google.html) guides.
 
 Finally, if you want to use your own Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you also have to change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
 
