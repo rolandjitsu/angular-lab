@@ -6,7 +6,8 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { AuthClient } from '../../services';
+import { AuthClient, FirebaseAuthProviders } from '../../services';
+import { Glyph } from '../glyph/glyph';
 
 @Component({
 	selector: 'login',
@@ -18,7 +19,8 @@ import { AuthClient } from '../../services';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES
+		ROUTER_DIRECTIVES,
+		Glyph
 	]
 })
 
@@ -34,10 +36,19 @@ export class Login {
 	constructor(client: AuthClient) {
 		this._client = client;
 	}
-	submit() {
+	loginWithGithub(event: MouseEvent) {
+		event.preventDefault();
+		this._client.loginWithProvider(FirebaseAuthProviders.Github, this.remember);
+	}
+	loginWithGoogle(event: MouseEvent) {
+		event.preventDefault();
+		this._client.loginWithProvider(FirebaseAuthProviders.Google, this.remember);
+	}
+	loginWithCredentials(event: Event) {
+		event.preventDefault();
 		this.isAuthenticationFailed = false;
 		this.isAuthenticating = true;
-		this._client.login(this.credentials, this.remember).then(null, (error) => {
+		this._client.loginWithCredentials(this.credentials, this.remember).then(null, (error) => {
 				this.isAuthenticationFailed = true;
 				this.isAuthenticating = false;
 			}

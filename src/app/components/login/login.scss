@@ -1,3 +1,7 @@
+@import "../../vars";
+@import "../../mixins";
+
+
 // Host Element (<login>)
 :host {
 	display: block;
@@ -7,7 +11,7 @@
 
 .login-form,
 .alert {
-	max-width: 350px;
+	max-width: 300px;
 }
 
 .login-form-email,
@@ -31,6 +35,26 @@
 	margin-bottom: 5px;
 }
 
-.btn {
-	margin-top: 8px;
+
+// Buttons
+
+.list-inline {
+	
+	& > li {
+		vertical-align: middle;
+	}
+	
+	a {
+		display: block;
+		color: $grey;
+		
+		&:hover,
+		&:focus {
+			color: $blue;
+		}
+	}
+}
+
+glyph {
+	@include square(38px);
 }
