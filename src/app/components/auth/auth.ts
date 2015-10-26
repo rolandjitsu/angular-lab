@@ -5,7 +5,6 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router';
 
-import { Ng2Logo } from '../ng2_logo/ng2_logo';
 import { Login } from '../login/login';
 import { ResetPassword } from '../reset_password/reset_password';
 import { Register } from '../register/register';
@@ -19,8 +18,7 @@ import { Register } from '../register/register';
 	],
 	directives: [
 		CORE_DIRECTIVES,
-		ROUTER_DIRECTIVES,
-		Ng2Logo
+		ROUTER_DIRECTIVES
 	]
 })
 

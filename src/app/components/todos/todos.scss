@@ -9,17 +9,8 @@
 
 // Base
 .todos-form,
-todo-list,
-.logo {
+todo-list {
 	max-width: 450px;
-}
-
-// Logo
-.logo {
-	
-	& > ng2-logo {
-		transform: scale3d(.5,.5,.5);
-	}
 }
 
 // Todo Form

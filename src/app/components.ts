@@ -4,7 +4,6 @@ export * from './components/auth/auth';
 export * from './components/checkbox/checkbox';
 export * from './components/glyph/glyph';
 export * from './components/login/login';
-export * from './components/ng2_logo/ng2_logo';
 export * from './components/register/register';
 export * from './components/reset_password/reset_password';
 export * from './components/todo_list/todo_list';
