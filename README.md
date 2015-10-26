@@ -112,3 +112,5 @@ In the making of this simple app, I have made use of whatever resources I could 
 - [x] Fix Auth Subscriber
 - [ ] Web Workers
 - [ ] Enhance Firebase Array
+- [ ] Firebase [Security](https://www.firebase.com/docs/security/) Rules
+- [ ] Firebase Data/User Management
