@@ -37,15 +37,12 @@ export class Login {
 		this._client = client;
 	}
 	loginWithGithub(event: MouseEvent) {
-		event.preventDefault();
 		this._client.loginWithProvider(FirebaseAuthProviders.Github, this.remember);
 	}
 	loginWithGoogle(event: MouseEvent) {
-		event.preventDefault();
 		this._client.loginWithProvider(FirebaseAuthProviders.Google, this.remember);
 	}
-	loginWithCredentials(event: Event) {
-		event.preventDefault();
+	loginWithCredentials() {
 		this.isAuthenticationFailed = false;
 		this.isAuthenticating = true;
 		this._client.loginWithCredentials(this.credentials, this.remember).then(null, (error) => {

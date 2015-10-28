@@ -1,7 +1,7 @@
 <form
 	class="login-form center-block"
 	#login="form"
-	(ng-submit)="loginWithCredentials($event)"
+	(ng-submit)="loginWithCredentials()"
 	novalidate>
 	<label for="email" class="sr-only">Email</label>
 	<input type="email" class="login-form-email form-control" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" [disabled]="isAuthenticating" placeholder="Email" autocomplete="off" required>
@@ -25,12 +25,12 @@
 		</li>
 		<li>or</li>
 		<li>
-			<a href="#" (click)="loginWithGithub($event)">
+			<a href="#" (click)="loginWithGithub()">
 				<glyph src="assets/glyphs/github.svg"></glyph>
 			</a>
 		</li>
 		<li>
-			<a href="#" (click)="loginWithGoogle($event)">
+			<a href="#" (click)="loginWithGoogle()">
 				<glyph src="assets/glyphs/google.svg"></glyph>
 			</a>
 		</li>
