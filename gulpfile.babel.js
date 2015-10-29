@@ -421,10 +421,10 @@ function createWebServer () {
 function runFirebaseCommand (cmd, done) {
 	let firebase = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase ';
 	let opts = ['--token', process.env.FIREBASE_TOKEN];
-	if (Array.isArray(cmd)) cmd.concat(opts);
+	if (Array.isArray(cmd)) opts.unshift.apply(opts, cmd);
 	else opts.unshift(cmd);
 	return new Promise((resolve, reject) => {
-		let proc = spawn(firebase, cmd);
+		let proc = spawn(firebase, opts);
 		proc.on('close', (code) => {
 			if (code === 0) resolve();
 			else reject();
