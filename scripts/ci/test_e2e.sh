@@ -15,8 +15,8 @@ sleep 10 # wait for the web server to come up
 
 # Let protractor use the default browser unless one is specified
 OPTIONS="";
-if [[ -n "$E2E_BROWSERS" ]]; then
-	OPTIONS="--browsers=$E2E_BROWSERS";
+if [[ -n "${E2E_BROWSERS}" ]]; then
+	OPTIONS="--browsers=${E2E_BROWSERS}";
 fi
 
-./node_modules/.bin/protractor protractor.config.js $OPTIONS
+./node_modules/.bin/protractor protractor.config.js ${OPTIONS}
