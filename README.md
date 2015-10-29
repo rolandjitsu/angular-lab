@@ -83,8 +83,8 @@ A full test suite can be run using `gulp test`, which runs unit tests and lints 
 
 ### Browser Support
 -------------------
-Even though all source code is compiled/transpiled to ES5 and [SystemJS](https://github.com/systemjs/systemjs) has support for IE8 and up, Angular 2.0 has no official indication of what browsers it supports.
-Therefore, is safe to assume that only [evergreen](http://eisenbergeffect.bluespire.com/evergreen-browsers/) browsers are being supported for now.
+Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/paulmillr/es6-shim) are provided, this app has no official indication of what browsers it supports (lack of enough unit tests).
+Though, you can check out the browser support for [Angular 2](https://github.com/angular-class/awesome-angular2#current-browser-support-for-angular-2) and assume that the app will work where Angular 2 works.
 
 
 ### Learning Material
