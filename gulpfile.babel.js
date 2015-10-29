@@ -7,6 +7,7 @@ import del from 'del';
 import engineIoClient from 'engine.io-client';
 import engineIo from 'engine.io';
 import { exec } from 'child_process';
+import firebase from 'firebase-tools';
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import karma from 'karma';
@@ -343,6 +344,19 @@ gulp.task('test', ['build/!ilbsr'], (done) => {
 		'lint',
 		done
 	);
+});
+
+
+// Deployments
+
+gulp.task('deploy/hosting', () => {
+	return firebase.deploy.hosting({
+		token: process.env.FIREBASE_TOKEN
+	});
+});
+
+gulp.task('deploy', (done) => {
+	runSequence('deploy/hosting', done);
 });
 
 
