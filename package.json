@@ -19,7 +19,7 @@
 		"test": "./node_modules/.bin/gulp test"
 	},
 	"dependencies": {
-		"angular2": "2.0.0-alpha.44",
+		"angular2": "2.0.0-alpha.45",
 		"systemjs": "0.19.x",
 		"es6-shim": "0.33.x"
 	},
@@ -35,7 +35,7 @@
 		"gulp-connect": "2.2.x",
 		"gulp-plumber": "1.0.x",
 		"gulp-rename": "1.2.x",
-		"gulp-sass": "2.0.x",
+		"gulp-sass": "2.1.x",
 		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.6.x",
 		"gulp-tslint": "3.4.x",
