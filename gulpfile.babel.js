@@ -6,8 +6,7 @@ import connect from 'gulp-connect';
 import del from 'del';
 import engineIoClient from 'engine.io-client';
 import engineIo from 'engine.io';
-import { exec } from 'child_process';
-import firebase from 'firebase-tools';
+import { exec, spawn } from 'child_process';
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import karma from 'karma';
@@ -350,9 +349,7 @@ gulp.task('test', ['build/!ilbsr'], (done) => {
 // Deployments
 
 gulp.task('deploy/hosting', () => {
-	return firebase.deploy.hosting({
-		token: process.env.FIREBASE_TOKEN
-	});
+	return runFirebaseCommand('deploy:hosting');
 });
 
 gulp.task('deploy', (done) => {
@@ -415,6 +412,20 @@ function createWebServer () {
 	connect.server({
 		root: PATHS.dist,
 		port: LAB_WEB_SERVER_PORT
+	});
+}
+
+function runFirebaseCommand (cmd, done) {
+	let firebase = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase ';
+	let opts = ['--token', process.env.FIREBASE_TOKEN];
+	if (Array.isArray(cmd)) cmd.concat(opts);
+	else opts.unshift(cmd);
+	return new Promise((resolve, reject) => {
+		let proc = spawn(firebase, cmd);
+		proc.on('close', (code) => {
+			if (code === 0) resolve();
+			else reject();
+		});
 	});
 }
 
