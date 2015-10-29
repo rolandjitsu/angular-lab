@@ -348,8 +348,11 @@ gulp.task('test', ['build/!ilbsr'], (done) => {
 
 // Deployments
 
-gulp.task('deploy/hosting', () => {
-	return runFirebaseCommand('deploy:hosting');
+gulp.task('deploy/hosting', (done) => {
+	return runFirebaseCommand('deploy:hosting').then(
+		() => done(),
+		() => process.exit(1)
+	);
 });
 
 gulp.task('deploy', (done) => {
