@@ -255,7 +255,7 @@ gulp.task('test:unit/ci', (done) => {
 	server.start();
 });
 
-gulp.task('test:unit/single', (done) => { // Run unit tests once in local env
+gulp.task('test:unit/single', ['build/!ilbsr'], (done) => { // Run unit tests once in local env
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true
 	});
@@ -337,7 +337,7 @@ gulp.task('test:unit', ['build/!ilbsr'], (done) => {
 	);
 });
 
-gulp.task('test', ['build/!ilbsr'], (done) => {
+gulp.task('test', (done) => {
 	runSequence(
 		'test:unit/single',
 		'lint',
@@ -348,7 +348,7 @@ gulp.task('test', ['build/!ilbsr'], (done) => {
 
 // Deployments
 
-gulp.task('deploy:hosting', () => {
+gulp.task('deploy:hosting', ['build/!ilbsr'], () => {
 	return runFirebaseCommand('deploy:hosting');
 });
 
@@ -430,6 +430,7 @@ function runFirebaseCommand (cmd) {
 	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
 	let argv = minimist(process.argv.slice(2));
 	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
+	console.log(TOKEN);
 	if (!TOKEN) {
 		gutil.log(gutil.colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
 		return Promise.reject();
