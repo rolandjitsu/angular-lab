@@ -348,7 +348,11 @@ gulp.task('test', ['build/!ilbsr'], (done) => {
 
 // Deployments
 
-gulp.task('deploy/hosting', (done) => {
+gulp.task('deploy:hosting', () => {
+	return runFirebaseCommand('deploy:hosting');
+});
+
+gulp.task('deploy:hosting/ci', (done) => {
 	return runFirebaseCommand('deploy:hosting').then(
 		() => done(),
 		() => process.exit(1)
@@ -356,7 +360,7 @@ gulp.task('deploy/hosting', (done) => {
 });
 
 gulp.task('deploy', (done) => {
-	runSequence('deploy/hosting', done);
+	runSequence('deploy:hosting', done);
 });
 
 
@@ -418,16 +422,33 @@ function createWebServer () {
 	});
 }
 
-function runFirebaseCommand (cmd, done) {
-	let firebase = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase ';
-	let opts = ['--token', process.env.FIREBASE_TOKEN];
-	if (Array.isArray(cmd)) opts.unshift.apply(opts, cmd);
-	else opts.unshift(cmd);
+// https://github.com/firebase/firebase-tools#commands
+function runFirebaseCommand (cmd) {
+	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
+	let argv = minimist(process.argv.slice(2));
+	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
+	if (!TOKEN) {
+		gutil.log(gutil.colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
+		return Promise.reject();
+	}
+	let args = [
+		'--non-interactive',
+		'--token',
+		`"${TOKEN}"`
+	];
+	if (Array.isArray(cmd)) args.unshift.apply(args, cmd);
+	else args.unshift(cmd);
+	args.unshift(binary);
 	return new Promise((resolve, reject) => {
-		let proc = spawn(firebase, opts);
-		proc.on('close', (code) => {
-			if (code === 0) resolve();
-			else reject();
+		let proc = exec(args.join(' '), (error, stdout, stderr) => {
+			if (error !== null) reject();
+			resolve();
+		});
+		proc.stdout.on('data', (data) => {
+			console.log(data);
+		});
+		proc.stderr.on('data', (data) => {
+			console.log(data);
 		});
 	});
 }
