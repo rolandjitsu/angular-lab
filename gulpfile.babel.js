@@ -353,7 +353,7 @@ gulp.task('deploy:hosting', ['build/!ilbsr'], () => {
 });
 
 gulp.task('deploy:hosting/ci', (done) => {
-	return runFirebaseCommand('deploy:hosting').then(
+	runFirebaseCommand('deploy:hosting').then(
 		() => done(),
 		() => {
 			done();
@@ -430,7 +430,6 @@ function runFirebaseCommand (cmd) {
 	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
 	let argv = minimist(process.argv.slice(2));
 	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
-	console.log(TOKEN);
 	if (!TOKEN) {
 		gutil.log(gutil.colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
 		return Promise.reject();
