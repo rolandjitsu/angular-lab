@@ -355,7 +355,10 @@ gulp.task('deploy:hosting', () => {
 gulp.task('deploy:hosting/ci', (done) => {
 	return runFirebaseCommand('deploy:hosting').then(
 		() => done(),
-		() => process.exit(1)
+		() => {
+			done();
+			process.exit(1);
+		}
 	);
 });
 
