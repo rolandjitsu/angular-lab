@@ -47,7 +47,7 @@ $(node bin)/npm install
 Now start the webserver and the build process (runs on file change) and navigate to [localhost:3000](http://localhost:3000):
 
 ```shell
-$(npm bin)/npm start # `$(npm bin)/gulp start`
+$(node bin)/npm start # `$(npm bin)/gulp start`
 ```
 
 
@@ -68,7 +68,27 @@ Enable **Github** and **Google** auth from the same **Login & Auth** tab and fol
 
 #### Hosting
 
-Finally, if you want to use your own Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you also have to change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
+Finally, if you want to use your own Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you have to do a few things in order to make it work.
+First make sure that you have ran `$(node bin)/npm install` so that the [firebase-tools](https://github.com/firebase/firebase-tools) dependency is installed. Then make sure that you are logged in the Firebase dashboard and run:
+
+```shell
+$(npm bin)/firebase login
+```
+
+And follow all the steps (a browser window will be opened so you can authenticate the client). Next you will need to get the token used for authentication when a deployment is done, do this by running:
+
+```shell
+$(npm bin)/firebase prefs:token
+```
+
+Copy the token and put it somewhere safe for further usage. Also change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
+Now you can deploy the app to you own Firebase app by running:
+
+```shell
+$(npm bin)/gulp deploy:hosting --token <your firebase token>
+```
+
+**Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy:hosting` so you won't need to provide the `--token` option every time you run the command.
 
 
 ### Running Tests
