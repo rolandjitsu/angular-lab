@@ -34,7 +34,6 @@
 		"no-unused-expression": true,
 		"no-unused-variable": true,
 		"no-use-before-declare": true,
-		"no-var-keyword": true,
 		"no-var-requires": true,
 		"one-line": [true, "check-catch", "check-open-brace", "check-whitespace", "avoid-escape"],
 		"quotemark": [true, "single"],
