@@ -39,7 +39,7 @@
 		"gulp-sass": "2.1.x",
 		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.6.x",
-		"gulp-tslint": "3.4.x",
+		"gulp-tslint": "3.5.x",
 		"gulp-typescript": "2.9.x",
 		"gulp-util": "3.0.x",
 		"gulp-watch": "4.3.x",
