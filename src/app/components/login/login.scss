@@ -23,7 +23,7 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	margin-bottom: -1px;
-	
+
 	&:focus {
 		z-index: 2;
 	}
@@ -39,21 +39,27 @@
 // Buttons
 
 .list-inline {
-	
+
 	& > li {
 		vertical-align: middle;
 	}
-	
+
 	a {
 		display: block;
 		color: $grey;
-		
+
 		&:hover,
 		&:focus {
-			color: $blue;
+			color: $primary-dark;
 		}
 	}
 }
+
+.btn {
+    background-color: $primary-dark !important;
+    border: none;
+}
+
 
 glyph {
 	@include square(38px);

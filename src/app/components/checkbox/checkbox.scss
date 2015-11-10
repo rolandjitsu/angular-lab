@@ -27,21 +27,21 @@
 }
 
 :host {
-	
+
 	&:focus,
 	&:hover {
 		&:not([aria-checked="true"]) {
-			
+
 			& > .box {
-				color: $green;
+				color: $success;
 			}
 		}
 	}
 }
 
 :host[aria-checked="true"] {
-	
+
 	& > .box {
-		color: $green;
+		color: $success;
 	}
 }

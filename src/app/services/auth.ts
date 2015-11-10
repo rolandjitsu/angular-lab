@@ -1,3 +1,5 @@
+// TODO: Need to re-write service once endpoints are ready
+
 const FIREBASE_AUTH_PROVIDERS = [
 	'password',
 	'github',

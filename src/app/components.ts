@@ -1,3 +1,4 @@
+// All components need to be listed here
 export * from './components/account/account';
 export * from './components/app/app';
 export * from './components/auth/auth';
@@ -6,6 +7,4 @@ export * from './components/glyph/glyph';
 export * from './components/login/login';
 export * from './components/register/register';
 export * from './components/reset_password/reset_password';
-export * from './components/todo_list/todo_list';
-export * from './components/todo_list_item/todo_list_item';
-export * from './components/todos/todos';
+export * from './components/top_nav/top_nav';
