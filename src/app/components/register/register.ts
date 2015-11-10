@@ -4,8 +4,8 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/angular2';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
 
+import { ROUTER_DIRECTIVES } from 'angular2/router';
 import { AuthClient } from '../../services';
 
 @Component({
@@ -22,6 +22,7 @@ import { AuthClient } from '../../services';
 	]
 })
 
+// TODO: Needs to be re-written when endpoints are ready
 export class Register {
 	isRegistrationFailed: boolean = false;
 	error: string = null;
