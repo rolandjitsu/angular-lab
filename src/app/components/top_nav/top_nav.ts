@@ -7,16 +7,17 @@ import {
 	ViewEncapsulation
 } from 'angular2/angular2';
 
-import { Chores } from '../../services';
+import { ROUTER_DIRECTIVES } from 'angular2/router';
+
 import { Glyph } from '../glyph/glyph';
 
 @Component({
-	selector: 'todos-count',
+	selector: 'top_nav',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	templateUrl: 'app/components/todos_count/todos_count.html',
+	templateUrl: 'app/components/top_nav/top_nav.html',
 	styleUrls: [
-		'app/components/todos_count/todos_count.css'
+		'app/components/top_nav/top_nav.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
@@ -24,14 +25,4 @@ import { Glyph } from '../glyph/glyph';
 	]
 })
 
-export class TodosCount {
-	count: number = 0;
-	constructor(@Inject(Chores) csp: Promise<Chores>, cdRef: ChangeDetectorRef) {
-		csp.then((cs) => {
-			cs.observe((snapshot: FirebaseDataSnapshot) => {
-				this.count = cs.length;
-				cdRef.markForCheck();
-			});
-		});
-	}
-}
+export class TopNav {}
