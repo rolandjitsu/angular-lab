@@ -3,6 +3,7 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/angular2';
+
 import { ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction } from 'angular2/router';
 
 import { AuthClient } from '../../services';
@@ -12,7 +13,7 @@ import { Login } from '../login/login';
 import { ResetPassword } from '../reset_password/reset_password';
 import { Register } from '../register/register';
 import { Account } from '../account/account';
-import { Todos } from '../todos/todos';
+import { TopNav } from '../top_nav/top_nav';
 
 @Component({
 	selector: 'app',
@@ -32,9 +33,9 @@ import { Todos } from '../todos/todos';
 
 @RouteConfig([
 	{
-		component: Todos,
+		component: TopNav,
 		path: '/',
-		as: 'Todos'
+		as: 'TopNav'
 	},
 	{
 		component: Account,
@@ -52,7 +53,7 @@ export class App {
 	constructor(router: Router, location: Location, client: AuthClient) {
 		client.observe((auth: FirebaseAuthData) => {
 			router.recognize(location.path()).then((instruction: Instruction) => {
-				if (auth && isAuthComponent(instruction)) router.navigate(['/Todos']);
+				if (auth && isAuthComponent(instruction)) router.navigate(['/TopNav']);
 				else if (!auth && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
 			});
 		});
