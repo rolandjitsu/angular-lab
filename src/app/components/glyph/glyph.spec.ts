@@ -113,9 +113,7 @@ export function main () {
 })
 class GlyphTest {
 	glyphs;
-	/* tslint:disable */
-	constructor(@Query(Glyph) glyphs:QueryList<Glyph>) {
-	/* tslint:enable */
+	constructor(@Query(Glyph) glyphs: QueryList<Glyph>) {
 		this.glyphs = glyphs;
 	}
 }
