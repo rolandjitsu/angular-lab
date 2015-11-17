@@ -70,9 +70,12 @@ export class FirebaseArray extends Array {
 			]);
 		}
 		let entries = _refs.get(url).entries;
-		super(entries.length);
-		for (let [entry, idx] of entries) {
-			this[idx] = entry;
+		if (!entries.length) super();
+		else {
+			super(entries.length);
+			for (let [entry, idx] of entries) {
+				this[idx] = entry;
+			}
 		}
 	}
 
