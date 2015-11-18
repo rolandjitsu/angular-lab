@@ -31,7 +31,7 @@ export class User {
 		this.email = attrs.email;
 		this.providers = attrs.providers;
 		let firebaseUsersRef = new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_USERS_PATH}`);
-		this.changes = new FirebaseObservable(firebaseUsersRef.child(attrs.uid),[
+		this.changes = new FirebaseObservable(firebaseUsersRef.child(attrs.uid), [
 			FirebaseEventType.Value
 		]);
 	}
