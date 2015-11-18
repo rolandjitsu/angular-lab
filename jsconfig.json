@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"target": "es6",
-		"module": "system"
+		"module": "system",
+		"target": "es6"
 	}
 }
