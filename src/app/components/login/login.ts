@@ -6,7 +6,7 @@ import {
 } from 'angular2/angular2';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
-import { AuthClient, FirebaseAuthProviders } from '../../services';
+import { AuthClient, FirebaseAuthProvider } from '../../services';
 import { Glyph } from '../glyph/glyph';
 
 @Component({
@@ -37,10 +37,10 @@ export class Login {
 		this._client = client;
 	}
 	loginWithGithub(event: MouseEvent) {
-		this._client.loginWithProvider(FirebaseAuthProviders.Github, this.remember);
+		this._client.loginWithProvider(FirebaseAuthProvider.Github, this.remember);
 	}
 	loginWithGoogle(event: MouseEvent) {
-		this._client.loginWithProvider(FirebaseAuthProviders.Google, this.remember);
+		this._client.loginWithProvider(FirebaseAuthProvider.Google, this.remember);
 	}
 	loginWithCredentials() {
 		this.isAuthenticationFailed = false;

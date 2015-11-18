@@ -1,4 +1,8 @@
-const FIREBASE_AUTH_PROVIDERS = [
+import { Observable } from 'angular2/angular2';
+
+import { FIREBASE_APP_LINK } from './firebase';
+
+const FIREBASE_AUTH_PROVIDER = [
 	'password',
 	'github',
 	'google',
@@ -6,7 +10,7 @@ const FIREBASE_AUTH_PROVIDERS = [
 	'twitter'
 ];
 
-export enum FirebaseAuthProviders {
+export enum FirebaseAuthProvider {
 	Password,
 	Github,
 	Google,
@@ -14,20 +18,40 @@ export enum FirebaseAuthProviders {
 	Twitter
 }
 
-function authOptionsDefaults (remember?: boolean): any {
+export function isUserAuthenticated (): boolean {
+	let firebaseRef = new Firebase(`${FIREBASE_APP_LINK}`);
+	let session = firebaseRef.getAuth();
+	return !!session;
+}
+
+function getAuthDefaultOpts (remember?: boolean): any {
 	return {
 		remember: typeof remember === 'boolean' && !remember ? 'sessionOnly' : 'default'
 	};
 }
 
-export class AuthClient {
-	private _firebaseRef: Firebase;
-	constructor(firebaseRef: Firebase) {
-		this._firebaseRef = firebaseRef;
+function addScope (target: string[], scope: string): string[] {
+	if (!Array.isArray(target)) target = [scope];
+	else if (!target.length || !target.includes(scope)) target = target.concat([scope]);
+	return target;
+}
+
+export class AuthClient  {
+	session: Observable<FirebaseAuthData>;
+	private _firebaseRef: Firebase = new Firebase(`${FIREBASE_APP_LINK}`);
+
+	constructor() {
+		this.session = new Observable<FirebaseAuthData>((observer) => {
+			let callback = (auth: FirebaseAuthData) => {
+				observer.next(auth);
+			};
+			this._firebaseRef.onAuth(callback);
+			return () => {
+				this._firebaseRef.offAuth(callback);
+			};
+		});
 	}
-	get session(): FirebaseAuthData {
-		return this._firebaseRef.getAuth();
-	}
+
 	register(credentials: FirebaseCredentials): Promise<FirebaseAuthData | any> {
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.createUser(credentials, (error) => {
@@ -41,7 +65,7 @@ export class AuthClient {
 	// [User Authentication]{@link https://www.firebase.com/docs/web/guide/user-auth.html}
 	// [Email & Password]{@link https://www.firebase.com/docs/web/guide/login/password.html}
 	loginWithCredentials(credentials: FirebaseCredentials, remember?: boolean): Promise<FirebaseAuthData | any> {
-		let opts = authOptionsDefaults(remember);
+		let opts = getAuthDefaultOpts(remember);
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.authWithPassword(
 				credentials,
@@ -54,18 +78,21 @@ export class AuthClient {
 		});
 	}
 	// [Github]{@link https://www.firebase.com/docs/web/guide/login/github.html}
-	// [Scopes]{@link https://developer.github.com/v3/oauth/#scopes}
+	// [Github Scopes]{@link https://developer.github.com/v3/oauth/#scopes}
 	// [Google]{@link https://www.firebase.com/docs/web/guide/login/google.html}
-	// [Scopes]{@link https://developers.google.com/+/web/api/rest/oauth#scopes}
+	// [Google Scopes]{@link https://developers.google.com/+/web/api/rest/oauth#scopes}
 	// [Facebook]{@link https://www.firebase.com/docs/web/guide/login/facebook.html}
-	// [Scopes]{@link https://developers.facebook.com/docs/facebook-login/permissions/v2.5}
+	// [Facebook Scopes]{@link https://developers.facebook.com/docs/facebook-login/permissions/v2.5}
 	// [Twitter]{@link https://www.firebase.com/docs/web/guide/login/twitter.html}
-	loginWithProvider(provider: FirebaseAuthProviders, remember?: boolean, scope?: any): Promise<any> {
-		let opts = authOptionsDefaults(remember);
-		if (scope && provider !== FirebaseAuthProviders.Twitter) opts.scope = scope;
+	loginWithProvider(provider: FirebaseAuthProvider, remember?: boolean, scopes?: string[]): Promise<any> {
+		let opts = getAuthDefaultOpts(remember);
+		// Github, Google and Facebook does not include the email address in it's data unless required specifically.
+		// The User service `.fromAuth()` depends on the email, so we ask for it.
+		scopes = addScope(scopes, provider === FirebaseAuthProvider.Github ? 'user:email' : 'email');
+		if (Array.isArray(scopes) && provider !== FirebaseAuthProvider.Twitter) opts.scope = scopes.join(',');
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.authWithOAuthRedirect(
-				FIREBASE_AUTH_PROVIDERS[provider],
+				FIREBASE_AUTH_PROVIDER[provider],
 				(error) => {
 					if (error) reject(error);
 				},
@@ -88,15 +115,6 @@ export class AuthClient {
 				else resolve();
 			});
 		});
-	}
-	observe(callback: (auth?: FirebaseAuthData) => void): Function {
-		this._firebaseRef.onAuth(callback);
-		return () => {
-			this._firebaseRef.offAuth(callback);
-		};
-	}
-	isAuthenticated(): boolean {
-		return this.session !== null;
 	}
 	logout(): void {
 		this._firebaseRef.unauth();

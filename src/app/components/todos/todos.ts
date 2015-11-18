@@ -5,9 +5,9 @@ import {
 	Component,
 	ViewEncapsulation
 } from 'angular2/angular2';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import { ROUTER_DIRECTIVES, CanActivate } from 'angular2/router';
 
-import { AuthClient, Chores } from '../../services';
+import { AuthClient, isUserAuthenticated, Chores } from '../../services';
 import { Glyph } from '../glyph/glyph';
 import { TodosCount } from '../todos_count/todos_count';
 import { TodoList } from '../todo_list/todo_list';
@@ -33,7 +33,7 @@ class Form {
 	]
 })
 
-// @CanActivate()
+@CanActivate(() => isUserAuthenticated())
 
 export class Todos {
 	form: Form = new Form();

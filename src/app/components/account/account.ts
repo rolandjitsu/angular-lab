@@ -4,9 +4,9 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/angular2';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import { ROUTER_DIRECTIVES, CanActivate } from 'angular2/router';
 
-import { AuthClient } from '../../services';
+import { AuthClient, isUserAuthenticated } from '../../services';
 
 @Component({
 	selector: 'account',
@@ -22,6 +22,8 @@ import { AuthClient } from '../../services';
 	]
 })
 
+@CanActivate(() => isUserAuthenticated())
+
 export class Account {
 	isChangeAttemptFailed: boolean = false;
 	isChangeAttemptSuccessful: boolean = false;
@@ -35,7 +37,9 @@ export class Account {
 	private _client: AuthClient;
 	constructor(client: AuthClient) {
 		this._client = client;
-		if (client.session) this.credentials.email = client.session.password.email;
+		client.session.subscribe((auth: FirebaseAuthData) => {
+			if (auth) this.credentials.email = auth[auth.provider].email;
+		});
 	}
 	submit() {
 		this.isChangeAttemptFailed = false;

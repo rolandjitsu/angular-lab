@@ -50,18 +50,18 @@ import { Todos } from '../todos/todos';
 
 export class App {
 	constructor(router: Router, location: Location, client: AuthClient) {
-		client.observe((auth: FirebaseAuthData) => {
+		client.session.subscribe((auth: FirebaseAuthData) => {
 			router.recognize(location.path()).then((instruction: Instruction) => {
 				if (auth && isAuthComponent(instruction)) router.navigate(['/Todos']);
 				else if (!auth && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
 			});
 		});
 		// TODO: eventually this will be handled by `@CanActivate` hook
-		router.subscribe((path) => {
-			router.recognize(path).then((instruction: Instruction) => {
-				if (!client.session && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
-			});
-		});
+		// router.subscribe((path) => {
+		// 	router.recognize(path).then((instruction: Instruction) => {
+		// 		if (!client.session && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
+		// 	});
+		// });
 	}
 }
 
