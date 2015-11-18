@@ -11,7 +11,7 @@
 
 .login-form,
 .alert {
-	max-width: 300px;
+	max-width: $auth-width;
 }
 
 .login-form-email,

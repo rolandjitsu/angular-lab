@@ -1,3 +1,5 @@
+@import '../../vars';
+
 // Host Element (<account>)
 :host {
 	display: block;
@@ -9,7 +11,7 @@
 
 .change-form,
 .alert {
-	max-width: 350px;
+	max-width: $auth-width;
 }
 
 .change-form-email,
