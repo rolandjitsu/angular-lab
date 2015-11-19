@@ -26,7 +26,7 @@ export class Icon {
 			queue.push(defer);
 			if (!pending) this._http
 				.get(url)
-				.map((response) => svg(response))
+				.map((response: Response) => svg(response))
 				.subscribe((element) => {
 					cache.set(url, element);
 					queue.forEach((item) => item.resolve(element.cloneNode(true)));
