@@ -10,7 +10,7 @@ import {
 	ViewEncapsulation,
 	ControlValueAccessor,
 	NgControl
-} from 'angular2/angular2';
+} from 'angular2/core';
 
 import { isPresent } from '../../../common/lang';
 import { KEY_CODES } from '../../../common/key_codes';

@@ -3,7 +3,7 @@ import {
 	FORM_DIRECTIVES,
 	ViewEncapsulation,
 	Component
-} from 'angular2/angular2';
+} from 'angular2/core';
 import { ROUTER_DIRECTIVES } from 'angular2/router';
 
 import { AuthClient } from '../../services';

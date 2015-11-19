@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from 'angular2/angular2';
+import { Pipe, PipeTransform } from 'angular2/core';
 
 import { isBlank } from '../../common/lang';
 

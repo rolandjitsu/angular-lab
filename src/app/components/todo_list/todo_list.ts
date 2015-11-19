@@ -5,7 +5,7 @@ import {
 	Inject,
 	Component,
 	ViewEncapsulation
-} from 'angular2/angular2';
+} from 'angular2/core';
 
 import { Chores } from '../../services';
 import { TodoListItem } from '../todo_list_item/todo_list_item';

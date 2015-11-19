@@ -5,7 +5,7 @@ import {
 	Component,
 	ViewEncapsulation,
 	Input
-} from 'angular2/angular2';
+} from 'angular2/core';
 
 import { Chores, Chore } from '../../services';
 import { Glyph } from '../glyph/glyph';

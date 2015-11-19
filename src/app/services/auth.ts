@@ -1,4 +1,4 @@
-import { Observable } from 'angular2/angular2';
+import { Observable } from 'angular2/core';
 
 import { FIREBASE_APP_LINK } from './firebase';
 
