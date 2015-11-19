@@ -1,4 +1,4 @@
-import { Observable } from 'angular2/angular2';
+import { Observable } from 'angular2/core';
 
 export enum FirebaseEventType {
 	Value,
