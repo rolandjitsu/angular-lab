@@ -4,7 +4,7 @@
 	#todo="form"
 	novalidate>
 	<div class="todo-cell-control">
-		<checkbox ng-control="status" [(ng-model)]="model.completed" (update)="onStatusChange($event)"></checkbox>
+		<checkbox ng-control="status" [(ng-model)]="model.completed" (change)="onStatusChange($event)"></checkbox>
 	</div>
 	<div class="todo-cell-content" [ng-class]="{ 'js-edit-mode': isEditMode }">
 		<div class="todo-cell-content-input">
