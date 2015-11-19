@@ -40,16 +40,13 @@ export class User {
 		let email: string = auth[auth.provider].email;
 		let firebaseUsersRef = new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_USERS_PATH}`);
 		let usersArray = new FirebaseArray(firebaseUsersRef);
-		console.log(auth, email);
 		let query = User.query({ by: { email }});
 		return new Promise((resolve) => {
 			query.then((users: Map<string, any>) => {
-				console.log(users);
 				if (users.size) {
 					// Found the user.
 					// Check if providers contains the current `auth.provider` and update the user providers if it does not contain it.
 					let { uid, providers } = Array.from(users.values())[0];
-					console.log(providers);
 					if (Array.isArray(providers) && providers.includes(auth.provider)) resolve(
 						new User({ uid, email, providers })
 					);

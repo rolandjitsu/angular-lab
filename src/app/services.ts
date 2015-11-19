@@ -36,7 +36,6 @@ export const SERVICES_PROVIDERS: Array<any> = [
 					if (auth !== null) {
 						let up = User.fromAuth(auth);
 						up.then((user: User) => {
-							console.log(user);
 							subscription.unsubscribe();
 							resolve(user);
 						});
