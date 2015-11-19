@@ -9,3 +9,4 @@ export * from './components/reset_password/reset_password';
 export * from './components/todo_list/todo_list';
 export * from './components/todo_list_item/todo_list_item';
 export * from './components/todos/todos';
+export * from './components/todos_count/todos_count';
