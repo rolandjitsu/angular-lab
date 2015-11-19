@@ -1,4 +1,4 @@
-import { provide, bootstrap, FORM_PROVIDERS } from 'angular2/angular2';
+import { FORM_PROVIDERS, provide, bootstrap, enableDevMode } from 'angular2/angular2';
 import { HTTP_PROVIDERS } from 'angular2/http';
 import { ROUTER_PRIMARY_COMPONENT, APP_BASE_HREF, ROUTER_PROVIDERS as NG2_ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router';
 
@@ -25,4 +25,5 @@ const APP_PROVIDERS: Array<any> = [
 	SERVICES_PROVIDERS
 ];
 
+enableDevMode();
 bootstrap(App, APP_PROVIDERS);
