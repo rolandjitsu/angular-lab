@@ -5,7 +5,7 @@ import connect from 'gulp-connect';
 import del from 'del';
 import { exec } from 'child_process';
 import gulp from 'gulp';
-import gutil from 'gulp-util';
+import { log, colors } from 'gulp-util';
 import karma from 'karma';
 import minimist from 'minimist';
 import plumber from 'gulp-plumber';
@@ -306,7 +306,7 @@ gulp.task('test/unit:sauce', ['build:!ilbsr'], function (done) {
 		]
 	});
 	if (!BROWSER_CONF.isSauce) {
-		gutil.log(gutil.colors.red('There were no Saucelabs browsers provided, add them with the --browsers option'));
+		log(colors.red('There were no Saucelabs browsers provided, add them with the --browsers option'));
 		done();
 		process.exit(1);
 	} else {
@@ -361,7 +361,7 @@ gulp.task('deploy', function (done) {
 gulp.task('start', function (done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => {
-			gutil.log(gutil.colors.red('A lab build server instance has already been started in another process, cannot start another one'));
+			log(colors.red('A lab build server instance has already been started in another process, cannot start another one'));
 			done();
 			process.exit(1);
 		},
@@ -373,7 +373,7 @@ gulp.task('start', function (done) {
 					port: WEB_SERVER_PORT,
 					root: PATHS.dist
 				});
-				gutil.log(gutil.colors.green('File watch processes for HTML, CSS & static assets are started'));
+				log(colors.green('File watch processes for HTML, CSS & static assets are started'));
 				watch(PATHS.src.static, () => {
 					runSequence('serve/static');
 				});
@@ -428,7 +428,7 @@ function runFirebaseCommand (cmd) {
 	const argv = minimist(process.argv.slice(2));
 	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
 	if (!TOKEN) {
-		gutil.log(gutil.colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
+		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
 		return Promise.reject();
 	}
 	let args = [
@@ -485,7 +485,7 @@ function getBrowsersConfigFromCLI () {
 class BuildServer {
 	constructor() {
 		let wss = new WebSocketServer({ port: BUILD_SERVER_PORT }, () => {
-			gutil.log(gutil.colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
+			log(colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
 		});
 		process.on('exit', () => {
 			wss.close();
@@ -499,7 +499,7 @@ class JsBuildServer {
 	constructor() {
 		WebSocketServer.isRunning(JS_BUILD_SERVER_ADDRESS).then(
 			() => {
-				gutil.log(gutil.colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
+				log(colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
 				let ws = new WebSocket(JS_BUILD_SERVER_ADDRESS);
 				ws.addEventListener('close', () => {
 					new JsBuildServer();
@@ -510,7 +510,7 @@ class JsBuildServer {
 					runSequence('build/js');
 				});
 				let wss = new WebSocketServer({ port: JS_BUILD_SERVER_PORT }, () => {
-					gutil.log(gutil.colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
+					log(colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
 				});
 				process.on('exit', () => {
 					watcher.close();
