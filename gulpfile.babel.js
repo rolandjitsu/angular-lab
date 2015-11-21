@@ -313,7 +313,7 @@ gulp.task('test:unit/karma-server', () => {
 });
 
 gulp.task('test:unit/karma-run', (done) => {
-	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process	
+	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process
 	runKarma('karma.config.js', done);
 });
 
@@ -497,7 +497,7 @@ function getBrowsersConfigFromCLI () {
 
 function buildJS () {
 	return gulp
-		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings)) // instead of gulp.src(...), project.src() can be used
+		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings), {base:'./src'}) // instead of gulp.src(...), project.src() can be used
 		.pipe(changed(PATHS.dist, { extension: '.js' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
@@ -509,7 +509,7 @@ function buildJS () {
 			gzip: true
 		}))
 		.pipe(gulp.dest(PATHS.dist));
-} 
+}
 
 function createBuildServer () {
 	let server = createEngineIOServer(LAB_BUILD_SERVER_PORT, () => {
