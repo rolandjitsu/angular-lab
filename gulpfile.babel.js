@@ -6,7 +6,7 @@ import connect from 'gulp-connect';
 import del from 'del';
 import engineIoClient from 'engine.io-client';
 import engineIo from 'engine.io';
-import { exec, spawn } from 'child_process';
+import { exec } from 'child_process';
 import gulp from 'gulp';
 import gutil from 'gulp-util';
 import karma from 'karma';
@@ -24,6 +24,11 @@ import watch from 'gulp-watch';
 
 import { SAUCE_LAUNCHERS, SAUCE_ALIASES } from './sauce.config';
 
+
+const GULP_SIZE_DEFAULT_OPTS = {
+	showFiles: true,
+	gzip: true
+};
 
 const KARMA_CONFIG = {
 	configFile: `${__dirname}/karma.config.js`
@@ -55,6 +60,7 @@ const PATHS = {
 	],
 	src: {
 		root: '/src',
+		static: 'src/**/*.{svg,jpg,png,ico}',
 		ts: [
 			'!src/_typings/*.d.ts',
 			'src/**/*.ts'
@@ -65,7 +71,6 @@ const PATHS = {
 			'!src/app/mixins.scss',
 			'src/**/*.scss'
 		],
-		static: 'src/**/*.{svg,jpg,png,ico}',
 		spec: [
 			'src/**/*.spec.ts'
 		]
@@ -73,7 +78,7 @@ const PATHS = {
 	dist: 'dist'
 };
 
-let ng2LabTSProject = ts.createProject('tsconfig.json');
+const NG2_LAB_TS_PROJECT = ts.createProject('tsconfig.json');
 
 
 // Clean
@@ -86,7 +91,7 @@ gulp.task('clean', (done) => {
 
 // Dependecies
 
-gulp.task('install/bower', (done) => {
+gulp.task('bower/install', (done) => {
 	bower
 		.commands
 		.install(null, { save: true }, { interactive: false })
@@ -96,7 +101,7 @@ gulp.task('install/bower', (done) => {
 		});
 });
 
-gulp.task('install/tsd', () => {
+gulp.task('tsd/install', () => {
 	let config = './tsd.json';
 	let api = tsd.getAPI(config);
 	return api.readConfig(config, true).then(() => {
@@ -117,19 +122,16 @@ gulp.task('install/tsd', () => {
 	});
 });
 
-gulp.task('deps', ['install/bower', 'install/tsd'], () => {
-	let libsPath = `${PATHS.dist}/lib`;
+gulp.task('deps', ['bower/install', 'tsd/install'], () => {
+	const LIBS_PATH = `${PATHS.dist}/lib`;
 	return gulp
 		.src(PATHS.lib)
-		.pipe(changed(libsPath))
+		.pipe(changed(LIBS_PATH))
 		.pipe(rename((file) => {
 			file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
 		}))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
-		.pipe(gulp.dest(libsPath));
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(gulp.dest(LIBS_PATH));
 });
 
 
@@ -170,15 +172,12 @@ gulp.task('serve/html', () => {
 	return gulp
 		.src(PATHS.src.html)
 		.pipe(changed(PATHS.dist))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist));
 });
 
 gulp.task('build/css', () => {
-	let sassConfig = {
+	let SASS_CONFIG = {
 		includePaths: [
 			`${PATHS.src.root}/app`
 		],
@@ -192,13 +191,10 @@ gulp.task('build/css', () => {
 		.pipe(changed(PATHS.dist, { extension: '.css' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(sass(sassConfig).on('error', sass.logError))
+		.pipe(sass(SASS_CONFIG).on('error', sass.logError))
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist));
 });
 
@@ -206,18 +202,25 @@ gulp.task('serve/static', () => {
 	return gulp
 		.src(PATHS.src.static)
 		.pipe(changed(PATHS.dist))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist));
 });
 
 gulp.task('build', (done) => {
-	runSequence('deps', ['build/js', 'serve/html', 'build/css', 'serve/static'], done);
+	runSequence(
+		'deps',
+		[
+			'serve/static',
+			'build/js',
+			'serve/html',
+			'build/css'
+		],
+		done
+	);
 });
 
-gulp.task('build/!ilbsr', (done) => { // Build if lab build server is not running
+// Build if lab build server is not running
+gulp.task('build:!ilbsr', (done) => {
 	isEngineIOServerRunning(LAB_BUILD_SERVER_PORT).then(() => { done(); }, () => {
 		runSequence('build', done);
 	});
@@ -239,7 +242,7 @@ gulp.task('lint', () => { // https://github.com/palantir/tslint#supported-rules
 
 // Tests
 
-gulp.task('test:unit/ci', (done) => {
+gulp.task('test/unit:ci', (done) => {
 	let browserConf = getBrowsersConfigFromCLI();
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true,
@@ -255,7 +258,7 @@ gulp.task('test:unit/ci', (done) => {
 	server.start();
 });
 
-gulp.task('test:unit/single', ['build/!ilbsr'], (done) => { // Run unit tests once in local env
+gulp.task('test/unit:single', ['build:!ilbsr'], (done) => { // Run unit tests once in local env
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true
 	});
@@ -265,7 +268,7 @@ gulp.task('test:unit/single', ['build/!ilbsr'], (done) => { // Run unit tests on
 	server.start();
 });
 
-gulp.task('test:unit/ci:sauce', (done) => {
+gulp.task('test/unit:ci/sauce', (done) => {
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true,
 		browserNoActivityTimeout: 240000,
@@ -283,7 +286,7 @@ gulp.task('test:unit/ci:sauce', (done) => {
 	server.start();
 });
 
-gulp.task('test:unit/sauce', ['build/!ilbsr'], (done) => {
+gulp.task('test/unit:sauce', ['build:!ilbsr'], (done) => {
 	let browserConf = getBrowsersConfigFromCLI();
 	let config = assign({}, KARMA_CONFIG, {
 		singleRun: true,
@@ -307,19 +310,19 @@ gulp.task('test:unit/sauce', ['build/!ilbsr'], (done) => {
 	}
 });
 
-gulp.task('test:unit/karma-server', () => {
+gulp.task('karma/server', () => {
 	let server = new karma.Server(KARMA_CONFIG);
 	server.start();
 });
 
-gulp.task('test:unit/karma-run', (done) => {
+gulp.task('karma/run', (done) => {
 	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process	
 	runKarma('karma.config.js', done);
 });
 
-gulp.task('test:unit', ['build/!ilbsr'], (done) => {
+gulp.task('test/unit', ['build:!ilbsr'], (done) => {
 	runSequence(
-		'test:unit/karma-server',
+		'karma/server',
 		() => {
 			// Create a build server to avoid parallel js builds when running unit tests in another process
 			// If the js build server is shut down from some other process (the same process that started it), restart it here
@@ -329,7 +332,7 @@ gulp.task('test:unit', ['build/!ilbsr'], (done) => {
 				let client = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
 				client.on('open', () => {
 					client.on('message', (msg) => {
-						if (msg === 'build/js:done') runSequence('test:unit/karma-run');
+						if (msg === 'build/js:done') runSequence('karma/run');
 					});
 				});
 			});
@@ -339,8 +342,8 @@ gulp.task('test:unit', ['build/!ilbsr'], (done) => {
 
 gulp.task('test', (done) => {
 	runSequence(
-		'test:unit/single',
 		'lint',
+		'test/unit:single',
 		done
 	);
 });
@@ -348,11 +351,11 @@ gulp.task('test', (done) => {
 
 // Deployments
 
-gulp.task('deploy:hosting', ['build/!ilbsr'], () => {
+gulp.task('deploy/hosting', ['build:!ilbsr'], () => {
 	return runFirebaseCommand('deploy:hosting');
 });
 
-gulp.task('deploy:hosting/ci', (done) => {
+gulp.task('deploy/hosting:ci', (done) => {
 	runFirebaseCommand('deploy:hosting').then(
 		() => done(),
 		() => {
@@ -363,7 +366,7 @@ gulp.task('deploy:hosting/ci', (done) => {
 });
 
 gulp.task('deploy', (done) => {
-	runSequence('deploy:hosting', done);
+	runSequence('deploy/hosting', done);
 });
 
 
@@ -420,15 +423,15 @@ process.on('SIGINT', () => {
 
 function createWebServer () {
 	connect.server({
-		root: PATHS.dist,
-		port: LAB_WEB_SERVER_PORT
+		port: LAB_WEB_SERVER_PORT,
+		root: PATHS.dist
 	});
 }
 
 // https://github.com/firebase/firebase-tools#commands
 function runFirebaseCommand (cmd) {
-	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
-	let argv = minimist(process.argv.slice(2));
+	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
+	const argv = minimist(process.argv.slice(2));
 	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
 	if (!TOKEN) {
 		gutil.log(gutil.colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
@@ -468,7 +471,7 @@ function runKarma (configFile, done) {
 
 function getBrowsersConfigFromCLI () {
 	let isSauce = false;
-	let args = minimist(process.argv.slice(2));
+	const args = minimist(process.argv.slice(2));
 	let rawInput = args.browsers ? args.browsers : 'CHROME_TRAVIS_CI';
 	let inputList = rawInput.replace(' ', '').split(',');
 	let outputList = [];
@@ -501,13 +504,10 @@ function buildJS () {
 		.pipe(changed(PATHS.dist, { extension: '.js' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(ts(ng2LabTSProject))
+		.pipe(ts(NG2_LAB_TS_PROJECT))
 		.js
 		.pipe(sourcemaps.write('.'))
-		.pipe(size({
-			showFiles: true,
-			gzip: true
-		}))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist));
 } 
 
