@@ -59,7 +59,7 @@ const PATHS = {
 		'tsd_typings/tsd.d.ts'
 	],
 	src: {
-		root: '/src',
+		root: './src',
 		static: 'src/**/*.{svg,jpg,png,ico}',
 		ts: [
 			'!src/_typings/*.d.ts',
@@ -316,7 +316,7 @@ gulp.task('karma/server', () => {
 });
 
 gulp.task('karma/run', (done) => {
-	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process	
+	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process
 	runKarma('karma.config.js', done);
 });
 
@@ -500,7 +500,7 @@ function getBrowsersConfigFromCLI () {
 
 function buildJS () {
 	return gulp
-		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings)) // instead of gulp.src(...), project.src() can be used
+		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings), { base: PATHS.src.root }) // instead of gulp.src(...), project.src() can be used
 		.pipe(changed(PATHS.dist, { extension: '.js' }))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
@@ -509,7 +509,7 @@ function buildJS () {
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist));
-} 
+}
 
 function createBuildServer () {
 	let server = createEngineIOServer(LAB_BUILD_SERVER_PORT, () => {
