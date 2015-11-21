@@ -30,8 +30,6 @@
 		"babel-preset-stage-1": "6.1.x",
 		"bower": "1.6.x",
 		"del": "2.1.x",
-		"engine.io-client": "1.5.x",
-		"engine.io": "1.5.x",
 		"firebase-tools": "2.1.x",
 		"gulp": "^3.9.0",
 		"gulp-autoprefixer": "3.1.x",
@@ -57,6 +55,7 @@
 		"protractor": "3.0.x",
 		"run-sequence": "1.1.x",
 		"tsd": "0.6.x",
+		"ws": "0.8.x",
 		"yargs": "3.30.x"
 	},
 	"engines": {

@@ -3,8 +3,6 @@ import bower from 'bower';
 import changed from 'gulp-changed';
 import connect from 'gulp-connect';
 import del from 'del';
-import engineIoClient from 'engine.io-client';
-import engineIo from 'engine.io';
 import { exec } from 'child_process';
 import gulp from 'gulp';
 import gutil from 'gulp-util';
@@ -20,6 +18,8 @@ import tslint from 'gulp-tslint';
 import tsd from 'tsd';
 import ts from 'gulp-typescript';
 import watch from 'gulp-watch';
+import { Server } from 'ws';
+import WebSocket from 'ws';
 
 import { SAUCE_LAUNCHERS, SAUCE_ALIASES } from './sauce.config';
 
@@ -80,7 +80,10 @@ const PATHS = {
 const NG2_LAB_TS_PROJECT = ts.createProject('tsconfig.json');
 
 
-// Clean
+/**
+ * Clean dist
+ */
+
 gulp.task('clean', (done) => {
 	del([PATHS.dist]).then(() => {
 		done();
@@ -88,7 +91,9 @@ gulp.task('clean', (done) => {
 });
 
 
-// Dependecies
+/**
+ * Dependecies
+ */
 
 gulp.task('bower/install', function (done) {
 	bower
@@ -133,26 +138,28 @@ gulp.task('deps', ['bower/install', 'tsd/install'], function () {
 });
 
 
-// Build
+/**
+ * Build steps
+ */
 
-let jsBuildServerSocket;
+let jsBuildServerWebSocket;
 gulp.task('build/js', function (done) {
-	if (jsBuildServerSocket) {
+	if (jsBuildServerWebSocket) {
 		let stream = buildJS();
 		stream.on('end', () => {
 			done();
 		});
 	}
 	else {
-		isEngineIOServerRunning(JS_BUILD_SERVER_PORT).then(
+		WebSocketServer.isRunning(JS_BUILD_SERVER_ADDRESS).then(
 			() => {
-				jsBuildServerSocket = engineIoClient(JS_BUILD_SERVER_ADDRESS);
-				jsBuildServerSocket.on('open', () => {
+				jsBuildServerWebSocket = new WebSocket(JS_BUILD_SERVER_ADDRESS);
+				jsBuildServerWebSocket.addEventListener('open', () => {
 					let stream = buildJS();
 					stream.on('end', () => {
 						done();
 					});
-				});
+				})
 			},
 			() => {
 				let stream = buildJS();
@@ -217,16 +224,19 @@ gulp.task('build', function (done) {
 
 // Build if lab build server is not running
 gulp.task('build:!ilbsr', function (done) {
-	isEngineIOServerRunning(BUILD_SERVER_PORT).then(
+	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => done(),
 		() => {
 			runSequence('build', done);
 		}
 	);
-}),
+});
 
 
-// Code integrity
+/**
+ * Code integrity
+ */
+
 gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-rules
 	return gulp
 		.src(PATHS.src.ts)
@@ -239,7 +249,9 @@ gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-
 });
 
 
-// Tests
+/**
+ * Unit tests
+ */
 
 gulp.task('test/unit:ci', function (done) {
 	const BROWSER_CONF = getBrowsersConfigFromCLI();
@@ -307,7 +319,7 @@ gulp.task('test/unit:sauce', ['build:!ilbsr'], function (done) {
 
 gulp.task('test/unit', ['build:!ilbsr'], function (done) {
 	createKarmaServer(KARMA_CONFIG);
-	createJsBuildServer();
+	new JsBuildServer();
 });
 
 gulp.task('test', function (done) {
@@ -319,7 +331,9 @@ gulp.task('test', function (done) {
 });
 
 
-// Deployments
+/**
+ * Deployments
+ */
 
 gulp.task('deploy/hosting', ['build:!ilbsr'], function () {
 	return runFirebaseCommand('deploy:hosting');
@@ -340,15 +354,12 @@ gulp.task('deploy', function (done) {
 });
 
 
-// Web server
-gulp.task('server', function (done) {
-	createWebServer();
-});
+/**
+ * Build and watch
+ */
 
-
-// Lab
 gulp.task('start', function (done) {
-	isEngineIOServerRunning(BUILD_SERVER_PORT).then(
+	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => {
 			gutil.log(gutil.colors.red('A lab build server instance has already been started in another process, cannot start another one'));
 			done();
@@ -356,10 +367,13 @@ gulp.task('start', function (done) {
 		},
 		() => {
 			runSequence('build', () => {
-				createJsBuildServer();
-				createBuildServer();
-				createWebServer();
-				gutil.log(gutil.colors.green('File watch processes for HTML, CSS & static assets started'));
+				new JsBuildServer();
+				new BuildServer();
+				connect.server({
+					port: WEB_SERVER_PORT,
+					root: PATHS.dist
+				});
+				gutil.log(gutil.colors.green('File watch processes for HTML, CSS & static assets are started'));
 				watch(PATHS.src.static, () => {
 					runSequence('serve/static');
 				});
@@ -375,7 +389,10 @@ gulp.task('start', function (done) {
 });
 
 
-// Default task
+/**
+ * Default task
+ */
+
 gulp.task('default', [
 	'start'
 ]);
@@ -392,11 +409,17 @@ function createKarmaServer (config = {}, callback = noop) {
 	server.start();
 }
 
-function createWebServer () {
-	connect.server({
-		port: WEB_SERVER_PORT,
-		root: PATHS.dist
-	});
+function buildJS () {
+	return gulp
+		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings), { base: PATHS.src.root }) // instead of gulp.src(...), project.src() can be used
+		.pipe(changed(PATHS.dist, { extension: '.js' }))
+		.pipe(plumber())
+		.pipe(sourcemaps.init())
+		.pipe(ts(NG2_LAB_TS_PROJECT))
+		.js
+		.pipe(sourcemaps.write('.'))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(gulp.dest(PATHS.dist));
 }
 
 // https://github.com/firebase/firebase-tools#commands
@@ -459,96 +482,57 @@ function getBrowsersConfigFromCLI () {
 	}
 }
 
-function buildJS () {
-	return gulp
-		.src(PATHS.src.ts.slice(-1).concat(PATHS.typings), { base: PATHS.src.root }) // instead of gulp.src(...), project.src() can be used
-		.pipe(changed(PATHS.dist, { extension: '.js' }))
-		.pipe(plumber())
-		.pipe(sourcemaps.init())
-		.pipe(ts(NG2_LAB_TS_PROJECT))
-		.js
-		.pipe(sourcemaps.write('.'))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist));
-}
-
-function createBuildServer () {
-	let server = createEngineIOServer(BUILD_SERVER_PORT, () => {
-		gutil.log(gutil.colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
-	});
-	process.on('exit', () => {
-		server.close();
-	});
+class BuildServer {
+	constructor() {
+		let wss = new WebSocketServer({ port: BUILD_SERVER_PORT }, () => {
+			gutil.log(gutil.colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
+		});
+		process.on('exit', () => {
+			wss.close();
+		});
+	}
 }
 
 // Create a build server to avoid parallel js builds when running unit tests in another process
 // If the js build server is shut down from some other process (the same process that started it), restart it here
-function createJsBuildServer () {
-	return new Promise((resolve, reject) => {
-		isEngineIOServerRunning(JS_BUILD_SERVER_PORT).then(
+class JsBuildServer {
+	constructor() {
+		WebSocketServer.isRunning(JS_BUILD_SERVER_ADDRESS).then(
 			() => {
-				let client = engineIoClient(JS_BUILD_SERVER_ADDRESS);
-				client.on('open', () => {
-					client.on('close', (msg) => {
-						createJsBuildServer();
-					});
-				});
 				gutil.log(gutil.colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
-				resolve();
+				let ws = new WebSocket(JS_BUILD_SERVER_ADDRESS);
+				ws.addEventListener('close', () => {
+					new JsBuildServer();
+				});
 			},
 			() => {
 				let watcher = watch(PATHS.src.ts, () => {
 					runSequence('build/js');
 				});
-				let server = createEngineIOServer(JS_BUILD_SERVER_PORT, () => {
+				let wss = new WebSocketServer({ port: JS_BUILD_SERVER_PORT }, () => {
 					gutil.log(gutil.colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
-					resolve();
-				});
-				server.on('connection', (socket) => {
-					socket.on('message', (msg) => {
-						server.broadcast(msg, socket.id);
-					});
 				});
 				process.on('exit', () => {
 					watcher.close();
-					server.close();
+					wss.close();
 				});
 			}
 		);
-	});
-}
-
-function createEngineIOServer (port, done) {
-	let server = engineIo.listen(port, typeof done === 'function' ? done : noop);
-	// Send message to everyone but (optionally) the sender
-	server.broadcast = (msg, skipId) => {
-		for (let id in server.clients) {
-			if (typeof skipId !== 'undefined') {
-				if (id == skipId) continue; // Don't broadcast to sender
-			}
-			server.clients[id].send(msg);
-		}
 	}
-	return server;
 }
 
-function isEngineIOServerRunning (port, timeout) {
-	return new Promise((resolve, reject) => {
-		let client = engineIoClient(`${ENGINE_IO_BASE_SOCKET_ADDRESS}${port}`);
-		let timer = setTimeout(() => {
-			reject();
-			client.close();
-		}, timeout || 500);
-		client.on('open', () => {
-			clearTimeout(timer);
-			resolve();
-			client.close();
+class WebSocketServer extends Server {
+	static isRunning(address) {
+		let ws = new WebSocket(address);
+		return new Promise((resolve, reject) => {
+			ws.addEventListener('error', (error) => {
+				if (error.code === 'ECONNREFUSED') reject();
+			});
+			ws.addEventListener('open', () => {
+				resolve();
+			});
 		});
-		client.on('close', () => {
-			clearTimeout(timer);
-			reject();
-		});
-	});
+	}
 }
 
 function noop (...args) {}
