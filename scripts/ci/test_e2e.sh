@@ -11,7 +11,7 @@ function killServer () {
 
 trap killServer EXIT
 
-sleep 10 # wait for the web server to come up
+sleep 5 # wait for the web server to come up
 
 # Let protractor use the default browser unless one is specified
 OPTIONS="";

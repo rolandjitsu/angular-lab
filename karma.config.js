@@ -1,6 +1,4 @@
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
-import assign from 'object-assign';
-
 import { SAUCE_LAUNCHERS } from './sauce.config';
 
 let karmaConfig = {};
@@ -25,7 +23,7 @@ if (process.env.TRAVIS) {
 	karmaConfig.transports = ['polling'];
 }
 
-assign(karmaConfig, {
+Object.assign(karmaConfig, {
 	frameworks: [
 		'jasmine'
 	],
@@ -34,7 +32,6 @@ assign(karmaConfig, {
 		'node_modules/systemjs/dist/system.src.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
 		'node_modules/angular2/bundles/angular2.dev.js',
 		'node_modules/angular2/bundles/router.dev.js',
-		'node_modules/angular2/node_modules/zone.js/dist/jasmine-patch.js',
 		'node_modules/angular2/bundles/http.dev.js',
 		'node_modules/angular2/bundles/testing.js',
 		'bower_components/firebase/firebase.js',
@@ -44,6 +41,11 @@ assign(karmaConfig, {
 			pattern: 'dist/**',
 			included: false,
 			watched: false
+		},
+		{
+			pattern: 'dist/**/*.js',
+			included: false,
+			watched: true
 		},
 		'test.js'
 	],
@@ -55,6 +57,6 @@ assign(karmaConfig, {
 	sauceLabs: sauceLabsConfig 
 });
 
-export default function (config) {
+module.exports = function (config) {
 	config.set(karmaConfig);
 };

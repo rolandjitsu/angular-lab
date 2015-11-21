@@ -1,4 +1,3 @@
-import assign from 'object-assign';
 import autoprefixer from 'gulp-autoprefixer';
 import bower from 'bower';
 import changed from 'gulp-changed';
@@ -36,13 +35,13 @@ const KARMA_CONFIG = {
 
 const ENGINE_IO_BASE_SOCKET_ADDRESS = 'ws://localhost:';
 
-const LAB_JS_BUILD_SERVER_PORT = 6174; // Kaprekar's constant
-const LAB_JS_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${LAB_JS_BUILD_SERVER_PORT}`;
+const JS_BUILD_SERVER_PORT = 6174; // Kaprekar's constant
+const JS_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${JS_BUILD_SERVER_PORT}`;
 
-const LAB_BUILD_SERVER_PORT = 1729; // Hardy–Ramanujan number
-const LAB_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${LAB_BUILD_SERVER_PORT}`;
+const BUILD_SERVER_PORT = 1729; // Hardy–Ramanujan number
+const BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${BUILD_SERVER_PORT}`;
 
-const LAB_WEB_SERVER_PORT = 3000;
+const WEB_SERVER_PORT = 3000;
 
 const PATHS = {
 	lib: [
@@ -91,7 +90,7 @@ gulp.task('clean', (done) => {
 
 // Dependecies
 
-gulp.task('bower/install', (done) => {
+gulp.task('bower/install', function (done) {
 	bower
 		.commands
 		.install(null, { save: true }, { interactive: false })
@@ -101,10 +100,10 @@ gulp.task('bower/install', (done) => {
 		});
 });
 
-gulp.task('tsd/install', () => {
-	let config = './tsd.json';
-	let api = tsd.getAPI(config);
-	return api.readConfig(config, true).then(() => {
+gulp.task('tsd/install', function () {
+	const TSD_CONFIG = './tsd.json';
+	let api = tsd.getAPI(TSD_CONFIG);
+	return api.readConfig(TSD_CONFIG, true).then(() => {
 		let opts = tsd.Options.fromJSON(); // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
 		let query = new tsd.Query();
 		opts.saveBundle = true;
@@ -118,11 +117,10 @@ gulp.task('tsd/install', () => {
 		return api.select(query, opts).then((selection) => {
 			return api.install(selection, opts);
 		});
-		return api.reinstall(opts);
 	});
 });
 
-gulp.task('deps', ['bower/install', 'tsd/install'], () => {
+gulp.task('deps', ['bower/install', 'tsd/install'], function () {
 	const LIBS_PATH = `${PATHS.dist}/lib`;
 	return gulp
 		.src(PATHS.lib)
@@ -138,22 +136,20 @@ gulp.task('deps', ['bower/install', 'tsd/install'], () => {
 // Build
 
 let jsBuildServerSocket;
-gulp.task('build/js', (done) => {
+gulp.task('build/js', function (done) {
 	if (jsBuildServerSocket) {
 		let stream = buildJS();
 		stream.on('end', () => {
-			jsBuildServerSocket.send('build/js:done');
 			done();
 		});
 	}
 	else {
-		isEngineIOServerRunning(LAB_JS_BUILD_SERVER_PORT).then(
+		isEngineIOServerRunning(JS_BUILD_SERVER_PORT).then(
 			() => {
-				jsBuildServerSocket = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
+				jsBuildServerSocket = engineIoClient(JS_BUILD_SERVER_ADDRESS);
 				jsBuildServerSocket.on('open', () => {
 					let stream = buildJS();
 					stream.on('end', () => {
-						jsBuildServerSocket.send('build/js:done');
 						done();
 					});
 				});
@@ -168,7 +164,7 @@ gulp.task('build/js', (done) => {
 	}
 });
 
-gulp.task('serve/html', () => {
+gulp.task('serve/html', function () {
 	return gulp
 		.src(PATHS.src.html)
 		.pipe(changed(PATHS.dist))
@@ -176,7 +172,7 @@ gulp.task('serve/html', () => {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('build/css', () => {
+gulp.task('build/css', function () {
 	let SASS_CONFIG = {
 		includePaths: [
 			`${PATHS.src.root}/app`
@@ -198,7 +194,7 @@ gulp.task('build/css', () => {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('serve/static', () => {
+gulp.task('serve/static', function () {
 	return gulp
 		.src(PATHS.src.static)
 		.pipe(changed(PATHS.dist))
@@ -206,7 +202,7 @@ gulp.task('serve/static', () => {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('build', (done) => {
+gulp.task('build', function (done) {
 	runSequence(
 		'deps',
 		[
@@ -220,15 +216,18 @@ gulp.task('build', (done) => {
 });
 
 // Build if lab build server is not running
-gulp.task('build:!ilbsr', (done) => {
-	isEngineIOServerRunning(LAB_BUILD_SERVER_PORT).then(() => { done(); }, () => {
-		runSequence('build', done);
-	});
+gulp.task('build:!ilbsr', function (done) {
+	isEngineIOServerRunning(BUILD_SERVER_PORT).then(
+		() => done(),
+		() => {
+			runSequence('build', done);
+		}
+	);
 }),
 
 
 // Code integrity
-gulp.task('lint', () => { // https://github.com/palantir/tslint#supported-rules
+gulp.task('lint', function () { // https://github.com/palantir/tslint#supported-rules
 	return gulp
 		.src(PATHS.src.ts)
 		.pipe(plumber())
@@ -242,105 +241,76 @@ gulp.task('lint', () => { // https://github.com/palantir/tslint#supported-rules
 
 // Tests
 
-gulp.task('test/unit:ci', (done) => {
-	let browserConf = getBrowsersConfigFromCLI();
-	let config = assign({}, KARMA_CONFIG, {
+gulp.task('test/unit:ci', function (done) {
+	const BROWSER_CONF = getBrowsersConfigFromCLI();
+	const CONFIG = Object.assign({}, KARMA_CONFIG, {
+		browsers: BROWSER_CONF.browsers,
 		singleRun: true,
 		reporters: [
 			'dots'
-		],
-		browsers: browserConf.browsers
+		]
 	});
-	let server = new karma.Server(config, (err) => {
+	createKarmaServer(CONFIG, (err) => {
 		done();
 		process.exit(err ? 1 : 0);
 	});
-	server.start();
 });
 
-gulp.task('test/unit:single', ['build:!ilbsr'], (done) => { // Run unit tests once in local env
-	let config = assign({}, KARMA_CONFIG, {
+gulp.task('test/unit:single', ['build:!ilbsr'], function (done) { // Run unit tests once in local env
+	const CONFIG = Object.assign({}, KARMA_CONFIG, {
 		singleRun: true
 	});
-	let server = new karma.Server(config, () => {
+	createKarmaServer(CONFIG, () => {
 		done();
 	});
-	server.start();
 });
 
-gulp.task('test/unit:ci/sauce', (done) => {
-	let config = assign({}, KARMA_CONFIG, {
+gulp.task('test/unit:ci/sauce', function (done) {
+	const CONFIG = Object.assign({}, KARMA_CONFIG, {
+		browsers: SAUCE_ALIASES.CI,
 		singleRun: true,
 		browserNoActivityTimeout: 240000,
 		captureTimeout: 120000,
 		reporters: [
 			'dots',
 			'saucelabs'
-		],
-		browsers: SAUCE_ALIASES.CI
+		]
 	});
-	let server = new karma.Server(config, (err) => {
+	createKarmaServer(CONFIG, (err) => {
 		done();
 		process.exit(err ? 1 : 0);
 	});
-	server.start();
 });
 
-gulp.task('test/unit:sauce', ['build:!ilbsr'], (done) => {
-	let browserConf = getBrowsersConfigFromCLI();
-	let config = assign({}, KARMA_CONFIG, {
+gulp.task('test/unit:sauce', ['build:!ilbsr'], function (done) {
+	const BROWSER_CONF = getBrowsersConfigFromCLI();
+	const CONFIG = Object.assign({}, KARMA_CONFIG, {
+		browsers: BROWSER_CONF.browsers,
 		singleRun: true,
 		browserNoActivityTimeout: 240000,
 		captureTimeout: 120000,
 		reporters: [
 			'dots'
-		],
-		browsers: browserConf.browsers
+		]
 	});
-	if (!browserConf.isSauce) {
+	if (!BROWSER_CONF.isSauce) {
 		gutil.log(gutil.colors.red('There were no Saucelabs browsers provided, add them with the --browsers option'));
 		done();
 		process.exit(1);
 	} else {
-		let server = new karma.Server(config, (err) => {
+		createKarmaServer(CONFIG, (err) => {
 			done();
 			process.exit(err ? 1 : 0);
 		});
-		server.start();
 	}
 });
 
-gulp.task('karma/server', () => {
-	let server = new karma.Server(KARMA_CONFIG);
-	server.start();
+gulp.task('test/unit', ['build:!ilbsr'], function (done) {
+	createKarmaServer(KARMA_CONFIG);
+	createJsBuildServer();
 });
 
-gulp.task('karma/run', (done) => {
-	// run the run command in a new process to avoid duplicate logging by both server and runner from a single process
-	runKarma('karma.config.js', done);
-});
-
-gulp.task('test/unit', ['build:!ilbsr'], (done) => {
-	runSequence(
-		'karma/server',
-		() => {
-			// Create a build server to avoid parallel js builds when running unit tests in another process
-			// If the js build server is shut down from some other process (the same process that started it), restart it here
-			createJsBuildServer(() => {
-				createJsBuildServer();
-			}).then(() => {
-				let client = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
-				client.on('open', () => {
-					client.on('message', (msg) => {
-						if (msg === 'build/js:done') runSequence('karma/run');
-					});
-				});
-			});
-		}
-	);
-});
-
-gulp.task('test', (done) => {
+gulp.task('test', function (done) {
 	runSequence(
 		'lint',
 		'test/unit:single',
@@ -351,11 +321,11 @@ gulp.task('test', (done) => {
 
 // Deployments
 
-gulp.task('deploy/hosting', ['build:!ilbsr'], () => {
+gulp.task('deploy/hosting', ['build:!ilbsr'], function () {
 	return runFirebaseCommand('deploy:hosting');
 });
 
-gulp.task('deploy/hosting:ci', (done) => {
+gulp.task('deploy/hosting:ci', function (done) {
 	runFirebaseCommand('deploy:hosting').then(
 		() => done(),
 		() => {
@@ -365,20 +335,20 @@ gulp.task('deploy/hosting:ci', (done) => {
 	);
 });
 
-gulp.task('deploy', (done) => {
+gulp.task('deploy', function (done) {
 	runSequence('deploy/hosting', done);
 });
 
 
 // Web server
-gulp.task('server', (done) => {
+gulp.task('server', function (done) {
 	createWebServer();
 });
 
 
 // Lab
-gulp.task('start', (done) => {
-	isEngineIOServerRunning(LAB_BUILD_SERVER_PORT).then(
+gulp.task('start', function (done) {
+	isEngineIOServerRunning(BUILD_SERVER_PORT).then(
 		() => {
 			gutil.log(gutil.colors.red('A lab build server instance has already been started in another process, cannot start another one'));
 			done();
@@ -386,22 +356,18 @@ gulp.task('start', (done) => {
 		},
 		() => {
 			runSequence('build', () => {
-				// Create a build server to avoid parallel js builds when running unit tests in another process
-				// If the js build server is shut down from some other process (the same process that started it), restart it here
-				createJsBuildServer(() => {
-					createJsBuildServer();
-				});
+				createJsBuildServer();
 				createBuildServer();
 				createWebServer();
 				gutil.log(gutil.colors.green('File watch processes for HTML, CSS & static assets started'));
+				watch(PATHS.src.static, () => {
+					runSequence('serve/static');
+				});
 				watch(PATHS.src.html, () => {
 					runSequence('serve/html');
 				});
 				watch(PATHS.src.scss, () => {
 					runSequence('build/css');
-				});
-				watch(PATHS.src.static, () => {
-					runSequence('serve/static');
 				});
 			});
 		}
@@ -416,14 +382,19 @@ gulp.task('default', [
 
 
 // Catch SIGINT and call process.exit() explicitly on CTRL+C so that we actually get the exit event
-process.on('SIGINT', () => {
+process.on('SIGINT', function () {
 	process.exit();
 });
 
 
+function createKarmaServer (config = {}, callback = noop) {
+	let server = new karma.Server(config, callback);
+	server.start();
+}
+
 function createWebServer () {
 	connect.server({
-		port: LAB_WEB_SERVER_PORT,
+		port: WEB_SERVER_PORT,
 		root: PATHS.dist
 	});
 }
@@ -456,16 +427,6 @@ function runFirebaseCommand (cmd) {
 		proc.stderr.on('data', (data) => {
 			console.log(data);
 		});
-	});
-}
-
-function runKarma (configFile, done) {
-	let cmd = process.platform === 'win32' ? 'node_modules\\.bin\\karma run ' : 'node node_modules/.bin/karma run ';
-	cmd += configFile;
-	exec(cmd, (e, stdout) => {
-		// ignore errors, we don't want to fail the build in the interactive (non-ci) mode
-		// karma server will print all test failures
-		done();
 	});
 }
 
@@ -512,33 +473,35 @@ function buildJS () {
 }
 
 function createBuildServer () {
-	let server = createEngineIOServer(LAB_BUILD_SERVER_PORT, () => {
-		gutil.log(gutil.colors.green(`Lab build server started ${LAB_BUILD_SERVER_ADDRESS}`));
+	let server = createEngineIOServer(BUILD_SERVER_PORT, () => {
+		gutil.log(gutil.colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
 	});
 	process.on('exit', () => {
 		server.close();
 	});
 }
 
-function createJsBuildServer (onShutdown) {
+// Create a build server to avoid parallel js builds when running unit tests in another process
+// If the js build server is shut down from some other process (the same process that started it), restart it here
+function createJsBuildServer () {
 	return new Promise((resolve, reject) => {
-		isEngineIOServerRunning(LAB_JS_BUILD_SERVER_PORT).then(
+		isEngineIOServerRunning(JS_BUILD_SERVER_PORT).then(
 			() => {
-				let client = engineIoClient(LAB_JS_BUILD_SERVER_ADDRESS);
+				let client = engineIoClient(JS_BUILD_SERVER_ADDRESS);
 				client.on('open', () => {
 					client.on('close', (msg) => {
-						if (typeof onShutdown === 'function') onShutdown();
+						createJsBuildServer();
 					});
 				});
-				gutil.log(gutil.colors.yellow(`JS build server already running on ${LAB_JS_BUILD_SERVER_ADDRESS}`));
+				gutil.log(gutil.colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
 				resolve();
 			},
 			() => {
 				let watcher = watch(PATHS.src.ts, () => {
 					runSequence('build/js');
 				});
-				let server = createEngineIOServer(LAB_JS_BUILD_SERVER_PORT, () => {
-					gutil.log(gutil.colors.green(`JS build server started ${LAB_JS_BUILD_SERVER_ADDRESS}`));
+				let server = createEngineIOServer(JS_BUILD_SERVER_PORT, () => {
+					gutil.log(gutil.colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
 					resolve();
 				});
 				server.on('connection', (socket) => {
@@ -588,4 +551,4 @@ function isEngineIOServerRunning (port, timeout) {
 	});
 }
 
-function noop () {}
+function noop (...args) {}

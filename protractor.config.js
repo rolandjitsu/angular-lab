@@ -70,7 +70,7 @@ let config = {
 		if (!caps) throw new Error(`Not configured browser name: ${browserName}`);
 		return caps;
 	}),
-	framework: 'jasmine2',
+	framework: 'jasmine',
 	jasmineNodeOpts: {
 		showColors: true,
 		defaultTimeoutInterval: 60000
