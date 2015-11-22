@@ -176,7 +176,8 @@ gulp.task('serve/html', function () {
 		.src(PATHS.src.html)
 		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(connect.reload());
 });
 
 gulp.task('build/css', function () {
@@ -198,7 +199,8 @@ gulp.task('build/css', function () {
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(connect.reload());
 });
 
 gulp.task('serve/static', function () {
@@ -206,7 +208,8 @@ gulp.task('serve/static', function () {
 		.src(PATHS.src.static)
 		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(connect.reload());
 });
 
 gulp.task('build', function (done) {
@@ -371,7 +374,8 @@ gulp.task('start', function (done) {
 				new BuildServer();
 				connect.server({
 					port: WEB_SERVER_PORT,
-					root: PATHS.dist
+					root: PATHS.dist,
+					livereload: true
 				});
 				log(colors.green('File watch processes for HTML, CSS & static assets are started'));
 				watch(PATHS.src.static, () => {
@@ -382,6 +386,10 @@ gulp.task('start', function (done) {
 				});
 				watch(PATHS.src.scss, () => {
 					runSequence('build/css');
+				});
+				// When process exits kill connect server
+				process.on('exit', () => {
+					connect.serverClose();
 				});
 			});
 		}
@@ -419,7 +427,8 @@ function buildJS () {
 		.js
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(connect.reload());
 }
 
 // https://github.com/firebase/firebase-tools#commands
