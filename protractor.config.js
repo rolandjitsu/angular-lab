@@ -1,6 +1,6 @@
-import yargs from 'yargs';
+var yargs = require('yargs');
 
-let argv = yargs
+var argv = yargs
 	.usage('NG Lab E2E test options.')
 	.options({
 		'browsers': {
@@ -12,16 +12,16 @@ let argv = yargs
 	.wrap(40)
 	.argv
 
-let browsers = argv['browsers'].split(',');
+var BROWSERS = argv['browsers'].split(',');
 
-const CHROME_OPTIONS = {
+var CHROME_OPTIONS = {
 	'args': ['--js-flags=--expose-gc'],
 	'perfLoggingPrefs': {
 		'traceCategories': 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
 	}
 };
 
-const BROWSER_CAPS = {
+var BROWSER_CAPS = {
 	ChromeDesktop: {
 		browserName: 'chrome',
 		chromeOptions: CHROME_OPTIONS,
@@ -53,7 +53,7 @@ const BROWSER_CAPS = {
 	}
 };
 
-let config = {
+module.exports.config = {
 	baseUrl: 'http://localhost:3000/',
 	// restartBrowserBetweenTests: true, // add it back once https://github.com/angular/protractor/issues/1983 is fixed
 	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
@@ -61,12 +61,12 @@ let config = {
 	// Special option for Angular2, to test against all Angular2 applications on the page.
 	rootElement: 'app',
 	specs: [
-		'dist/**/*.e2e.js'
+		'dist/test/**/*.spec.js'
 	],
 	exclude: [],
-	multiCapabilities: browsers.map((browserName) => {
-		let caps = BROWSER_CAPS[browserName];
-		console.log('Testing against', browserName);
+	multiCapabilities: BROWSERS.map((browserName) => {
+		var caps = BROWSER_CAPS[browserName];
+		console.log(`Testing against: ${browserName}`);
 		if (!caps) throw new Error(`Not configured browser name: ${browserName}`);
 		return caps;
 	}),
@@ -74,7 +74,14 @@ let config = {
 	jasmineNodeOpts: {
 		showColors: true,
 		defaultTimeoutInterval: 60000
-	}
+	},
+	plugins: [
+		{ package: 'protractor-console-plugin' },
+		{
+			package: 'protractor-accessibility-plugin',
+			chromeA11YDevTools: {
+				treatWarningsAsFailures: true
+			}
+		}
+	]
 };
-
-export { config };

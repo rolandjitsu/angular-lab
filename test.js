@@ -26,8 +26,8 @@ System.config({
 		}
 	},
 	paths: {
-		'common/*': '/base/dist/common/*',
-		'app/*': '/base/dist/app/*'
+		'common/*': '/base/dist/app/common/*',
+		'app/*': '/base/dist/app/app/*'
 	}
 });
 

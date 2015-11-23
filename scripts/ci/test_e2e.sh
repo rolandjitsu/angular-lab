@@ -1,17 +1,23 @@
 #!/bin/bash
 set -e
 
+NPM_BIN="./node_modules/.bin"
+
 function killServer () {
 	kill $serverPid
 }
 
-./node_modules/.bin/webdriver-manager update # update selenium webdriver
-./node_modules/.bin/gulp build # bundle the app
-./node_modules/.bin/gulp server & serverPid=$! # start the web server required by protractor and save PID so that on exit gets closed
+# Start a web server required by protractor to run the tests and save the process PID so that on exit we can kill it and stop the server
+${NPM_BIN}/http-server ./dist/app -p 3000 --silent & serverPid=$!
+echo "Server running at http://localhost:3000"
+# Update selenium webdriver
+${NPM_BIN}/webdriver-manager update
 
+# On EXIT kill the server PID
 trap killServer EXIT
 
-sleep 5 # wait for the web server to come up
+# Wait for the web server to come up
+sleep 5
 
 # Let protractor use the default browser unless one is specified
 OPTIONS="";
@@ -19,4 +25,6 @@ if [[ -n "${E2E_BROWSERS}" ]]; then
 	OPTIONS="--browsers=${E2E_BROWSERS}";
 fi
 
-./node_modules/.bin/protractor protractor.config.js ${OPTIONS}
+${NPM_BIN}/protractor \
+	protractor.config.js \
+	${OPTIONS}

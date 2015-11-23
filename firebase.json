@@ -1,11 +1,14 @@
 {
 	"firebase": "ng2-lab",
-	"public": "dist",
+	"public": "dist/app",
 	"ignore": [
 		"bower_components",
+		"media",
 		"node_modules",
 		"scripts",
 		"src",
+		"test",
+		"tsd_typings",
 		"**/.*",
 		"bower.json",
 		"firebase.json",
