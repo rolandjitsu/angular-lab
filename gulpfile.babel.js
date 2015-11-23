@@ -198,12 +198,14 @@ gulp.task('serve/static', function assets () {
 		.pipe(connect.reload());
 });
 
-gulp.task('build', gulp.parallel(
+gulp.task('build', gulp.series(
 	'deps',
-	'serve/static',
-	'build/js',
-	'serve/html',
-	'build/css'
+	gulp.parallel(
+		'serve/static',
+		'build/js',
+		'serve/html',
+		'build/css'
+	)
 ));
 
 // Build if lab build server is not running
