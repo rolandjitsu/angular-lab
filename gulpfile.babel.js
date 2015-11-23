@@ -141,15 +141,25 @@ gulp.task('deps', gulp.series(
 
 gulp.task('build/js:tests', function tests () {
 	return buildJs(
-		[].concat(PATHS.typings, PATHS.test.ts),
+		[
+			'node_modules/angular2/typings/selenium-webdriver/selenium-webdriver.d.ts',
+			'node_modules/angular2/typings/angular-protractor/angular-protractor.d.ts',
+			'node_modules/angular2/typings/jasmine/jasmine.d.ts'
+		].concat(PATHS.typings, PATHS.test.ts),
 		PATHS.dist.test,
 		PATHS.test.root
 	);
 });
 
 gulp.task('build/js:app', function app () {
-	return buildJs([].concat(PATHS.typings, PATHS.src.ts), PATHS.dist.app, PATHS.src.root)
-		.pipe(connect.reload());
+	let stream = buildJs(
+		[].concat(PATHS.typings, PATHS.src.ts),
+		PATHS.dist.app,
+		PATHS.src.root
+	);
+	return stream.pipe(
+		connect.reload()
+	);
 });
 
 gulp.task('build/js', gulp.parallel(
