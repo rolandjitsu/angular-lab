@@ -14,9 +14,6 @@ import { Icon } from '../../services';
 	styleUrls: [
 		'app/components/glyph/glyph.css'
 	],
-	directives: [
-		Glyph
-	],
 	inputs: [
 		'src'
 	]
