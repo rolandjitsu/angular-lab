@@ -343,7 +343,7 @@ gulp.task(function deploy() {
  * Build and watch
  */
 
-gulp.task(function start(done) {
+gulp.task(function serve(done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => {
 			log(colors.red('A lab build server instance has already been started in another process, cannot start another one'));
@@ -377,7 +377,7 @@ gulp.task(function start(done) {
  * Default task
  */
 
-gulp.task('default', gulp.series('start'));
+gulp.task('default', gulp.series('serve'));
 
 
 // Catch SIGINT and call process.exit() explicitly on CTRL+C so that we actually get the exit event
