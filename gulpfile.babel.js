@@ -5,6 +5,7 @@ import connect from 'gulp-connect';
 import del from 'del';
 import {exec} from 'child_process';
 import gulp from 'gulp';
+import gts from 'gulp-typescript';
 import {log, colors} from 'gulp-util';
 import karma from 'karma';
 import minimist from 'minimist';
@@ -15,7 +16,7 @@ import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import tslint from 'gulp-tslint';
 import tsd from 'tsd';
-import ts from 'gulp-typescript';
+import typescript from 'typescript';
 import {Server} from 'ws';
 import WebSocket from 'ws';
 
@@ -392,14 +393,16 @@ function createKarmaServer(config = {}, callback = noop) {
 }
 
 // Returns a stream
-function buildJs(src, dest, base = './') {
-	const TS_PROJECT = ts.createProject('tsconfig.json');
+function buildJs(src, dest, base = './', options = {}) {
+	const TS_PROJECT = gts.createProject('tsconfig.json', Object.assign(options, {
+		typescript: typescript
+	}));
 	return gulp
 		.src(src, {base: base}) // instead of gulp.src(...), project.src() can be used
 		.pipe(changed(dest, {extension: '.js'}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(ts(TS_PROJECT))
+		.pipe(gts(TS_PROJECT))
 		.js
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
