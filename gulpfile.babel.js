@@ -326,23 +326,17 @@ gulp.task('test', gulp.series(
  * Deployments
  */
 
-gulp.task('deploy/hosting', gulp.series('build:!ibsr', function deploy () {
+gulp.task('deploy/hosting', function () {
 	return runFirebaseCommand('deploy:hosting');
-}));
-
-gulp.task('deploy/hosting:ci', function (done) {
-	runFirebaseCommand('deploy:hosting').then(
-		() => done(),
-		() => {
-			done();
-			process.exit(1);
-		}
-	);
 });
 
-gulp.task('deploy', gulp.series(
-	'deploy/hosting'
-));
+gulp.task('deploy/rules', function () {
+	return runFirebaseCommand('deploy:rules');
+});
+
+gulp.task(function deploy() {
+	return runFirebaseCommand('deploy');
+});
 
 
 /**
