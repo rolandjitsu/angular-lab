@@ -18,12 +18,8 @@ __karma__.loaded = function () {};
 System.warnings = true;
 System.config({
 	packages: {
-		common: {
-			defaultExtension: 'js'
-		},
-		app: {
-			defaultExtension: 'js'
-		}
+		common: {defaultExtension: 'js'},
+		app: {defaultExtension: 'js'}
 	},
 	paths: {
 		'common/*': '/base/dist/app/common/*',
@@ -60,6 +56,6 @@ System
 	);
 
 
-function specs (path) {
+function specs(path) {
 	return /.spec\.js$/.test(path);
 }

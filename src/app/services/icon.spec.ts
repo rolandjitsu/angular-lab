@@ -20,12 +20,12 @@ import {
 	Http
 } from 'angular2/http';
 
-import { Icon } from './icon';
+import {Icon} from './icon';
 
 const SVG_GLYPH_HTML = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/></svg>';
 const FAKE_URL = 'glyph.svg';
 
-export function main () {
+export function main() {
 	describe('Icon', () => {
 		let injector: Injector;
 		let store: Icon;
@@ -58,7 +58,7 @@ export function main () {
 			backend = injector.get(MockBackend);
 			store = injector.get(Icon);
 			response = new Response(
-				new ResponseOptions({ body: SVG_GLYPH_HTML })
+				new ResponseOptions({body: SVG_GLYPH_HTML})
 			);
 			glyph = createGlyphNode();
 		});
@@ -98,7 +98,7 @@ export function main () {
 	});
 }
 
-function createGlyphNode (): Node {
+function createGlyphNode(): Node {
 	let container = document.createElement('div');
 	container.innerHTML = SVG_GLYPH_HTML;
 	return container.firstChild.cloneNode(true);

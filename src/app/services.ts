@@ -1,11 +1,11 @@
-import { provide } from 'angular2/core';
-import { Http } from 'angular2/http';
+import {provide} from 'angular2/core';
+import {Http} from 'angular2/http';
 
-import { AuthClient } from './services/auth';
-import { Chores } from './services/chores';
-import { FIREBASE_APP_LINK, FIREBASE_CHORES_PATH } from './services/firebase';
-import { Icon } from './services/icon';
-import { User } from './services/user';
+import {AuthClient} from './services/auth';
+import {Chores} from './services/chores';
+import {FIREBASE_APP_LINK, FIREBASE_CHORES_PATH} from './services/firebase';
+import {Icon} from './services/icon';
+import {User} from './services/user';
 
 export * from './services/auth';
 export * from './services/chores';

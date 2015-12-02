@@ -12,9 +12,9 @@ import {
 	NgControl
 } from 'angular2/core';
 
-import { isPresent } from '../../../common/lang';
-import { KEY_CODES } from '../../../common/key_codes';
-import { Glyph } from '../glyph/glyph';
+import {isPresent} from '../../../common/lang';
+import {KEY_CODES} from '../../../common/key_codes';
+import {Glyph} from '../glyph/glyph';
 
 @Component({
 	selector: 'checkbox[ng-control], checkbox[ng-form-control], checkbox[ng-model]',

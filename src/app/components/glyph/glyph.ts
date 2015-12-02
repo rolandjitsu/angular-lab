@@ -5,7 +5,7 @@ import {
 	OnDestroy
 } from 'angular2/core';
 
-import { Icon } from '../../services';
+import {Icon} from '../../services';
 
 @Component({
 	selector: 'glyph',

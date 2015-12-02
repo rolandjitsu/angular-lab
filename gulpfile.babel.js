@@ -1,11 +1,11 @@
 import autoprefixer from 'gulp-autoprefixer';
-import { commands as bower } from 'bower';
+import {commands as bower} from 'bower';
 import changed from 'gulp-changed';
 import connect from 'gulp-connect';
 import del from 'del';
-import { exec } from 'child_process';
+import {exec} from 'child_process';
 import gulp from 'gulp';
-import { log, colors } from 'gulp-util';
+import {log, colors} from 'gulp-util';
 import karma from 'karma';
 import minimist from 'minimist';
 import plumber from 'gulp-plumber';
@@ -16,10 +16,10 @@ import sourcemaps from 'gulp-sourcemaps';
 import tslint from 'gulp-tslint';
 import tsd from 'tsd';
 import ts from 'gulp-typescript';
-import { Server } from 'ws';
+import {Server} from 'ws';
 import WebSocket from 'ws';
 
-import { SAUCE_LAUNCHERS, SAUCE_ALIASES } from './sauce.config';
+import {SAUCE_LAUNCHERS, SAUCE_ALIASES} from './sauce.config';
 
 
 const GULP_SIZE_DEFAULT_OPTS = {
@@ -86,7 +86,7 @@ const PATHS = {
  * Clean dist
  */
 
-gulp.task(function clean () {
+gulp.task(function clean() {
 	return del([PATHS.dist.root]);
 });
 
@@ -96,7 +96,7 @@ gulp.task(function clean () {
  */
 
 gulp.task('bower/install', function () {
-	return bower.install(null, { save: true }, { interactive: false });
+	return bower.install(null, {save: true}, {interactive: false});
 });
 
 gulp.task('tsd/install', function () {
@@ -121,7 +121,7 @@ gulp.task('tsd/install', function () {
 
 gulp.task('deps', gulp.series(
 	gulp.parallel('bower/install', 'tsd/install'),
-	function copy () {
+	function copy() {
 		const LIBS_PATH = `${PATHS.dist.app}/lib`;
 		return gulp
 			.src(PATHS.lib)
@@ -139,7 +139,7 @@ gulp.task('deps', gulp.series(
  * Build steps
  */
 
-gulp.task('build/js:tests', function tests () {
+gulp.task('build/js:tests', function () {
 	return buildJs(
 		[
 			'node_modules/angular2/typings/selenium-webdriver/selenium-webdriver.d.ts',
@@ -151,7 +151,7 @@ gulp.task('build/js:tests', function tests () {
 	);
 });
 
-gulp.task('build/js:app', function app () {
+gulp.task('build/js:app', function () {
 	let stream = buildJs(
 		[].concat(PATHS.typings, PATHS.src.ts),
 		PATHS.dist.app,
@@ -167,7 +167,7 @@ gulp.task('build/js', gulp.parallel(
 	'build/js:app'
 ));
 
-gulp.task('serve/html', function html () {
+gulp.task('serve/html', function () {
 	return gulp
 		.src(PATHS.src.html)
 		.pipe(changed(PATHS.dist.app))
@@ -176,7 +176,7 @@ gulp.task('serve/html', function html () {
 		.pipe(connect.reload());
 });
 
-gulp.task('build/css', function css () {
+gulp.task('build/css', function () {
 	let SASS_CONFIG = {
 		includePaths: [
 			`${PATHS.src.root}/app`
@@ -188,7 +188,7 @@ gulp.task('build/css', function css () {
 	};
 	return gulp
 		.src(PATHS.src.scss)
-		.pipe(changed(PATHS.dist.app, { extension: '.css' }))
+		.pipe(changed(PATHS.dist.app, {extension: '.css'}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass(SASS_CONFIG).on('error', sass.logError))
@@ -199,7 +199,7 @@ gulp.task('build/css', function css () {
 		.pipe(connect.reload());
 });
 
-gulp.task('serve/static', function assets () {
+gulp.task('serve/static', function () {
 	return gulp
 		.src(PATHS.src.static)
 		.pipe(changed(PATHS.dist.app))
@@ -219,7 +219,7 @@ gulp.task('build', gulp.series(
 ));
 
 // Build if lab build server is not running
-gulp.task('build:!ibsr', function build (done) {
+gulp.task('build:!ibsr', function (done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(() => done(), () => {
 		gulp.task('build')((error) => done(error));
 	});
@@ -230,7 +230,7 @@ gulp.task('build:!ibsr', function build (done) {
  * Code integrity
  */
 
-gulp.task('lint', function lint (done) { // https://github.com/palantir/tslint#supported-rules
+gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-rules
 	return gulp
 		.src([].concat(PATHS.test.ts, PATHS.src.ts))
 		.pipe(plumber())
@@ -262,7 +262,7 @@ gulp.task('test/unit:ci', function (done) {
 	});
 });
 
-gulp.task('test/unit:single', gulp.series('build:!ibsr', function run (done) { // Run unit tests once in local env
+gulp.task('test/unit:single', gulp.series('build:!ibsr', function run(done) { // Run unit tests once in local env
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
 		singleRun: true
 	});
@@ -288,7 +288,7 @@ gulp.task('test/unit:ci/sauce', function (done) {
 	});
 });
 
-gulp.task('test/unit:sauce', gulp.series('build:!ibsr', function run (done) {
+gulp.task('test/unit:sauce', gulp.series('build:!ibsr', function run(done) {
 	const BROWSER_CONF = getBrowsersConfigFromCLI();
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
 		browsers: BROWSER_CONF.browsers,
@@ -311,7 +311,7 @@ gulp.task('test/unit:sauce', gulp.series('build:!ibsr', function run (done) {
 	}
 }));
 
-gulp.task('test/unit', gulp.series('build:!ibsr', function run (done) {
+gulp.task('test/unit', gulp.series('build:!ibsr', function run(done) {
 	createKarmaServer(KARMA_CONFIG);
 	createJsBuildServer();
 }));
@@ -343,7 +343,7 @@ gulp.task(function deploy() {
  * Build and watch
  */
 
-gulp.task(function start (done) {
+gulp.task(function start(done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => {
 			log(colors.red('A lab build server instance has already been started in another process, cannot start another one'));
@@ -386,17 +386,17 @@ process.on('SIGINT', function () {
 });
 
 
-function createKarmaServer (config = {}, callback = noop) {
+function createKarmaServer(config = {}, callback = noop) {
 	let server = new karma.Server(config, callback);
 	server.start();
 }
 
 // Returns a stream
-function buildJs (src, dest, base = './') {
+function buildJs(src, dest, base = './') {
 	const TS_PROJECT = ts.createProject('tsconfig.json');
 	return gulp
-		.src(src, { base: base }) // instead of gulp.src(...), project.src() can be used
-		.pipe(changed(dest, { extension: '.js' }))
+		.src(src, {base: base}) // instead of gulp.src(...), project.src() can be used
+		.pipe(changed(dest, {extension: '.js'}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(ts(TS_PROJECT))
@@ -407,7 +407,7 @@ function buildJs (src, dest, base = './') {
 }
 
 // https://github.com/firebase/firebase-tools#commands
-function runFirebaseCommand (cmd) {
+function runFirebaseCommand(cmd) {
 	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
 	const argv = minimist(process.argv.slice(2));
 	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
@@ -437,7 +437,7 @@ function runFirebaseCommand (cmd) {
 	});
 }
 
-function getBrowsersConfigFromCLI () {
+function getBrowsersConfigFromCLI() {
 	let isSauce = false;
 	const args = minimist(process.argv.slice(2));
 	let rawInput = args.browsers ? args.browsers : 'CHROME_TRAVIS_CI';
@@ -466,8 +466,8 @@ function getBrowsersConfigFromCLI () {
 	}
 }
 
-function createBuildServer () {
-	let wss = new WebSocketServer({ port: BUILD_SERVER_PORT }, () => {
+function createBuildServer() {
+	let wss = new WebSocketServer({port: BUILD_SERVER_PORT}, () => {
 		log(colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
 	});
 	process.on('exit', () => {
@@ -477,7 +477,7 @@ function createBuildServer () {
 
 // Create a build server to avoid parallel js builds when running unit tests in another process
 // If the js build server is shut down from some other process (the same process that started it), restart it here
-function createJsBuildServer () {
+function createJsBuildServer() {
 	WebSocketServer.isRunning(JS_BUILD_SERVER_ADDRESS).then(
 		() => {
 			log(colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
@@ -488,7 +488,7 @@ function createJsBuildServer () {
 		},
 		() => {
 			let watcher = gulp.watch([].concat(PATHS.test.ts, PATHS.src.ts), gulp.series('build/js'));
-			let wss = new WebSocketServer({ port: JS_BUILD_SERVER_PORT }, () => {
+			let wss = new WebSocketServer({port: JS_BUILD_SERVER_PORT}, () => {
 				log(colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
 			});
 			process.on('exit', () => {
@@ -513,4 +513,4 @@ class WebSocketServer extends Server {
 	}
 }
 
-function noop (...args) {}
+function noop(...args) {}

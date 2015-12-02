@@ -4,10 +4,10 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/core';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 
-import { AuthClient, FirebaseAuthProvider } from '../../services';
-import { Glyph } from '../glyph/glyph';
+import {AuthClient, FirebaseAuthProvider} from '../../services';
+import {Glyph} from '../glyph/glyph';
 
 @Component({
 	selector: 'login',

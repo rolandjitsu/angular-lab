@@ -5,9 +5,9 @@ import {
 	beforeEach
 } from 'angular2/testing';
 
-import { LowerCasePipe } from './lowercase';
+import {LowerCasePipe} from './lowercase';
 
-export function main () {
+export function main() {
 	describe('LowerCasePipe', () => {
 		let pipe;
 		let str;
@@ -30,7 +30,9 @@ export function main () {
 				let val2 = pipe.transform('WAT');
 				expect(val2).toEqual('wat');
 			});
-			it('should not support other objects', () => { expect(() => pipe.transform(new Object())).toThrowError(); });
+			it('should not support other objects', () => {
+				expect(() => pipe.transform(new Object())).toThrowError();
+			});
 		});
 	});
 }

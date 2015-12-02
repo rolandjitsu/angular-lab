@@ -4,9 +4,9 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/core';
-import { ROUTER_DIRECTIVES } from 'angular2/router';
+import {ROUTER_DIRECTIVES} from 'angular2/router';
 
-import { AuthClient } from '../../services';
+import {AuthClient} from '../../services';
 
 @Component({
 	selector: 'register',

@@ -76,7 +76,7 @@ module.exports.config = {
 		defaultTimeoutInterval: 60000
 	},
 	plugins: [
-		{ package: 'protractor-console-plugin' },
+		{package: 'protractor-console-plugin'},
 		{
 			package: 'protractor-accessibility-plugin',
 			chromeA11YDevTools: {

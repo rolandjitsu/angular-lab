@@ -7,9 +7,9 @@ import {
 	Input
 } from 'angular2/core';
 
-import { Chores, Chore } from '../../services';
-import { Glyph } from '../glyph/glyph';
-import { Checkbox } from '../checkbox/checkbox';
+import {Chores, Chore} from '../../services';
+import {Glyph} from '../glyph/glyph';
+import {Checkbox} from '../checkbox/checkbox';
 
 @Component({
 	// moduleId: module.id, // CommonJS standard

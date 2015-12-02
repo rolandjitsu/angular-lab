@@ -1,4 +1,4 @@
-import { FirebaseArray, FirebaseArrayValue } from '../../common/firebase_array';
+import {FirebaseArray, FirebaseArrayValue} from '../../common/firebase_array';
 
 export interface Chore extends FirebaseArrayValue {
 	createdAt: number | string;

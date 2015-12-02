@@ -3,16 +3,16 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/core';
-import { ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction } from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction} from 'angular2/router';
 
-import { AuthClient } from '../../services';
-import { LowerCasePipe } from '../../pipes';
-import { Auth } from '../auth/auth';
-import { Login } from '../login/login';
-import { ResetPassword } from '../reset_password/reset_password';
-import { Register } from '../register/register';
-import { Account } from '../account/account';
-import { Todos } from '../todos/todos';
+import {AuthClient} from '../../services';
+import {LowerCasePipe} from '../../pipes';
+import {Auth} from '../auth/auth';
+import {Login} from '../login/login';
+import {ResetPassword} from '../reset_password/reset_password';
+import {Register} from '../register/register';
+import {Account} from '../account/account';
+import {Todos} from '../todos/todos';
 
 @Component({
 	selector: 'app',

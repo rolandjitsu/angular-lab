@@ -7,8 +7,8 @@ import {
 	ViewEncapsulation
 } from 'angular2/core';
 
-import { Chores } from '../../services';
-import { Glyph } from '../glyph/glyph';
+import {Chores} from '../../services';
+import {Glyph} from '../glyph/glyph';
 
 @Component({
 	selector: 'todos-count',

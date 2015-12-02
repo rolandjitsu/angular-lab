@@ -4,9 +4,9 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/core';
-import { ROUTER_DIRECTIVES, CanActivate } from 'angular2/router';
+import {ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
 
-import { AuthClient, isUserAuthenticated } from '../../services';
+import {AuthClient, isUserAuthenticated} from '../../services';
 
 @Component({
 	selector: 'account',

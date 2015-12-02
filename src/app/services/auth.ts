@@ -1,6 +1,6 @@
-import { Observable } from 'angular2/core';
+import {Observable} from 'angular2/core';
 
-import { FIREBASE_APP_LINK } from './firebase';
+import {FIREBASE_APP_LINK} from './firebase';
 
 const FIREBASE_AUTH_PROVIDER = [
 	'password',
@@ -18,19 +18,19 @@ export enum FirebaseAuthProvider {
 	Twitter
 }
 
-export function isUserAuthenticated (): boolean {
+export function isUserAuthenticated(): boolean {
 	let firebaseRef = new Firebase(`${FIREBASE_APP_LINK}`);
 	let session = firebaseRef.getAuth();
 	return !!session;
 }
 
-function getAuthDefaultOpts (remember?: boolean): any {
+function getAuthDefaultOpts(remember?: boolean): any {
 	return {
 		remember: typeof remember === 'boolean' && !remember ? 'sessionOnly' : 'default'
 	};
 }
 
-function addScope (target: string[], scope: string): string[] {
+function addScope(target: string[], scope: string): string[] {
 	if (!Array.isArray(target)) target = [scope];
 	else if (!target.length || !target.includes(scope)) target = target.concat([scope]);
 	return target;

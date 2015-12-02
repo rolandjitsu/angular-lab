@@ -3,11 +3,11 @@ import {
 	ViewEncapsulation,
 	Component
 } from 'angular2/core';
-import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router';
+import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
 
-import { Login } from '../login/login';
-import { ResetPassword } from '../reset_password/reset_password';
-import { Register } from '../register/register';
+import {Login} from '../login/login';
+import {ResetPassword} from '../reset_password/reset_password';
+import {Register} from '../register/register';
 
 @Component({
 	selector: 'auth',

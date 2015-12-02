@@ -1,1 +1,1 @@
-export { LowerCasePipe } from './pipes/lowercase';
+export {LowerCasePipe} from './pipes/lowercase';

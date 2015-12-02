@@ -7,8 +7,8 @@ import {
 	ViewEncapsulation
 } from 'angular2/core';
 
-import { Chores } from '../../services';
-import { TodoListItem } from '../todo_list_item/todo_list_item';
+import {Chores} from '../../services';
+import {TodoListItem} from '../todo_list_item/todo_list_item';
 
 @Component({
 	selector: 'todo-list',

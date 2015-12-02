@@ -28,8 +28,8 @@ import {
 	Http
 } from 'angular2/http';
 
-import { Icon } from '../../services';
-import { Glyph } from './glyph';
+import {Icon} from '../../services';
+import {Glyph} from './glyph';
 
 const GLYPH_RESPONSE_BODY = `
 	<?xml version="1.0" encoding="UTF-8"?>
@@ -37,7 +37,7 @@ const GLYPH_RESPONSE_BODY = `
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
 `;
 
-export function main () {
+export function main() {
 	describe('<glyph>', () => {
 		let backend: MockBackend;
 		let response;
@@ -67,7 +67,7 @@ export function main () {
 		beforeEach(inject([MockBackend], (mockBackend) => {
 			backend = mockBackend;
 			response = new Response(
-				new ResponseOptions({ body: GLYPH_RESPONSE_BODY })
+				new ResponseOptions({body: GLYPH_RESPONSE_BODY})
 			);
 		}));
 

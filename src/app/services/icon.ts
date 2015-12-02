@@ -1,7 +1,7 @@
-import { Http, Response } from 'angular2/http';
+import {Http, Response} from 'angular2/http';
 
-import { Defer } from '../../common/async';
-import { Animation } from '../../common/animation';
+import {Defer} from '../../common/async';
+import {Animation} from '../../common/animation';
 
 let cache: Map<any, any> = new Map();
 
@@ -37,7 +37,7 @@ export class Icon {
 	}
 }
 
-function svg (response: Response): Node {
+function svg(response: Response): Node {
 	let parser: DOMParser = new DOMParser();
 	let doc: Document = parser.parseFromString(
 		response.text(),
