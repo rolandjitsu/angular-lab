@@ -1,7 +1,7 @@
 import autoprefixer from 'gulp-autoprefixer';
+import browserSync from 'browser-sync';
 import {commands as bower} from 'bower';
 import changed from 'gulp-changed';
-import connect from 'gulp-connect';
 import del from 'del';
 import {exec} from 'child_process';
 import gulp from 'gulp';
@@ -21,6 +21,8 @@ import WebSocket from 'ws';
 
 import {SAUCE_LAUNCHERS, SAUCE_ALIASES} from './sauce.config';
 
+
+const bs = browserSync.create('NG2 Lab');
 
 const GULP_SIZE_DEFAULT_OPTS = {
 	showFiles: true,
@@ -155,7 +157,7 @@ gulp.task('build/js:app', function () {
 		PATHS.src.root
 	);
 	return stream.pipe(
-		connect.reload()
+		bs.stream()
 	);
 });
 
@@ -170,7 +172,7 @@ gulp.task('serve/html', function () {
 		.pipe(changed(PATHS.dist.app))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist.app))
-		.pipe(connect.reload());
+		.pipe(bs.stream());
 });
 
 gulp.task('build/css', function () {
@@ -193,7 +195,7 @@ gulp.task('build/css', function () {
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist.app))
-		.pipe(connect.reload());
+		.pipe(bs.stream());
 });
 
 gulp.task('serve/static', function () {
@@ -202,7 +204,7 @@ gulp.task('serve/static', function () {
 		.pipe(changed(PATHS.dist.app))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist.app))
-		.pipe(connect.reload());
+		.pipe(bs.stream());
 });
 
 gulp.task('build', gulp.series(
@@ -351,18 +353,18 @@ gulp.task(function serve(done) {
 			gulp.task('build')(() => {
 				createJsBuildServer();
 				createBuildServer();
-				connect.server({
-					port: WEB_SERVER_PORT,
-					root: PATHS.dist.app,
-					livereload: true
-				});
 				log(colors.green('File watch processes for HTML, CSS & static assets are started'));
 				gulp.watch(PATHS.src.static, gulp.series('serve/static'));
 				gulp.watch(PATHS.src.html, gulp.series('serve/html'));
 				gulp.watch(PATHS.src.scss, gulp.series('build/css'));
-				// When process exits kill connect server
+				// For more BS options,
+				// check http://www.browsersync.io/docs/options/
+				bs.init({
+					server: PATHS.dist.app
+				});
+				// When process exits kill browser-sync server
 				process.on('exit', () => {
-					connect.serverClose();
+					bs.exit();
 				});
 			});
 		}
