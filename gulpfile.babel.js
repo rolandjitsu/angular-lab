@@ -157,7 +157,7 @@ gulp.task('build/js:app', function () {
 		PATHS.src.root
 	);
 	return stream.pipe(
-		bs.stream()
+		bs.stream({match: "**/*.js"})
 	);
 });
 
@@ -195,7 +195,7 @@ gulp.task('build/css', function () {
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(PATHS.dist.app))
-		.pipe(bs.stream());
+		.pipe(bs.stream({match: "**/*.css"}));
 });
 
 gulp.task('serve/static', function () {
