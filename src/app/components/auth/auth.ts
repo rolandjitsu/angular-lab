@@ -21,18 +21,19 @@ import {Register} from '../register/register';
 
 @RouteConfig([
 	{
-		component: Login,
 		path: '/',
+		component: Login,
+		useAsDefault: true,
 		as: 'Login'
 	},
 	{
-		component: ResetPassword,
 		path: '/reset',
+		component: ResetPassword,
 		as: 'Reset'
 	},
 	{
-		component: Register,
 		path: '/register',
+		component: Register,
 		as: 'Register'
 	}
 ])

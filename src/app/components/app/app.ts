@@ -29,18 +29,19 @@ import {Todos} from '../todos/todos';
 
 @RouteConfig([
 	{
-		component: Todos,
 		path: '/',
+		component: Todos,
+		useAsDefault: true,
 		as: 'Todos'
 	},
 	{
-		component: Account,
 		path: '/account',
+		component: Account,
 		as: 'Account'
 	},
 	{
-		component: Auth,
 		path: '/login/...',
+		component: Auth,
 		as: 'Auth'
 	}
 ])
