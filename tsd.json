@@ -5,11 +5,26 @@
 	"path": "tsd_typings",
 	"bundle": "tsd_typings/tsd.d.ts",
 	"installed": {
+		"node/node.d.ts": {
+			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+		},
+		"selenium-webdriver/selenium-webdriver.d.ts": {
+			"commit": "715df764419937a75a25dcd76bfc954157bc7b96"
+		},
+		"angular-protractor/angular-protractor.d.ts": {
+			"commit": "715df764419937a75a25dcd76bfc954157bc7b96"
+		},
+		"jasmine/jasmine.d.ts": {
+			"commit": "715df764419937a75a25dcd76bfc954157bc7b96"
+		},
+		"es6-shim/es6-shim.d.ts": {
+			"commit": "715df764419937a75a25dcd76bfc954157bc7b96"
+		},
 		"firebase/firebase.d.ts": {
 			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
 		},
-		"node/node.d.ts": {
-			"commit": "de1bfe2c1de921da660cc17a5af1de6c095b35eb"
+		"zone.js/zone.js.d.ts": {
+			"commit": "715df764419937a75a25dcd76bfc954157bc7b96"
 		}
 	}
 }
