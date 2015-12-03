@@ -52,7 +52,6 @@ const PATHS = {
 		'node_modules/angular2/bundles/testing.*'
 	],
 	typings: [
-		'src/_typings/custom.d.ts',
 		'tsd_typings/tsd.d.ts'
 	],
 	test: {
