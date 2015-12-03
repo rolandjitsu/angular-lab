@@ -6,9 +6,8 @@ import del from 'del';
 import {exec} from 'child_process';
 import gulp from 'gulp';
 import gts from 'gulp-typescript';
-import {log, colors} from 'gulp-util';
+import {env, log, colors} from 'gulp-util';
 import karma from 'karma';
-import minimist from 'minimist';
 import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
 import sass from 'gulp-sass';
@@ -104,16 +103,18 @@ gulp.task('tsd/install', function () {
 	const TSD_CONFIG = './tsd.json';
 	let api = tsd.getAPI(TSD_CONFIG);
 	return api.readConfig(TSD_CONFIG, true).then(() => {
-		let opts = tsd.Options.fromJSON(); // https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
+		// Check the source for more config,
+		// https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
+		let opts = tsd.Options.fromJSON();
 		let query = new tsd.Query();
-		opts.saveBundle = true;
-		opts.overwriteFiles = true;
-		opts.resolveDependencies = true;
+		Object.assign(opts, {
+			overwriteFiles: true,
+			saveBundle: true
+		})
 		api.context.config.getInstalled().forEach((install) => {
 			let def = tsd.Def.getFrom(install.path);
 			query.addNamePattern(`${def.project}/${def.name}`);
 		});
-		query.versionMatcher = new tsd.VersionMatcher('latest');
 		return api.select(query, opts).then((selection) => {
 			return api.install(selection, opts);
 		});
@@ -142,11 +143,7 @@ gulp.task('deps', gulp.series(
 
 gulp.task('build/js:tests', function () {
 	return buildJs(
-		[
-			'node_modules/angular2/typings/selenium-webdriver/selenium-webdriver.d.ts',
-			'node_modules/angular2/typings/angular-protractor/angular-protractor.d.ts',
-			'node_modules/angular2/typings/jasmine/jasmine.d.ts'
-		].concat(PATHS.typings, PATHS.test.ts),
+		[].concat(PATHS.typings, PATHS.test.ts),
 		PATHS.dist.test,
 		PATHS.test.root
 	);
@@ -412,8 +409,7 @@ function buildJs(src, dest, base = './', options = {}) {
 // https://github.com/firebase/firebase-tools#commands
 function runFirebaseCommand(cmd) {
 	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
-	const argv = minimist(process.argv.slice(2));
-	const TOKEN = process.env.FIREBASE_TOKEN || argv.token;
+	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
 	if (!TOKEN) {
 		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
 		return Promise.reject();
@@ -442,8 +438,7 @@ function runFirebaseCommand(cmd) {
 
 function getBrowsersConfigFromCLI() {
 	let isSauce = false;
-	const args = minimist(process.argv.slice(2));
-	let rawInput = args.browsers ? args.browsers : 'CHROME_TRAVIS_CI';
+	let rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
 	let inputList = rawInput.replace(' ', '').split(',');
 	let outputList = [];
 	for (let i = 0; i < inputList.length; i++) {
