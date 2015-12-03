@@ -7,7 +7,7 @@ import {FIREBASE_APP_LINK, FIREBASE_USERS_PATH} from './firebase';
 export interface UserQueryOpts {
 	by: {
 		email?: string;
-		uid?: string
+		key?: string
 	};
 }
 
@@ -17,21 +17,21 @@ export interface UserQueryOpts {
 // If no user exists we create one by pushing to the array of users
 // and on done we proceed with the same action as before.
 export class User {
-	uid: string; // the key for the user from the array of users
 	email: string; // auth.<provider>.email
 	providers: string[]; // all auth.provider used by the user to authenticate
+	key: string; // the key for the user from the array of users
 	changes: FirebaseObservable;
 
 	constructor(attrs: {
-		uid: string,
 		email: string,
-		providers: string[]
+		providers: string[],
+		key: string
 	}) {
-		this.uid = attrs.uid;
 		this.email = attrs.email;
 		this.providers = attrs.providers;
+		this.key = attrs.key;
 		let firebaseUsersRef = new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_USERS_PATH}`);
-		this.changes = new FirebaseObservable(firebaseUsersRef.child(attrs.uid), [
+		this.changes = new FirebaseObservable(firebaseUsersRef.child(attrs.key), [
 			FirebaseEventType.Value
 		]);
 	}
@@ -46,12 +46,12 @@ export class User {
 				if (users.size) {
 					// Found the user.
 					// Check if providers contains the current `auth.provider` and update the user providers if it does not contain it.
-					let {uid, providers} = Array.from(users.values())[0];
+					let {key, providers} = Array.from(users.values())[0];
 					if (Array.isArray(providers) && providers.includes(auth.provider)) resolve(
-						new User({uid, email, providers})
+						new User({key, email, providers})
 					);
 					else {
-						let firebaseUserProvidersRef = firebaseUsersRef.child(uid).child('providers');
+						let firebaseUserProvidersRef = firebaseUsersRef.child(key).child('providers');
 						let observable = new FirebaseObservable(firebaseUserProvidersRef, [
 							FirebaseEventType.Value
 						]);
@@ -59,7 +59,7 @@ export class User {
 						let subscription = observable.subscribe((event: FirebaseEvent) => {
 							if (first) first = false;
 							else {
-								let user = new User({uid, email, providers: event.data.val()});
+								let user = new User({key, email, providers: event.data.val()});
 								subscription.unsubscribe();
 								resolve(user);
 							}
@@ -76,21 +76,21 @@ export class User {
 					// After user is saved, resolve the promise with the newly created user.
 					let providers = [auth.provider];
 					usersArray.add({email, providers}).then((ref: Firebase) => {
-						let uid = ref.key();
-						let firebaseUserUidRef = ref.child('uid');
-						let observable = new FirebaseObservable(firebaseUserUidRef, [
+						let key = ref.key();
+						let firebaseUserKeyRef = ref.child('key');
+						let observable = new FirebaseObservable(firebaseUserKeyRef, [
 							FirebaseEventType.Value
 						]);
 						let first = true;
 						let subscription = observable.subscribe(() => {
 							if (first) first = false;
 							else {
-								let user = new User({email, providers, uid});
+								let user = new User({email, providers, key});
 								subscription.unsubscribe();
 								resolve(user);
 							}
 						});
-						firebaseUserUidRef.set(uid);
+						firebaseUserKeyRef.set(key);
 					});
 				}
 			});

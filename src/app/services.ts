@@ -19,7 +19,7 @@ export const SERVICES_PROVIDERS: Array<any> = [
 			return new Promise((resolve) => {
 				return promise.then((user: User) => resolve(
 					new Chores(
-						new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_CHORES_PATH}/${user.uid}`)
+						new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_CHORES_PATH}/${user.key}`)
 					)
 				));
 			});
@@ -30,7 +30,7 @@ export const SERVICES_PROVIDERS: Array<any> = [
 	}),
 	provide(User, {
 		useFactory: (client: AuthClient) => {
-			// Authenticate Firebase and then create/get the user based on the uid/email returned from Firebase after auth
+			// Authenticate Firebase and then create/get the user based on the key/email returned from Firebase after auth
 			return new Promise((resolve) => {
 				let subscription = client.session.subscribe((auth: FirebaseAuthData) => {
 					if (auth !== null) {
