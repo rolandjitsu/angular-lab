@@ -1,11 +1,10 @@
 import {
-	CORE_DIRECTIVES,
-	FORM_DIRECTIVES,
 	Inject,
 	Component,
 	ViewEncapsulation,
 	Input
 } from 'angular2/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Chores, Chore} from '../../services';
 import {Glyph} from '../glyph/glyph';

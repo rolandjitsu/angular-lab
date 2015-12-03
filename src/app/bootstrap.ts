@@ -1,4 +1,6 @@
-import {FORM_PROVIDERS, provide, bootstrap, enableDevMode} from 'angular2/core';
+import {bootstrap} from 'angular2/platform/browser';
+import {FORM_PROVIDERS} from 'angular2/common';
+import {provide, enableDevMode} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {
 	ROUTER_PRIMARY_COMPONENT,

@@ -1,8 +1,5 @@
-import {
-	CORE_DIRECTIVES,
-	ViewEncapsulation,
-	Component
-} from 'angular2/core';
+import {ViewEncapsulation, Component} from 'angular2/core';
+import {CORE_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction} from 'angular2/router';
 
 import {AuthClient} from '../../services';

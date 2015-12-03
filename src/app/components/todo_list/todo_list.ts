@@ -1,11 +1,11 @@
 import {
-	CORE_DIRECTIVES,
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Inject,
 	Component,
 	ViewEncapsulation
 } from 'angular2/core';
+import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {Chores} from '../../services';
 import {TodoListItem} from '../todo_list_item/todo_list_item';

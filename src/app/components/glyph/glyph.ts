@@ -32,7 +32,7 @@ export class Glyph implements OnDestroy {
 			else this.el.appendChild(svg);
 		});
 	}
-	onDestroy() {
+	ngOnDestroy() {
 		let svg = this.el.querySelector('svg');
 		if (svg) this.el.removeChild(svg);
 	}
