@@ -3,7 +3,7 @@ import browserSync from 'browser-sync';
 import {commands as bower} from 'bower';
 import changed from 'gulp-changed';
 import del from 'del';
-import {exec} from 'child_process';
+import {exec, spawn} from 'child_process';
 import gulp from 'gulp';
 import gts from 'gulp-typescript';
 import {env, log, colors} from 'gulp-util';
@@ -13,6 +13,7 @@ import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
+import split from 'split2';
 import tslint from 'gulp-tslint';
 import tsd from 'tsd';
 import typescript from 'typescript';
@@ -408,33 +409,38 @@ function buildJs(src, dest, base = './', options = {}) {
 }
 
 // https://github.com/firebase/firebase-tools#commands
-function runFirebaseCommand(cmd) {
-	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node node_modules/.bin/firebase';
+function runFirebaseCommand(cmd, args = []) {
+	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
 	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
 	if (!TOKEN) {
 		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
 		return Promise.reject();
 	}
-	let args = [
+	let defaultArgs = [
 		'--non-interactive',
 		'--token',
 		`"${TOKEN}"`
 	];
-	if (Array.isArray(cmd)) args.unshift.apply(args, cmd);
-	else args.unshift(cmd);
+	if (Array.isArray(args)) args.unshift.apply(args, defaultArgs);
+	else args = defaultArgs;
+	binary += ` ${cmd}`;
 	args.unshift(binary);
 	return new Promise((resolve, reject) => {
-		let proc = exec(args.join(' '), (error, stdout, stderr) => {
+		let proc = exec(args.join(' '));
+		proc.stdout.pipe(split()).on('data', logWithoutNewLine());
+		proc.stderr.pipe(split()).on('data', logWithoutNewLine(colors.red));
+		proc.on('close', (error) => {
 			if (error !== null) reject();
 			resolve();
 		});
-		proc.stdout.on('data', (data) => {
-			console.log(data);
-		});
-		proc.stderr.on('data', (data) => {
-			console.log(data);
-		});
 	});
+}
+
+function logWithoutNewLine(color = colors.white) {
+	return (line) => {
+		if (/\r?\n|\r/g.test(line) || line == '') return;
+		log(color(line));
+	};
 }
 
 function getBrowsersConfigFromCLI() {
