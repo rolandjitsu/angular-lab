@@ -29,6 +29,8 @@ before_install:
 
 install:
   - npm install --loglevel silent
+  - ./node_modules/.bin/bower install
+  - ./node_modules/.bin/tsd install
 
 before_script: ./scripts/ci/clean.sh
 
