@@ -1,11 +1,11 @@
 var yargs = require('yargs');
 
 var argv = yargs
-	.usage('NG Lab E2E test options.')
+	.usage('NG2 Lab E2E test options.')
 	.options({
 		'browsers': {
 			describe: 'Comma separated list of preconfigured browsers to use.',
-			default: 'ChromeDesktop'
+			default: 'CHROME_DESKTOP'
 		}
 	})
 	.help('help')
@@ -22,7 +22,7 @@ var CHROME_OPTIONS = {
 };
 
 var BROWSER_CAPS = {
-	ChromeDesktop: {
+	CHROME_DESKTOP: {
 		browserName: 'chrome',
 		chromeOptions: CHROME_OPTIONS,
 		loggingPrefs: {
@@ -30,7 +30,7 @@ var BROWSER_CAPS = {
 			browser: 'ALL'
 		}
 	},
-	IPhoneSimulator: {
+	IPHONE_SIMULATOR: {
 		browserName: 'MobileSafari',
 		simulator: true,
 		CFBundleName: 'Safari',
@@ -41,7 +41,7 @@ var BROWSER_CAPS = {
 			browser: 'ALL'
 		}
 	},
-	IPadNative: {
+	IPAD_NATIVE: {
 		browserName: 'MobileSafari',
 		simulator: false,
 		CFBundleName: 'Safari',
@@ -56,10 +56,9 @@ var BROWSER_CAPS = {
 module.exports.config = {
 	baseUrl: 'http://localhost:3000/',
 	// restartBrowserBetweenTests: true, // add it back once https://github.com/angular/protractor/issues/1983 is fixed
-	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
-	// useAllAngular2AppRoots: true,
 	// Special option for Angular2, to test against all Angular2 applications on the page.
-	rootElement: 'app',
+	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
+	useAllAngular2AppRoots: true,
 	specs: [
 		'dist/test/**/*.spec.js'
 	],
@@ -67,13 +66,14 @@ module.exports.config = {
 	multiCapabilities: BROWSERS.map((browserName) => {
 		var caps = BROWSER_CAPS[browserName];
 		console.log(`Testing against: ${browserName}`);
-		if (!caps) throw new Error(`Not configured browser name: ${browserName}`);
+		if (!caps) throw new Error(`There is no browser with name "${browserName};" configured.`);
 		return caps;
 	}),
 	framework: 'jasmine',
 	jasmineNodeOpts: {
-		showColors: true,
-		defaultTimeoutInterval: 60000
+		color: true,
+		defaultTimeoutInterval: 60000,
+		verbose: true
 	},
 	plugins: [
 		{package: 'protractor-console-plugin'},
