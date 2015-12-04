@@ -1,6 +1,5 @@
 import autoprefixer from 'gulp-autoprefixer';
 import browserSync from 'browser-sync';
-import {commands as bower} from 'bower';
 import changed from 'gulp-changed';
 import del from 'del';
 import {exec, spawn} from 'child_process';
@@ -16,7 +15,6 @@ import sourcemaps from 'gulp-sourcemaps';
 import {sleep} from 'sleep';
 import split from 'split2';
 import tslint from 'gulp-tslint';
-import tsd from 'tsd';
 import typescript from 'typescript';
 import {Server} from 'ws';
 import WebSocket from 'ws';
@@ -112,46 +110,17 @@ gulp.task(function clean() {
  * Dependecies
  */
 
-gulp.task('bower/install', function () {
-	return bower.install(null, {save: true}, {interactive: false});
+gulp.task(function deps() {
+	const LIBS_PATH = `${PATHS.dist.app}/lib`;
+	return gulp
+		.src(PATHS.lib)
+		.pipe(changed(LIBS_PATH))
+		.pipe(rename((file) => {
+			file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
+		}))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(gulp.dest(LIBS_PATH));
 });
-
-gulp.task('tsd/install', function () {
-	const TSD_CONFIG = './tsd.json';
-	let api = tsd.getAPI(TSD_CONFIG);
-	return api.readConfig(TSD_CONFIG, true).then(() => {
-		// Check the source for more config,
-		// https://github.com/DefinitelyTyped/tsd/blob/bb2dc91ad64f159298657805154259f9e68ea8a6/src/tsd/Options.ts
-		let opts = tsd.Options.fromJSON();
-		let query = new tsd.Query();
-		Object.assign(opts, {
-			overwriteFiles: true,
-			saveBundle: true
-		})
-		api.context.config.getInstalled().forEach((install) => {
-			let def = tsd.Def.getFrom(install.path);
-			query.addNamePattern(`${def.project}/${def.name}`);
-		});
-		return api.select(query, opts).then((selection) => {
-			return api.install(selection, opts);
-		});
-	});
-});
-
-gulp.task('deps', gulp.series(
-	gulp.parallel('bower/install', 'tsd/install'),
-	function copy() {
-		const LIBS_PATH = `${PATHS.dist.app}/lib`;
-		return gulp
-			.src(PATHS.lib)
-			.pipe(changed(LIBS_PATH))
-			.pipe(rename((file) => {
-				file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
-			}))
-			.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-			.pipe(gulp.dest(LIBS_PATH));
-	}
-));
 
 
 /**
