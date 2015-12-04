@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "system",
+		"module": "commonjs",
 		"target": "es6"
 	},
 	"exclude": [
