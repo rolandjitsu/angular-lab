@@ -202,7 +202,7 @@ gulp.task('build', gulp.series(
 	)
 ));
 
-// Build if lab build server is not running
+// Build if build server is not running
 gulp.task('build:!ibsr', function (done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(() => done(), () => {
 		gulp.task('build')((error) => done(error));
@@ -415,7 +415,7 @@ gulp.task(function deploy() {
 
 function createBuildServer() {
 	let wss = new WebSocketServer({port: BUILD_SERVER_PORT}, () => {
-		log(colors.green(`Lab build server started ${BUILD_SERVER_ADDRESS}`));
+		log(colors.green(`Build server started ${BUILD_SERVER_ADDRESS}`));
 	});
 	process.on('exit', () => {
 		wss.close();
@@ -425,7 +425,7 @@ function createBuildServer() {
 gulp.task(function serve(done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
 		() => {
-			log(colors.red('A lab build server instance has already been started in another process, cannot start another one'));
+			log(colors.red('A build server instance has already been started in another process, cannot start another one'));
 			done();
 			process.exit(1);
 		},
@@ -486,15 +486,6 @@ function buildJs(src, dest, base = './', options = {}) {
 		.pipe(gulp.dest(dest));
 }
 
-function streamProcLog(proc) {
-	proc.stdout.pipe(split()).on('data', (line) => {
-		log(colors.white(line));
-	});
-	proc.stderr.pipe(split()).on('data', (line) => {
-		log(colors.red(line));
-	});
-}
-
 function getBrowsersConfigFromCLI() {
 	let isSauce = false;
 	let rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
@@ -513,7 +504,7 @@ function getBrowsersConfigFromCLI() {
 		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
 			outputList = outputList.concat(SAUCE_ALIASES[input]);
 			isSauce = true;
-		} else throw new Error('ERROR: unknown browser found in getBrowsersConfigFromCLI()');
+		} else throw new Error('Browser name(s) passed as option could not be found in SAUCE_LAUNCHERS. Check available browsers in "sauce.config.js".');
 	}
 	return {
 		browsers: outputList.filter((item, pos, self) => {
@@ -545,6 +536,15 @@ function createJsBuildServer() {
 			});
 		}
 	);
+}
+
+function streamProcLog(proc) {
+	proc.stdout.pipe(split()).on('data', (line) => {
+		log(colors.white(line));
+	});
+	proc.stderr.pipe(split()).on('data', (line) => {
+		log(colors.red(line));
+	});
 }
 
 function noop(...args) {}
