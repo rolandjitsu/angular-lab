@@ -42,7 +42,11 @@ After you have the above tools setup, install all runtime/dev dependencies by ru
 
 ```shell
 $(node bin)/npm install
+$(node bin)/bower install
+$(node bin)/tsd install
 ```
+
+**Note**: If you change any of the deps (remove/add) in either `bower.json`, `package.json` or `tsd.json`, make sure that you run the above steps again.
 
 Now start the webserver and the build process (runs on file change) and navigate to [localhost:3000](http://localhost:3000):
 
