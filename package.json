@@ -23,7 +23,7 @@
 		"@reactivex/rxjs": "5.0.0-alpha.11",
 		"angular2": "2.0.0-alpha.47",
 		"systemjs": "0.19.x",
-		"es6-shim": "0.33.x"
+		"core-js": "1.2.x"
 	},
 	"devDependencies": {
 		"babel-core": "6.2.x",

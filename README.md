@@ -7,7 +7,7 @@
 
 This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
-* [ES6 Shim](https://github.com/paulmillr/es6-shim) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features
+* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features
 * [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
 * [Karma](http://karma-runner.github.io)
