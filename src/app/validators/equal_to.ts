@@ -33,7 +33,7 @@ export class EqualToValidator implements Validator {
 	constructor(@Host() formDir: NgForm) {
 		this.form = formDir.form;
 	}
- 	validate(control: Control): {[key: string]: any} {
+	validate(control: Control): {[key: string]: any} {
 		if (isPresent(Validators.required(control))) return null;
 		let form: ControlGroup = this.form;
 		let target = form.find(this.target);
@@ -43,7 +43,7 @@ export class EqualToValidator implements Validator {
 				control.updateValueAndValidity();
 			});
 		}
- 		return target.value !== control.value
+		return target.value !== control.value
 			? {'equalTo': true}
 			: null;
 	}

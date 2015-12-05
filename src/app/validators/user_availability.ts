@@ -20,7 +20,7 @@ import {User} from '../services';
 })
 
 export class UserAvailabilityValidator implements Validator {
- 	validate(control: Control): {[key: string]: any} {
+	validate(control: Control): {[key: string]: any} {
 		if (isPresent(Validators.required(control))) return null;
 		let email: string = control.value;
 		return new Promise((resolve) => {
