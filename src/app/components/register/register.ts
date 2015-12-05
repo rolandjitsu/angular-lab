@@ -4,6 +4,8 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {AuthClient} from '../../services';
 
+import {UserAvailabilityValidator} from '../../validators';
+
 @Component({
 	selector: 'register',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
@@ -14,7 +16,8 @@ import {AuthClient} from '../../services';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES
+		ROUTER_DIRECTIVES,
+		UserAvailabilityValidator
 	]
 })
 

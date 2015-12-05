@@ -4,6 +4,8 @@ import {ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
 
 import {AuthClient, isUserAuthenticated} from '../../services';
 
+import {EqualToValidator} from '../../validators';
+
 @Component({
 	selector: 'account',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
@@ -14,7 +16,8 @@ import {AuthClient, isUserAuthenticated} from '../../services';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES
+		ROUTER_DIRECTIVES,
+		EqualToValidator
 	]
 })
 

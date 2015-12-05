@@ -16,7 +16,8 @@
 
 .change-form-email,
 .change-form-oldpassword,
-.change-form-newpassword {
+.change-form-newpassword,
+.change-form-retypenewpassword {
 	position: relative;
 }
 
@@ -26,7 +27,8 @@
 }
 
 .change-form-email,
-.change-form-oldpassword {
+.change-form-oldpassword,
+.change-form-newpassword {
 	margin-bottom: -1px;
 	
 	&:focus {
@@ -34,11 +36,12 @@
 	}
 }
 
-.change-form-oldpassword {
+.change-form-oldpassword,
+.change-form-newpassword {
 	border-radius: 0;
 }
 
-.change-form-newpassword {
+.change-form-retypenewpassword {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
