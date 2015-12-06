@@ -78,7 +78,7 @@ const PATHS = {
 	},
 	src: {
 		root: 'src',
-		static: 'src/**/*.{svg,jpg,png,ico}',
+		static: 'src/**/*.{svg,jpg,png,ico,txt}',
 		ts: [
 			'src/**/*.ts'
 		],
