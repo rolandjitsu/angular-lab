@@ -1,0 +1,30 @@
+# humanstxt.org
+# Humans responsible & technology colophon
+
+# TEAM
+
+	Roland Andrei Groza -- Software Engineer -- https://github.com/rolandjitsu
+
+# THANKS
+
+	https://github.com/google/web-starter-kit
+	https://github.com/h5bp/html5-boilerplate
+	https://google.com/design/spec/material-design/introduction.html
+	https://github.com/pkozlowski-opensource/ng2-play
+	https://github.com/AngularClass/angular2-webpack-starter
+	https://github.com/auth0/angular2-authentication-sample
+	https://github.com/davideast/ng2do
+
+# TECHNOLOGY COLOPHON
+
+	TypeScript, JavaScript (ES6/7)
+	HTML5, CSS3
+	SystemJS, Core JS
+	Angular 2
+	Material Design Lite, Material Icons
+	NPM, Bower, TSD
+	Gulp
+	Karma, Jasmine, Protractor
+	Travis CI, Saucelabs
+	Gemnasium
+	Firebase

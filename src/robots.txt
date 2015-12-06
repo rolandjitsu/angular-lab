@@ -1,0 +1,5 @@
+# robotstxt.org
+
+# All crawling of all content
+User-agent: *
+Allow: /
