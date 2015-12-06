@@ -10,7 +10,7 @@ export const SAUCE_LAUNCHERS = {
 	'SL_CHROME': {
 		base: 'SauceLabs',
 		browserName: 'chrome',
-		version: '44'
+		version: '46'
 	},
 	'SL_CHROME_BETA': {
 		base: 'SauceLabs',
@@ -25,7 +25,7 @@ export const SAUCE_LAUNCHERS = {
 	'SL_FIREFOX': {
 		base: 'SauceLabs',
 		browserName: 'firefox',
-		version: '37'
+		version: '42'
 	},
 	'SL_FIREFOX_BETA': {
 		base: 'SauceLabs',
@@ -49,6 +49,12 @@ export const SAUCE_LAUNCHERS = {
 		platform: 'OS X 10.10',
 		version: '8'
 	},
+	'SL_SAFARI_9': {
+		base: 'SauceLabs',
+		browserName: 'safari',
+		platform: 'OS X 10.11',
+		version: '9.0'
+	},
 	'SL_IOS_7': {
 		base: 'SauceLabs',
 		browserName: 'iphone',
@@ -60,6 +66,12 @@ export const SAUCE_LAUNCHERS = {
 		browserName: 'iphone',
 		platform: 'OS X 10.10',
 		version: '8.4'
+	},
+	'SL_IOS_9': {
+		base: 'SauceLabs',
+		browserName: 'iphone',
+		platform: 'OS X 10.10',
+		version: '9.1'
 	},
 	'SL_IE_9': {
 		base: 'SauceLabs',
@@ -82,13 +94,7 @@ export const SAUCE_LAUNCHERS = {
 	'SL_EDGE': {
 		base: 'SauceLabs',
 		browserName: 'microsoftedge',
-		platform: 'Windows 10'
-	},
-	'SL_ANDROID_4.0': {
-		base: 'SauceLabs',
-		browserName: 'android',
-		platform: 'Linux',
-		version: '4.0'
+		platform: '20.10240'
 	},
 	'SL_ANDROID_4.1': {
 		base: 'SauceLabs',
@@ -127,28 +133,30 @@ export const SAUCE_ALIASES = {
 		return SAUCE_LAUNCHERS[item].base == 'SauceLabs';
 	}),
 	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE_9', 'SL_IE_10', 'SL_IE_11', 'SL_EDGE', 'SL_SAFARI_7', 'SL_SAFARI_8'],
-	'MOBILE': ['SL_ANDROID_4.0', 'SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1', 'SL_IOS_7', 'SL_IOS_8'],
-	'ANDROID': ['SL_ANDROID_4.0', 'SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1'],
+	'MOBILE': ['SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1', 'SL_IOS_7', 'SL_IOS_8', 'SL_IOS_9'],
+	'ANDROID': ['SL_ANDROID_4.1', 'SL_ANDROID_4.2', 'SL_ANDROID_4.3', 'SL_ANDROID_4.4', 'SL_ANDROID_5.1'],
 	'IE': ['SL_IE_9', 'SL_IE_10', 'SL_IE_11'],
-	'IOS': ['SL_IOS_7', 'SL_IOS_8'],
-	'SAFARI': ['SL_SAFARI_7', 'SL_SAFARI_8'],
+	'IOS': ['SL_IOS_7', 'SL_IOS_8', 'SL_IOS_9'],
+	'SAFARI': ['SL_SAFARI_7', 'SL_SAFARI_8', 'SL_SAFARI_9'],
 	'BETA': ['SL_CHROME_BETA', 'SL_FIREFOX_BETA'],
 	'DEV': ['SL_CHROME_DEV', 'SL_FIREFOX_DEV'],
 	'CI': [
 		'SL_CHROME',
 		// 'SL_SAFARI_7',
 		'SL_SAFARI_8',
+		'SL_SAFARI_9',
 		// 'SL_IOS_7',
 		'SL_IOS_8',
+		'SL_IOS_9',
 		'SL_FIREFOX',
 		// 'SL_IE_9',
 		// 'SL_IE_10',
-		'SL_IE_11',
-		// 'SL_EDGE'
+		// 'SL_IE_11',
+		'SL_EDGE',
 		// 'SL_ANDROID_4.1',
 		// 'SL_ANDROID_4.2',
 		// 'SL_ANDROID_4.3',
-		// 'SL_ANDROID_4.4',
+		'SL_ANDROID_4.4',
 		'SL_ANDROID_5.1'
 	]
 };
