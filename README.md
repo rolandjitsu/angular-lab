@@ -109,7 +109,7 @@ Tests can be run selectively as it follows:
 
 ### Browser Support
 -------------------
-Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/paulmillr/es6-shim) are provided, this app has no official indication of what browsers it supports (lack of enough unit tests).
+Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/zloirock/core-js) are provided, this app has no official indication of what browsers it supports (lack of enough unit tests).
 Though, you can check out the browser support for [Angular 2](https://github.com/angular-class/awesome-angular2#current-browser-support-for-angular-2) and assume that the app will work where Angular 2 works.
 
 
