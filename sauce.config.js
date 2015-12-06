@@ -139,16 +139,16 @@ export const SAUCE_ALIASES = {
 		// 'SL_SAFARI_7',
 		'SL_SAFARI_8',
 		// 'SL_IOS_7',
-		// 'SL_IOS_8',
-		// 'SL_FIREFOX',
+		'SL_IOS_8',
+		'SL_FIREFOX',
 		// 'SL_IE_9',
 		// 'SL_IE_10',
-		// 'SL_IE_11',
+		'SL_IE_11',
 		// 'SL_EDGE'
 		// 'SL_ANDROID_4.1',
 		// 'SL_ANDROID_4.2',
 		// 'SL_ANDROID_4.3',
 		// 'SL_ANDROID_4.4',
-		// 'SL_ANDROID_5.1'
+		'SL_ANDROID_5.1'
 	]
 };
