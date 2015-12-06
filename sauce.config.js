@@ -135,16 +135,16 @@ export const SAUCE_ALIASES = {
 	'BETA': ['SL_CHROME_BETA', 'SL_FIREFOX_BETA'],
 	'DEV': ['SL_CHROME_DEV', 'SL_FIREFOX_DEV'],
 	'CI': [
-		'SL_CHROME'
+		'SL_CHROME',
 		// 'SL_SAFARI_7',
-		// 'SL_SAFARI_8',
+		'SL_SAFARI_8',
 		// 'SL_IOS_7',
 		// 'SL_IOS_8',
 		// 'SL_FIREFOX',
 		// 'SL_IE_9',
 		// 'SL_IE_10',
 		// 'SL_IE_11',
-		// 'SL_EDGE',
+		'SL_EDGE'
 		// 'SL_ANDROID_4.1',
 		// 'SL_ANDROID_4.2',
 		// 'SL_ANDROID_4.3',
