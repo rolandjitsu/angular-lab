@@ -28,7 +28,7 @@ Object.assign(karmaConfig, {
 		'jasmine'
 	],
 	files: [
-		'node_modules/es6-shim/es6-shim.js',
+		'node_modules/core-js/client/shim.js',
 		'node_modules/systemjs/dist/system.src.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
 		'node_modules/angular2/bundles/angular2.dev.js',
 		'node_modules/angular2/bundles/router.dev.js',
@@ -54,7 +54,16 @@ Object.assign(karmaConfig, {
 	browsers: [
 		'Chrome'
 	],
-	sauceLabs: sauceLabsConfig 
+	plugins: [
+		'karma-chrome-launcher',
+		'karma-jasmine',
+		'karma-sauce-launcher',
+		'karma-sourcemap-loader'
+	],
+	preprocessors: {
+		'**/*.js': ['sourcemap']
+	},
+	sauceLabs: sauceLabsConfig
 });
 
 module.exports = function (config) {

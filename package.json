@@ -51,6 +51,7 @@
 		"karma-chrome-launcher": "0.2.x",
 		"karma-cli": "0.1.x",
 		"karma-jasmine": "0.3.x",
+		"karma-sourcemap-loader": "0.3.x",
 		"karma-sauce-launcher": "0.3.x",
 		"protractor": "3.0.x",
 		"protractor-accessibility-plugin": "0.1.x",
