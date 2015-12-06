@@ -14,8 +14,8 @@ import {
 	NgControl
 } from 'angular2/common';
 
-import {isPresent} from '../../../common/lang';
-import {KEY_CODES} from '../../../common/key_codes';
+import {isPresent} from '../../common/lang';
+import {KEY_CODES} from '../../common/key_codes';
 import {Glyph} from '../glyph/glyph';
 
 @Component({

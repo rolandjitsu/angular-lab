@@ -60,7 +60,7 @@ module.exports.config = {
 	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
 	useAllAngular2AppRoots: true,
 	specs: [
-		'dist/test/**/*.spec.js'
+		'dist/test/e2e/**/*.spec.js'
 	],
 	exclude: [],
 	multiCapabilities: BROWSERS.map((browserName) => {

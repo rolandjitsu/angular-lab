@@ -1,5 +1,5 @@
-import {FirebaseArray} from '../../common/firebase_array';
-import {FirebaseEvent, FirebaseEventType, FirebaseObservable} from '../../common/firebase_observable';
+import {FirebaseArray} from '../common/firebase_array';
+import {FirebaseEvent, FirebaseEventType, FirebaseObservable} from '../common/firebase_observable';
 
 import {FIREBASE_APP_LINK, FIREBASE_USERS_PATH} from './firebase';
 

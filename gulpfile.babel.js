@@ -91,14 +91,14 @@ const PATHS = {
 	},
 	dist: {
 		root: 'dist',
-		test: 'dist/test',
-		app: 'dist/app'
+		public: 'dist/public',
+		test: 'dist/test'
 	}
 };
 
 
 /**
- * Clean dist
+ * Clean
  */
 
 gulp.task(function clean() {
@@ -111,7 +111,7 @@ gulp.task(function clean() {
  */
 
 gulp.task(function deps() {
-	const LIBS_PATH = `${PATHS.dist.app}/lib`;
+	const LIBS_PATH = `${PATHS.dist.public}/lib`;
 	return gulp
 		.src(PATHS.lib)
 		.pipe(changed(LIBS_PATH))
@@ -124,7 +124,7 @@ gulp.task(function deps() {
 
 
 /**
- * Build steps
+ * Build Steps
  */
 
 gulp.task('build/js:tests', function () {
@@ -138,7 +138,7 @@ gulp.task('build/js:tests', function () {
 gulp.task('build/js:app', function () {
 	let stream = buildJs(
 		[].concat(PATHS.typings, PATHS.src.ts),
-		PATHS.dist.app,
+		PATHS.dist.public,
 		PATHS.src.root
 	);
 	return stream.pipe(
@@ -154,9 +154,9 @@ gulp.task('build/js', gulp.parallel(
 gulp.task('serve/html', function () {
 	return gulp
 		.src(PATHS.src.html)
-		.pipe(changed(PATHS.dist.app))
+		.pipe(changed(PATHS.dist.public))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.app))
+		.pipe(gulp.dest(PATHS.dist.public))
 		.pipe(bs.stream());
 });
 
@@ -172,23 +172,23 @@ gulp.task('build/css', function () {
 	};
 	return gulp
 		.src(PATHS.src.scss)
-		.pipe(changed(PATHS.dist.app, {extension: '.css'}))
+		.pipe(changed(PATHS.dist.public, {extension: '.css'}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass(SASS_CONFIG).on('error', sass.logError))
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.app))
+		.pipe(gulp.dest(PATHS.dist.public))
 		.pipe(bs.stream({match: "**/*.css"}));
 });
 
 gulp.task('serve/static', function () {
 	return gulp
 		.src(PATHS.src.static)
-		.pipe(changed(PATHS.dist.app))
+		.pipe(changed(PATHS.dist.public))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.app))
+		.pipe(gulp.dest(PATHS.dist.public))
 		.pipe(bs.stream());
 });
 
@@ -202,16 +202,9 @@ gulp.task('build', gulp.series(
 	)
 ));
 
-// Build if build server is not running
-gulp.task('build:!ibsr', function (done) {
-	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(() => done(), () => {
-		gulp.task('build')((error) => done(error));
-	});
-});
-
 
 /**
- * Code integrity
+ * Code Integrity
  */
 
 gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-rules
@@ -228,7 +221,7 @@ gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-
 
 
 /**
- * Unit tests
+ * Unit Tests
  */
 
 function createKarmaServer(config = {}, callback = noop) {
@@ -236,6 +229,7 @@ function createKarmaServer(config = {}, callback = noop) {
 	server.start();
 }
 
+// On the CI we build everything once before any tests are ran, so we do not need to run a build here
 gulp.task('test/unit:ci', function (done) {
 	const BROWSER_CONF = getBrowsersConfigFromCLI();
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
@@ -250,15 +244,6 @@ gulp.task('test/unit:ci', function (done) {
 		process.exit(err ? 1 : 0);
 	});
 });
-
-gulp.task('test/unit:single', gulp.series('build:!ibsr', function run(done) { // Run unit tests once in local env
-	const CONFIG = Object.assign({}, KARMA_CONFIG, {
-		singleRun: true
-	});
-	createKarmaServer(CONFIG, () => {
-		done();
-	});
-}));
 
 gulp.task('test/unit:ci/sauce', function (done) {
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
@@ -277,7 +262,23 @@ gulp.task('test/unit:ci/sauce', function (done) {
 	});
 });
 
-gulp.task('test/unit:sauce', gulp.series('build:!ibsr', function run(done) {
+// Locally we need to run a build before we run any tests
+gulp.task('test/unit:continuous', gulp.series('build', function run(done) {
+	createKarmaServer(KARMA_CONFIG);
+	createJsBuildServer();
+}));
+
+// Run unit tests once
+gulp.task('test/unit:single', gulp.series('build', function run(done) {
+	const CONFIG = Object.assign({}, KARMA_CONFIG, {
+		singleRun: true
+	});
+	createKarmaServer(CONFIG, () => {
+		done();
+	});
+}));
+
+gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
 	const BROWSER_CONF = getBrowsersConfigFromCLI();
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
 		browsers: BROWSER_CONF.browsers,
@@ -300,11 +301,6 @@ gulp.task('test/unit:sauce', gulp.series('build:!ibsr', function run(done) {
 	}
 }));
 
-gulp.task('test/unit', gulp.series('build:!ibsr', function run(done) {
-	createKarmaServer(KARMA_CONFIG);
-	createJsBuildServer();
-}));
-
 
 /**
  * E2E Tests
@@ -324,7 +320,7 @@ function createHttpServer() {
 				sleep(5); // Let's wait for our webserver to be online
 				log(colors.green(`Webserver started on port ${WEB_SERVER_PORT}`));
 				let proc = spawn(binary, [
-					PATHS.dist.app,
+					PATHS.dist.public,
 					`-p ${WEB_SERVER_PORT}`,
 					'--silent'
 				]);
@@ -342,8 +338,9 @@ gulp.task('webdriver/update', function () {
 	return proc;
 });
 
+// Locally we need to run a build before we run any tests
 gulp.task('test/e2e:single', gulp.series(
-	'build:!ibsr',
+	'build',
 	'webdriver/update',
 	function protractor(done) { // Run e2e tests once in local env
 		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
@@ -360,18 +357,7 @@ gulp.task('test/e2e:single', gulp.series(
 
 
 /**
- * Tests
- */
-
-gulp.task('test', gulp.series(
-	'lint',
-	'test/unit:single',
-	'test/e2e:single'
-));
-
-
-/**
- * Deployments
+ * Firebase Deployments
  */
 
 // https://github.com/firebase/firebase-tools#commands
@@ -410,7 +396,7 @@ gulp.task(function deploy() {
 
 
 /**
- * Build and watch
+ * Build, Watch & Serve
  */
 
 function createBuildServer() {
@@ -440,7 +426,7 @@ gulp.task(function serve(done) {
 				// For more BS options,
 				// check http://www.browsersync.io/docs/options/
 				bs.init({
-					server: PATHS.dist.app,
+					server: PATHS.dist.public,
 					port: WEB_SERVER_PORT
 				});
 				// When process exits kill browser-sync server
@@ -454,7 +440,7 @@ gulp.task(function serve(done) {
 
 
 /**
- * Default task
+ * Default
  */
 
 gulp.task('default', gulp.series('serve'));
@@ -526,12 +512,17 @@ function createJsBuildServer() {
 			});
 		},
 		() => {
-			let watcher = gulp.watch([].concat(PATHS.test.ts, PATHS.src.ts), gulp.series('build/js'));
+			let watchers = [
+				gulp.watch(PATHS.src.ts, gulp.series('build/js:app')),
+				gulp.watch(PATHS.test.ts, gulp.series('build/js:tests'))
+			];
 			let wss = new WebSocketServer({port: JS_BUILD_SERVER_PORT}, () => {
 				log(colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
 			});
 			process.on('exit', () => {
-				watcher.close();
+				for (let watcher of watchers) {
+					watcher.close();
+				}
 				wss.close();
 			});
 		}

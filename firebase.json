@@ -1,6 +1,6 @@
 {
 	"firebase": "ng2-lab",
-	"public": "dist/app",
+	"public": "dist/public",
 	"ignore": [
 		"bower_components",
 		"media",

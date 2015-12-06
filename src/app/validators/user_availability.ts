@@ -6,7 +6,7 @@ import {
 	Validator
 } from 'angular2/common';
 
-import {isPresent} from '../../common/lang';
+import {isPresent} from '../common/lang';
 import {User} from '../services';
 
 @Directive({

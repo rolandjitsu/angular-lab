@@ -18,12 +18,10 @@ __karma__.loaded = function () {};
 System.warnings = true;
 System.config({
 	packages: {
-		common: {defaultExtension: 'js'},
 		app: {defaultExtension: 'js'}
 	},
 	paths: {
-		'common/*': '/base/dist/app/common/*',
-		'app/*': '/base/dist/app/app/*'
+		'app/*': '/base/dist/public/app/*'
 	}
 });
 

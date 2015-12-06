@@ -14,7 +14,7 @@ import {
 	Validator
 } from 'angular2/common';
 
-import {isPresent} from '../../common/lang';
+import {isPresent} from '../common/lang';
 
 @Directive({
 	selector: '[equal-to][ng-control],[equal-to][ng-form-control],[equal-to][ng-model]',

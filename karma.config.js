@@ -38,12 +38,12 @@ Object.assign(karmaConfig, {
 		// Sources and specs
 		// Loaded through systemjs, in `test.js`
 		{
-			pattern: 'dist/app/**',
+			pattern: 'dist/public/**',
 			included: false,
 			watched: false
 		},
 		{
-			pattern: 'dist/app/**/*.js',
+			pattern: 'dist/public/**/*.js',
 			included: false,
 			watched: true
 		},
