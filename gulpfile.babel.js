@@ -70,7 +70,7 @@ const PATHS = {
 	typings: [
 		'tsd_typings/tsd.d.ts'
 	],
-	test: {
+	tests: {
 		root: 'test',
 		ts: [
 			'test/**/*.ts'
@@ -129,9 +129,9 @@ gulp.task(function deps() {
 
 gulp.task('build/js:tests', function () {
 	return buildJs(
-		[].concat(PATHS.typings, PATHS.test.ts),
+		[].concat(PATHS.typings, PATHS.tests.ts),
 		PATHS.dist.test,
-		PATHS.test.root
+		PATHS.tests.root
 	);
 });
 
@@ -209,7 +209,7 @@ gulp.task('build', gulp.series(
 
 gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-rules
 	return gulp
-		.src([].concat(PATHS.test.ts, PATHS.src.ts))
+		.src([].concat(PATHS.tests.ts, PATHS.src.ts))
 		.pipe(plumber())
 		.pipe(tslint())
 		.pipe(tslint.report('verbose', {
@@ -514,7 +514,7 @@ function createJsBuildServer() {
 		() => {
 			let watchers = [
 				gulp.watch(PATHS.src.ts, gulp.series('build/js:app')),
-				gulp.watch(PATHS.test.ts, gulp.series('build/js:tests'))
+				gulp.watch(PATHS.tests.ts, gulp.series('build/js:tests'))
 			];
 			let wss = new WebSocketServer({port: JS_BUILD_SERVER_PORT}, () => {
 				log(colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
