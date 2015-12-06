@@ -7,16 +7,12 @@ import {
 	describe,
 	expect,
 	inject,
-	injectAsync,
 	it
 } from 'angular2/testing';
 import {
 	provide,
 	EventEmitter,
-	Query,
-	QueryList,
-	Component,
-	View
+	Component
 } from 'angular2/core';
 import {
 	MockBackend,
@@ -73,47 +69,32 @@ export function main() {
 
 		afterEach(() => backend.verifyNoPendingRequests());
 
-		it('should append an svg as child of self', injectAsync([TestComponentBuilder], (tcb: TestComponentBuilder) => {
+		it('should append an svg as child of self', inject([TestComponentBuilder], (tcb: TestComponentBuilder) => {
 			let ee: any = new EventEmitter();
 			backend.connections.subscribe((connection: MockConnection) => {
 				connection.mockRespond(response);
-				ee.next(2);
+				ee.resolve();
 			});
-			return tcb
+			tcb
 				.createAsync(GlyphTest)
 				.then((rtc: RootTestComponent) => {
-					let comp = rtc.debugElement.componentInstance;
-					console.log(comp);
-					// comp.glyphs.changes.toRx().subscribe(_ => {
-					// 	console.log(comp.glyphs.length)
-					// });
 					rtc.detectChanges();
-					return new Promise((resolve) => {
-						ee.observer({
-							next: () => {
-								let logo: Element = rtc.debugElement.nativeElement.querySelector('glyph');
-								expect(logo.querySelector('svg')).not.toBe(null);
-								resolve();
-							}
-						});
+					ee.subscribe(null, null, () => {
+						let logo: Element = rtc.debugElement.nativeElement.querySelector('glyph');
+						expect(logo.querySelector('svg')).not.toBe(null);
 					});
 				});
 		}));
 	});
 }
 
+
 @Component({
-	selector: 'glyph-test'
-})
-@View({
+	selector: 'glyph-test',
 	template: `<glyph src="glyph.svg"></glyph>`,
 	directives: [
 		Glyph
 	]
 })
-class GlyphTest {
-	glyphs;
-	constructor(@Query(Glyph) glyphs: QueryList<Glyph>) {
-		this.glyphs = glyphs;
-	}
-}
+
+class GlyphTest {}

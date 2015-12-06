@@ -3,7 +3,7 @@ import {
 	beforeEach,
 	describe,
 	expect,
-	injectAsync,
+	inject,
 	it
 } from 'angular2/testing';
 import {
@@ -66,16 +66,13 @@ export function main() {
 		afterEach(() => backend.verifyNoPendingRequests());
 
 		describe('.get', () => {
-			it('return value should be an SVG element', injectAsync([], () => {
+			it('return value should be an SVG element', inject([], () => {
 				backend.connections.subscribe((connection: MockConnection) => connection.mockRespond(response));
-				return new Promise((resolve) => {
-					store.get(FAKE_URL).then((svg) => {
-						expect(svg.isEqualNode(glyph)).toBe(true);
-						resolve();
-					});
+				store.get(FAKE_URL).then((svg) => {
+					expect(svg.isEqualNode(glyph)).toBe(true);
 				});
 			}));
-			it('should only fire one request for the same path and resolve from cache', injectAsync([], () => {
+			it('should only fire one request for the same path and resolve from cache', inject([], () => {
 				let url = `ofor/${FAKE_URL}`;
 				let spy = jasmine.createSpy('onEstablish');
 				let bc = {
@@ -85,12 +82,9 @@ export function main() {
 					bc.onEstablish();
 					connection.mockRespond(response);
 				});
-				return new Promise((resolve) => {
+				store.get(url).then(() => {
 					store.get(url).then(() => {
-						store.get(url).then(() => {
-							expect(bc.onEstablish.calls.count()).toEqual(1);
-							resolve();
-						});
+						expect(bc.onEstablish.calls.count()).toEqual(1);
 					});
 				});
 			}));
