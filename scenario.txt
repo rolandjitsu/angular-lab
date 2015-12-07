@@ -1,0 +1,16 @@
+# User uses wants login with Github
+	-> User authenticates
+		-| Check if Github provider exists
+			- Provider does not exist
+				- Create provider
+		-| Store the new user on the provider
+		-| Generate a GUID and store it on the same user
+		-| Get user email
+		-| Search the users datastore
+			- User found
+				- Get the user and give back
+			- User not found
+				- Create user with GUID
+
+# User comes back with a different provider (Google)
+	- Same steps as before
