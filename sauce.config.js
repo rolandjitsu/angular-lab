@@ -146,7 +146,7 @@ export const SAUCE_ALIASES = {
 		'SL_SAFARI_7',
 		'SL_SAFARI_8',
 		'SL_SAFARI_9',
-		'SL_IOS_7',
+		// 'SL_IOS_7',
 		'SL_IOS_8',
 		'SL_IOS_9',
 		// 'SL_FIREFOX',
