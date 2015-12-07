@@ -1,7 +1,7 @@
 import { isFunction } from './lang';
 
 let ns = 0;
-if (performance && isFunction(performance.now) && performance.timing) ns = performance.timing.navigationStart;
+if (window.performance && isFunction(window.performance.now) && window.performance.timing) ns = window.performance.timing.navigationStart;
 
 let animationEndEventName = (() => {
 	let fakeEl: HTMLElement = document.createElement('fake-el');
