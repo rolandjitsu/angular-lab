@@ -25,7 +25,8 @@ export const SAUCE_LAUNCHERS = {
 	'SL_FIREFOX': {
 		base: 'SauceLabs',
 		browserName: 'firefox',
-		version: '42'
+		// platform: 'Linux',
+		version: '42.0'
 	},
 	'SL_FIREFOX_BETA': {
 		base: 'SauceLabs',
@@ -93,8 +94,9 @@ export const SAUCE_LAUNCHERS = {
 	},
 	'SL_EDGE': {
 		base: 'SauceLabs',
-		browserName: 'microsoftedge',
-		platform: '20.10240'
+		browserName: 'MicrosoftEdge',
+		platform: 'Windows 10',
+		version: '20.10240'
 	},
 	'SL_ANDROID_4.1': {
 		base: 'SauceLabs',
@@ -152,11 +154,11 @@ export const SAUCE_ALIASES = {
 		// 'SL_IE_9',
 		// 'SL_IE_10',
 		// 'SL_IE_11',
-		'SL_EDGE',
+		// 'SL_EDGE',
 		// 'SL_ANDROID_4.1',
 		// 'SL_ANDROID_4.2',
 		// 'SL_ANDROID_4.3',
-		'SL_ANDROID_4.4',
+		// 'SL_ANDROID_4.4',
 		'SL_ANDROID_5.1'
 	]
 };
