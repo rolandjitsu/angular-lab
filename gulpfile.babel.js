@@ -1,5 +1,5 @@
 import autoprefixer from 'gulp-autoprefixer';
-import browserSync from 'browser-sync';
+import {create as createBrowserSyncServer} from 'browser-sync';
 import changed from 'gulp-changed';
 import del from 'del';
 import {exec, spawn} from 'child_process';
@@ -36,7 +36,7 @@ class WebSocketServer extends Server {
 	}
 }
 
-const bs = browserSync.create('NG2 Lab');
+const bs = createBrowserSyncServer('NG2 Lab');
 
 const GULP_SIZE_DEFAULT_OPTS = {
 	showFiles: true,
