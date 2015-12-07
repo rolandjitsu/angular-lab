@@ -15,9 +15,7 @@
 		"url": "https://github.com/rolandjitsu/ng2-lab"
 	},
 	"scripts": {
-		"build": "gulp clean && gulp build",
-		"start": "gulp serve",
-		"test": "gulp test"
+		"start": "gulp serve"
 	},
 	"dependencies": {
 		"@reactivex/rxjs": "5.0.0-alpha.11",
