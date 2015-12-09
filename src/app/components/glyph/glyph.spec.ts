@@ -1,5 +1,5 @@
 import {
-	RootTestComponent,
+	ComponentFixture,
 	TestComponentBuilder,
 	afterEach,
 	beforeEachProviders,
@@ -14,9 +14,8 @@ import {
 	EventEmitter,
 	Component
 } from 'angular2/core';
+import {MockBackend, MockConnection,} from 'angular2/http/testing'
 import {
-	MockBackend,
-	MockConnection,
 	ConnectionBackend,
 	BaseRequestOptions,
 	ResponseOptions,
@@ -77,10 +76,10 @@ export function main() {
 			});
 			tcb
 				.createAsync(GlyphTest)
-				.then((rtc: RootTestComponent) => {
-					rtc.detectChanges();
+				.then((fixture: ComponentFixture) => {
+					fixture.detectChanges();
 					ee.subscribe(null, null, () => {
-						let logo: Element = rtc.debugElement.nativeElement.querySelector('glyph');
+						let logo: Element = fixture.nativeElement.querySelector('glyph');
 						expect(logo.querySelector('svg')).not.toBe(null);
 					});
 				});

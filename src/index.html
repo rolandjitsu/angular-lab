@@ -20,6 +20,12 @@
 		<script>
 			System.warnings = true;
 			System.defaultJSExtensions = true;
+			System.config({
+				paths: {
+					'rxjs/operator/*': 'lib/rxjs/add/operator/*.js',
+					'rxjs/*' : 'lib/rxjs/*.js'
+				}
+			});
 			System.import('app/bootstrap').catch(
 				console.error.bind(console)
 			);

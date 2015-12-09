@@ -10,9 +10,8 @@ import {
 	Injector,
 	provide
 } from 'angular2/core';
+import {MockBackend, MockConnection,} from 'angular2/http/testing'
 import {
-	MockBackend,
-	MockConnection,
 	ConnectionBackend,
 	BaseRequestOptions,
 	ResponseOptions,

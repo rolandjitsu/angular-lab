@@ -1,7 +1,7 @@
 <form
 	class="todo-cell clearfix"
 	[ng-class]="{ 'js-complete': model.completed }"
-	#todo="form"
+	#todo="ngForm"
 	novalidate>
 	<div class="todo-cell-control">
 		<checkbox ng-control="status" [(ng-model)]="model.completed" (change)="onStatusChange($event)"></checkbox>

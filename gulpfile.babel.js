@@ -110,7 +110,16 @@ gulp.task(function clean() {
  * Dependecies
  */
 
-gulp.task(function deps() {
+gulp.task('deps/rxjs', function () {
+	const RXJS_LIB_PATH = `${PATHS.dist.public}/lib/rxjs`;
+	return gulp
+		.src('node_modules/rxjs/**/*')
+		.pipe(changed(RXJS_LIB_PATH))
+		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(gulp.dest(RXJS_LIB_PATH));
+});
+
+gulp.task('deps', gulp.series('deps/rxjs', function copy() {
 	const LIBS_PATH = `${PATHS.dist.public}/lib`;
 	return gulp
 		.src(PATHS.lib)
@@ -120,7 +129,7 @@ gulp.task(function deps() {
 		}))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
 		.pipe(gulp.dest(LIBS_PATH));
-});
+}));
 
 
 /**

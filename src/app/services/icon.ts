@@ -1,4 +1,5 @@
 import {Http, Response} from 'angular2/http';
+import 'rxjs/operator/map';
 
 import {Defer} from '../common/async';
 import {Animation} from '../common/animation';
