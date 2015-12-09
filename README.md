@@ -42,8 +42,8 @@ After you have the above tools setup, install all runtime/dev dependencies by ru
 
 ```shell
 $(node bin)/npm install
-$(node bin)/bower install
-$(node bin)/tsd install
+$(npm bin)/bower install
+$(npm bin)/tsd install
 ```
 
 **Note**: If you change any of the deps (remove/add) in either `bower.json`, `package.json` or `tsd.json`, make sure that you run the above steps again.
@@ -98,7 +98,6 @@ $(npm bin)/gulp deploy/hosting --token <your firebase token>
 ### Running Tests
 -----------------
 Tests can be run selectively as it follows:
-* `$(npm bin)/gulp lint`: lints all `.ts` files
 * `$(npm bin)/gulp test/unit:continuous`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
 * `$(npm bin)/gulp lint`: runs [tslint](http://palantir.github.io/tslint/) and checks all `.ts` files according to the `tslint.json` rules file
 * `$(npm bin)/gulp test/unit:single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
