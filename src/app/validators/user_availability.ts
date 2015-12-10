@@ -10,7 +10,7 @@ import {isPresent} from '../common/lang';
 import {User} from '../services';
 
 @Directive({
-	selector: '[user-availability][ng-control],[user-availability][ng-form-control],[user-availability][ng-model]',
+	selector: '[userAvailability][ngControl],[userAvailability][ngFormControl],[userAvailability][ngModel]',
 	providers: [
 		provide(NG_ASYNC_VALIDATORS, {
 			useExisting: UserAvailabilityValidator,

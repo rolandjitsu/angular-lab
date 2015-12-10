@@ -12,7 +12,7 @@ import {Checkbox} from '../checkbox/checkbox';
 
 @Component({
 	// moduleId: module.id, // CommonJS standard
-	selector: '[todo-list-item]',
+	selector: '[todoListItem]',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/todo_list_item/todo_list_item.html',
 	styleUrls: [

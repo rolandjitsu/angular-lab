@@ -19,7 +19,7 @@ import {KEY_CODES} from '../../common/key_codes';
 import {Glyph} from '../glyph/glyph';
 
 @Component({
-	selector: 'checkbox[ng-control], checkbox[ng-form-control], checkbox[ng-model]',
+	selector: 'checkbox[ngControl], checkbox[ngFormControl], checkbox[ngModel]',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	templateUrl: 'app/components/checkbox/checkbox.html',
 	styleUrls: [

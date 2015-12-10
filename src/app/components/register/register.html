@@ -1,30 +1,30 @@
 <form
 	class="register-form center-block"
 	#register="ngForm"
-	(ng-submit)="submit()"
+	(ngSubmit)="submit()"
 	novalidate>
 	<label for="email" class="sr-only">Email</label>
-	<input type="email" class="form-control register-form-email" id="email" name="email" ng-control="email" [(ng-model)]="credentials.email" [disabled]="isRegistering" placeholder="Email" autocomplete="off" required user-availability>
+	<input type="email" class="form-control register-form-email" id="email" name="email" ngControl="email" [(ngModel)]="credentials.email" [disabled]="isRegistering" placeholder="Email" autocomplete="off" required userAvailability>
 	<label for="password" class="sr-only">Password</label>
-	<input type="password" class="form-control register-form-password" id="password" name="password" ng-control="password" [(ng-model)]="credentials.password" [disabled]="isRegistering" placeholder="Password" autocomplete="off" required>
+	<input type="password" class="form-control register-form-password" id="password" name="password" ngControl="password" [(ngModel)]="credentials.password" [disabled]="isRegistering" placeholder="Password" autocomplete="off" required>
 	<button type="submit" class="btn btn-primary btn-block" [disabled]="!register.form.valid || isRegistering">
 		Register
 	</button>
 	<div class="text-right">
-		<a [router-link]="['../Login']">Back</a>
+		<a [routerLink]="['../Login']">Back</a>
 	</div>
 </form>
 
 <div
-	*ng-if="register.form.hasError('userAvailability', 'email')"
+	*ngIf="register.form.hasError('userAvailability', 'email')"
 	class="alert alert-danger center-block"
 	role="alert">
 	Sorry, but it looks like the email you are trying to register has already been registered.
-	<a [router-link]="['../Reset']">Forgot your password?</a>
+	<a [routerLink]="['../Reset']">Forgot your password?</a>
 </div>
 
 <div
-	*ng-if="isRegistrationFailed"
+	*ngIf="isRegistrationFailed"
 	class="alert alert-danger center-block"
 	role="alert">
 	{{ error || 'The registration, please try again later.' }}

@@ -17,7 +17,7 @@ import {
 import {isPresent} from '../common/lang';
 
 @Directive({
-	selector: '[equal-to][ng-control],[equal-to][ng-form-control],[equal-to][ng-model]',
+	selector: '[equalTo][ngControl],[equalTo][ngFormControl],[equalTo][ngModel]',
 	providers: [
 		provide(NG_VALIDATORS, {
 			useExisting: EqualToValidator,
@@ -29,7 +29,7 @@ import {isPresent} from '../common/lang';
 export class EqualToValidator implements Validator {
 	form: ControlGroup;
 	tc: AbstractControl;
-	@Input('equal-to') target: string;
+	@Input('equalTo') target: string;
 	constructor(@Host() formDir: NgForm) {
 		this.form = formDir.form;
 	}

@@ -1,15 +1,15 @@
 <form
 	class="todo-cell clearfix"
-	[ng-class]="{ 'js-complete': model.completed }"
+	[ngClass]="{ 'js-complete': model.completed }"
 	#todo="ngForm"
 	novalidate>
 	<div class="todo-cell-control">
-		<checkbox ng-control="status" [(ng-model)]="model.completed" (change)="onStatusChange($event)"></checkbox>
+		<checkbox ngControl="status" [(ngModel)]="model.completed" (change)="onStatusChange($event)"></checkbox>
 	</div>
-	<div class="todo-cell-content" [ng-class]="{ 'js-edit-mode': isEditMode }">
+	<div class="todo-cell-content" [ngClass]="{ 'js-edit-mode': isEditMode }">
 		<div class="todo-cell-content-input">
 			<label for="name" class="sr-only">Name/Title</label>
-			<input #input type="text" id="name" name="name" ng-control="title" [(ng-model)]="model.name" (change)="onNameChange($event.target.value)" (keyup.enter)="toggleEditMode($event, input)" [disabled]="model.completed" placeholder="Name/Title" autocomplete="off">
+			<input #input type="text" id="name" name="name" ngControl="title" [(ngModel)]="model.name" (change)="onNameChange($event.target.value)" (keyup.enter)="toggleEditMode($event, input)" [disabled]="model.completed" placeholder="Name/Title" autocomplete="off">
 		</div>
 		<div class="todo-cell-content-text">{{model.name}}</div>
 	</div>

@@ -1,6 +1,6 @@
 <form
 	class="change-form center-block m-t-lg"
-	(ng-submit)="submit()"
+	(ngSubmit)="submit()"
 	#change="ngForm"
 	novalidate>
 	<label for="email" class="sr-only">Email</label>
@@ -9,8 +9,8 @@
 		class="form-control change-form-email"
 		id="email"
 		name="email"
-		ng-control="email"
-		[(ng-model)]="credentials.email"
+		ngControl="email"
+		[(ngModel)]="credentials.email"
 		[disabled]="isChanging"
 		placeholder="Email"
 		autocomplete="off"
@@ -21,8 +21,8 @@
 		class="form-control change-form-oldpassword"
 		id="old-password"
 		name="oldPassword"
-		ng-control="oldPassword"
-		[(ng-model)]="credentials.oldPassword"
+		ngControl="oldPassword"
+		[(ngModel)]="credentials.oldPassword"
 		[disabled]="isChanging"
 		placeholder="Current Password"
 		autocomplete="off"
@@ -33,8 +33,8 @@
 		class="form-control change-form-newpassword"
 		id="new-password"
 		name="newPassword"
-		ng-control="newPassword"
-		[(ng-model)]="credentials.newPassword"
+		ngControl="newPassword"
+		[(ngModel)]="credentials.newPassword"
 		[disabled]="isChanging"
 		placeholder="New Password"
 		autocomplete="off"
@@ -44,12 +44,12 @@
 		class="form-control change-form-retypenewpassword"
 		id="retype-new-password"
 		name="retypeNewPassword"
-		ng-control="retypeNewPassword"
+		ngControl="retypeNewPassword"
 		[disabled]="isChanging"
 		placeholder="Retype New Password"
 		autocomplete="off"
 		required
-		equal-to="newPassword">
+		equalTo="newPassword">
 	<button
 		type="submit"
 		class="btn btn-block btn-primary"
@@ -57,34 +57,34 @@
 		Change Password
 	</button>
 	<div class="text-right">
-		<a [router-link]="['/Todos']">
+		<a [routerLink]="['/Todos']">
 			Back
 		</a>
 	</div>
 </form>
 
 <div
-	*ng-if="!change.form.valid && change.form.dirty"
+	*ngIf="!change.form.valid && change.form.dirty"
 	class="alert alert-danger center-block"
 	role="alert">
 	There seems to be some errors in the form.
 	<ul>
-		<li *ng-if="change.form.hasError('required', 'oldPassword')">Current password is required.</li>
-		<li *ng-if="change.form.hasError('required', 'newPassword')">A new password is required.</li>
-		<li *ng-if="change.form.hasError('equalTo', 'retypeNewPassword')">Please make sure the new password and retyped new password are the same.</li>
-		<li *ng-if="change.form.hasError('required', 'retypeNewPassword')">Please retype your new password.</li>
+		<li *ngIf="change.form.hasError('required', 'oldPassword')">Current password is required.</li>
+		<li *ngIf="change.form.hasError('required', 'newPassword')">A new password is required.</li>
+		<li *ngIf="change.form.hasError('equalTo', 'retypeNewPassword')">Please make sure the new password and retyped new password are the same.</li>
+		<li *ngIf="change.form.hasError('required', 'retypeNewPassword')">Please retype your new password.</li>
 	</ul>
 </div>
 
 <div
-	*ng-if="isChangeAttemptFailed"
+	*ngIf="isChangeAttemptFailed"
 	class="alert alert-danger center-block"
 	role="alert">
 	{{ error || 'Could not change your password, try again later.' }}
 </div>
 
 <div
-	*ng-if="isChangeAttemptSuccessful"
+	*ngIf="isChangeAttemptSuccessful"
 	class="alert alert-success center-block"
 	role="alert">
 	Successfuly changed your password.
