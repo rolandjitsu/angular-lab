@@ -24,7 +24,7 @@
 		"es6-shim": "0.33.x",
 		"reflect-metadata": "0.1.x",
 		"rxjs": "5.0.0-alpha.14",
-		"zone.js": "0.5.x"
+		"zone.js": "0.5.8"
 	},
 	"devDependencies": {
 		"babel-core": "6.3.x",
