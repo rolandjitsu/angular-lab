@@ -6,11 +6,12 @@ import {AuthClient, FirebaseAuthProvider} from '../../services';
 import {Glyph} from '../glyph/glyph';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'login',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/login/login.html',
+	templateUrl: './login.html',
 	styleUrls: [
-		'app/components/login/login.css'
+		'./login.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

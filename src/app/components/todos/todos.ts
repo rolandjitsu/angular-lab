@@ -12,11 +12,12 @@ class Form {
 }
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'todos',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/todos/todos.html',
+	templateUrl: './todos.html',
 	styleUrls: [
-		'app/components/todos/todos.css'
+		'./todos.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

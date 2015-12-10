@@ -11,12 +11,13 @@ import {Chores} from '../../services';
 import {TodoListItem} from '../todo_list_item/todo_list_item';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'todo-list',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	changeDetection: ChangeDetectionStrategy.Detached,
-	templateUrl: 'app/components/todo_list/todo_list.html',
+	templateUrl: './todo_list.html',
 	styleUrls: [
-		'app/components/todo_list/todo_list.css'
+		'./todo_list.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

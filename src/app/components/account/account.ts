@@ -7,11 +7,12 @@ import {AuthClient, isUserAuthenticated} from '../../services';
 import {EqualToValidator} from '../../validators';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'account',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/account/account.html',
+	templateUrl: './account.html',
 	styleUrls: [
-		'app/components/account/account.css'
+		'./account.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

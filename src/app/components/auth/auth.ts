@@ -7,11 +7,12 @@ import {ResetPassword} from '../reset_password/reset_password';
 import {Register} from '../register/register';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'auth',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/auth/auth.html',
+	templateUrl: './auth.html',
 	styleUrls: [
-		'app/components/auth/auth.css'
+		'./auth.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

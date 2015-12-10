@@ -7,11 +7,12 @@ import {AuthClient} from '../../services';
 import {UserAvailabilityValidator} from '../../validators';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'register',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/register/register.html',
+	templateUrl: './register.html',
 	styleUrls: [
-		'app/components/register/register.css'
+		'./register.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

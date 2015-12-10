@@ -11,12 +11,13 @@ import {Chores} from '../../services';
 import {Glyph} from '../glyph/glyph';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'todos-count',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	templateUrl: 'app/components/todos_count/todos_count.html',
+	templateUrl: './todos_count.html',
 	styleUrls: [
-		'app/components/todos_count/todos_count.css'
+		'./todos_count.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

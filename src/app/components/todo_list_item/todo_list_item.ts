@@ -11,12 +11,12 @@ import {Glyph} from '../glyph/glyph';
 import {Checkbox} from '../checkbox/checkbox';
 
 @Component({
-	// moduleId: module.id, // CommonJS standard
+	moduleId: module.id, // CommonJS standard
 	selector: '[todoListItem]',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/todo_list_item/todo_list_item.html',
+	templateUrl: './todo_list_item.html',
 	styleUrls: [
-		'app/components/todo_list_item/todo_list_item.css'
+		'./todo_list_item.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

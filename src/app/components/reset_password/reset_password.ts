@@ -5,11 +5,12 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {AuthClient} from '../../services';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'reset-password',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/reset_password/reset_password.html',
+	templateUrl: './reset_password.html',
 	styleUrls: [
-		'app/components/reset_password/reset_password.css'
+		'./reset_password.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,

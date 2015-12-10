@@ -19,11 +19,12 @@ import {KEY_CODES} from '../../common/key_codes';
 import {Glyph} from '../glyph/glyph';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'checkbox[ngControl], checkbox[ngFormControl], checkbox[ngModel]',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/checkbox/checkbox.html',
+	templateUrl: './checkbox.html',
 	styleUrls: [
-		'app/components/checkbox/checkbox.css'
+		'./checkbox.css'
 	],
 	directives: [
 		Glyph

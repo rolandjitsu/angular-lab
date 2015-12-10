@@ -12,11 +12,12 @@ import {Account} from '../account/account';
 import {Todos} from '../todos/todos';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'app',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: 'app/components/app/app.html',
+	templateUrl: './app.html',
 	styleUrls: [
-		'app/components/app/app.css'
+		'./app.css'
 	],
 	directives: [
 		CORE_DIRECTIVES,
