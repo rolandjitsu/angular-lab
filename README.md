@@ -34,7 +34,11 @@ As package/typings managers:
 * [Firebase Setup](#firebase-setup)
 	* [Authentication](#authentication)
 	* [Hosting](#hosting)
-* [Running Tests](#running-tests)
+* [Travis CI Setup](#travis-ci-setup)
+* [Development](#development)
+	* [Info](#info)
+	* [Running Tests](#running-tests)
+	* [Other Tasks](#other-tasks)
 * [Browser Support](#browser-support)
 * [Learning Material](#learning-material)
 * [Credits](#credits)
@@ -42,10 +46,17 @@ As package/typings managers:
 
 ### Setup
 ---------
-Clone this repo and setup the following tools on your machine:
+Make sure you have [Node](http://nodejs.org) (*if not already installed*) then clone this repo and setup the following tools on your machine using `npm install -g <package>`:
+* [Bower](http://bower.io)
+* [TSD](http://definitelytyped.org/tsd)
+* [Gulp](http://gulpjs.com/)
 
-* [Node](http://nodejs.org) (*if not already installed*)
-* [Gulp](http://gulpjs.com/) (*optional*)
+**Note**: All the above tools are only necessary to install globally to avoid writing `./node_modules/.bin/<command>`/`$(npm bin)/<command>` every time you want to run a command. Users running OS X or Linux based systems (soon Windows as well) could also use tools like [direnv](http://direnv.net) to expose the local npm binaries using a `.envrc` file:
+```shell
+# Node Binaries
+export PATH=$PATH:$PWD/node_modules/.bin
+```
+As a preference, I prefer not having anything installed globally and keep everything isolated per project.
 
 After you have the above tools setup, install all runtime/dev dependencies by running:
 
@@ -55,9 +66,9 @@ $(npm bin)/bower install
 $(npm bin)/tsd install
 ```
 
-**Note**: If you change any of the deps (remove/add) in either `bower.json`, `package.json` or `tsd.json`, make sure that you run the above steps again.
+**Note**: If you change any of the deps (remove/add) in either `bower.json`, `package.json` or `tsd.json`, make sure that you run the above commands again.
 
-Now start the webserver and the build process (runs on file change) and navigate to [localhost:3000](http://localhost:3000):
+Now start the webserver and the build/watch processes (to watch for file changes) and the app will open in your default browser:
 
 ```shell
 $(node bin)/npm start # `$(npm bin)/gulp serve`
@@ -104,20 +115,61 @@ $(npm bin)/gulp deploy/hosting --token <your firebase token>
 **Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy/hosting` so you won't need to provide the `--token` option every time you run the command.
 
 
-### Running Tests
------------------
+### Travis CI Setup
+-------------------
+If you plan on using this setup with your own projects and you wish to setup Travis CI, then you must make sure of a couple of things in order to have everything working properly on the CI:
+1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase prefs:token` so that your deployments to firebase will work. If you do not use Firebase, skip this step. Also, you may want to encript the token if the source code is available for public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
+2. Because of the nature of TSD, sometimes you will see some errors when it will try to install typings (about a Github rate limit), if that happens, you will also want to setup a `TSD_GITHUB_TOKEN` env variable which contains a [personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) (should also be encrypted).
+3. In case you use SauceLabs, set the env var `SAUCE_USERNAME` to your own username and create a new env variable `SAUCE_ACCESS_KEY` containing the access key you can get from the SauceLabs dashboard (read more about setting up SauceLabs with Travis [here](https://docs.travis-ci.com/user/sauce-connect/)).
+4. If you do not use the deployment to Firebase, remove that step from `.travis.yml`.
+
+Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account. So I suggest you start out with a clean project and start git from scratch (`git init`), then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
+
+
+### Development
+---------------
+Bellow you can find a couple of things to help understanding how this setup works and how to make it easier when developing on this app (or starting your own and use this as a guideline).
+
+#### Info
+
+When running the app (`$(npm bin)/gulp serve`) in a terminal window and running the unit tests (`$(npm bin)/gulp test/unit:continuous`) in watch mode in another at the same time (or vice versa), two web socket servers will be started in the background in order to communicate between the two processes.
+The reason for the above is that when the app builds on file change the unit tests should not build again at the same time the app started the build (nor the other way around). Moreover, this will make sure to notify BrowserSync that a change happened and that it should reload the browser to reflect that change.
+
+Furthermore, when running the `$(npm bin)/gulp serve` command a couple of things will happen:
+
+1. everything will be distributed to a `dist` dir
+2. dependencies will be copied to the dist folder
+3. HTML and static assets will be copied to the dist folder
+4. SASS will be compiled to CSS into the dist folder
+5. the app and tests `.ts` files will be compiled (into the dist) and a build server will be started (the build server runs the `.ts` file compilation when a file change occurs)
+2. a watcher for HTML, SASS and static assets will be started
+5. [BrowserSync](http://browsersync.io) will open a browser window with the app running (on port `3000`, with the BS interface on port `3001` and the Weinre tool on `8080`)
+
+The above info is important because you need to make sure that the following ports are always avaialble: `1729`, `6174`, `3000`, `3001`, `8080`.
+
+#### Running Tests
+
 Tests can be run selectively as it follows:
-* `$(npm bin)/gulp test/unit:continuous`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
+
 * `$(npm bin)/gulp lint`: runs [tslint](http://palantir.github.io/tslint/) and checks all `.ts` files according to the `tslint.json` rules file
+* `$(npm bin)/gulp test/unit:continuous`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
 * `$(npm bin)/gulp test/unit:single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
 * `$(npm bin)/gulp test/e2e:single`: e2e tests in a browser; runs in single run mode
 
-**Note**: When running the app (`$(npm bin)/gulp serve`) in a terminal window and running the unit tests (`$(npm bin)/gulp test/unit:continuous`) in watch mode in another at the same time (or vice versa), two web socket servers will be started in the background in order to communicate between the two processes so that when the app builds on file change the unit tests won't build again (the unit tests task must bulid the `.ts` files in order to run the tests). Therefore, make sure port `1729` and port `6174` are not used by any other process.
+#### Other Tasks
+
+If you run into caching issues or some other problems with the contents of the distribution folder, you could run the `$(npm bin)/gulp clean` task to remove it and then rebuild everything again.
+
+If you just want to build everything, run `$(npm bin)/gulp build`.
+
+And if you want to deploy the Firebase security rules, use `$(npm bin)/gulp deploy/rules`. Just make sure you provide the auth token either as an env variable (`FIREBASE_TOKEN`) or as an option (`--token`).
+
+And of course to see what other tasks are available, run `$(npm bin)/gulp --tasks`.
 
 
 ### Browser Support
 -------------------
-Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/zloirock/core-js) are provided, this app has no official indication of what browsers it supports (lack of enough unit tests).
+Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/zloirock/core-js) are provided, this app has no official indication of what browsers it supports (lack of enough unit/e2e tests).
 Though, you can check out the browser support for [Angular 2](https://github.com/angular-class/awesome-angular2#current-browser-support-for-angular-2) and assume that the app will work where Angular 2 works.
 
 
