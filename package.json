@@ -48,6 +48,7 @@
 		"http-server": "0.8.x",
 		"jasmine": "2.4.x",
 		"jasmine-core": "2.4.x",
+		"jasmine-spec-reporter": "2.4.x",
 		"karma": "0.13.x",
 		"karma-chrome-launcher": "0.2.x",
 		"karma-cli": "0.1.x",

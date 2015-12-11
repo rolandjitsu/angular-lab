@@ -1,4 +1,7 @@
 var yargs = require('yargs');
+// Using Jasmine Spec Reporter
+// https://github.com/bcaudan/jasmine-spec-reporter/blob/master/docs/protractor-configuration.md
+var SpecReporter = require('jasmine-spec-reporter');
 
 var argv = yargs
 	.usage('NG2 Lab E2E test options.')
@@ -73,7 +76,12 @@ module.exports.config = {
 	jasmineNodeOpts: {
 		color: true,
 		defaultTimeoutInterval: 60000,
-		verbose: true
+		// Remove protractor dot reporter
+		print: function () {}
+	},
+	onPrepare: function() {
+		// Add jasmine spec reporter
+		jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
 	},
 	plugins: [
 		{package: 'protractor-console-plugin'},
