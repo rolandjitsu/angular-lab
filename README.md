@@ -118,6 +118,7 @@ $(npm bin)/gulp deploy/hosting --token <your firebase token>
 ### Travis CI Setup
 -------------------
 If you plan on using this setup with your own projects and you wish to setup Travis CI, then you must make sure of a couple of things in order to have everything working properly on the CI:
+
 1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase prefs:token` so that your deployments to firebase will work. If you do not use Firebase, skip this step. Also, you may want to encript the token if the source code is available for public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
 2. Because of the nature of TSD, sometimes you will see some errors when it will try to install typings (about a Github rate limit), if that happens, you will also want to setup a `TSD_GITHUB_TOKEN` env variable which contains a [personal access token](https://help.github.com/articles/creating-an-access-token-for-command-line-use/) (should also be encrypted).
 3. In case you use SauceLabs, set the env var `SAUCE_USERNAME` to your own username and create a new env variable `SAUCE_ACCESS_KEY` containing the access key you can get from the SauceLabs dashboard (read more about setting up SauceLabs with Travis [here](https://docs.travis-ci.com/user/sauce-connect/)).
