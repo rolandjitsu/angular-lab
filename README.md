@@ -7,14 +7,23 @@
 
 This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
-* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features
+* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular and this project
 * [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
+* [Angular 2](http://angular.io/) - obviously (and all it's dependencies: [RxJS](https://github.com/ReactiveX/RxJS), [zone.js](https://github.com/angular/zone.js), etc.)
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
+* [Protractor](https://angular.github.io/protractor) - e2e test framework
 * [Karma](http://karma-runner.github.io)
 * [Jasmine](http://jasmine.github.io) - assertion lib for the app unit tests
-* [Protractor](https://angular.github.io/protractor) - e2e test framework
 * [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
 * [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
+* [Gulp](http://gulpjs.com) - task runner (and some other dependencies used for some tasks)
+* [BrowserSync](http://browsersync.io) - makes code refresh very easy
+
+As package/typings managers:
+* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependecies version's
+* [NPM](https://npmjs.com)
+* [Bower](http://bower.io)
+* [TSD](http://definitelytyped.org/tsd)
 
 **Note**: Bear in mind that [Angular 2](https://angular.io) is not production ready yet, but you can keep an eye on it [here](http://splintercode.github.io/is-angular-2-ready), courtesy of [Cory Rylan](https://github.com/splintercode).
 

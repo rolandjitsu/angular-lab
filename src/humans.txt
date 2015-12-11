@@ -19,12 +19,12 @@
 
 	TypeScript, JavaScript (ES6/7)
 	HTML5, CSS3
-	SystemJS, Core JS
+	Core JS, SystemJS
 	Angular 2
 	Material Design Lite, Material Icons
+	Firebase
 	NPM, Bower, TSD
-	Gulp
-	Karma, Jasmine, Protractor
+	Gulp, BrowserSync
+	Protractor, Karma, Jasmine
 	Travis CI, Saucelabs
 	Gemnasium
-	Firebase
