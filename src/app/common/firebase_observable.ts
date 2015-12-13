@@ -1,4 +1,4 @@
-import { Observable } from 'angular2/core';
+import {Observable} from 'rxjs/Observable';
 
 export enum FirebaseEventType {
 	Value,
