@@ -59,7 +59,6 @@
 		"protractor-accessibility-plugin": "0.1.x",
 		"protractor-console-plugin": "0.1.x",
 		"sauce-connect-launcher": "0.13.x",
-		"sleep": "3.0.x",
 		"split2": "1.0.x",
 		"tsd": "0.6.x",
 		"tslint": "3.1.x",

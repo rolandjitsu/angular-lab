@@ -13,7 +13,6 @@ import sauceConnectLauncher from 'sauce-connect-launcher';
 import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
-import {sleep} from 'sleep';
 import split from 'split2';
 import tslint from 'gulp-tslint';
 import typescript from 'typescript';
@@ -347,15 +346,15 @@ function createHttpServer() {
 				resolve();
 			},
 			() => {
-				sleep(5); // Let's wait for our webserver to be online
 				log(colors.green(`Webserver started on port ${WEB_SERVER_PORT}`));
 				let proc = spawn(binary, [
 					PATHS.dist.public,
 					`-p ${WEB_SERVER_PORT}`,
 					'--silent'
 				]);
+				// Let's wait for our webserver to be online
+				setTimeout(() => resolve(proc));
 				streamProcLog(proc);
-				resolve(proc);
 			}
 		);
 	});
