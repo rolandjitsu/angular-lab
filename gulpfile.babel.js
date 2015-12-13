@@ -9,6 +9,7 @@ import {env, log, colors} from 'gulp-util';
 import karma from 'karma';
 import plumber from 'gulp-plumber';
 import rename from 'gulp-rename';
+import sauceConnectLauncher from 'sauce-connect-launcher';
 import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
@@ -299,14 +300,34 @@ gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
 		]
 	});
 	if (!BROWSER_CONF.isSauce) {
-		log(colors.red('There were no Saucelabs browsers provided, add them with the --browsers option'));
+		log(colors.red('There were no Saucelabs browsers provided, add them with the --browsers option.'));
 		done();
-		process.exit(1);
 	} else {
-		createKarmaServer(CONFIG, (err) => {
+		log(colors.white('Starting sauce connect ...'));
+		const SAUCE_USERNAME = process.env.SAUCE_USERNAME || env.username;
+		const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY || env.accessKey;
+		if (!SAUCE_USERNAME) {
+			log(colors.red('No SAUCE_USERNAME found in env or --username option passed.'));
 			done();
-			process.exit(err ? 1 : 0);
-		});
+		} else if (!SAUCE_ACCESS_KEY) {
+			log(colors.red('No SAUCE_ACCESS_KEY found in env or --accessKey option passed.'));
+			done();
+		} else {
+			sauceConnectLauncher({username: SAUCE_USERNAME, accessKey: SAUCE_ACCESS_KEY}, (err, proc) => {
+				if (err) {
+					log(colors.red(err.message));
+					done();
+					process.exit(1);
+				} else {
+					log(colors.cyan("Sauce connect is ready"));
+					createKarmaServer(CONFIG, (err) => {
+						proc.close();
+						done();
+						process.exit(err ? 1 : 0);
+					});
+				}
+			});
+		}
 	}
 }));
 

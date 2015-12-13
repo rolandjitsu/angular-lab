@@ -157,6 +157,8 @@ Tests can be run selectively as it follows:
 * `$(npm bin)/gulp test/unit:single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
 * `$(npm bin)/gulp test/e2e:single`: e2e tests in a browser; runs in single run mode
 
+And if you have a Saucelabse account, you can also run unit tests on some of the SL browsers provided in `sauce.config.js`. Just call `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox, iOS9` (and whatever other browsers you wish) and make sure that you have the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env variables set. You can also pass the two env variables as options if you prefer it: `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox --username=<your sauce username> --acessKey=<you sauce access key>`.
+
 #### Other Tasks
 
 If you run into caching issues or some other problems with the contents of the distribution folder, you could run the `$(npm bin)/gulp clean` task to remove it and then rebuild everything again.
