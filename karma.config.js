@@ -1,5 +1,5 @@
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
-import {SAUCE_LAUNCHERS} from './sauce.config';
+import {SAUCE_LAUNCHERS} from './browsers.config.js';
 
 let karmaConfig = {};
 let sauceLabsConfig = {

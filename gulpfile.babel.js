@@ -20,7 +20,7 @@ import typescript from 'typescript';
 import {Server} from 'ws';
 import WebSocket from 'ws';
 
-import {SAUCE_LAUNCHERS, SAUCE_ALIASES} from './sauce.config';
+import {CUSTOM_LAUNCHERS, SAUCE_ALIASES} from './browsers.config';
 
 
 class WebSocketServer extends Server {
@@ -509,18 +509,18 @@ function getBrowsersConfigFromCLI() {
 	let outputList = [];
 	for (let i = 0; i < inputList.length; i++) {
 		let input = inputList[i];
-		if (SAUCE_LAUNCHERS.hasOwnProperty(input)) {
+		if (CUSTOM_LAUNCHERS.hasOwnProperty(input)) {
 			// Non-sauce browsers case: overrides everything, ignoring other options
 			outputList = [input];
 			isSauce = false;
 			break;
-		} else if (SAUCE_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
+		} else if (CUSTOM_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
 			isSauce = true;
 			outputList.push(`SL_${input.toUpperCase()}`);
 		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
 			outputList = outputList.concat(SAUCE_ALIASES[input]);
 			isSauce = true;
-		} else throw new Error('Browser name(s) passed as option could not be found in SAUCE_LAUNCHERS. Check available browsers in "sauce.config.js".');
+		} else throw new Error('Browser name(s) passed as option could not be found in SAUCE_LAUNCHERS. Check available browsers in "browsers.js".');
 	}
 	return {
 		browsers: outputList.filter((item, pos, self) => {
