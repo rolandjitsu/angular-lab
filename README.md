@@ -10,12 +10,20 @@ This setup is using:
 * [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular and this project
 * [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
 * [Angular 2](http://angular.io/) - obviously (and all it's dependencies: [RxJS](https://github.com/ReactiveX/RxJS), [zone.js](https://github.com/angular/zone.js), etc.)
+
+Hosted services (BaaS):
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
+
+For tests:
 * [Protractor](https://angular.github.io/protractor) - e2e test framework
 * [Karma](http://karma-runner.github.io)
 * [Jasmine](http://jasmine.github.io) - assertion lib for the app unit tests
+
+As a CI/CD:
 * [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
 * [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
+
+Task runner and dev tools:
 * [Gulp](http://gulpjs.com) - task runner (and some other dependencies used for some tasks)
 * [BrowserSync](http://browsersync.io) - makes code refresh very easy
 
