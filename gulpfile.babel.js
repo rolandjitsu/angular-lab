@@ -47,13 +47,13 @@ const KARMA_CONFIG = {
 	configFile: `${__dirname}/karma.config.js`
 };
 
-const ENGINE_IO_BASE_SOCKET_ADDRESS = 'ws://localhost:';
+const BASE_WS_SOCKET_ADDRESS = 'ws://localhost:';
 
 const JS_BUILD_SERVER_PORT = 6174; // Kaprekar's constant
-const JS_BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${JS_BUILD_SERVER_PORT}`;
+const JS_BUILD_SERVER_ADDRESS = `${BASE_WS_SOCKET_ADDRESS}${JS_BUILD_SERVER_PORT}`;
 
 const BUILD_SERVER_PORT = 1729; // Hardy–Ramanujan number
-const BUILD_SERVER_ADDRESS = `${ENGINE_IO_BASE_SOCKET_ADDRESS}${BUILD_SERVER_PORT}`;
+const BUILD_SERVER_ADDRESS = `${BASE_WS_SOCKET_ADDRESS}${BUILD_SERVER_PORT}`;
 
 const WEB_SERVER_PORT = 3000;
 
