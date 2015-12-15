@@ -14,8 +14,9 @@
 	</head>
 	<body>
 		<app></app>
-		<!-- ES6 -->
+		<!-- ES6/Polyfills -->
 		<script src="lib/shim.min.js"></script>
+		<script src="lib/angular2-polyfills.js"></script>
 		<script src="lib/system.js"></script>
 		<script>
 			System.warnings = true;
@@ -30,9 +31,9 @@
 				console.error.bind(console)
 			);
 		</script>
-		<!-- Angular Deps -->
+		<!-- Angular 2 -->
 		<script src="lib/angular2.min.js"></script>
-		<script src="lib/router.js"></script>
+		<script src="lib/router.min.js"></script>
 		<script src="lib/http.min.js"></script>
 		<!-- Firebase -->
 		<script src="lib/firebase.js"></script>

@@ -29,12 +29,13 @@ Object.assign(karmaConfig, {
 	],
 	files: [
 		'node_modules/core-js/client/shim.js',
-		'node_modules/systemjs/dist/system.src.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+		'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+		'node_modules/angular2/bundles/angular2-polyfills.js',
 		'node_modules/angular2/bundles/angular2.dev.js',
 		'node_modules/angular2/bundles/router.dev.js',
 		'node_modules/angular2/bundles/http.dev.js',
-		'node_modules/angular2/bundles/testing.js',
-		'bower_components/firebase/firebase.js',
+		'node_modules/angular2/bundles/testing.dev.js',
+		'bower_components/firebase/firebase-debug.js',
 		// Sources and specs
 		// Loaded through systemjs, in `test.js`
 		{
