@@ -18,24 +18,35 @@
 		<script src="lib/shim.min.js"></script>
 		<script src="lib/angular2-polyfills.js"></script>
 		<script src="lib/system.js"></script>
-		<script>
-			System.warnings = true;
-			System.defaultJSExtensions = true;
-			System.config({
-				paths: {
-					'rxjs/operator/*': 'lib/rxjs/add/operator/*.js',
-					'rxjs/*' : 'lib/rxjs/*.js'
-				}
-			});
-			System.import('app/bootstrap').catch(
-				console.error.bind(console)
-			);
-		</script>
+
 		<!-- Angular 2 -->
 		<script src="lib/angular2.min.js"></script>
 		<script src="lib/router.min.js"></script>
 		<script src="lib/http.min.js"></script>
 		<!-- Firebase -->
 		<script src="lib/firebase.js"></script>
+
+		<script>
+			System.warnings = true;
+			//System.defaultJSExtensions = true;
+			System.config({
+				packages: {
+					'app'     : {
+						defaultExtension: 'js'
+					},
+					'lib/rxjs': {
+						defaultExtension: 'js'
+					}
+				},
+				paths   : {
+					'rxjs/operator/*': 'lib/rxjs/add/operator/*.js',
+					'rxjs/*'         : 'lib/rxjs/*.js'
+				}
+			});
+			System.import('app/bootstrap').catch(
+				console.error.bind(console)
+			);
+		</script>
+
 	</body>
 </html>
