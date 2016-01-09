@@ -23,24 +23,21 @@
 		<script src="lib/angular2.min.js"></script>
 		<script src="lib/router.min.js"></script>
 		<script src="lib/http.min.js"></script>
+		
 		<!-- Firebase -->
 		<script src="lib/firebase.js"></script>
 
+		<!-- SystemJS Config -->
 		<script>
 			System.warnings = true;
-			//System.defaultJSExtensions = true;
 			System.config({
 				packages: {
-					'app'     : {
-						defaultExtension: 'js'
-					},
-					'lib/rxjs': {
-						defaultExtension: 'js'
-					}
+					'app': {defaultExtension: 'js'},
+					'lib/rxjs': {defaultExtension: 'js'}
 				},
-				paths   : {
+				paths: {
 					'rxjs/operator/*': 'lib/rxjs/add/operator/*.js',
-					'rxjs/*'         : 'lib/rxjs/*.js'
+					'rxjs/*': 'lib/rxjs/*.js'
 				}
 			});
 			System.import('app/bootstrap').catch(
