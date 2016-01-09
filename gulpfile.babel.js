@@ -60,9 +60,10 @@ const WEB_SERVER_PORT = 3000;
 const PATHS = {
 	lib: [
 		'bower_components/firebase/firebase.js',
-		'node_modules/core-js/client/shim.*',
+		'node_modules/es6-shim/es6-shim.*',
 		'node_modules/systemjs/dist/system.*',
 		'node_modules/angular2/bundles/angular2-polyfills.js',
+		'node_modules/angular2/bundles/angular2-polyfills.min.js',
 		'node_modules/angular2/bundles/angular2.js',
 		'node_modules/angular2/bundles/angular2.min.js',
 		'node_modules/angular2/bundles/angular2.dev.js',
