@@ -211,9 +211,9 @@ export class FirebaseArray extends Array {
 
 	move(key: string, priority: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			/* tslint:disable */
-			if (!keyExists(key) || isPriorityValid(priority)) return reject();
-			/* tslint:enable */
+			if (isPriorityValid(priority) || !keyExists(key)) {
+				return reject();
+			}
 			let ref: Firebase = this.ref.child(key);
 			ref.setPriority(priority, (error) => {
 				if (error) reject(error);
