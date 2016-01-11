@@ -18,10 +18,13 @@ __karma__.loaded = function () {};
 System.warnings = true;
 System.config({
 	packages: {
-		app: {defaultExtension: 'js'}
+		'app': {defaultExtension: 'js'},
+		'rxjs': {defaultExtension: 'js'}
 	},
 	paths: {
-		'app/*': '/base/dist/public/app/*'
+		'app/*': '/base/dist/public/app/*',
+		'rxjs/operator/*': '/base/node_modules/rxjs/add/operator/*.js',
+		'rxjs/*': '/base/node_modules/rxjs/*'
 	}
 });
 

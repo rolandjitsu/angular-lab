@@ -28,14 +28,18 @@ Object.assign(karmaConfig, {
 		'jasmine'
 	],
 	files: [
-		'node_modules/core-js/client/shim.js',
-		'node_modules/systemjs/dist/system.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
+		'node_modules/es6-shim/es6-shim.js',
 		'node_modules/angular2/bundles/angular2-polyfills.js',
+		'node_modules/systemjs/dist/system.src.js', // Including systemjs because it defines `__eval`, which produces correct stack traces
 		'node_modules/angular2/bundles/angular2.dev.js',
 		'node_modules/angular2/bundles/router.dev.js',
 		'node_modules/angular2/bundles/http.dev.js',
 		'node_modules/angular2/bundles/testing.dev.js',
+
+		{pattern: 'node_modules/rxjs/**', included: false, watched: false, served: true},
+
 		'bower_components/firebase/firebase-debug.js',
+
 		// Sources and specs
 		// Loaded through systemjs, in `test.js`
 		{
@@ -52,9 +56,7 @@ Object.assign(karmaConfig, {
 	],
 	exclude: [],
 	customLaunchers: SAUCE_LAUNCHERS,
-	browsers: [
-		'Chrome'
-	],
+	sauceLabs: sauceLabsConfig,
 	plugins: [
 		'karma-chrome-launcher',
 		'karma-jasmine',
@@ -64,7 +66,9 @@ Object.assign(karmaConfig, {
 	preprocessors: {
 		'**/*.js': ['sourcemap']
 	},
-	sauceLabs: sauceLabsConfig
+	browsers: [
+		'Chrome'
+	]
 });
 
 module.exports = function (config) {
