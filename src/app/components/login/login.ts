@@ -3,7 +3,6 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {AuthClient, FirebaseAuthProvider} from '../../services';
-import {Glyph} from '../glyph/glyph';
 
 @Component({
 	moduleId: module.id, // CommonJS standard
@@ -16,8 +15,7 @@ import {Glyph} from '../glyph/glyph';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES,
-		Glyph
+		ROUTER_DIRECTIVES
 	]
 })
 

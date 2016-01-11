@@ -8,7 +8,6 @@ import {
 import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {Chores} from '../../services';
-import {Glyph} from '../glyph/glyph';
 
 @Component({
 	moduleId: module.id, // CommonJS standard
@@ -20,8 +19,7 @@ import {Glyph} from '../glyph/glyph';
 		'./todos_count.css'
 	],
 	directives: [
-		CORE_DIRECTIVES,
-		Glyph
+		CORE_DIRECTIVES
 	]
 })
 

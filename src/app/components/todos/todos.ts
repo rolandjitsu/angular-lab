@@ -3,7 +3,6 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
 
 import {AuthClient, isUserAuthenticated, Chores} from '../../services';
-import {Glyph} from '../glyph/glyph';
 import {TodosCount} from '../todos_count/todos_count';
 import {TodoList} from '../todo_list/todo_list';
 
@@ -23,7 +22,6 @@ class Form {
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
 		ROUTER_DIRECTIVES,
-		Glyph,
 		TodosCount,
 		TodoList
 	]

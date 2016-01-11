@@ -1,6 +1,6 @@
 import {bootstrap} from 'angular2/platform/browser';
 import {FORM_PROVIDERS} from 'angular2/common';
-import {provide, enableProdMode} from 'angular2/core';
+import {PLATFORM_DIRECTIVES, provide, enableProdMode} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {
 	ROUTER_PRIMARY_COMPONENT,
@@ -10,8 +10,10 @@ import {
 	HashLocationStrategy
 } from 'angular2/router';
 
+import {Checkbox} from './common/checkbox/checkbox';
+import {Glyph} from './common/glyph/glyph';
 import {SERVICES_PROVIDERS} from './services';
-import {App} from './components';
+import {App} from './components/app/app';
 
 const ROUTER_PROVIDERS: Array<any> = [
 	NG2_ROUTER_PROVIDERS,
@@ -30,7 +32,14 @@ const APP_PROVIDERS: Array<any> = [
 	HTTP_PROVIDERS,
 	FORM_PROVIDERS,
 	ROUTER_PROVIDERS,
-	SERVICES_PROVIDERS
+	SERVICES_PROVIDERS,
+	provide(PLATFORM_DIRECTIVES, {
+		useValue: [
+			Checkbox,
+			Glyph
+		],
+		multi: true
+	})
 ];
 
 // TODO: eventually this would need to be enabled only if we are in production

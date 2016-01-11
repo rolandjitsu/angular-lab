@@ -7,8 +7,6 @@ import {
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Chores, Chore} from '../../services';
-import {Glyph} from '../glyph/glyph';
-import {Checkbox} from '../checkbox/checkbox';
 
 @Component({
 	moduleId: module.id, // CommonJS standard
@@ -20,9 +18,7 @@ import {Checkbox} from '../checkbox/checkbox';
 	],
 	directives: [
 		CORE_DIRECTIVES,
-		FORM_DIRECTIVES,
-		Glyph,
-		Checkbox
+		FORM_DIRECTIVES
 	]
 })
 

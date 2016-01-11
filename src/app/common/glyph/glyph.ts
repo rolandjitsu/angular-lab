@@ -8,11 +8,12 @@ import {
 import {Icon} from '../../services';
 
 @Component({
+	moduleId: module.id, // CommonJS standard
 	selector: 'glyph',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	template: '',
 	styleUrls: [
-		'app/components/glyph/glyph.css'
+		'./glyph.css'
 	],
 	inputs: [
 		'src'
