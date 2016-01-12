@@ -23,7 +23,7 @@ System.config({
 	},
 	paths: {
 		'app/*': '/base/dist/public/app/*',
-		'rxjs/operator/*': '/base/node_modules/rxjs/add/operator/*.js',
+		'rxjs/operator/*': '/base/node_modules/rxjs/add/operator/*',
 		'rxjs/*': '/base/node_modules/rxjs/*'
 	}
 });
