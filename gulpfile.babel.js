@@ -277,7 +277,7 @@ gulp.task('test/unit:ci/sauce', function (done) {
 
 // Locally we need to run a build before we run any tests
 gulp.task('test/unit:continuous', gulp.series('build', function run(done) {
-	createKarmaServer(KARMA_CONFIG);
+	createKarmaServer(KARMA_CONFIG, done);
 	createJsBuildServer();
 }));
 
@@ -461,7 +461,7 @@ gulp.task(function serve(done) {
 				bs.init({
 					server: PATHS.dist.public,
 					port: WEB_SERVER_PORT
-				});
+				}, done);
 				// When process exits kill browser-sync server
 				process.on('exit', () => {
 					bs.exit();
