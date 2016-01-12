@@ -33,11 +33,11 @@
 			System.config({
 				packages: {
 					'app': {defaultExtension: 'js'},
-					'lib/rxjs': {defaultExtension: 'js'}
+					'rxjs': {defaultExtension: 'js'}
 				},
 				paths: {
-					'rxjs/operator/*': 'lib/rxjs/add/operator/*.js',
-					'rxjs/*': 'lib/rxjs/*.js'
+					'rxjs/operator/*': 'lib/rxjs/add/operator/*',
+					'rxjs/*': 'lib/rxjs/*'
 				}
 			});
 			System.import('app/bootstrap').catch(
