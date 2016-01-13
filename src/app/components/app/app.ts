@@ -3,6 +3,7 @@ import {CORE_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction} from 'angular2/router';
 
 import {AuthClient} from '../../services';
+import {Tracker} from '../../services';
 import {LowerCasePipe} from '../../pipes';
 import {Auth} from '../auth/auth';
 import {Login} from '../login/login';
@@ -48,19 +49,22 @@ import {Todos} from '../todos/todos';
 ])
 
 export class App {
-	constructor(router: Router, location: Location, client: AuthClient) {
+	constructor(router: Router, location: Location, client: AuthClient, tracker: Tracker) {
 		client.session.subscribe((auth: FirebaseAuthData) => {
 			router.recognize(location.path()).then((instruction: Instruction) => {
 				if (auth && isAuthComponent(instruction)) router.navigate(['/Todos']);
 				else if (!auth && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
 			});
 		});
-		// TODO: eventually this will be handled by `@CanActivate` hook
-		// router.subscribe((path) => {
-		// 	router.recognize(path).then((instruction: Instruction) => {
-		// 		if (!client.session && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
-		// 	});
-		// });
+		router.subscribe((path) => {
+			console.log(path);
+			tracker.send('pageview', path.length ? path : '/');
+			// router.recognize(path).then((instruction: Instruction) => {
+			// 	console.log(instruction);
+			// 	
+			// 	// if (!client.session && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
+			// });
+		});
 	}
 }
 

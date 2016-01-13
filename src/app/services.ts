@@ -5,12 +5,14 @@ import {AuthClient} from './services/auth';
 import {Chores} from './services/chores';
 import {FIREBASE_APP_LINK, FIREBASE_CHORES_PATH} from './services/firebase';
 import {Icon} from './services/icon';
+import {Tracker} from './services/tracker';
 import {User} from './services/user';
 
 export * from './services/auth';
 export * from './services/chores';
 export * from './services/firebase';
 export * from './services/icon';
+export * from './services/tracker';
 export * from './services/user';
 
 export const SERVICES_PROVIDERS: Array<any> = [
@@ -59,5 +61,10 @@ export const SERVICES_PROVIDERS: Array<any> = [
 		deps: [
 			Http
 		]
+	}),
+	provide(Tracker, {
+		useFactory: () => {
+			return new Tracker();
+		}
 	})
 ];
