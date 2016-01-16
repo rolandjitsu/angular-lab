@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs/Observable';
 
-export enum FirebaseEventType {
+export enum FirebaseQueryEventType {
 	Value,
 	ChildAdded,
 	ChildChanged,
@@ -8,31 +8,31 @@ export enum FirebaseEventType {
 	ChildMoved
 }
 
-const FIREBASE_EVENT_TYPE = {
-	[FirebaseEventType.Value]: 'value',
-	[FirebaseEventType.ChildAdded]: 'child_added',
-	[FirebaseEventType.ChildChanged]: 'child_changed',
-	[FirebaseEventType.ChildMoved]: 'child_moved',
-	[FirebaseEventType.ChildRemoved]: 'child_removed'
+const FIREBASE_QUERY_EVENT_TYPE_PROPERTY = {
+	[FirebaseQueryEventType.Value]: 'value',
+	[FirebaseQueryEventType.ChildAdded]: 'child_added',
+	[FirebaseQueryEventType.ChildChanged]: 'child_changed',
+	[FirebaseQueryEventType.ChildMoved]: 'child_moved',
+	[FirebaseQueryEventType.ChildRemoved]: 'child_removed'
 };
 
-export interface FirebaseEvent {
+export interface FirebaseQueryEvent {
 	data: FirebaseDataSnapshot;
-	type: FirebaseEventType;
+	type: FirebaseQueryEventType;
 }
 
-export class FirebaseObservable extends Observable<FirebaseEvent> {
+export class FirebaseQueryObservable extends Observable<FirebaseQueryEvent> {
 	private _path: string;
-	private _events: FirebaseEventType[];
+	private _events: FirebaseQueryEventType[];
 
-	constructor(path: string | Firebase | FirebaseQuery, events: FirebaseEventType[]) {
+	constructor(path: string | Firebase | FirebaseQuery, events: FirebaseQueryEventType[]) {
 		super((observer) => {
 			let map = [];
 			let firebaseRef: Firebase | FirebaseQuery = path instanceof Firebase || typeof path === 'object' ? path : new Firebase(`${path}`);
 			for (var event of events) {
-				event = FIREBASE_EVENT_TYPE[event];
+				event = FIREBASE_QUERY_EVENT_TYPE_PROPERTY[event];
 				map.push([event, function (snapshot: FirebaseDataSnapshot) {
-					observer.next(<FirebaseEvent>{
+					observer.next(<FirebaseQueryEvent>{
 						data: snapshot,
 						type: event
 					});
@@ -51,7 +51,7 @@ export class FirebaseObservable extends Observable<FirebaseEvent> {
 
 	// https://github.com/ReactiveX/RxJS/blob/master/doc/operator-creation.md#adding-the-operator-to-observable
 	lift(operator) {
-		const observable = new FirebaseObservable(this._path, this._events);
+		const observable = new FirebaseQueryObservable(this._path, this._events);
 		observable.source = this;
 		observable.operator = operator;
 		return observable;

@@ -1,5 +1,5 @@
 import {FirebaseArray} from '../common/firebase_array';
-import {FirebaseEvent, FirebaseEventType, FirebaseObservable} from '../common/firebase_observable';
+import {FirebaseQueryEvent, FirebaseQueryEventType, FirebaseQueryObservable} from '../common/firebase_query_observable';
 
 import {FIREBASE_APP_LINK, FIREBASE_USERS_PATH} from './firebase';
 
@@ -20,7 +20,7 @@ export class User {
 	email: string; // auth.<provider>.email
 	providers: string[]; // all auth.provider used by the user to authenticate
 	key: string; // the key for the user from the array of users
-	changes: FirebaseObservable;
+	changes: FirebaseQueryObservable;
 
 	constructor(attrs: {
 		email: string,
@@ -31,8 +31,8 @@ export class User {
 		this.providers = attrs.providers;
 		this.key = attrs.key;
 		let firebaseUsersRef = new Firebase(`${FIREBASE_APP_LINK}/${FIREBASE_USERS_PATH}`);
-		this.changes = new FirebaseObservable(firebaseUsersRef.child(attrs.key), [
-			FirebaseEventType.Value
+		this.changes = new FirebaseQueryObservable(firebaseUsersRef.child(attrs.key), [
+			FirebaseQueryEventType.Value
 		]);
 	}
 
@@ -52,11 +52,11 @@ export class User {
 					);
 					else {
 						let firebaseUserProvidersRef = firebaseUsersRef.child(key).child('providers');
-						let observable = new FirebaseObservable(firebaseUserProvidersRef, [
-							FirebaseEventType.Value
+						let observable = new FirebaseQueryObservable(firebaseUserProvidersRef, [
+							FirebaseQueryEventType.Value
 						]);
 						let first = true;
-						let subscription = observable.subscribe((event: FirebaseEvent) => {
+						let subscription = observable.subscribe((event: FirebaseQueryEvent) => {
 							if (first) first = false;
 							else {
 								let user = new User({key, email, providers: event.data.val()});
@@ -78,8 +78,8 @@ export class User {
 					usersArray.add({email, providers}).then((ref: Firebase) => {
 						let key = ref.key();
 						let firebaseUserKeyRef = ref.child('key');
-						let observable = new FirebaseObservable(firebaseUserKeyRef, [
-							FirebaseEventType.Value
+						let observable = new FirebaseQueryObservable(firebaseUserKeyRef, [
+							FirebaseQueryEventType.Value
 						]);
 						let first = true;
 						let subscription = observable.subscribe(() => {
@@ -105,10 +105,10 @@ export class User {
 			let subscriber = (child) => {
 				let queryRef = firebaseUsersRef.orderByChild(child).equalTo(opts.by[child]);
 				return (resolve) => {
-					let observable = new FirebaseObservable(queryRef, [
-						FirebaseEventType.Value
+					let observable = new FirebaseQueryObservable(queryRef, [
+						FirebaseQueryEventType.Value
 					]);
-					let subscription = observable.subscribe((event: FirebaseEvent) => {
+					let subscription = observable.subscribe((event: FirebaseQueryEvent) => {
 						if (event.data.exists()) resolve(event.data.val());
 						else resolve(null);
 						subscription.unsubscribe();
