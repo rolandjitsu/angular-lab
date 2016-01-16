@@ -11,8 +11,9 @@ This setup is using:
 * [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
 * [Angular 2](http://angular.io/) - obviously (and all it's dependencies: [RxJS](https://github.com/ReactiveX/RxJS), [zone.js](https://github.com/angular/zone.js), etc.)
 
-Hosted services (BaaS):
+Hosted services:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
+* [Google Analytics](https://analytics.google.com) - tracking pageviews and/or other events
 
 For tests:
 * [Protractor](https://angular.github.io/protractor) - e2e test framework
@@ -39,10 +40,11 @@ As package/typings managers:
 # Table of Contents
 
 * [Setup](#setup)
-* [Firebase Setup](#firebase-setup)
+* [Firebase](#firebase)
 	* [Authentication](#authentication)
 	* [Hosting](#hosting)
-* [Travis CI Setup](#travis-ci-setup)
+* [Travis CI](#travis-ci)
+* [Google Analytics](#google-analytics)
 * [Development](#development)
 	* [Info](#info)
 	* [Running Tests](#running-tests)
@@ -83,8 +85,8 @@ $(node bin)/npm start # `$(npm bin)/gulp serve`
 ```
 
 
-### Firebase Setup
-------------------
+### Firebase
+------------
 If you wish to have your own Firebase account used with this setup you have to change the `FIREBASE_APP_LINK` located in `src/app/services/firebase.ts` to your own Firebase app link:
 
 ![Firebase App Link](media/firebase_app_link.png)
@@ -123,8 +125,8 @@ $(npm bin)/gulp deploy/hosting --token <your firebase token>
 **Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy/hosting` so you won't need to provide the `--token` option every time you run the command.
 
 
-### Travis CI Setup
--------------------
+### Travis CI
+-------------
 If you plan on using this setup with your own projects and you wish to setup Travis CI, then you must make sure of a couple of things in order to have everything working properly on the CI:
 
 1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase prefs:token` so that your deployments to firebase will work. If you do not use Firebase, skip this step. Also, you may want to encript the token if the source code is available for public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
@@ -133,6 +135,11 @@ If you plan on using this setup with your own projects and you wish to setup Tra
 4. If you do not use the deployment to Firebase, remove that step from `.travis.yml`.
 
 Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account. So I suggest you start out with a clean project and start git from scratch (`git init`), then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
+
+
+### Google Analytics
+--------------------
+This app is also using [Google Analytics](https://analytics.google.com) to track pageviews (and in the future some other user behaviour events); if you plan on using this app for your own purposes, please make sure to change the `NG2_LAB_TRACKING_CODE` (located in `app/services/tracker.ts`) to your own.
 
 
 ### Development
