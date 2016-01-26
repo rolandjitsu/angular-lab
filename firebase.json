@@ -18,6 +18,7 @@
 		"karma.config.js",
 		"package.json",
 		"protractor.config.js",
+		"rules.json",
 		"test.js",
 		"tsconfig.js",
 		"tsd.json",
