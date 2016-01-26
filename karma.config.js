@@ -1,5 +1,5 @@
 // Inspired by https://github.com/angular/angular/blob/master/karma-js.conf.js
-import {SAUCE_LAUNCHERS} from './browsers.config.js';
+import {CUSTOM_LAUNCHERS} from './browsers.config.js';
 
 let karmaConfig = {};
 let sauceLabsConfig = {
@@ -55,7 +55,7 @@ Object.assign(karmaConfig, {
 		'test.js'
 	],
 	exclude: [],
-	customLaunchers: SAUCE_LAUNCHERS,
+	customLaunchers: CUSTOM_LAUNCHERS,
 	sauceLabs: sauceLabsConfig,
 	plugins: [
 		'karma-chrome-launcher',

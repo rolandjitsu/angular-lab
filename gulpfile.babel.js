@@ -523,7 +523,7 @@ function getBrowsersConfigFromCLI() {
 		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
 			outputList = outputList.concat(SAUCE_ALIASES[input]);
 			isSauce = true;
-		} else throw new Error('Browser name(s) passed as option could not be found in SAUCE_LAUNCHERS. Check available browsers in "browsers.config.js".');
+		} else throw new Error('Browser name(s) passed as option could not be found in CUSTOM_LAUNCHERS. Check available browsers in "browsers.config.js".');
 	}
 	return {
 		browsers: outputList.filter((item, pos, self) => {
