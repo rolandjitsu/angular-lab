@@ -8,7 +8,7 @@
 		"scripts",
 		"src",
 		"test",
-		"tsd_typings",
+		"typings",
 		"**/.*",
 		"bower.json",
 		"browsers.config.js",
@@ -21,8 +21,8 @@
 		"rules.json",
 		"test.js",
 		"tsconfig.js",
-		"tsd.json",
-		"tslint.json"
+		"tslint.json",
+		"typings.json"
 	],
 	"headers": [{
 		"source" : "**/*.@(js|html|css|map)",

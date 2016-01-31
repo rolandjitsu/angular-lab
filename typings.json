@@ -1,0 +1,8 @@
+{
+  "ambientDependencies": {
+    "firebase": "github:DefinitelyTyped/DefinitelyTyped/firebase/firebase.d.ts#de1bfe2c1de921da660cc17a5af1de6c095b35eb",
+    "selenium-webdriver": "github:DefinitelyTyped/DefinitelyTyped/selenium-webdriver/selenium-webdriver.d.ts#5ea7d92bb39c7a26f49dc3de2c566d5ae325e19e",
+    "angular-protractor": "github:DefinitelyTyped/DefinitelyTyped/angular-protractor/angular-protractor.d.ts#5ea7d92bb39c7a26f49dc3de2c566d5ae325e19e",
+    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#5ea7d92bb39c7a26f49dc3de2c566d5ae325e19e"
+  }
+}

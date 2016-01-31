@@ -60,9 +60,9 @@
 		"protractor-console-plugin": "0.1.x",
 		"sauce-connect-launcher": "0.14.x",
 		"split2": "1.1.x",
-		"tsd": "0.6.x",
 		"tslint": "3.2.x",
 		"typescript": "1.7.x",
+		"typings": "0.6.x",
 		"ws": "1.0.x",
 		"yargs": "3.31.x"
 	},

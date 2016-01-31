@@ -72,7 +72,7 @@ const PATHS = {
 		'node_modules/angular2/bundles/testing.*'
 	],
 	typings: [
-		'tsd_typings/tsd.d.ts'
+		'typings/main.d.ts'
 	],
 	tests: {
 		root: 'test',
