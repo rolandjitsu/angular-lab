@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-./node_modules/.bin/gulp clean
+$(npm bin)/gulp clean
