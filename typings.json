@@ -4,6 +4,7 @@
 		"core-js": "github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#c777572e8532c4d358306fe4c0e17a533f940b04",
 		"firebase": "github:DefinitelyTyped/DefinitelyTyped/firebase/firebase.d.ts#de1bfe2c1de921da660cc17a5af1de6c095b35eb",
 		"jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#5ea7d92bb39c7a26f49dc3de2c566d5ae325e19e",
+		"node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#aee0039a2d6686ec78352125010ebb38a7a7d743",
 		"selenium-webdriver": "github:DefinitelyTyped/DefinitelyTyped/selenium-webdriver/selenium-webdriver.d.ts#5ea7d92bb39c7a26f49dc3de2c566d5ae325e19e"
 	}
 }
