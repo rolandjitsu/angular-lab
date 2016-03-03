@@ -16,7 +16,7 @@
 		"url": "https://github.com/rolandjitsu/ng2-lab"
 	},
 	"dependencies": {
-		"firebase": "2.3.x"
+		"firebase": "2.4.x"
 	},
 	"private": true
 }
