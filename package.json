@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"systemjs": "0.19.x",
-		"angular2": "2.0.0-beta.7",
+		"angular2": "2.0.0-beta.8",
 		"es6-promise": "^3.0.2",
 		"es6-shim": "^0.33.x",
 		"reflect-metadata": "0.1.2",
