@@ -23,7 +23,7 @@
 	Angular 2
 	Material Design Lite, Material Icons
 	Firebase
-	NPM, Bower, Typings
+	NPM, JSPM, Typings
 	Gulp, BrowserSync
 	Protractor, Karma, Jasmine
 	Travis CI, Saucelabs
