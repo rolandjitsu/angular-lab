@@ -1,3 +1,6 @@
+import 'core-js/shim';
+import 'zone.js';
+import 'reflect-metadata';
 import {bootstrap} from 'angular2/platform/browser';
 import {FORM_PROVIDERS} from 'angular2/common';
 import {PLATFORM_DIRECTIVES, provide, enableProdMode} from 'angular2/core';

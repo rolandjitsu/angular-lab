@@ -17,15 +17,7 @@
 	"scripts": {
 		"start": "gulp serve"
 	},
-	"dependencies": {
-		"systemjs": "0.19.x",
-		"angular2": "2.0.0-beta.8",
-		"es6-promise": "^3.0.2",
-		"es6-shim": "^0.33.x",
-		"reflect-metadata": "0.1.2",
-		"rxjs": "5.0.0-beta.2",
-		"zone.js": "0.5.15"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"babel-core": "6.6.x",
 		"babel-preset-es2015": "6.6.x",
@@ -38,7 +30,6 @@
 		"gulp-autoprefixer": "3.1.x",
 		"gulp-changed": "1.3.x",
 		"gulp-plumber": "1.1.x",
-		"gulp-rename": "1.2.x",
 		"gulp-sass": "2.2.x",
 		"gulp-size": "2.0.x",
 		"gulp-sourcemaps": "1.6.x",
@@ -49,6 +40,7 @@
 		"jasmine": "2.4.x",
 		"jasmine-core": "2.4.x",
 		"jasmine-spec-reporter": "2.4.x",
+		"jspm": "beta",
 		"karma": "0.13.x",
 		"karma-chrome-launcher": "0.2.x",
 		"karma-cli": "0.1.x",
@@ -60,14 +52,62 @@
 		"protractor-console-plugin": "0.1.x",
 		"sauce-connect-launcher": "0.14.x",
 		"split2": "2.0.x",
-		"tslint": "3.5.x",
-		"typescript": "1.8.x",
+		"tslint": "next",
+		"typescript": "next",
 		"typings": "0.6.x",
 		"ws": "1.0.x",
 		"yargs": "4.2.x"
 	},
 	"engines": {
 		"node": "5.1.x"
+	},
+	"jspm": {
+		"name": "ng2-lab",
+		"configFiles": {
+			"jspm:browser": "src/jspm.browser.js",
+			"jspm": "src/jspm.config.js"
+		},
+		"dependencies": {
+			"angular2": "npm:angular2@^2.0.0-beta.8",
+			"core-js": "npm:core-js@^2.1.4",
+			"firebase": "github:firebase/firebase-bower@^2.4.1"
+		},
+		"devDependencies": {},
+		"peerDependencies": {
+			"buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
+			"child_process": "github:jspm/nodelibs-child_process@^0.2.0-alpha",
+			"constants": "github:jspm/nodelibs-constants@^0.2.0-alpha",
+			"crypto": "github:jspm/nodelibs-crypto@^0.2.0-alpha",
+			"es6-promise": "npm:es6-promise@^3.0.2",
+			"es6-shim": "npm:es6-shim@^0.33.3",
+			"events": "github:jspm/nodelibs-events@^0.2.0-alpha",
+			"fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+			"path": "github:jspm/nodelibs-path@^0.2.0-alpha",
+			"process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+			"reflect-metadata": "npm:reflect-metadata@^0.1.3",
+			"rxjs": "npm:rxjs@5.0.0-beta.2",
+			"stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
+			"string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
+			"util": "github:jspm/nodelibs-util@^0.2.0-alpha",
+			"vm": "github:jspm/nodelibs-vm@^0.2.0-alpha",
+			"zone.js": "npm:zone.js@^0.5.15"
+		},
+		"overrides": {
+			"github:firebase/firebase-bower@2.4.1": {
+				"main": "firebase",
+				"registry": "jspm"
+			},
+			"npm:inherits@2.0.1": {
+				"ignore": [
+					"test.js"
+				]
+			},
+			"npm:reflect-metadata@0.1.3": {
+				"map": {
+					"crypto": "@empty"
+				}
+			}
+		}
 	},
 	"private": true
 }

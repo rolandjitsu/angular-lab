@@ -1,3 +1,5 @@
+import * as Firebase from 'firebase';
+
 /**
  * Firebase array value interface.
  */

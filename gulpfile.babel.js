@@ -8,7 +8,6 @@ import gts from 'gulp-typescript';
 import {env, log, colors} from 'gulp-util';
 import karma from 'karma';
 import plumber from 'gulp-plumber';
-import rename from 'gulp-rename';
 import sauceConnectLauncher from 'sauce-connect-launcher';
 import sass from 'gulp-sass';
 import size from 'gulp-size';
@@ -99,26 +98,33 @@ gulp.task(function clean() {
  * Dependencies
  */
 
-gulp.task('deps/rxjs', function () {
-	const RXJS_LIB_PATH = `${PATHS.dist.public}/lib/rxjs`;
+gulp.task('deps/jspm:config', function () {
 	return gulp
-		.src('node_modules/rxjs/**/*')
-		.pipe(changed(RXJS_LIB_PATH))
+		.src([
+			`${PATHS.src.root}/jspm.browser.js`,
+			`${PATHS.src.root}/jspm.config.js`
+		])
+		.pipe(changed(PATHS.dist.public))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(RXJS_LIB_PATH));
+		.pipe(gulp.dest(PATHS.dist.public));
 });
 
-gulp.task('deps', gulp.series('deps/rxjs', function copy() {
-	const LIBS_PATH = `${PATHS.dist.public}/lib`;
+gulp.task('deps/jspm:packages', function () {
+	const JSPM_PACKAGES_DIST_PATH = `${PATHS.dist.public}/jspm_packages`;
 	return gulp
-		.src(PATHS.lib)
-		.pipe(changed(LIBS_PATH))
-		.pipe(rename((file) => {
-			file.basename = file.basename.toLowerCase(); // Firebase is case sensitive, thus we lowercase all for ease of access
-		}))
+		.src([
+			'jspm_packages/**/.*',
+			'jspm_packages/**/*'
+		])
+		.pipe(changed(JSPM_PACKAGES_DIST_PATH))
 		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(LIBS_PATH));
-}));
+		.pipe(gulp.dest(JSPM_PACKAGES_DIST_PATH));
+});
+
+gulp.task('deps', gulp.parallel(
+	'deps/jspm:config',
+	'deps/jspm:packages'
+));
 
 
 /**
