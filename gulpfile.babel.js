@@ -40,7 +40,7 @@ const bs = createBrowserSyncServer('NG2 Lab');
 
 const GULP_SIZE_DEFAULT_OPTS = {
 	showFiles: true,
-	gzip: true
+	gzip: false
 };
 
 const KARMA_CONFIG = {
@@ -383,7 +383,7 @@ gulp.task('test/e2e:single', gulp.series(
 			proc.on('close', () => {
 				if (pid) process.kill(pid);
 				done();
-			});	
+			});
 		});
 	}
 ));
