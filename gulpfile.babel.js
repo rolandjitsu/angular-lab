@@ -111,7 +111,7 @@ gulp.task(function clean() {
 
 
 /**
- * Dependecies
+ * Dependencies
  */
 
 gulp.task('deps/rxjs', function () {
