@@ -2,7 +2,7 @@
 	"firebase": "ng2-lab",
 	"public": "dist/public",
 	"ignore": [
-		"jspm_packages",
+		"./jspm_packages",
 		"media",
 		"node_modules",
 		"scripts",
