@@ -57,7 +57,7 @@ As package/typings managers:
 ### Setup
 ---------
 Make sure you have [Node](http://nodejs.org) (*if not already installed*) then clone this repo and setup the following tools on your machine using `npm install -g <package>`:
-* [Bower](http://jspm.io)
+* [JSPM](http://jspm.io)
 * [Typings](https://github.com/typings/typings)
 * [Gulp](http://gulpjs.com/)
 
