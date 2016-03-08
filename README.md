@@ -32,7 +32,7 @@ As package/typings managers:
 * [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependecies version's
 * [NPM](https://npmjs.com)
 * [Typings](https://github.com/typings/typings)
-* [Bower](http://bower.io)
+* [JSPM](http://jspm.io)
 
 **Note**: Bear in mind that [Angular 2](https://angular.io) is not production ready yet, but you can keep an eye on it [here](http://splintercode.github.io/is-angular-2-ready), courtesy of [Cory Rylan](https://github.com/splintercode).
 
@@ -57,7 +57,7 @@ As package/typings managers:
 ### Setup
 ---------
 Make sure you have [Node](http://nodejs.org) (*if not already installed*) then clone this repo and setup the following tools on your machine using `npm install -g <package>`:
-* [Bower](http://bower.io)
+* [Bower](http://jspm.io)
 * [Typings](https://github.com/typings/typings)
 * [Gulp](http://gulpjs.com/)
 
@@ -72,11 +72,11 @@ After you have the above tools setup, install all runtime/dev dependencies by ru
 
 ```shell
 $(node bin)/npm install
+$(npm bin)/jspm install
 $(npm bin)/typings install
-$(npm bin)/bower install
 ```
 
-**Note**: If you change any of the deps (remove/add) in either `bower.json`, `package.json` or `typings.json`, make sure that you run the above commands again.
+**Note**: If you change any of the deps (remove/add) in either `package.json` or `typings.json`, make sure that you run the above commands again.
 
 Now start the webserver and the build/watch processes (to watch for file changes) and the app will open in your default browser:
 

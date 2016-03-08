@@ -2,7 +2,7 @@
 	"firebase": "ng2-lab",
 	"public": "dist/public",
 	"ignore": [
-		"bower_components",
+		"jspm_packages",
 		"media",
 		"node_modules",
 		"scripts",
@@ -10,7 +10,6 @@
 		"test",
 		"typings",
 		"**/.*",
-		"bower.json",
 		"browsers.config.js",
 		"firebase.json",
 		"gulpfile.babel.js",

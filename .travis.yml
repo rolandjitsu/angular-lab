@@ -28,8 +28,8 @@ before_install:
 
 install:
   - npm install --loglevel silent
+  - $(npm bin)/jspm install
   - $(npm bin)/typings install
-  - $(npm bin)/bower install
 
 before_script: ./scripts/ci/clean.sh
 

@@ -35,8 +35,8 @@ typings
 .envrc
 
 
-## Bower
-bower_components
+## JSPM
+jspm_packages
 
 
 ## Dist

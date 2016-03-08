@@ -4,8 +4,8 @@
 		"target": "es6"
 	},
 	"exclude": [
-		"bower_components",
 		"dist",
+		"jspm_packages",
 		"node_modules"
 	]
 }
