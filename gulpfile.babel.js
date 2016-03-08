@@ -98,6 +98,7 @@ gulp.task(function clean() {
  * Dependencies
  */
 
+// TODO: add watch for package.json and the jspm config and rerun the deps task if there is a change
 gulp.task('deps/jspm:config', function () {
 	return gulp
 		.src([
