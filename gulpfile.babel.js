@@ -476,7 +476,7 @@ gulp.task(function serve(done) {
  * Default
  */
 
-gulp.task('default', gulp.series('serve'));
+gulp.task('default', gulp.task('serve'));
 
 
 // Catch SIGINT and call process.exit() explicitly on CTRL+C so that we actually get the exit event
