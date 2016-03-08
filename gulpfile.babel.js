@@ -21,21 +21,6 @@ import WebSocket from 'ws';
 
 import {CUSTOM_LAUNCHERS, SAUCE_ALIASES} from './browsers.config';
 
-
-class WebSocketServer extends Server {
-	static isRunning(address) {
-		let ws = new WebSocket(address);
-		return new Promise((resolve, reject) => {
-			ws.addEventListener('error', (error) => {
-				if (error.code === 'ECONNREFUSED') reject();
-			});
-			ws.addEventListener('open', () => {
-				resolve();
-			});
-		});
-	}
-}
-
 const bs = createBrowserSyncServer('NG2 Lab');
 
 const GULP_SIZE_DEFAULT_OPTS = {
@@ -237,11 +222,6 @@ gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-
  * Unit Tests
  */
 
-function createKarmaServer(config = {}, callback = noop) {
-	let server = new karma.Server(config, callback);
-	server.start();
-}
-
 // On the CI we build everything once before any tests are ran, so we do not need to run a build here
 gulp.task('test/unit:ci', function (done) {
 	const BROWSER_CONF = getBrowsersConfigFromCLI();
@@ -339,31 +319,6 @@ gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
  * E2E Tests
  */
 
-function createHttpServer() {
-	const binary = process.platform === 'win32'
-		? 'node_modules\\.bin\\http-server'
-		: 'node_modules/.bin/http-server';
-	return new Promise((resolve) => {
-		WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
-			() => {
-				log(colors.yellow(`A web server is already running on port ${WEB_SERVER_PORT}`));
-				resolve();
-			},
-			() => {
-				log(colors.green(`Webserver started on port ${WEB_SERVER_PORT}`));
-				let proc = spawn(binary, [
-					PATHS.dist.public,
-					`-p ${WEB_SERVER_PORT}`,
-					'--silent'
-				]);
-				// Let's wait for our webserver to be online
-				setTimeout(() => resolve(proc));
-				streamProcLog(proc);
-			}
-		);
-	});
-}
-
 gulp.task('webdriver/update', function () {
 	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\webdriver-manager' : 'node_modules/.bin/webdriver-manager';
 	let proc = spawn(binary, ['update']);
@@ -393,28 +348,6 @@ gulp.task('test/e2e:single', gulp.series(
  * Firebase Deployments
  */
 
-// https://github.com/firebase/firebase-tools#commands
-function runFirebaseCommand(cmd, args = []) {
-	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
-	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
-	if (!TOKEN) {
-		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
-		return Promise.reject();
-	}
-	let defaultArgs = [
-		'--non-interactive',
-		'--token',
-		`"${TOKEN}"`
-	];
-	if (Array.isArray(args)) args.unshift.apply(args, defaultArgs);
-	else args = defaultArgs;
-	binary += ` ${cmd}`;
-	args.unshift(binary);
-	let proc = exec(args.join(' '));
-	streamProcLog(proc);
-	return proc;
-}
-
 gulp.task('deploy/hosting', function () {
 	return runFirebaseCommand('deploy:hosting');
 });
@@ -431,15 +364,6 @@ gulp.task(function deploy() {
 /**
  * Build, Watch & Serve
  */
-
-function createBuildServer() {
-	let wss = new WebSocketServer({port: BUILD_SERVER_PORT}, () => {
-		log(colors.green(`Build server started ${BUILD_SERVER_ADDRESS}`));
-	});
-	process.on('exit', () => {
-		wss.close();
-	});
-}
 
 gulp.task(function serve(done) {
 	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
@@ -488,6 +412,81 @@ process.on('SIGINT', function () {
 /**
  * Helpers
  */
+
+class WebSocketServer extends Server {
+	static isRunning(address) {
+		let ws = new WebSocket(address);
+		return new Promise((resolve, reject) => {
+			ws.addEventListener('error', (error) => {
+				if (error.code === 'ECONNREFUSED') reject();
+			});
+			ws.addEventListener('open', () => {
+				resolve();
+			});
+		});
+	}
+}
+
+function createKarmaServer(config = {}, callback = noop) {
+	let server = new karma.Server(config, callback);
+	server.start();
+}
+
+function createHttpServer() {
+	const binary = process.platform === 'win32'
+		? 'node_modules\\.bin\\http-server'
+		: 'node_modules/.bin/http-server';
+	return new Promise((resolve) => {
+		WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
+			() => {
+				log(colors.yellow(`A web server is already running on port ${WEB_SERVER_PORT}`));
+				resolve();
+			},
+			() => {
+				log(colors.green(`Webserver started on port ${WEB_SERVER_PORT}`));
+				let proc = spawn(binary, [
+					PATHS.dist.public,
+					`-p ${WEB_SERVER_PORT}`,
+					'--silent'
+				]);
+				// Let's wait for our webserver to be online
+				setTimeout(() => resolve(proc));
+				streamProcLog(proc);
+			}
+		);
+	});
+}
+
+// https://github.com/firebase/firebase-tools#commands
+function runFirebaseCommand(cmd, args = []) {
+	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
+	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
+	if (!TOKEN) {
+		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
+		return Promise.reject();
+	}
+	let defaultArgs = [
+		'--non-interactive',
+		'--token',
+		`"${TOKEN}"`
+	];
+	if (Array.isArray(args)) args.unshift.apply(args, defaultArgs);
+	else args = defaultArgs;
+	binary += ` ${cmd}`;
+	args.unshift(binary);
+	let proc = exec(args.join(' '));
+	streamProcLog(proc);
+	return proc;
+}
+
+function createBuildServer() {
+	let wss = new WebSocketServer({port: BUILD_SERVER_PORT}, () => {
+		log(colors.green(`Build server started ${BUILD_SERVER_ADDRESS}`));
+	});
+	process.on('exit', () => {
+		wss.close();
+	});
+}
 
 function buildJs(src, dest, base = './', options = {}) {
 	const TS_PROJECT = gts.createProject('tsconfig.json', Object.assign(options, {
