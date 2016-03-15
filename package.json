@@ -55,7 +55,7 @@
 		"typescript": "next",
 		"typings": "0.7.x",
 		"ws": "1.0.x",
-		"yargs": "4.2.x"
+		"yargs": "4.3.x"
 	},
 	"engines": {
 		"node": "5.1.x"
