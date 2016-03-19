@@ -15,19 +15,9 @@
 	<body>
 		<app></app>
 		<!-- ES6/Polyfills -->
-		<!--<script src="lib/es6-shim.min.js"></script>-->
-		<!--<script src="lib/angular2-polyfills.min.js"></script>-->
 		<script src="jspm_packages/system.js"></script>
 		<script src="jspm.browser.js"></script>
 		<script src="jspm.config.js"></script>
-
-		<!-- Angular 2 -->
-		<!--<script src="lib/angular2.dev.js"></script>-->
-		<!--<script src="lib/router.min.js"></script>-->
-		<!--<script src="lib/http.min.js"></script>-->
-
-		<!-- Firebase -->
-		<!--<script src="lib/firebase.js"></script>-->
 
 		<!-- Google Analytics -->
 		<script>
@@ -37,19 +27,8 @@
 			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 		</script>
 
-		<!-- SystemJS Config -->
+		<!-- SystemJS -->
 		<script>
-//			System.warnings = true;
-//			System.config({
-//				packages: {
-//					'app': {defaultExtension: 'js'},
-//					'lib/rxjs': {defaultExtension: 'js'}
-//				},
-//				paths: {
-//					'rxjs/operator/*': 'lib/rxjs/add/operator/*',
-//					'rxjs/*': 'lib/rxjs/*'
-//				}
-//			});
 			System.import('app/bootstrap').catch(
 				console.error.bind(console)
 			);
