@@ -6,14 +6,14 @@ SystemJS.config({
 	],
 
 	map: {
-		"angular2": "npm:angular2@2.0.0-beta.9",
+		"angular2": "npm:angular2@2.0.0-beta.11",
 		"buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
 		"child_process": "github:jspm/nodelibs-child_process@0.2.0-alpha",
 		"constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
 		"core-js": "npm:core-js@2.1.4",
 		"crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
 		"es6-promise": "npm:es6-promise@3.1.2",
-		"es6-shim": "npm:es6-shim@0.33.13",
+		"es6-shim": "npm:es6-shim@0.35.0",
 		"events": "github:jspm/nodelibs-events@0.2.0-alpha",
 		"firebase": "github:firebase/firebase-bower@2.4.1",
 		"fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
@@ -25,7 +25,7 @@ SystemJS.config({
 		"string_decoder": "github:jspm/nodelibs-string_decoder@0.2.0-alpha",
 		"util": "github:jspm/nodelibs-util@0.2.0-alpha",
 		"vm": "github:jspm/nodelibs-vm@0.2.0-alpha",
-		"zone.js": "npm:zone.js@0.5.15"
+		"zone.js": "npm:zone.js@0.6.4"
 	},
 
 	packages: {
@@ -221,11 +221,6 @@ SystemJS.config({
 			"map": {
 				"inherits": "npm:inherits@2.0.1",
 				"readable-stream": "npm:readable-stream@2.0.5"
-			}
-		},
-		"npm:zone.js@0.5.15": {
-			"map": {
-				"es6-promise": "npm:es6-promise@3.1.2"
 			}
 		}
 	}
