@@ -1,18 +1,22 @@
 #!/bin/bash
 set -e
 
-function killServer () {
-	kill $serverPid
+function killServers() {
+	if kill ${webServerPid}; then
+		echo 'Web server was shut down.'
+	fi
 }
 
-# Start a web server required by protractor to run the tests and save the process PID so that on exit we can kill it and stop the server
-$(npm bin)/http-server ./dist/app -p 3000 --silent & serverPid=$!
-echo "Server running at http://localhost:3000"
-# Update selenium webdriver
+# Selenium webdriver
+# Update
 $(npm bin)/webdriver-manager update
 
-# On EXIT kill the server PID
-trap killServer EXIT
+# Start a web server required by protractor to run the tests.
+# Save the process PID so that on exit we can kill the process and stop the server.
+$(npm bin)/browser-sync start --config ./bs.config.js & webServerPid=$!
+
+# On EXIT kill the servers
+trap killServers EXIT
 
 # Wait for the web server to come up
 sleep 5

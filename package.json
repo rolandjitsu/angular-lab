@@ -35,7 +35,6 @@
 		"gulp-tslint": "4.3.x",
 		"gulp-typescript": "2.12.x",
 		"gulp-util": "3.0.x",
-		"http-server": "0.9.x",
 		"jasmine": "2.4.x",
 		"jasmine-core": "2.4.x",
 		"jasmine-spec-reporter": "2.4.x",
@@ -46,6 +45,7 @@
 		"karma-jasmine": "0.3.x",
 		"karma-sourcemap-loader": "0.3.x",
 		"karma-sauce-launcher": "0.3.x",
+		"open": "0.0.x",
 		"protractor": "3.1.x",
 		"protractor-accessibility-plugin": "0.1.x",
 		"protractor-console-plugin": "0.1.x",
@@ -54,7 +54,6 @@
 		"tslint": "next",
 		"typescript": "next",
 		"typings": "0.7.x",
-		"ws": "1.0.x",
 		"yargs": "4.3.x"
 	},
 	"engines": {

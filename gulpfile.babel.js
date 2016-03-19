@@ -1,12 +1,12 @@
 import autoprefixer from 'gulp-autoprefixer';
-import {create as createBrowserSyncServer} from 'browser-sync';
 import changed from 'gulp-changed';
-import del from 'del';
+import {create as createBrowserSyncServer} from 'browser-sync';
+import {colors, env, log} from 'gulp-util';
 import {exec, spawn} from 'child_process';
+import del from 'del';
 import gulp from 'gulp';
-import gts from 'gulp-typescript';
-import {env, log, colors} from 'gulp-util';
 import karma from 'karma';
+import open from 'open';
 import plumber from 'gulp-plumber';
 import sauceConnectLauncher from 'sauce-connect-launcher';
 import sass from 'gulp-sass';
@@ -14,47 +14,22 @@ import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import split from 'split2';
 import tslint from 'gulp-tslint';
-import typescript from 'typescript';
-import {Server} from 'ws';
-import WebSocket from 'ws';
-
-import {CUSTOM_LAUNCHERS, SAUCE_ALIASES} from './browsers.config';
+import typescript from 'gulp-typescript';
 
 const bs = createBrowserSyncServer('NG2 Lab');
 
-const GULP_SIZE_DEFAULT_OPTS = {
+import {
+	CUSTOM_LAUNCHERS,
+	SAUCE_ALIASES
+} from './browsers.config';
+const KARMA_CONFIG = {configFile: `${__dirname}/karma.config.js`};
+const BS_CONFIG = require('./bs.config');
+const GULP_SIZE_DEFAULT_CONFIG = {
 	showFiles: true,
 	gzip: false
 };
 
-const KARMA_CONFIG = {
-	configFile: `${__dirname}/karma.config.js`
-};
-
-const BASE_WS_SOCKET_ADDRESS = 'ws://localhost:';
-
-const JS_BUILD_SERVER_PORT = 6174; // Kaprekar's constant
-const JS_BUILD_SERVER_ADDRESS = `${BASE_WS_SOCKET_ADDRESS}${JS_BUILD_SERVER_PORT}`;
-
-const BUILD_SERVER_PORT = 1729; // Hardy–Ramanujan number
-const BUILD_SERVER_ADDRESS = `${BASE_WS_SOCKET_ADDRESS}${BUILD_SERVER_PORT}`;
-
-const WEB_SERVER_PORT = 3000;
-
 const PATHS = {
-	lib: [
-		'bower_components/firebase/firebase.js',
-		'node_modules/es6-shim/es6-shim.*',
-		'node_modules/systemjs/dist/system.*',
-		'node_modules/angular2/bundles/angular2-polyfills.js',
-		'node_modules/angular2/bundles/angular2-polyfills.min.js',
-		'node_modules/angular2/bundles/angular2.js',
-		'node_modules/angular2/bundles/angular2.min.js',
-		'node_modules/angular2/bundles/angular2.dev.js',
-		'node_modules/angular2/bundles/router.*',
-		'node_modules/angular2/bundles/http.*',
-		'node_modules/angular2/bundles/testing.*'
-	],
 	typings: [
 		'typings/main.d.ts'
 	],
@@ -86,29 +61,24 @@ const PATHS = {
 
 
 /**
- * Clean
+ * Start a web server using BS
+ * See https://www.browsersync.io/docs
  */
 
-gulp.task(function clean() {
-	return del([PATHS.dist.root]);
+gulp.task(function server(done) {
+	// For more BS options,
+	// check http://www.browsersync.io/docs/options/
+	bs.init(BS_CONFIG, done);
+	// When process exits kill browser-sync server
+	process.on('exit', () => {
+		bs.exit();
+	});
 });
 
 
 /**
- * Dependencies
+ * Copy JSPM assets
  */
-
-// TODO: add watch for package.json and the jspm config and rerun the deps task if there is a change
-gulp.task('deps/jspm:config', function () {
-	return gulp
-		.src([
-			`${PATHS.src.root}/jspm.browser.js`,
-			`${PATHS.src.root}/jspm.config.js`
-		])
-		.pipe(changed(PATHS.dist.public))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.public));
-});
 
 gulp.task('deps/jspm:packages', function () {
 	const JSPM_PACKAGES_DIST_PATH = `${PATHS.dist.public}/jspm_packages`;
@@ -118,18 +88,58 @@ gulp.task('deps/jspm:packages', function () {
 			'jspm_packages/**/*'
 		])
 		.pipe(changed(JSPM_PACKAGES_DIST_PATH))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
 		.pipe(gulp.dest(JSPM_PACKAGES_DIST_PATH));
 });
 
+// TODO: add watch for package.json and the jspm config and rerun the deps task if there is a change
+gulp.task('deps/jspm:config', function () {
+	return gulp
+		.src([
+			`${PATHS.src.root}/jspm.browser.js`,
+			`${PATHS.src.root}/jspm.config.js`
+		])
+		.pipe(changed(PATHS.dist.public))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
+		.pipe(gulp.dest(PATHS.dist.public));
+});
+
 gulp.task('deps', gulp.parallel(
-	'deps/jspm:config',
-	'deps/jspm:packages'
+	'deps/jspm:packages',
+	'deps/jspm:config'
 ));
 
 
 /**
- * Build Steps
+ * Copy static assets
+ */
+
+gulp.task('serve/static', function () {
+	return gulp
+		.src(PATHS.src.static)
+		.pipe(changed(PATHS.dist.public))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
+		.pipe(gulp.dest(PATHS.dist.public))
+		.pipe(bs.stream());
+});
+
+
+/**
+ * Copy HTML
+ */
+
+gulp.task('serve/html', function () {
+	return gulp
+		.src(PATHS.src.html)
+		.pipe(changed(PATHS.dist.public))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
+		.pipe(gulp.dest(PATHS.dist.public))
+		.pipe(bs.stream());
+});
+
+
+/**
+ * Build JS
  */
 
 gulp.task('build/js:tests', function () {
@@ -156,67 +166,76 @@ gulp.task('build/js', gulp.parallel(
 	'build/js:app'
 ));
 
-gulp.task('serve/html', function () {
+function buildJs(src, dest, base = './', options = {}) {
 	return gulp
-		.src(PATHS.src.html)
-		.pipe(changed(PATHS.dist.public))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.public))
-		.pipe(bs.stream());
-});
+		.src(src, {base: base})
+		.pipe(changed(dest, {extension: '.js'}))
+		.pipe(plumber())
+		.pipe(sourcemaps.init())
+		.pipe(typescript(typescript.createProject('tsconfig.json', Object.assign(options, {
+			typescript: require('typescript')
+		}))))
+		.js
+		.pipe(sourcemaps.write('.'))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
+		.pipe(gulp.dest(dest));
+}
+
+
+/**
+ * Build SCSS
+ */
 
 gulp.task('build/css', function () {
-	let SASS_CONFIG = {
-		includePaths: [
-			`${PATHS.src.root}/app`
-		],
-		outputStyle: 'compressed', // nested (default), expanded, compact, compressed
-		indentType: 'tab',
-		indentWidth: 1,
-		linefeed: 'lf'
-	};
 	return gulp
 		.src(PATHS.src.scss)
 		.pipe(changed(PATHS.dist.public, {extension: '.css'}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(sass(SASS_CONFIG).on('error', sass.logError))
+		.pipe(sass({
+			includePaths: [
+				`${PATHS.src.root}/app`
+			],
+			outputStyle: 'compressed', // nested (default), expanded, compact, compressed
+			indentType: 'tab',
+			indentWidth: 1,
+			linefeed: 'lf'
+		}))
+		.on('error', sass.logError)
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
 		.pipe(gulp.dest(PATHS.dist.public))
 		.pipe(bs.stream({match: "**/*.css"}));
 });
 
-gulp.task('serve/static', function () {
-	return gulp
-		.src(PATHS.src.static)
-		.pipe(changed(PATHS.dist.public))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(PATHS.dist.public))
-		.pipe(bs.stream());
-});
 
-gulp.task('build', gulp.series(
+/**
+ * Build everything
+ */
+
+gulp.task('build', gulp.parallel(
 	'deps',
-	gulp.parallel(
-		'serve/static',
-		'build/js',
-		'serve/html',
-		'build/css'
-	)
+	'serve/static',
+	'serve/html',
+	'build/js',
+	'build/css'
 ));
 
 
 /**
- * Code Integrity
+ * Check code integrity (lint)
+ * `tslint.json` contains enabled rules.
+ * See https://github.com/palantir/tslint#supported-rules for more rules.
  */
 
-gulp.task(function lint(done) { // https://github.com/palantir/tslint#supported-rules
+gulp.task(function lint(done) {
 	return gulp
 		.src([].concat(PATHS.tests.ts, PATHS.src.ts))
 		.pipe(plumber())
-		.pipe(tslint())
+		.pipe(tslint({
+			tslint: require('tslint') // Use a different version of tslint
+		}))
 		.pipe(tslint.report('verbose', {
 			summarizeFailureOutput: true,
 			emitError: true
@@ -265,7 +284,8 @@ gulp.task('test/unit:ci/sauce', function (done) {
 // Locally we need to run a build before we run any tests
 gulp.task('test/unit:continuous', gulp.series('build', function run(done) {
 	createKarmaServer(KARMA_CONFIG, done);
-	createJsBuildServer();
+	// TODO: compile specs and required files at runtime
+	// createJsBuildServer();
 }));
 
 // Run unit tests once
@@ -293,222 +313,20 @@ gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
 		log(colors.red('There were no Saucelabs browsers provided, add them with the --browsers option.'));
 		done();
 	} else {
-		log(colors.white('Starting sauce connect ...'));
-		const SAUCE_USERNAME = process.env.SAUCE_USERNAME || env.username;
-		const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY || env.accessKey;
-		if (!SAUCE_USERNAME) {
-			log(colors.red('No SAUCE_USERNAME found in env or --username option passed.'));
+		startSauceConnect().then((scp) => createKarmaServer(CONFIG, (err) => {
+			scp.close();
 			done();
-		} else if (!SAUCE_ACCESS_KEY) {
-			log(colors.red('No SAUCE_ACCESS_KEY found in env or --accessKey option passed.'));
+			process.exit(err ? 1 : 0);
+		}), () => {
 			done();
-		} else {
-			sauceConnectLauncher({username: SAUCE_USERNAME, accessKey: SAUCE_ACCESS_KEY}, (err, proc) => {
-				if (err) {
-					log(colors.red(err.message));
-					done();
-					process.exit(1);
-				} else {
-					log(colors.cyan("Sauce connect is ready"));
-					createKarmaServer(CONFIG, (err) => {
-						proc.close();
-						done();
-						process.exit(err ? 1 : 0);
-					});
-				}
-			});
-		}
+			process.exit(1);
+		});
 	}
 }));
 
-
-/**
- * E2E Tests
- */
-
-gulp.task('webdriver/update', function () {
-	const binary = process.platform === 'win32' ? 'node_modules\\.bin\\webdriver-manager' : 'node_modules/.bin/webdriver-manager';
-	let proc = spawn(binary, ['update']);
-	streamProcLog(proc);
-	return proc;
-});
-
-// Locally we need to run a build before we run any tests
-gulp.task('test/e2e:single', gulp.series(
-	'build',
-	'webdriver/update',
-	function protractor(done) { // Run e2e tests once in local env
-		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
-		createHttpServer().then(({pid} = {}) => {
-			let proc = spawn(binary, ['protractor.config.js']);
-			streamProcLog(proc);
-			proc.on('close', () => {
-				if (pid) process.kill(pid);
-				done();
-			});
-		});
-	}
-));
-
-
-/**
- * Firebase Deployments
- */
-
-gulp.task('deploy/hosting', function () {
-	return runFirebaseCommand('deploy:hosting');
-});
-
-gulp.task('deploy/rules', function () {
-	return runFirebaseCommand('deploy:rules');
-});
-
-gulp.task(function deploy() {
-	return runFirebaseCommand('deploy');
-});
-
-
-/**
- * Build, Watch & Serve
- */
-
-gulp.task(function serve(done) {
-	WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
-		() => {
-			log(colors.red('A build server instance has already been started in another process, cannot start another one'));
-			done();
-			process.exit(1);
-		},
-		() => {
-			gulp.task('build')(() => {
-				createJsBuildServer();
-				createBuildServer();
-				log(colors.green('File watch processes for HTML, CSS & static assets are started'));
-				gulp.watch(PATHS.src.static, gulp.series('serve/static'));
-				gulp.watch(PATHS.src.html, gulp.series('serve/html'));
-				gulp.watch(PATHS.src.scss, gulp.series('build/css'));
-				// For more BS options,
-				// check http://www.browsersync.io/docs/options/
-				bs.init({
-					server: PATHS.dist.public,
-					port: WEB_SERVER_PORT
-				}, done);
-				// When process exits kill browser-sync server
-				process.on('exit', () => {
-					bs.exit();
-				});
-			});
-		}
-	);
-});
-
-
-/**
- * Default
- */
-
-gulp.task('default', gulp.task('serve'));
-
-
-// Catch SIGINT and call process.exit() explicitly on CTRL+C so that we actually get the exit event
-process.on('SIGINT', function () {
-	process.exit();
-});
-
-
-/**
- * Helpers
- */
-
-class WebSocketServer extends Server {
-	static isRunning(address) {
-		let ws = new WebSocket(address);
-		return new Promise((resolve, reject) => {
-			ws.addEventListener('error', (error) => {
-				if (error.code === 'ECONNREFUSED') reject();
-			});
-			ws.addEventListener('open', () => {
-				resolve();
-			});
-		});
-	}
-}
-
-function createKarmaServer(config = {}, callback = noop) {
+function createKarmaServer(config = {}, callback = () => {}) {
 	let server = new karma.Server(config, callback);
 	server.start();
-}
-
-function createHttpServer() {
-	const binary = process.platform === 'win32'
-		? 'node_modules\\.bin\\http-server'
-		: 'node_modules/.bin/http-server';
-	return new Promise((resolve) => {
-		WebSocketServer.isRunning(BUILD_SERVER_ADDRESS).then(
-			() => {
-				log(colors.yellow(`A web server is already running on port ${WEB_SERVER_PORT}`));
-				resolve();
-			},
-			() => {
-				log(colors.green(`Webserver started on port ${WEB_SERVER_PORT}`));
-				let proc = spawn(binary, [
-					PATHS.dist.public,
-					`-p ${WEB_SERVER_PORT}`,
-					'--silent'
-				]);
-				// Let's wait for our webserver to be online
-				setTimeout(() => resolve(proc));
-				streamProcLog(proc);
-			}
-		);
-	});
-}
-
-// https://github.com/firebase/firebase-tools#commands
-function runFirebaseCommand(cmd, args = []) {
-	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
-	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
-	if (!TOKEN) {
-		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
-		return Promise.reject();
-	}
-	let defaultArgs = [
-		'--non-interactive',
-		'--token',
-		`"${TOKEN}"`
-	];
-	if (Array.isArray(args)) args.unshift.apply(args, defaultArgs);
-	else args = defaultArgs;
-	binary += ` ${cmd}`;
-	args.unshift(binary);
-	let proc = exec(args.join(' '));
-	streamProcLog(proc);
-	return proc;
-}
-
-function createBuildServer() {
-	let wss = new WebSocketServer({port: BUILD_SERVER_PORT}, () => {
-		log(colors.green(`Build server started ${BUILD_SERVER_ADDRESS}`));
-	});
-	process.on('exit', () => {
-		wss.close();
-	});
-}
-
-function buildJs(src, dest, base = './', options = {}) {
-	const TS_PROJECT = gts.createProject('tsconfig.json', Object.assign(options, {
-		typescript: typescript
-	}));
-	return gulp
-		.src(src, {base: base}) // instead of gulp.src(...), project.src() can be used
-		.pipe(changed(dest, {extension: '.js'}))
-		.pipe(plumber())
-		.pipe(sourcemaps.init())
-		.pipe(gts(TS_PROJECT))
-		.js
-		.pipe(sourcemaps.write('.'))
-		.pipe(size(GULP_SIZE_DEFAULT_OPTS))
-		.pipe(gulp.dest(dest));
 }
 
 function getBrowsersConfigFromCLI() {
@@ -539,33 +357,177 @@ function getBrowsersConfigFromCLI() {
 	}
 }
 
-// Create a build server to avoid parallel js builds when running unit tests in another process
-// If the js build server is shut down from some other process (the same process that started it), restart it here
-function createJsBuildServer() {
-	WebSocketServer.isRunning(JS_BUILD_SERVER_ADDRESS).then(
-		() => {
-			log(colors.yellow(`JS build server already running on ${JS_BUILD_SERVER_ADDRESS}`));
-			let ws = new WebSocket(JS_BUILD_SERVER_ADDRESS);
-			ws.addEventListener('close', () => {
-				createJsBuildServer();
+
+/**
+ * E2E Tests
+ */
+
+gulp.task('webdriver/update', function () {
+	const binary = process.platform === 'win32'
+		? 'node_modules\\.bin\\webdriver-manager'
+		: 'node_modules/.bin/webdriver-manager';
+	let proc = spawn(binary, ['update']);
+	streamProcLog(proc);
+	return proc;
+});
+
+// Run tests locally on Chrome.
+gulp.task('test/e2e:local', gulp.series(
+	'build',
+	'webdriver/update',
+	'server',
+	function test(done) {
+		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
+		const proc = spawn(binary, ['protractor.config.js']);
+		streamProcLog(proc);
+		return proc.on('close', () => {
+			done();
+			process.exit();
+		});
+	}
+));
+
+// Run tests on SauceLabs browsers.
+// Expects that SAUCE_USERNAME and SAUCE_ACCESS_KEY are set as env variables,
+// or passed as args.
+gulp.task('test/e2e:sauce', gulp.series(
+	'build',
+	'webdriver/update',
+	'server',
+	function test(done) {
+		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
+		startSauceConnect().then((scp) => {
+			let proc = spawn(binary, ['protractor.config.js', '--sc']);
+			streamProcLog(proc);
+			proc.on('close', () => {
+				done();
+				scp.close();
+				process.exit();
 			});
-		},
-		() => {
-			let watchers = [
-				gulp.watch(PATHS.src.ts, gulp.series('build/js:app')),
-				gulp.watch(PATHS.tests.ts, gulp.series('build/js:tests'))
-			];
-			let wss = new WebSocketServer({port: JS_BUILD_SERVER_PORT}, () => {
-				log(colors.green(`JS build server started ${JS_BUILD_SERVER_ADDRESS}`));
-			});
-			process.on('exit', () => {
-				for (let watcher of watchers) {
-					watcher.close();
+		});
+	}
+));
+
+
+/**
+ * Firebase Deployments
+ */
+
+gulp.task(function deploy() {
+	return runFirebaseCommand('deploy');
+});
+
+// Run Firebase commands such as: `deploy:rules`, etc.
+// https://github.com/firebase/firebase-tools#commands
+function runFirebaseCommand(cmd, args = []) {
+	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
+	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
+
+	if (!TOKEN) {
+		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
+		return Promise.reject();
+	}
+
+	const defaultArgs = [
+		'--non-interactive',
+		'--token',
+		`"${TOKEN}"`
+	];
+
+	if (Array.isArray(args)) {
+		args.unshift.apply(args, defaultArgs);
+	} else {
+		args = defaultArgs;
+	}
+
+	binary += ` ${cmd}`;
+	args.unshift(binary);
+
+	const proc = exec(args.join(' '));
+
+	streamProcLog(proc);
+
+	return proc;
+}
+
+
+/**
+ * Build, Watch & Serve
+ */
+
+gulp.task('serve', gulp.series(
+	'build',
+	'server',
+	function start() {
+		const watchers = [
+			gulp.watch(PATHS.tests.ts, gulp.task('build/js:tests')),
+			gulp.watch(PATHS.src.ts, gulp.task('build/js:app')),
+			gulp.watch(PATHS.src.static, gulp.task('serve/static')),
+			gulp.watch(PATHS.src.html, gulp.task('serve/html')),
+			gulp.watch(PATHS.src.scss, gulp.task('build/css'))
+		];
+		log(colors.green('File watch processes for TS, HTML, SCSS & static assets are started'));
+		open(`http://localhost:${BS_CONFIG.port}`);
+		// When process exits stop all watchers
+		process.on('exit', () => {
+			// done();
+			for (const watcher of watchers) {
+				watcher.close();
+			}
+		});
+	}
+));
+
+
+/**
+ * Default
+ */
+
+gulp.task('default', gulp.task('serve'));
+
+
+/**
+ * Clean
+ */
+
+gulp.task(function clean() {
+	return del([PATHS.dist.root]);
+});
+
+
+// Catch SIGINT and call process.exit() explicitly on 'CTRL + C' so that we actually get the exit event
+process.on('SIGINT', function () {
+	process.exit();
+});
+
+
+/**
+ * Helpers
+ */
+
+function startSauceConnect() {
+	log(colors.white('Starting sauce connect ...'));
+	const SAUCE_USERNAME = process.env.SAUCE_USERNAME || env.username;
+	const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY || env.accessKey;
+	if (!SAUCE_USERNAME) {
+		log(colors.red('No SAUCE_USERNAME found in env or --username option passed.'));
+		return Promise.reject();
+	} else if (!SAUCE_ACCESS_KEY) {
+		log(colors.red('No SAUCE_ACCESS_KEY found in env or --accessKey option passed.'));
+		return Promise.reject();
+	} else {
+		return new Promise((resolve, reject) => {
+			sauceConnectLauncher({username: SAUCE_USERNAME, accessKey: SAUCE_ACCESS_KEY}, (error, scp) => {
+				if (error) {
+					log(colors.red(error.message));
+					reject(error);
+				} else {
+					log(colors.cyan("Sauce connect is ready"));
+					resolve(scp);
 				}
-				wss.close();
 			});
-		}
-	);
+		});
+	}
 }
 
 function streamProcLog(proc) {
@@ -576,5 +538,3 @@ function streamProcLog(proc) {
 		log(colors.red(line));
 	});
 }
-
-function noop(...args) {}

@@ -1,54 +1,36 @@
+// Provide a CLI like interface.
+// See https://github.com/yargs/yargs for more details.
 var yargs = require('yargs');
-// Using Jasmine Spec Reporter
-// https://github.com/bcaudan/jasmine-spec-reporter/blob/master/docs/protractor-configuration.md
+
+// Using Jasmine spec reporter
+// See https://github.com/bcaudan/jasmine-spec-reporter/blob/master/docs/protractor-configuration.md for config.
 var SpecReporter = require('jasmine-spec-reporter');
 
 var argv = yargs
 	.usage('NG2 Lab E2E test options.')
 	.options({
-		'browsers': {
+		browsers: {
 			describe: 'Comma separated list of preconfigured browsers to use.',
 			default: 'CHROME_DESKTOP'
+		},
+		sc: {
+			describe: 'Use Sauce Connect to run tests.',
+			type: 'boolean'
 		}
 	})
 	.help('help')
 	.wrap(40)
-	.argv
-
-var BROWSERS = argv['browsers'].split(',');
-
-var CHROME_OPTIONS = {
-	'args': ['--js-flags=--expose-gc'],
-	'perfLoggingPrefs': {
-		'traceCategories': 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
-	}
-};
+	.argv;
 
 var BROWSER_CAPS = {
 	CHROME_DESKTOP: {
 		browserName: 'chrome',
-		chromeOptions: CHROME_OPTIONS,
-		loggingPrefs: {
-			performance: 'ALL',
-			browser: 'ALL'
-		}
-	},
-	IPHONE_SIMULATOR: {
-		browserName: 'MobileSafari',
-		simulator: true,
-		CFBundleName: 'Safari',
-		device: 'iphone',
-		instruments: 'true',
-		loggingPrefs: {
-			performance: 'ALL',
-			browser: 'ALL'
-		}
-	},
-	IPAD_NATIVE: {
-		browserName: 'MobileSafari',
-		simulator: false,
-		CFBundleName: 'Safari',
-		device: 'ipad',
+		chromeOptions: {
+			'args': ['--js-flags=--expose-gc'],
+			'perfLoggingPrefs': {
+				'traceCategories': 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
+			}
+		},
 		loggingPrefs: {
 			performance: 'ALL',
 			browser: 'ALL'
@@ -56,35 +38,59 @@ var BROWSER_CAPS = {
 	}
 };
 
-module.exports.config = {
+var config = {};
+
+if (process.env.TRAVIS) {
+	Object.keys(BROWSER_CAPS).forEach(function (key) {
+		BROWSER_CAPS[key].build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
+		BROWSER_CAPS[key]['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+		BROWSER_CAPS[key].name = 'NG2 Lab - E2E';
+	});
+
+	config.sauceUser = process.env.SAUCE_USERNAME;
+	config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+} else if (argv.sc) {
+	Object.keys(BROWSER_CAPS).forEach(function (key) {
+		BROWSER_CAPS[key].name = 'NG2 Lab - E2E';
+	});
+
+	config.sauceUser = process.env.SAUCE_USERNAME;
+	config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+}
+
+module.exports.config = Object.assign(config, {
 	baseUrl: 'http://localhost:3000/',
-	// restartBrowserBetweenTests: true, // add it back once https://github.com/angular/protractor/issues/1983 is fixed
 	// Special option for Angular2, to test against all Angular2 applications on the page.
 	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
 	useAllAngular2AppRoots: true,
-	specs: [
-		'dist/test/e2e/**/*.spec.js'
-	],
-	exclude: [],
-	multiCapabilities: BROWSERS.map((browserName) => {
-		var caps = BROWSER_CAPS[browserName];
-		console.log(`Testing against: ${browserName}`);
-		if (!caps) throw new Error(`There is no browser with name "${browserName};" configured.`);
+	getPageTimeout: 120000,
+	allScriptsTimeout: 120000,
+	specs: ['dist/test/e2e/**/*.spec.js'],
+	multiCapabilities: argv.browsers.split(',').map((browser) => {
+		var caps = BROWSER_CAPS[browser];
+		console.log(`Testing against: ${browser}`);
+
+		if (!caps) {
+			throw new Error(`There is no browser with name "${browser};" configured.`);
+		}
+
 		return caps;
 	}),
 	framework: 'jasmine',
 	jasmineNodeOpts: {
 		color: true,
-		defaultTimeoutInterval: 60000,
+		defaultTimeoutInterval: 120000,
 		// Remove protractor dot reporter
 		print: function () {}
 	},
-	onPrepare: function() {
+	onPrepare: function () {
 		// Add jasmine spec reporter
 		jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
 	},
 	plugins: [
-		{package: 'protractor-console-plugin'},
+		{
+			package: 'protractor-console-plugin'
+		},
 		{
 			package: 'protractor-accessibility-plugin',
 			chromeA11YDevTools: {
@@ -92,4 +98,4 @@ module.exports.config = {
 			}
 		}
 	]
-};
+});

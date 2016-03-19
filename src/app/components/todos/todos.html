@@ -4,10 +4,14 @@
 			<todos-count></todos-count>
 		</li>
 		<li>
-			<a [routerLink]="['/Account']"><glyph src="assets/glyphs/settings.svg"></glyph></a>
+			<a [routerLink]="['/Account']" aria-label="Account">
+				<glyph src="assets/glyphs/settings.svg"></glyph>
+			</a>
 		</li>
 		<li>
-			<a (click)="logout($event)"><glyph src="assets/glyphs/lock.svg"></glyph></a>
+			<a (click)="logout($event)" aria-label="Logout">
+				<glyph src="assets/glyphs/lock.svg"></glyph>
+			</a>
 		</li>
 	</ul>
 </nav>
