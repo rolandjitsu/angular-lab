@@ -1,16 +1,23 @@
 SystemJS.config({
+	trace: false,
+	production: false,
+	packages: {
+		app: {defaultExtension: 'js'}
+	}
+});
+
+SystemJS.config({
 	packageConfigPaths: [
 		"npm:@*/*.json",
 		"npm:*.json",
 		"github:*/*.json"
 	],
-
 	map: {
 		"angular2": "npm:angular2@2.0.0-beta.11",
 		"buffer": "github:jspm/nodelibs-buffer@0.2.0-alpha",
 		"child_process": "github:jspm/nodelibs-child_process@0.2.0-alpha",
 		"constants": "github:jspm/nodelibs-constants@0.2.0-alpha",
-		"core-js": "npm:core-js@2.1.4",
+		"core-js": "npm:core-js@2.2.1",
 		"crypto": "github:jspm/nodelibs-crypto@0.2.0-alpha",
 		"es6-promise": "npm:es6-promise@3.1.2",
 		"es6-shim": "npm:es6-shim@0.35.0",
@@ -27,7 +34,6 @@ SystemJS.config({
 		"vm": "github:jspm/nodelibs-vm@0.2.0-alpha",
 		"zone.js": "npm:zone.js@0.6.4"
 	},
-
 	packages: {
 		"github:jspm/nodelibs-buffer@0.2.0-alpha": {
 			"map": {
@@ -202,11 +208,11 @@ SystemJS.config({
 				"randombytes": "npm:randombytes@2.0.3"
 			}
 		},
-		"npm:readable-stream@2.0.5": {
+		"npm:readable-stream@2.0.6": {
 			"map": {
 				"core-util-is": "npm:core-util-is@1.0.2",
 				"inherits": "npm:inherits@2.0.1",
-				"isarray": "npm:isarray@0.0.1",
+				"isarray": "npm:isarray@1.0.0",
 				"process-nextick-args": "npm:process-nextick-args@1.0.6",
 				"string_decoder": "npm:string_decoder@0.10.31",
 				"util-deprecate": "npm:util-deprecate@1.0.2"
@@ -220,7 +226,7 @@ SystemJS.config({
 		"npm:stream-browserify@2.0.1": {
 			"map": {
 				"inherits": "npm:inherits@2.0.1",
-				"readable-stream": "npm:readable-stream@2.0.5"
+				"readable-stream": "npm:readable-stream@2.0.6"
 			}
 		}
 	}
