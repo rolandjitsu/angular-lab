@@ -1,3 +1,5 @@
+import {env} from 'gulp-util';
+
 export const CUSTOM_LAUNCHERS = {
 	// Use Chromium preinstalled with Travis VM
 	// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
@@ -128,6 +130,36 @@ export const CUSTOM_LAUNCHERS = {
 		version: '5.1'
 	}
 };
+
+export function providers() {
+	let isSauce = false;
+	const rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
+	const inputList = rawInput.replace(' ', '').split(',');
+	let outputList = [];
+	for (let i = 0; i < inputList.length; i++) {
+		const input = inputList[i];
+		if (CUSTOM_LAUNCHERS.hasOwnProperty(input)) {
+			// Non-sauce browsers case.
+			// Overrides everything,
+			// ignore other options.
+			outputList = [input];
+			isSauce = false;
+			break;
+		} else if (CUSTOM_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
+			isSauce = true;
+			outputList.push(`SL_${input.toUpperCase()}`);
+		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
+			outputList = outputList.concat(SAUCE_ALIASES[input]);
+			isSauce = true;
+		} else {
+			throw new Error('Browser name(s) passed as option could not be found in CUSTOM_LAUNCHERS. Check available browsers in "browsers.config.js".');
+		}
+	}
+	return {
+		browsers: outputList.filter((item, pos, self) => self.indexOf(item) == pos),
+		isSauce: isSauce
+	}
+}
 
 export const SAUCE_ALIASES = {
 	'ALL': Object.keys(CUSTOM_LAUNCHERS).filter(function (item) {

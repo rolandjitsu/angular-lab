@@ -5,6 +5,7 @@ import {colors, env, log} from 'gulp-util';
 import {exec, spawn} from 'child_process';
 import del from 'del';
 import gulp from 'gulp';
+import jspmConfig from 'jspm/lib/config';
 import karma from 'karma';
 import open from 'open';
 import plumber from 'gulp-plumber';
@@ -13,14 +14,15 @@ import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import split from 'split2';
+import through from 'through2';
 import tslint from 'gulp-tslint';
 import typescript from 'gulp-typescript';
 
 const bs = createBrowserSyncServer('NG2 Lab');
 
 import {
-	CUSTOM_LAUNCHERS,
-	SAUCE_ALIASES
+	SAUCE_ALIASES,
+	providers
 } from './browsers.config';
 const KARMA_CONFIG = {configFile: `${__dirname}/karma.config.js`};
 const BS_CONFIG = require('./bs.config');
@@ -31,32 +33,29 @@ const GULP_SIZE_DEFAULT_CONFIG = {
 
 const PATHS = {
 	typings: [
-		'typings/main.d.ts'
+		'typings/browser.d.ts'
 	],
-	tests: {
-		root: 'test',
-		ts: [
-			'test/**/*.ts'
-		]
-	},
 	src: {
-		root: 'src',
-		static: 'src/**/*.{svg,jpg,png,ico,txt}',
-		ts: [
-			'src/**/*.ts'
+		static: [
+			'assets/**/*.{svg,jpg,png,ico,txt}',
+			'apple-touch-icon.png',
+			'favicon.ico',
+			'humans.txt',
+			'LICENSE',
+			'robots.txt'
 		],
-		html: 'src/**/*.html',
+		ts: [
+			'app/**/*.ts'
+		],
+		html: [
+			'app/**/*.html',
+			'index.html'
+		],
 		scss: [
-			'!src/app/vars.scss',
-			'!src/app/mixins.scss',
-			'src/**/*.scss'
+			'app/**/*.scss'
 		]
 	},
-	dist: {
-		root: 'dist',
-		public: 'dist/public',
-		test: 'dist/test'
-	}
+	dist: 'dist'
 };
 
 
@@ -66,8 +65,6 @@ const PATHS = {
  */
 
 gulp.task(function server(done) {
-	// For more BS options,
-	// check http://www.browsersync.io/docs/options/
 	bs.init(BS_CONFIG, done);
 	// When process exits kill browser-sync server
 	process.on('exit', () => {
@@ -81,31 +78,60 @@ gulp.task(function server(done) {
  */
 
 gulp.task('deps/jspm:packages', function () {
-	const JSPM_PACKAGES_DIST_PATH = `${PATHS.dist.public}/jspm_packages`;
 	return gulp
 		.src([
 			'jspm_packages/**/.*',
 			'jspm_packages/**/*'
-		])
-		.pipe(changed(JSPM_PACKAGES_DIST_PATH))
+		], {
+			base: '.'
+		})
+		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(JSPM_PACKAGES_DIST_PATH));
+		.pipe(gulp.dest(PATHS.dist));
 });
 
-// TODO: add watch for package.json and the jspm config and rerun the deps task if there is a change
-gulp.task('deps/jspm:config', function () {
+gulp.task('deps/jspm:browser', function () {
 	return gulp
-		.src([
-			`${PATHS.src.root}/jspm.browser.js`,
-			`${PATHS.src.root}/jspm.config.js`
-		])
-		.pipe(changed(PATHS.dist.public))
+		.src('jspm.browser.js')
+		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist.public));
+		.pipe(gulp.dest(PATHS.dist));
 });
+
+gulp.task('deps/jspm:config', function () {
+	jspmConfig.loadSync();
+	return gulp
+		.src('jspm.config.js')
+		.pipe(changed(PATHS.dist))
+		.pipe(transform(jspmConfig.loader.getConfig()))
+		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
+		.pipe(gulp.dest(PATHS.dist));
+});
+
+function transform(config) {
+	config.production = true;
+	config.transpiler = 'none';
+	delete config.typescriptOptions;
+	delete config.packages.test;
+	config.packages.app = {
+		defaultExtension: 'ts',
+			map: {
+			'./env': {
+				'~production': './env.dev'
+			}
+		}
+	};
+
+	return through.obj((chunk, enc, callback) => {
+		chunk.contents = new Buffer(`SystemJS.config(${JSON.stringify(config)})`, 'utf8');
+		callback(null, chunk);
+	});
+}
+
 
 gulp.task('deps', gulp.parallel(
 	'deps/jspm:packages',
+	'deps/jspm:browser',
 	'deps/jspm:config'
 ));
 
@@ -116,11 +142,12 @@ gulp.task('deps', gulp.parallel(
 
 gulp.task('serve/static', function () {
 	return gulp
-		.src(PATHS.src.static)
-		.pipe(changed(PATHS.dist.public))
+		.src(PATHS.src.static, {
+			base: '.'
+		})
+		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist.public))
-		.pipe(bs.stream());
+		.pipe(gulp.dest(PATHS.dist));
 });
 
 
@@ -130,11 +157,12 @@ gulp.task('serve/static', function () {
 
 gulp.task('serve/html', function () {
 	return gulp
-		.src(PATHS.src.html)
-		.pipe(changed(PATHS.dist.public))
+		.src(PATHS.src.html, {
+			base: '.'
+		})
+		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist.public))
-		.pipe(bs.stream());
+		.pipe(gulp.dest(PATHS.dist));
 });
 
 
@@ -142,59 +170,43 @@ gulp.task('serve/html', function () {
  * Build JS
  */
 
-gulp.task('build/js:tests', function () {
-	return buildJs(
-		[].concat(PATHS.typings, PATHS.tests.ts),
-		PATHS.dist.test,
-		PATHS.tests.root
-	);
-});
-
-gulp.task('build/js:app', function () {
-	let stream = buildJs(
-		[].concat(PATHS.typings, PATHS.src.ts),
-		PATHS.dist.public,
-		PATHS.src.root
-	);
-	return stream.pipe(
-		bs.stream({match: "**/*.js"})
-	);
-});
-
-gulp.task('build/js', gulp.parallel(
-	'build/js:tests',
-	'build/js:app'
-));
-
-function buildJs(src, dest, base = './', options = {}) {
+gulp.task('build/js', function () {
 	return gulp
-		.src(src, {base: base})
-		.pipe(changed(dest, {extension: '.js'}))
+		.src([].concat(PATHS.typings, PATHS.src.ts), {
+			base: '.'
+		})
+		.pipe(changed(PATHS.dist, {
+			extension: '.js'
+		}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(typescript(typescript.createProject('tsconfig.json', Object.assign(options, {
+		.pipe(typescript(typescript.createProject('tsconfig.json', {
 			typescript: require('typescript')
-		}))))
+		})))
 		.js
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(dest));
-}
+		.pipe(gulp.dest(PATHS.dist));
+});
 
 
 /**
- * Build SCSS
+ * Build CSS
  */
 
 gulp.task('build/css', function () {
 	return gulp
-		.src(PATHS.src.scss)
-		.pipe(changed(PATHS.dist.public, {extension: '.css'}))
+		.src(PATHS.src.scss, {
+			base: '.'
+		})
+		.pipe(changed(PATHS.dist, {
+			extension: '.css'
+		}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
 		.pipe(sass({
 			includePaths: [
-				`${PATHS.src.root}/app`
+				'./app'
 			],
 			outputStyle: 'compressed', // nested (default), expanded, compact, compressed
 			indentType: 'tab',
@@ -205,8 +217,7 @@ gulp.task('build/css', function () {
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist.public))
-		.pipe(bs.stream({match: "**/*.css"}));
+		.pipe(gulp.dest(PATHS.dist));
 });
 
 
@@ -231,7 +242,7 @@ gulp.task('build', gulp.parallel(
 
 gulp.task(function lint(done) {
 	return gulp
-		.src([].concat(PATHS.tests.ts, PATHS.src.ts))
+		.src(PATHS.src.ts)
 		.pipe(plumber())
 		.pipe(tslint({
 			tslint: require('tslint') // Use a different version of tslint
@@ -248,11 +259,10 @@ gulp.task(function lint(done) {
  * Unit Tests
  */
 
-// On the CI we build everything once before any tests are ran, so we do not need to run a build here
 gulp.task('test/unit:ci', function (done) {
-	const BROWSER_CONF = getBrowsersConfigFromCLI();
+	const {browsers} = providers();
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
-		browsers: BROWSER_CONF.browsers,
+		browsers,
 		singleRun: true,
 		reporters: [
 			'dots'
@@ -281,27 +291,24 @@ gulp.task('test/unit:ci/sauce', function (done) {
 	});
 });
 
-// Locally we need to run a build before we run any tests
-gulp.task('test/unit:continuous', gulp.series('build', function run(done) {
-	createKarmaServer(KARMA_CONFIG, done);
-	// TODO: compile specs and required files at runtime
-	// createJsBuildServer();
-}));
+// Run unit tests in watch mode
+gulp.task('test/unit:continuous', function (done) {
+	createKarmaServer(KARMA_CONFIG, () => done());
+});
 
 // Run unit tests once
-gulp.task('test/unit:single', gulp.series('build', function run(done) {
-	const CONFIG = Object.assign({}, KARMA_CONFIG, {
+gulp.task('test/unit:single', function (done) {
+	createKarmaServer(Object.assign({}, KARMA_CONFIG, {
 		singleRun: true
-	});
-	createKarmaServer(CONFIG, () => {
-		done();
-	});
-}));
+	}), () => done());
+});
 
-gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
-	const BROWSER_CONF = getBrowsersConfigFromCLI();
+// Run unit tests once
+// (runs tests on SauceLabs if `--browsers` option is provided).
+gulp.task('test/unit:single/sauce', function (done) {
+	const {browsers, isSauce} = providers();
 	const CONFIG = Object.assign({}, KARMA_CONFIG, {
-		browsers: BROWSER_CONF.browsers,
+		browsers,
 		singleRun: true,
 		browserNoActivityTimeout: 240000,
 		captureTimeout: 120000,
@@ -309,7 +316,7 @@ gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
 			'dots'
 		]
 	});
-	if (!BROWSER_CONF.isSauce) {
+	if (!isSauce) {
 		log(colors.red('There were no Saucelabs browsers provided, add them with the --browsers option.'));
 		done();
 	} else {
@@ -322,39 +329,11 @@ gulp.task('test/unit:sauce', gulp.series('build', function run(done) {
 			process.exit(1);
 		});
 	}
-}));
+});
 
 function createKarmaServer(config = {}, callback = () => {}) {
 	let server = new karma.Server(config, callback);
 	server.start();
-}
-
-function getBrowsersConfigFromCLI() {
-	let isSauce = false;
-	let rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
-	let inputList = rawInput.replace(' ', '').split(',');
-	let outputList = [];
-	for (let i = 0; i < inputList.length; i++) {
-		let input = inputList[i];
-		if (CUSTOM_LAUNCHERS.hasOwnProperty(input)) {
-			// Non-sauce browsers case: overrides everything, ignoring other options
-			outputList = [input];
-			isSauce = false;
-			break;
-		} else if (CUSTOM_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
-			isSauce = true;
-			outputList.push(`SL_${input.toUpperCase()}`);
-		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
-			outputList = outputList.concat(SAUCE_ALIASES[input]);
-			isSauce = true;
-		} else throw new Error('Browser name(s) passed as option could not be found in CUSTOM_LAUNCHERS. Check available browsers in "browsers.config.js".');
-	}
-	return {
-		browsers: outputList.filter((item, pos, self) => {
-			return self.indexOf(item) == pos;
-		}),
-		isSauce: isSauce
-	}
 }
 
 
@@ -373,7 +352,6 @@ gulp.task('webdriver/update', function () {
 
 // Run tests locally on Chrome.
 gulp.task('test/e2e:local', gulp.series(
-	'build',
 	'webdriver/update',
 	'server',
 	function test(done) {
@@ -391,7 +369,6 @@ gulp.task('test/e2e:local', gulp.series(
 // Expects that SAUCE_USERNAME and SAUCE_ACCESS_KEY are set as env variables,
 // or passed as args.
 gulp.task('test/e2e:sauce', gulp.series(
-	'build',
 	'webdriver/update',
 	'server',
 	function test(done) {
@@ -452,29 +429,13 @@ function runFirebaseCommand(cmd, args = []) {
 
 
 /**
- * Build, Watch & Serve
+ * Start server and open app in browser
  */
 
 gulp.task('serve', gulp.series(
-	'build',
 	'server',
 	function start() {
-		const watchers = [
-			gulp.watch(PATHS.tests.ts, gulp.task('build/js:tests')),
-			gulp.watch(PATHS.src.ts, gulp.task('build/js:app')),
-			gulp.watch(PATHS.src.static, gulp.task('serve/static')),
-			gulp.watch(PATHS.src.html, gulp.task('serve/html')),
-			gulp.watch(PATHS.src.scss, gulp.task('build/css'))
-		];
-		log(colors.green('File watch processes for TS, HTML, SCSS & static assets are started'));
 		open(`http://localhost:${BS_CONFIG.port}`);
-		// When process exits stop all watchers
-		process.on('exit', () => {
-			// done();
-			for (const watcher of watchers) {
-				watcher.close();
-			}
-		});
 	}
 ));
 
@@ -491,7 +452,7 @@ gulp.task('default', gulp.task('serve'));
  */
 
 gulp.task(function clean() {
-	return del([PATHS.dist.root]);
+	return del([PATHS.dist]);
 });
 
 

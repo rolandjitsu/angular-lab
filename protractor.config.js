@@ -1,12 +1,12 @@
 // Provide a CLI like interface.
 // See https://github.com/yargs/yargs for more details.
-var yargs = require('yargs');
+const yargs = require('yargs');
 
 // Using Jasmine spec reporter
 // See https://github.com/bcaudan/jasmine-spec-reporter/blob/master/docs/protractor-configuration.md for config.
-var SpecReporter = require('jasmine-spec-reporter');
+const SpecReporter = require('jasmine-spec-reporter');
 
-var argv = yargs
+const argv = yargs
 	.usage('NG2 Lab E2E test options.')
 	.options({
 		browsers: {
@@ -22,7 +22,7 @@ var argv = yargs
 	.wrap(40)
 	.argv;
 
-var BROWSER_CAPS = {
+const BROWSER_CAPS = {
 	CHROME_DESKTOP: {
 		browserName: 'chrome',
 		chromeOptions: {
@@ -38,10 +38,10 @@ var BROWSER_CAPS = {
 	}
 };
 
-var config = {};
+const config = {};
 
 if (process.env.TRAVIS) {
-	Object.keys(BROWSER_CAPS).forEach(function (key) {
+	Object.keys(BROWSER_CAPS).forEach((key) => {
 		BROWSER_CAPS[key].build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
 		BROWSER_CAPS[key]['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
 		BROWSER_CAPS[key].name = 'NG2 Lab - E2E';
@@ -50,9 +50,7 @@ if (process.env.TRAVIS) {
 	config.sauceUser = process.env.SAUCE_USERNAME;
 	config.sauceKey = process.env.SAUCE_ACCESS_KEY;
 } else if (argv.sc) {
-	Object.keys(BROWSER_CAPS).forEach(function (key) {
-		BROWSER_CAPS[key].name = 'NG2 Lab - E2E';
-	});
+	Object.keys(BROWSER_CAPS).forEach((key) => BROWSER_CAPS[key].name = 'NG2 Lab - E2E');
 
 	config.sauceUser = process.env.SAUCE_USERNAME;
 	config.sauceKey = process.env.SAUCE_ACCESS_KEY;
@@ -65,9 +63,9 @@ module.exports.config = Object.assign(config, {
 	useAllAngular2AppRoots: true,
 	getPageTimeout: 120000,
 	allScriptsTimeout: 120000,
-	specs: ['dist/test/e2e/**/*.spec.js'],
+	specs: ['e2e/**/*.spec.js'],
 	multiCapabilities: argv.browsers.split(',').map((browser) => {
-		var caps = BROWSER_CAPS[browser];
+		const caps = BROWSER_CAPS[browser];
 		console.log(`Testing against: ${browser}`);
 
 		if (!caps) {
@@ -86,6 +84,9 @@ module.exports.config = Object.assign(config, {
 	onPrepare: function () {
 		// Add jasmine spec reporter
 		jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
+		// Add babel for ES6 support
+		// (some features that are not already implemented in Node).
+		require("babel-core/register");
 	},
 	plugins: [
 		{
