@@ -69,7 +69,7 @@
 			"firebase": "github:firebase/firebase-bower@^2.4.1",
 			"reflect-metadata": "npm:reflect-metadata@^0.1.3",
 			"rxjs": "npm:rxjs@5.0.0-beta.2",
-			"zone.js": "npm:zone.js@^0.6.4"
+			"zone.js": "npm:zone.js@^0.6.5"
 		},
 		"devDependencies": {
 			"babel": "npm:systemjs-plugin-babel@^0.0.8",

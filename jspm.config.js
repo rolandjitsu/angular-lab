@@ -5,6 +5,7 @@ SystemJS.config({
 	typescriptOptions: {
 		'typeCheck': true,
 		'tsconfig': true,
+		'targetLib': 'es6',
 		'module': 'es6',
 		'target': 'es6'
 	},
@@ -69,7 +70,7 @@ SystemJS.config({
 		'ts': 'github:frankwallis/plugin-typescript@4.0.2',
 		'util': 'github:jspm/nodelibs-util@0.2.0-alpha',
 		'vm': 'github:jspm/nodelibs-vm@0.2.0-alpha',
-		'zone.js': 'npm:zone.js@0.6.4'
+		'zone.js': 'npm:zone.js@0.6.5'
 	},
 	packages: {
 		'github:jspm/nodelibs-path@0.1.0': {
