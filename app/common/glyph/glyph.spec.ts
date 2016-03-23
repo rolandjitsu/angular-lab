@@ -4,7 +4,7 @@ import {
 	afterEach,
 	beforeEachProviders,
 	// https://github.com/angular/angular/commit/c1a0af5
-	withProviders,
+	// withProviders,
 	beforeEach,
 	describe,
 	expect,
@@ -14,7 +14,6 @@ import {
 import {By} from 'angular2/platform/browser';
 import {
 	provide,
-	EventEmitter,
 	Component
 } from 'angular2/core';
 import {MockBackend, MockConnection} from 'angular2/http/testing';
@@ -76,11 +75,14 @@ describe('<glyph>', () => {
 			.then((fixture: ComponentFixture) => {
 				fixture.detectChanges();
 				// Make sure the element has been appended to DOM
-				Scheduler.queue.schedule(() => {
-					const svg = fixture.debugElement.query(By.css('glyph'));
-					expect((<HTMLCollection>svg.nativeNode.children).length).toEqual(1);
-					done();
-				}, 50);
+				Scheduler.queue.schedule(
+					() => {
+						const svg = fixture.debugElement.query(By.css('glyph'));
+						expect((<HTMLCollection>svg.nativeNode.children).length).toEqual(1);
+						done();
+					},
+					50
+				);
 			});
 	});
 });

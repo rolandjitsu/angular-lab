@@ -32,8 +32,11 @@ function getAuthDefaultOpts(remember?: boolean): any {
 }
 
 function addScope(target: string[], scope: string): string[] {
-	if (!Array.isArray(target)) target = [scope];
-	else if (!target.length || !target.includes(scope)) target = target.concat([scope]);
+	if (!Array.isArray(target)) {
+		target = [scope];
+	} else if (!target.length || !target.includes(scope)) {
+		target = target.concat([scope]);
+	}
 	return target;
 }
 
@@ -56,10 +59,13 @@ export class AuthClient  {
 	register(credentials: FirebaseCredentials): Promise<FirebaseAuthData | any> {
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.createUser(credentials, (error) => {
-				if (error) reject(error);
-				else this.loginWithCredentials(credentials).then((auth: FirebaseAuthData) => {
-					resolve(auth);
-				});
+				if (error) {
+					reject(error);
+				} else {
+					this.loginWithCredentials(credentials).then((auth: FirebaseAuthData) => {
+						resolve(auth);
+					});
+				}
 			});
 		});
 	}
@@ -71,8 +77,11 @@ export class AuthClient  {
 			this._firebaseRef.authWithPassword(
 				credentials,
 				(error, auth: FirebaseAuthData) => { // https://www.firebase.com/docs/web/guide/login/password.html#section-logging-in
-					if (error) reject(error);
-					else resolve(auth);
+					if (error) {
+						reject(error);
+					} else {
+						resolve(auth);
+					}
 				},
 				opts
 			);
@@ -95,7 +104,9 @@ export class AuthClient  {
 			this._firebaseRef.authWithOAuthRedirect(
 				FIREBASE_AUTH_PROVIDER[provider],
 				(error) => {
-					if (error) reject(error);
+					if (error) {
+						reject(error);
+					}
 				},
 				opts
 			);
@@ -104,16 +115,22 @@ export class AuthClient  {
 	resetPassword(credentials: FirebaseResetPasswordCredentials): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.resetPassword(credentials, (error) => {
-				if (error) reject(error);
-				else resolve();
+				if (error) {
+					reject(error);
+				} else {
+					resolve();
+				}
 			});
 		});
 	}
 	changePassword(credentials: FirebaseChangePasswordCredentials): Promise<any> {
 		return new Promise((resolve, reject) => {
 			this._firebaseRef.changePassword(credentials, (error) => {
-				if (error) reject(error);
-				else resolve();
+				if (error) {
+					reject(error);
+				} else {
+					resolve();
+				}
 			});
 		});
 	}

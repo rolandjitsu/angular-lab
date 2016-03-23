@@ -51,8 +51,9 @@ export class FirebaseArray extends Array {
 		super();
 		let url: string = ref.toString();
 		this.ref = ref;
-		if (_refs.has(url)) this._subs = _refs.get(url)._subs;
-		else {
+		if (_refs.has(url)) {
+			this._subs = _refs.get(url)._subs;
+		} else {
 			_refs.set(url, {
 				entries: [],
 				_subs: []
@@ -129,8 +130,11 @@ export class FirebaseArray extends Array {
 			let key: string = this.ref.push().key();
 			let ref: Firebase = this.ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
-				if (error) reject(error);
-				else resolve(ref);
+				if (error) {
+					reject(error);
+				} else {
+					resolve(ref);
+				}
 			});
 		});
 	}
@@ -152,8 +156,11 @@ export class FirebaseArray extends Array {
 			if (!keyExists(key)) return reject();
 			let ref: Firebase = this.ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
-				if (error) reject(error);
-				else resolve(ref);
+				if (error) {
+					reject(error);
+				} else {
+					resolve(ref);
+				}
 			});
 		});
 	}
@@ -171,8 +178,11 @@ export class FirebaseArray extends Array {
 
 	get(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) reject();
-			else this.ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
+			if (keyExists(key)) {
+				this.ref.child(key).once('value', (snapshot) => resolve(snapshot.val()), (error) => reject(error));
+			} else {
+				reject();
+			}
 		});
 	}
 
@@ -190,11 +200,16 @@ export class FirebaseArray extends Array {
 
 	update(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) return reject();
+			if (!keyExists(key)) {
+				return reject();
+			}
 			let ref: Firebase = this.ref.child(key);
 			ref.update(transformDataToFirebaseArrayValue(data), (error) => {
-				if (error) reject(error);
-				else resolve(ref);
+				if (error) {
+					reject(error);
+				} else {
+					resolve(ref);
+				}
 			});
 		});
 	}
@@ -218,8 +233,11 @@ export class FirebaseArray extends Array {
 			}
 			let ref: Firebase = this.ref.child(key);
 			ref.setPriority(priority, (error) => {
-				if (error) reject(error);
-				else resolve(ref);
+				if (error) {
+					reject(error);
+				} else {
+					resolve(ref);
+				}
 			});
 		});
 	}
@@ -237,10 +255,15 @@ export class FirebaseArray extends Array {
 
 	remove(key: string): Promise<any> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) return reject();
+			if (!keyExists(key)) {
+				return reject();
+			}
 			this.ref.child(key).remove((error) => {
-				if (error) reject(error);
-				else resolve();
+				if (error) {
+					reject(error);
+				} else {
+					resolve();
+				}
 			});
 		});
 	}
@@ -308,7 +331,9 @@ export class FirebaseArray extends Array {
 
 	private _indexOfKey(key: string): number {
 		for (let [i, len] = [0, this.length]; i < len; i++) {
-			if (this[i].key === key) return i;
+			if (this[i].key === key) {
+				return i;
+			}
 		}
 		return -1;
 	}
@@ -316,11 +341,15 @@ export class FirebaseArray extends Array {
 		this.splice(this._getRecordPos(key, prevKey), 0, record);
 	}
 	private _getRecordPos(key: string, prevKey?: string): number {
-		if (prevKey === null) return 0;
-		else {
+		if (prevKey === null) {
+			return 0;
+		} else {
 			let idx = this._indexOfKey(prevKey);
-			if (idx === -1) return this.length;
-			else return idx + 1;
+			if (idx === -1) {
+				return this.length;
+			} else {
+				return idx + 1;
+			}
 		}
 	}
 }
@@ -339,14 +368,19 @@ function isJsObject (obj: any) {
 }
 
 function extendFirebaseArrayValue (base: any, data: any): any {
-	if (!isJsObject(base) || !isJsObject(data)) return data;
-	else {
+	if (!isJsObject(base) || !isJsObject(data)) {
+		return data;
+	} else {
 		let key: string;
 		for (key in base) {
-			if (key !== 'key' && base.hasOwnProperty(key) && !data.hasOwnProperty(key)) delete base[key];
+			if (key !== 'key' && base.hasOwnProperty(key) && !data.hasOwnProperty(key)) {
+				delete base[key];
+			}
 		}
 		for (key in data) {
-			if (data.hasOwnProperty(key)) base[key] = data[key];
+			if (data.hasOwnProperty(key)) {
+				base[key] = data[key];
+			}
 		}
 		return base;
 	}

@@ -17,9 +17,7 @@ export class Icon {
 		if (cache.has(url)) {
 			// Delay the next tick until the defer is returned,
 			// otherwise the subscriber will not be notified about the resolution if called before return
-			Scheduler.queue.schedule(() => {
-				defer.resolve(cache.get(url).cloneNode(true));
-			}, 0);
+			Scheduler.queue.schedule(() => defer.resolve(cache.get(url).cloneNode(true)), 0);
 		} else {
 			let pending: boolean = this.queue.has(url);
 			if (!pending) this.queue.set(url, []);

@@ -26,7 +26,6 @@ export class UserAvailabilityValidator implements Validator {
 		return new Promise((resolve) => {
 			User.query({by: {email}}).then((users) => {
 				let emails = Array.from(users.values()).map((user) => user.email);
-				console.log(emails, control);
 				resolve(
 					emails.includes(email)
 						? {'userAvailability': true}

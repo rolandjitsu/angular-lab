@@ -14,7 +14,7 @@ const COMPONENT_BASE_PATH = './app/common/glyph';
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
 	template: '',
 	styleUrls: [
-		`${COMPONENT_BASE_PATH}/glyph.css`,
+		`${COMPONENT_BASE_PATH}/glyph.css`
 	],
 	inputs: [
 		'src'

@@ -3,7 +3,7 @@ import {
 	beforeEach,
 	describe,
 	expect,
-	inject,
+	// inject,
 	it
 } from 'angular2/testing';
 import {

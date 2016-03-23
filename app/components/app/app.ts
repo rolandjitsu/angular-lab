@@ -53,12 +53,15 @@ export class App {
 	constructor(router: Router, location: Location, client: AuthClient, tracker: Tracker) {
 		client.session.subscribe((auth: FirebaseAuthData) => {
 			router.recognize(location.path()).then((instruction: Instruction) => {
-				if (auth && isAuthComponent(instruction)) router.navigate(['/Todos']);
-				else if (!auth && !isAuthComponent(instruction)) router.navigate(['/Auth', 'Login']);
+				if (auth && isAuthComponent(instruction)) {
+					router.navigate(['/Todos']);
+				} else if (!auth && !isAuthComponent(instruction)) {
+					router.navigate(['/Auth', 'Login']);
+				}
 			});
 		});
 		router.subscribe((path) => {
-			console.log(path);
+			// console.log(path);
 			tracker.send('pageview', path.length ? path : '/');
 			// router.recognize(path).then((instruction: Instruction) => {
 			// 	console.log(instruction);

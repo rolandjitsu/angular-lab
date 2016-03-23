@@ -48,18 +48,18 @@ export class User {
 					// Found the user.
 					// Check if providers contains the current `auth.provider` and update the user providers if it does not contain it.
 					let {key, providers} = Array.from(users.values())[0];
-					if (Array.isArray(providers) && providers.includes(auth.provider)) resolve(
-						new User({key, email, providers})
-					);
-					else {
+					if (Array.isArray(providers) && providers.includes(auth.provider)) {
+						resolve(new User({key, email, providers}));
+					} else {
 						let firebaseUserProvidersRef = firebaseUsersRef.child(key).child('providers');
 						let observable = new FirebaseQueryObservable(firebaseUserProvidersRef, [
 							FirebaseQueryEventType.Value
 						]);
 						let first = true;
 						let subscription = observable.subscribe((event: FirebaseQueryEvent) => {
-							if (first) first = false;
-							else {
+							if (first) {
+								first = false;
+							} else {
 								let user = new User({key, email, providers: event.data.val()});
 								subscription.unsubscribe();
 								resolve(user);
@@ -84,8 +84,9 @@ export class User {
 						]);
 						let first = true;
 						let subscription = observable.subscribe(() => {
-							if (first) first = false;
-							else {
+							if (first) {
+								first = false;
+							} else {
 								let user = new User({email, providers, key});
 								subscription.unsubscribe();
 								resolve(user);
@@ -110,8 +111,11 @@ export class User {
 						FirebaseQueryEventType.Value
 					]);
 					let subscription = observable.subscribe((event: FirebaseQueryEvent) => {
-						if (event.data.exists()) resolve(event.data.val());
-						else resolve(null);
+						if (event.data.exists()) {
+							resolve(event.data.val());
+						} else {
+							resolve(null);
+						}
 						subscription.unsubscribe();
 					});
 				};
