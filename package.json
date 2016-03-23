@@ -15,12 +15,14 @@
 		"name": "Roland Groza",
 		"email": "rolandjitsu@gmail.com"
 	},
-	"main": "",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/rolandjitsu/ng2-lab"
 	},
 	"scripts": {
+		"build": "gulp clean && gulp build",
+		"test": "gulp lint && gulp test/unit:single && gulp test/e2e:local",
+		"deploy": "gulp deploy",
 		"start": "gulp serve"
 	},
 	"dependencies": {},
