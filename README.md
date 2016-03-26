@@ -117,7 +117,7 @@ $(npm bin)/firebase prefs:token
 ```
 
 Copy the token and put it somewhere safe for further usage. Also change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
-Now you can deploy the app to you own Firebase app by running:
+Now you can deploy the app to you own Firebase app by running (note that you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build):
 
 ```shell
 $(npm bin)/gulp deploy/hosting --token <your firebase token>
