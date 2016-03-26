@@ -7,34 +7,35 @@
 
 This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
-* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular and this project
-* [SystemJS](https://github.com/systemjs/systemjs) - loading the compiled (`.ts` -> `.js`) source files in the browser
-* [Angular 2](http://angular.io/) - obviously (and all it's dependencies: [RxJS](https://github.com/ReactiveX/RxJS), [zone.js](https://github.com/angular/zone.js), etc.)
+* [SystemJS](https://github.com/systemjs/systemjs) - loading and compiling `.ts` to `.js` in the browser during dev mode
+* [Angular 2](http://angular.io/)
+* [reflect-metadata](https://github.com/rbuckton/ReflectDecorators) - dep of Angular 2 (used for making DI possible)
+* [ES6 Shim](https://github.com/paulmillr/es6-shim) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project (if you require more feature coverage consider using [Core JS](https://github.com/zloirock/core-js))
+* [RxJS](https://github.com/ReactiveX/RxJS) - also a dependency of Angular 2 but used by some of the app components
+* [zone.js](https://github.com/angular/zone.js) - dependency of Angular 2
 
 Hosted services:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
-* [Google Analytics](https://analytics.google.com) - tracking pageviews and/or other events
+* [Google Analytics](https://analytics.google.com) - tracking page views and/or other events
 
-For tests:
+For unit/e2e tests:
 * [Protractor](https://angular.github.io/protractor) - e2e test framework
-* [Karma](http://karma-runner.github.io)
-* [Jasmine](http://jasmine.github.io) - assertion lib for the app unit tests
+* [Karma](http://karma-runner.github.io) - test runner for the app unit tests
+* [Jasmine](http://jasmine.github.io) - assertion lib
 
 As a CI/CD:
 * [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
 * [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
 
 Task runner and dev tools:
-* [Gulp](http://gulpjs.com) - task runner (and some other dependencies used for some tasks)
-* [BrowserSync](http://browsersync.io) - makes code refresh very easy
+* [BrowserSync](http://browsersync.io) - used as a static webserver for local development
+* [Gulp](http://gulpjs.com) - task runner
 
 As package/typings managers:
 * [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependecies version's
 * [NPM](https://npmjs.com)
 * [Typings](https://github.com/typings/typings)
 * [JSPM](http://jspm.io)
-
-**Note**: Bear in mind that [Angular 2](https://angular.io) is not production ready yet, but you can keep an eye on it [here](http://splintercode.github.io/is-angular-2-ready), courtesy of [Cory Rylan](https://github.com/splintercode).
 
 
 # Table of Contents
@@ -147,20 +148,13 @@ Bellow you can find a couple of things to help understanding how this setup work
 
 #### Info
 
-When running the app (`$(npm bin)/gulp serve`) in a terminal window and running the unit tests (`$(npm bin)/gulp test/unit:continuous`) in watch mode in another at the same time (or vice versa), two web socket servers will be started in the background in order to communicate between the two processes.
-The reason for the above is that when the app builds on file change the unit tests should not build again at the same time the app started the build (nor the other way around). Moreover, this will make sure to notify BrowserSync that a change happened and that it should reload the browser to reflect that change.
+During development, when running the app in the browser, all TS is being compiled at runtime. Therefore, there might be a slight delay (around 15 - 20 sec) after the first page refresh, but it should run smoothly from there on.
 
-Furthermore, when running the `$(npm bin)/gulp serve` command a couple of things will happen:
+Note that there is no build required to be able to run the app, thus all you need to get it started is `$(npm bin)/gulp serve` which will start the BrowserSync static webserver and open the app in the default browser.
 
-1. everything will be distributed to a `dist` dir
-2. dependencies will be copied to the dist folder
-3. HTML and static assets will be copied to the dist folder
-4. SASS will be compiled to CSS into the dist folder
-5. the app and tests `.ts` files will be compiled (into the dist) and a build server will be started (the build server runs the `.ts` file compilation when a file change occurs)
-2. a watcher for HTML, SASS and static assets will be started
-5. [BrowserSync](http://browsersync.io) will open a browser window with the app running (on port `3000`, with the BS interface on port `3001` and the Weinre tool on `8080`)
+Unit tests run the same way, so there is no need to rerun builds when a spec or source file is changed. For further info about unit tests read bellow.
 
-The above info is important because you need to make sure that the following ports are always avaialble: `1729`, `6174`, `3000`, `3001`, `8080`.
+E2E tests need no compilation as you will be writing them in ES6 and the latest versions of node have implemented most of the ES6 features.
 
 #### Running Tests
 
@@ -169,37 +163,30 @@ Tests can be run selectively as it follows:
 * `$(npm bin)/gulp lint`: runs [tslint](http://palantir.github.io/tslint/) and checks all `.ts` files according to the `tslint.json` rules file
 * `$(npm bin)/gulp test/unit:continuous`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
 * `$(npm bin)/gulp test/unit:single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
-* `$(npm bin)/gulp test/e2e:single`: e2e tests in a browser; runs in single run mode
+* `$(npm bin)/gulp test/e2e:local`: e2e tests in a browser; runs in single run mode
 
-And if you have a Saucelabse account, you can also run unit tests on some of the SL browsers provided in `browsers.config.js`. Just call `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox, iOS9` (and whatever other browsers you wish) and make sure that you have the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env variables set. You can also pass the two env variables as options if you prefer it: `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox --username=<your sauce username> --acessKey=<you sauce access key>`.
+And if you have a Saucelabs account, you can also run unit tests on some of the SL browsers provided in `browsers.config.js`. Just call `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox, iOS9` (and whatever other browsers you wish) and make sure that you have the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env variables set. You can also pass the two env variables as options if you prefer it: `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox --username=<your sauce username> --acessKey=<you sauce access key>`.
 
 #### Other Tasks
 
-If you run into caching issues or some other problems with the contents of the distribution folder, you could run the `$(npm bin)/gulp clean` task to remove it and then rebuild everything again.
-
 If you just want to build everything, run `$(npm bin)/gulp build`.
 
-And if you want to deploy the Firebase security rules, use `$(npm bin)/gulp deploy/rules`. Just make sure you provide the auth token either as an env variable (`FIREBASE_TOKEN`) or as an option (`--token`).
+And if you want to deploy the app to Firebase (security rules and app files), use `$(npm bin)/gulp deploy`. Just make sure you provide the auth token either as an env variable (`FIREBASE_TOKEN`) or as an option (`--token`).
 
 And of course to see what other tasks are available, run `$(npm bin)/gulp --tasks`.
 
 
 ### Browser Support
 -------------------
-Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/zloirock/core-js) are provided, this app has no official indication of what browsers it supports (lack of enough unit/e2e tests).
+Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/paulmillr/es6-shim) are provided, this app has no official indication of what browsers it supports (lack of enough unit/e2e tests).
 Though, you can check out the browser support for [Angular 2](https://github.com/angular-class/awesome-angular2#current-browser-support-for-angular-2) and assume that the app will work where Angular 2 works.
 
 
 ### Learning Material
 ---------------------
-* [Angular Docs](https://angular.io)
-* [Routing](http://blog.thoughtram.io/angularjs/2015/02/19/futuristic-routing-in-angular.html)
-* [Template Syntax](http://victorsavkin.com/post/119943127151/angular-2-template-syntax)
-* [Forms](https://ngforms.firebaseapp.com)
-* [DI](http://blog.thoughtram.io/angular/2015/05/18/dependency-injection-in-angular-2.html)
-* [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM)
 * [Angular 2 Education](https://github.com/timjacobi/angular2-education)
-* [Awsome Angular 2](https://github.com/angular-class/awesome-angular2)
+* [Awesome Angular 2](https://github.com/angular-class/awesome-angular2)
+* [Angular Docs](https://angular.io)
 
 
 ### Credits
