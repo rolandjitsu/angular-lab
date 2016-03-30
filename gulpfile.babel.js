@@ -432,6 +432,7 @@ function runFirebaseCommand(cmd, args = []) {
  * Start server and open app in browser
  */
 
+// TODO: we need to figure out a way to reload the browser or code when there are changes, look into systemjs hot reloader
 gulp.task('serve', gulp.series(
 	'server',
 	function start() {
