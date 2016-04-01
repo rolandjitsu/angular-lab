@@ -67,7 +67,7 @@
 		"yargs": "4.3.x"
 	},
 	"engines": {
-		"node": "5.1.x"
+		"node": "5.10.x"
 	},
 	"private": true,
 	"jspm": {
