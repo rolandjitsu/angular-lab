@@ -37,6 +37,13 @@ SystemJS.config({
 					'loader': 'sass'
 				}
 			}
+		},
+		'npm:angular2@2.0.0-beta.11': {
+			'meta': {
+				'*.js': {
+					'typings': true
+				}
+			}
 		}
 	}
 });
@@ -48,7 +55,7 @@ SystemJS.config({
 		'github:*/*.json'
 	],
 	map: {
-		'angular2': 'npm:angular2@2.0.0-beta.11',
+		'angular2': 'npm:angular2@2.0.0-beta.13',
 		'assert': 'github:jspm/nodelibs-assert@0.2.0-alpha',
 		'babel': 'npm:systemjs-plugin-babel@0.0.8',
 		'buffer': 'github:jspm/nodelibs-buffer@0.2.0-alpha',
@@ -62,7 +69,7 @@ SystemJS.config({
 		'fs': 'github:jspm/nodelibs-fs@0.2.0-alpha',
 		'path': 'github:jspm/nodelibs-path@0.2.0-alpha',
 		'process': 'github:jspm/nodelibs-process@0.2.0-alpha',
-		'reflect-metadata': 'npm:reflect-metadata@0.1.3',
+		'reflect-metadata': 'npm:reflect-metadata@0.1.2',
 		'rxjs': 'npm:rxjs@5.0.0-beta.2',
 		'sass': 'github:mobilexag/plugin-sass@0.3.0',
 		'stream': 'github:jspm/nodelibs-stream@0.2.0-alpha',
@@ -70,9 +77,16 @@ SystemJS.config({
 		'ts': 'github:frankwallis/plugin-typescript@4.0.2',
 		'util': 'github:jspm/nodelibs-util@0.2.0-alpha',
 		'vm': 'github:jspm/nodelibs-vm@0.2.0-alpha',
-		'zone.js': 'npm:zone.js@0.6.5'
+		'zone.js': 'npm:zone.js@0.6.8'
 	},
 	packages: {
+		'npm:angular2@2.0.0-beta.13': {
+			'map': {
+				'reflect-metadata': 'npm:reflect-metadata@0.1.2',
+				'rxjs': 'npm:rxjs@5.0.0-beta.2',
+				'zone.js': 'npm:zone.js@0.6.8'
+			}
+		},
 		'github:jspm/nodelibs-path@0.1.0': {
 			'map': {
 				'path-browserify': 'npm:path-browserify@0.0.0'
@@ -126,13 +140,6 @@ SystemJS.config({
 			'map': {
 				'punycode': 'npm:punycode@1.3.2',
 				'querystring': 'npm:querystring@0.2.0'
-			}
-		},
-		'npm:angular2@2.0.0-beta.11': {
-			'meta': {
-				'*.js': {
-					'typings': true
-				}
 			}
 		},
 		'npm:rxjs@5.0.0-beta.2': {
