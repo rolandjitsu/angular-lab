@@ -1,4 +1,4 @@
-import * as Firebase from '../common/constants';
+import Firebase from 'firebase';
 import {FirebaseArray} from '../common/firebase_array';
 import {FirebaseQueryEvent, FirebaseQueryEventType, FirebaseQueryObservable} from '../common/firebase_query_observable';
 
