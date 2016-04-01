@@ -38,7 +38,7 @@ SystemJS.config({
 				}
 			}
 		},
-		'npm:angular2@2.0.0-beta.11': {
+		'npm:angular2@2.0.0-beta.13': {
 			'meta': {
 				'*.js': {
 					'typings': true
