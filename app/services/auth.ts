@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs/Observable';
-import * as Firebase from 'firebase';
+import * as Firebase from '../common/constants';
 
-import {FIREBASE_APP_LINK} from './firebase';
+import {FIREBASE_APP_LINK} from './../common/constants';
 
 const FIREBASE_AUTH_PROVIDER = [
 	'password',

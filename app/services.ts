@@ -3,14 +3,14 @@ import {Http} from 'angular2/http';
 
 import {AuthClient} from './services/auth';
 import {Chores} from './services/chores';
-import {FIREBASE_APP_LINK, FIREBASE_CHORES_PATH} from './services/firebase';
+import {FIREBASE_APP_LINK, FIREBASE_CHORES_PATH} from './common/constants';
 import {Icon} from './services/icon';
 import {Tracker} from './services/tracker';
 import {User} from './services/user';
 
 export * from './services/auth';
 export * from './services/chores';
-export * from './services/firebase';
+export * from './common/constants';
 export * from './services/icon';
 export * from './services/tracker';
 export * from './services/user';

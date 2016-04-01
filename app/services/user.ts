@@ -1,8 +1,8 @@
-import * as Firebase from 'firebase';
+import * as Firebase from '../common/constants';
 import {FirebaseArray} from '../common/firebase_array';
 import {FirebaseQueryEvent, FirebaseQueryEventType, FirebaseQueryObservable} from '../common/firebase_query_observable';
 
-import {FIREBASE_APP_LINK, FIREBASE_USERS_PATH} from './firebase';
+import {FIREBASE_APP_LINK, FIREBASE_USERS_PATH} from './../common/constants';
 
 
 export interface UserQueryOpts {
