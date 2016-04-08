@@ -72,7 +72,7 @@
 	"jspm": {
 		"name": "ng2-lab",
 		"dependencies": {
-			"angular2": "npm:angular2@^2.0.0-beta.13",
+			"angular2": "npm:angular2@^2.0.0-beta.14",
 			"core-js": "npm:core-js@^2.2.2",
 			"firebase": "github:firebase/firebase-bower@^2.4.1",
 			"reflect-metadata": "npm:reflect-metadata@0.1.2",
@@ -104,7 +104,7 @@
 				"main": "firebase",
 				"registry": "jspm"
 			},
-			"npm:angular2@2.0.0-beta.13": {
+			"npm:angular2@2.0.0-beta.14": {
 				"main": false,
 				"dependencies": {
 					"reflect-metadata": "npm:reflect-metadata@0.1.2",

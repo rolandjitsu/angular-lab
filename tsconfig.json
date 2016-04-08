@@ -9,7 +9,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"angular2/*": [
-				"jspm_packages/npm/angular2@2.0.0-beta.13/*"
+				"jspm_packages/npm/angular2@2.0.0-beta.14/*"
 			],
 			"rxjs/*": [
 				"jspm_packages/npm/rxjs@5.0.0-beta.2/*"

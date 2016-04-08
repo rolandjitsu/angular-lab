@@ -35,7 +35,7 @@ SystemJS.config({
 				}
 			}
 		},
-		'npm:angular2@2.0.0-beta.13': {
+		'npm:angular2@2.0.0-beta.14': {
 			'meta': {
 				'*.js': {
 					'typings': true
@@ -52,7 +52,7 @@ SystemJS.config({
 		'github:*/*.json'
 	],
 	map: {
-		'angular2': 'npm:angular2@2.0.0-beta.13',
+		'angular2': 'npm:angular2@2.0.0-beta.14',
 		'assert': 'github:jspm/nodelibs-assert@0.2.0-alpha',
 		'babel': 'npm:systemjs-plugin-babel@0.0.8',
 		'buffer': 'github:jspm/nodelibs-buffer@0.2.0-alpha',
@@ -73,14 +73,14 @@ SystemJS.config({
 		'ts': 'github:frankwallis/plugin-typescript@4.0.2',
 		'util': 'github:jspm/nodelibs-util@0.2.0-alpha',
 		'vm': 'github:jspm/nodelibs-vm@0.2.0-alpha',
-		'zone.js': 'npm:zone.js@0.6.8'
+		'zone.js': 'npm:zone.js@0.6.10'
 	},
 	packages: {
-		'npm:angular2@2.0.0-beta.13': {
+		'npm:angular2@2.0.0-beta.14': {
 			'map': {
 				'reflect-metadata': 'npm:reflect-metadata@0.1.2',
 				'rxjs': 'npm:rxjs@5.0.0-beta.2',
-				'zone.js': 'npm:zone.js@0.6.8'
+				'zone.js': 'npm:zone.js@0.6.10'
 			}
 		},
 		'npm:rxjs@5.0.0-beta.2': {
