@@ -1,6 +1,6 @@
 import {ViewEncapsulation, Component} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES, Router, RouteConfig, Location, Instruction} from 'angular2/router';
+import {ROUTER_DIRECTIVES, Route, Router, RouteConfig, Location, Instruction} from 'angular2/router';
 
 import {AuthClient} from '../../services';
 import {Tracker} from '../../services';
@@ -31,22 +31,22 @@ const COMPONENT_BASE_PATH = './app/components/app';
 })
 
 @RouteConfig([
-	{
+	new Route({
 		path: '/',
 		component: Todos,
-		useAsDefault: true,
-		as: 'Todos'
-	},
-	{
+		name: 'Todos',
+		useAsDefault: true
+	}),
+	new Route({
 		path: '/account',
 		component: Account,
-		as: 'Account'
-	},
-	{
+		name: 'Account'
+	}),
+	new Route({
 		path: '/login/...',
 		component: Auth,
-		as: 'Auth'
-	}
+		name: 'Auth'
+	})
 ])
 
 export class App {
