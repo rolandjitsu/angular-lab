@@ -1,16 +1,14 @@
-@import "../../vars";
-
-// Host Element (<register>)
+/* Host Element (<register>) */
 :host {
 	display: block;
 }
 
 
-// Form
+/* Form */
 
 .register-form,
 .alert {
-	max-width: $auth-width;
+	max-width: 400px;
 }
 
 .register-form-email,
@@ -22,10 +20,10 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	margin-bottom: -1px;
-	
-	&:focus {
-		z-index: 2;
-	}
+}
+
+.register-form-email:focus {
+	z-index: 2;
 }
 
 .register-form-password {

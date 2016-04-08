@@ -1,0 +1,56 @@
+/* Host Element (<todos>) */
+:host {
+	display: block;
+}
+
+
+/* Base */
+.todos-form,
+todo-list {
+	max-width: 400px;
+}
+
+
+/* Form */
+.todos-form {
+	padding-top: 80px;
+	padding-bottom: 40px;
+}
+
+.todos-form button {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	border: 1px solid deepskyblue;
+	border-radius: 50%;
+	background: transparent;
+	color: deepskyblue;
+	outline: none;
+}
+
+.todos-form button:disabled {
+	 cursor: not-allowed;
+	 opacity: .45;
+}
+
+.todos-form button:disabled:focus:not(:disabled),
+.todos-form button:disabled:hover:not(:disabled) {
+	background-color: deepskyblue;
+	color: #fff;
+}
+
+
+/* Navigation */
+.nav {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+}
+
+.nav li:first-of-type {
+	padding-right: 16px;
+}
+
+.nav a {
+	cursor: pointer;
+}

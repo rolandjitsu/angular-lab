@@ -1,0 +1,14 @@
+/* Host Element (<glyph>) */
+:host {
+	display: inline-block;
+	vertical-align: middle;
+	fill: currentColor;
+	color: inherit;
+	width: 24px;
+	height: 24px;
+}
+
+:host > svg {
+	pointer-events: none;
+	display: block;
+}

@@ -10,7 +10,6 @@ import karma from 'karma';
 import open from 'open';
 import plumber from 'gulp-plumber';
 import sauceConnectLauncher from 'sauce-connect-launcher';
-import sass from 'gulp-sass';
 import size from 'gulp-size';
 import sourcemaps from 'gulp-sourcemaps';
 import split from 'split2';
@@ -204,16 +203,6 @@ gulp.task('build/css', function () {
 		}))
 		.pipe(plumber())
 		.pipe(sourcemaps.init())
-		.pipe(sass({
-			includePaths: [
-				'./app'
-			],
-			outputStyle: 'compressed', // nested (default), expanded, compact, compressed
-			indentType: 'tab',
-			indentWidth: 1,
-			linefeed: 'lf'
-		}))
-		.on('error', sass.logError)
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))

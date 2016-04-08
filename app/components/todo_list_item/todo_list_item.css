@@ -1,14 +1,10 @@
-@import "../../vars";
-@import "../../mixins";
-
-
-// Host Element (<todo-list-item>)
+/* Host Element (<todo-list-item>) */
 :host {
 	display: block;
 }
 
 
-// Cell
+/* Cell */
 
 .todo-cell {
 	position: relative;
@@ -23,13 +19,13 @@
 }
 
 
-// Control
+/* Control */
 .todo-cell-control {
 	width: 24px;
 }
 
 
-// Content
+/* Content */
 
 .todo-cell-content {
 	position: relative;
@@ -42,16 +38,16 @@
 
 .todo-cell-content-input {
 	display: none;
-	
-	& input {
-		border-width: 0;
-		padding: 0;
-		outline: none;
-	}
-	
-	.js-edit-mode & {
-		display: block;
-	}
+}
+
+.todo-cell-content-input input {
+	border-width: 0;
+	padding: 0;
+	outline: none;
+}
+
+.js-edit-mode .todo-cell-content-input {
+	display: block;
 }
 
 .todo-cell-content-text {
@@ -60,63 +56,62 @@
 }
 
 
-// Accessory View (Edit/Delete)
+/* Accessory View (Edit/Delete) */
 
 .todo-cell-av {
 	width: 56px;
 	font-size: 0;
 	transition: opacity .125s ease-in-out;
 	z-index: 0;
-	
-	li {
-		display: inline-block;
-	}
-	
-	a {
-		display: block;
-		color: $grey;
-		transition: color .125s ease-in-out;
-		cursor: pointer;
-	}
-	
-	.js-complete & {
-		opacity: 0;
-		pointer-events: none;
-		z-index: -2;
-	}
+}
+
+.todo-cell-av li {
+	display: inline-block;
+}
+
+.todo-cell-av a {
+	display: block;
+	color: lightgrey;
+	transition: color .125s ease-in-out;
+	cursor: pointer;
+}
+
+.js-complete .todo-cell-av {
+	opacity: 0;
+	pointer-events: none;
+	z-index: -2;
 }
 
 .todo-cell-av-edit {
 	padding-right: 4px;
-	
-	&:hover,
-	&:focus {
-		color: $blue !important;
-	}
+}
+
+.todo-cell-av-edit:hover,
+.todo-cell-av-edit:focus {
+	color: deepskyblue !important;
 }
 
 .todo-cell-av-delete {
 	padding-left: 4px;
-	
-	&:hover,
-	&:focus {
-		color: $red !important;
-	}
+}
+
+.todo-cell-av-delete:hover,
+.todo-cell-av-delete:focus {
+	color: indianred !important;
 }
 
 
-// Status
-
+/* Status */
 .todo-cell-status {
 	position: absolute;
 	right: 0;
 	opacity: 0;
 	transition: opacity .125s ease-in-out;
 	z-index: -2;
-	
-	.js-complete & {
-		opacity: 1;
-		transition-delay: .150s;
-		z-index: 0;
-	}
+}
+
+.js-complete .todo-cell-status {
+	opacity: 1;
+	transition-delay: .150s;
+	z-index: 0;
 }

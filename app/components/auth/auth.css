@@ -1,9 +1,9 @@
-// Host Element (<auth>)
+/* Host Element (<auth>) */
 :host {
 	display: block;
 }
 
-// Header
+/* Header */
 .header {
 	height: 180px;
 	line-height: 180px;

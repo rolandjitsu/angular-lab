@@ -1,8 +1,0 @@
-@mixin square($size) {
-	@include size($size, $size);
-}
-
-@mixin size($width, $height) {
-	width: $width;
-	height: $height;
-}

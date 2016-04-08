@@ -1,17 +1,15 @@
-@import '../../vars';
-
-// Host Element (<account>)
+/* Host Element (<account>) */
 :host {
 	display: block;
 	height: 100vh;
 }
 
 
-// Form
+/* Form */
 
 .change-form,
 .alert {
-	max-width: $auth-width;
+	max-width: 400px;
 }
 
 .change-form-email,
@@ -30,10 +28,12 @@
 .change-form-oldpassword,
 .change-form-newpassword {
 	margin-bottom: -1px;
-	
-	&:focus {
-		z-index: 2;
-	}
+}
+
+.change-form-email:focus,
+.change-form-oldpassword:focus,
+.change-form-newpassword:focus {
+	 z-index: 2;
 }
 
 .change-form-oldpassword,

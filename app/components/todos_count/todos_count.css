@@ -1,21 +1,18 @@
-@import "../../vars";
-
-
-// Host Element (<todos>)
+/* Host Element (<todos>) */
 :host {
 	display: block;
 }
 
-// Bubble
+/* Bubble */
 .bubble {
 	position: relative;
-	color: $grey;
+	color: lightgrey;
 }
 
-// Count
+/* Count */
 .label {
 	position: absolute;
 	top: -12px;
 	right: -16px;
-	border: 2px solid $white;
+	border: 2px solid #fff;
 }

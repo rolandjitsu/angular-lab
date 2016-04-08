@@ -1,17 +1,14 @@
-@import "../../vars";
-@import "../../mixins";
-
-
-// Host Element (<login>)
+/* Host Element (<login>) */
 :host {
 	display: block;
 }
 
-// Form
+
+/* Form */
 
 .login-form,
 .alert {
-	max-width: $auth-width;
+	max-width: 400px;
 }
 
 .login-form-email,
@@ -23,10 +20,10 @@
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 	margin-bottom: -1px;
-	
-	&:focus {
-		z-index: 2;
-	}
+}
+
+.login-form-email:focus {
+	z-index: 2;
 }
 
 .login-form-password {
@@ -36,25 +33,23 @@
 }
 
 
-// Buttons
+/* Buttons */
 
-.list-inline {
-	
-	& > li {
-		vertical-align: middle;
-	}
-	
-	a {
-		display: block;
-		color: $grey;
-		
-		&:hover,
-		&:focus {
-			color: $blue;
-		}
-	}
+.list-inline > li {
+	vertical-align: middle;
+}
+
+.list-inline a {
+	display: block;
+	color: lightgray;
+}
+
+.list-inline a:hover,
+.list-inline a:focus {
+	 color: deepskyblue;
 }
 
 glyph {
-	@include square(38px);
+	width: 38px;
+	height: 38px;
 }
