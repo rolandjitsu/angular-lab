@@ -72,6 +72,11 @@
 	"jspm": {
 		"name": "ng2-lab",
 		"dependencies": {
+			"@angular2-material/button": "npm:@angular2-material/button@^2.0.0-alpha.2",
+			"@angular2-material/card": "npm:@angular2-material/card@^2.0.0-alpha.2",
+			"@angular2-material/checkbox": "npm:@angular2-material/checkbox@^2.0.0-alpha.2",
+			"@angular2-material/core": "npm:@angular2-material/core@^2.0.0-alpha.2",
+			"@angular2-material/input": "npm:@angular2-material/input@^2.0.0-alpha.2",
 			"angular2": "npm:angular2@^2.0.0-beta.14",
 			"core-js": "npm:core-js@^2.2.2",
 			"firebase": "github:firebase/firebase-bower@^2.4.1",
@@ -104,6 +109,41 @@
 				"main": "firebase",
 				"registry": "jspm"
 			},
+			"npm:@angular2-material/button@2.0.0-alpha.2": {
+				"meta": {
+					"*.js": {
+						"typings": true
+					}
+				}
+			},
+			"npm:@angular2-material/card@2.0.0-alpha.2": {
+				"meta": {
+					"*.js": {
+						"typings": true
+					}
+				}
+			},
+			"npm:@angular2-material/checkbox@2.0.0-alpha.2": {
+				"meta": {
+					"*.js": {
+						"typings": true
+					}
+				}
+			},
+			"npm:@angular2-material/core@2.0.0-alpha.2": {
+				"meta": {
+					"*.js": {
+						"typings": true
+					}
+				}
+			},
+			"npm:@angular2-material/input@2.0.0-alpha.2": {
+				"meta": {
+					"*.js": {
+						"typings": true
+					}
+				}
+			},
 			"npm:angular2@2.0.0-beta.14": {
 				"main": false,
 				"dependencies": {
@@ -126,6 +166,9 @@
 							"reflect-metadata",
 							"zone.js"
 						]
+					},
+					"*.js": {
+						"typings": true
 					}
 				}
 			},

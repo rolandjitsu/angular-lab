@@ -34,13 +34,6 @@ SystemJS.config({
 					'loader': 'ts'
 				}
 			}
-		},
-		'npm:angular2@2.0.0-beta.14': {
-			'meta': {
-				'*.js': {
-					'typings': true
-				}
-			}
 		}
 	}
 });
@@ -52,6 +45,11 @@ SystemJS.config({
 		'github:*/*.json'
 	],
 	map: {
+		'@angular2-material/button': 'npm:@angular2-material/button@2.0.0-alpha.2',
+		'@angular2-material/card': 'npm:@angular2-material/card@2.0.0-alpha.2',
+		'@angular2-material/checkbox': 'npm:@angular2-material/checkbox@2.0.0-alpha.2',
+		'@angular2-material/core': 'npm:@angular2-material/core@2.0.0-alpha.2',
+		'@angular2-material/input': 'npm:@angular2-material/input@2.0.0-alpha.2',
 		'angular2': 'npm:angular2@2.0.0-beta.14',
 		'assert': 'github:jspm/nodelibs-assert@0.2.0-alpha',
 		'babel': 'npm:systemjs-plugin-babel@0.0.8',
