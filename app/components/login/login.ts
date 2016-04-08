@@ -1,6 +1,19 @@
-import {ViewEncapsulation, Component} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
+import {
+	ViewEncapsulation,
+	Component
+} from 'angular2/core';
+import {
+	CORE_DIRECTIVES,
+	FORM_DIRECTIVES
+} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
+import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
+import {MdCheckbox} from '@angular2-material/checkbox';
+import {
+	MdButton,
+	MdAnchor
+} from '@angular2-material/button';
 
 import {AuthClient, FirebaseAuthProvider} from '../../services';
 
@@ -16,7 +29,12 @@ const COMPONENT_BASE_PATH = './app/components/login';
 	directives: [
 		CORE_DIRECTIVES,
 		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES
+		ROUTER_DIRECTIVES,
+		MD_CARD_DIRECTIVES,
+		MD_INPUT_DIRECTIVES,
+		MdAnchor,
+		MdButton,
+		MdCheckbox
 	]
 })
 

@@ -5,51 +5,15 @@
 
 
 /* Form */
-
 .login-form,
 .alert {
+	margin-left: auto;
+	margin-right: auto;
 	max-width: 400px;
-}
-
-.login-form-email,
-.login-form-password {
-	position: relative;
-}
-
-.login-form-email {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	margin-bottom: -1px;
-}
-
-.login-form-email:focus {
-	z-index: 2;
-}
-
-.login-form-password {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	margin-bottom: 5px;
 }
 
 
 /* Buttons */
-
 .list-inline > li {
 	vertical-align: middle;
-}
-
-.list-inline a {
-	display: block;
-	color: lightgray;
-}
-
-.list-inline a:hover,
-.list-inline a:focus {
-	 color: deepskyblue;
-}
-
-glyph {
-	width: 38px;
-	height: 38px;
 }
