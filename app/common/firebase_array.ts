@@ -1,5 +1,3 @@
-// import Firebase from 'firebase';
-
 import {isJsObject} from './lang';
 
 

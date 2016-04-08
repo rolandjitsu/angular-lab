@@ -1,6 +1,7 @@
 import 'core-js/shim';
 import 'zone.js';
 import 'reflect-metadata';
+import 'firebase';
 
 import {bootstrap} from 'angular2/platform/browser';
 import {FORM_PROVIDERS} from 'angular2/common';

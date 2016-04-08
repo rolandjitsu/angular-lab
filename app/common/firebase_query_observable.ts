@@ -1,4 +1,3 @@
-import Firebase from 'firebase';
 import {Observable} from 'rxjs/Observable';
 
 export enum FirebaseQueryEventType {
