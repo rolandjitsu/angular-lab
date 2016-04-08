@@ -1,4 +1,7 @@
-import Firebase from 'firebase';
+// import Firebase from 'firebase';
+
+import {isJsObject} from './lang';
+
 
 /**
  * Firebase array value interface.
@@ -43,12 +46,13 @@ let _refs: Map<any, any> = new Map();
  * // or let fa = new FirebaseArray(ref);
  */
 
-export class FirebaseArray extends Array {
+export class FirebaseArray {
 	ref: Firebase;
-	private _subs: Array<Array<any>>;
+
+	private _subs: Array<any>[];
+	private _items = [];
 
 	constructor(ref: Firebase) {
-		super();
 		let url: string = ref.toString();
 		this.ref = ref;
 		if (_refs.has(url)) {
@@ -65,30 +69,33 @@ export class FirebaseArray extends Array {
 				child_moved: this._onMoved,
 				child_removed: this._onRemoved
 			};
-			for (let name of Object.keys(events)) this._subs.push([
-				name,
-				this.ref.on(
+			for (let [name, event] of (<any>Object).entries(events)) {
+				this._subs.push([
 					name,
-					events[name].bind(this)
-				)
-			]);
+					this.ref.on(name, (...args) => Reflect.apply(event, this, args))
+				]);
+			}
 		}
 		let entries = _refs.get(url).entries;
 		if (!entries.length) {
-			this.length = entries.length;
+			this._items = new Array(entries.length);
 			for (let [entry, idx] of entries) {
-				this[idx] = entry;
+				this._items[idx] = entry;
 			}
 		}
 	}
 
+	[Symbol.iterator]() {
+		return this._items.values();
+	}
 
-	// TODO:
+
+	// TODO
 	// On instance create, we need to check if the Firebase `ref` exists and if it is compatible with an FirebaseArray;
 	// Implement remaining Array [methods]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array}.
 	// Keep in mind that for methods like `.every()`, if a primitive is passed,
-	// we need to check the `.value` because we store pimitives as `{ value: <primitive>, key: <string> }`.
-	// Alternatively, we need to figure out what to do when similar methods are called on the array, perhaps just documenting that primite values are not stored as primitives.
+	// we need to check the `.value` because we store primitives as `{ value: <primitive>, key: <string> }`.
+	// Alternatively, we need to figure out what to do when similar methods are called on the array, perhaps just documenting that primitive values are not stored as primitives.
 	// The same thing applies for `.filter()`, `.find()`, `.findIndex()`, `.forEach()`, `.map()`, `.reduce()`,
 	// `.reduceRight()`, `.some()`.
 	// Whereas methods like `.includes()`, `.indexOf()`, `.lastIndexOf()` just need to check if it is a primitive and if so check the `.value` is the value searched for.
@@ -153,7 +160,9 @@ export class FirebaseArray extends Array {
 
 	set(key: string, data: any): Promise<Firebase> {
 		return new Promise((resolve, reject) => {
-			if (!keyExists(key)) return reject();
+			if (!keyExists(key)) {
+				return reject();
+			}
 			let ref: Firebase = this.ref.child(key);
 			ref.set(transformDataToFirebaseArrayValue(data), (error) => {
 				if (error) {
@@ -312,33 +321,37 @@ export class FirebaseArray extends Array {
 	private _onChanged(snapshot: FirebaseDataSnapshot): void {
 		let key: string = snapshot.key();
 		let pos: number = this._indexOfKey(key);
-		if (pos !== -1) this[pos] = extendFirebaseArrayValue(this[pos], parseFirebaseArrayValue(key, snapshot.val()));
+		if (pos !== -1) {
+			this._items[pos] = extendFirebaseArrayValue(this._items[pos], parseFirebaseArrayValue(key, snapshot.val()));
+		}
 	}
 	private _onMoved(snapshot: FirebaseDataSnapshot, prevKey?: string): void {
 		let key: string = snapshot.key();
 		let oldPos: number = this._indexOfKey(key);
 		if (oldPos !== -1) {
-			let record: any = this[oldPos];
-			this.splice(oldPos, 1);
+			let record: any = this._items[oldPos];
+			this._items.splice(oldPos, 1);
 			this._move(key, record, prevKey);
 		}
 	}
 	private _onRemoved(snapshot: FirebaseDataSnapshot): void {
 		let pos: number = this._indexOfKey(snapshot.key());
-		if (pos !== -1) this.splice(pos, 1);
+		if (pos !== -1) {
+			this._items.splice(pos, 1);
+		}
 	}
 
 
 	private _indexOfKey(key: string): number {
-		for (let [i, len] = [0, this.length]; i < len; i++) {
-			if (this[i].key === key) {
+		for (let [i, item] of this._items.entries()) {
+			if (item.key === key) {
 				return i;
 			}
 		}
 		return -1;
 	}
 	private _move(key: string, record: any, prevKey?: string): void {
-		this.splice(this._getRecordPos(key, prevKey), 0, record);
+		this._items.splice(this._getRecordPos(key, prevKey), 0, record);
 	}
 	private _getRecordPos(key: string, prevKey?: string): number {
 		if (prevKey === null) {
@@ -346,7 +359,7 @@ export class FirebaseArray extends Array {
 		} else {
 			let idx = this._indexOfKey(prevKey);
 			if (idx === -1) {
-				return this.length;
+				return this._items.length;
 			} else {
 				return idx + 1;
 			}
@@ -361,10 +374,6 @@ function keyExists (key: any) {
 
 function isPriorityValid (priority: any) {
 	return typeof priority === 'string' || (!Number.isNaN(parseFloat(priority)) && Number.isFinite(priority));
-}
-
-function isJsObject (obj: any) {
-	return obj !== null && (typeof obj === 'function' || typeof obj === 'object');
 }
 
 function extendFirebaseArrayValue (base: any, data: any): any {
@@ -389,14 +398,24 @@ function extendFirebaseArrayValue (base: any, data: any): any {
 function transformDataToFirebaseArrayValue (data: any): any {
 	if (data && isJsObject(data)) {
 		delete data.key;
-		if (data.hasOwnProperty('value')) data = data.value;
+		if (data.hasOwnProperty('value')) {
+			data = data.value;
+		}
 	}
-	if (data === undefined) data = null;
+
+	if (data === undefined) {
+		data = null;
+	}
+
 	return data;
 }
 
 function parseFirebaseArrayValue (key: string, data: any): any {
-	if (!isJsObject(data) || !data) data = { value: data };
+	if (!isJsObject(data) || !data) {
+		data = {value: data};
+	}
+
 	data.key = key;
+
 	return data;
 }
