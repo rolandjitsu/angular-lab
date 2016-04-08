@@ -1,6 +1,6 @@
 import {ViewEncapsulation, Component} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES, RouteConfig} from 'angular2/router';
+import {ROUTER_DIRECTIVES, RouteConfig, Route} from 'angular2/router';
 
 import {Login} from '../login/login';
 import {ResetPassword} from '../reset_password/reset_password';
@@ -22,22 +22,22 @@ const COMPONENT_BASE_PATH = './app/components/auth';
 })
 
 @RouteConfig([
-	{
+	new Route({
 		path: '/',
 		component: Login,
-		useAsDefault: true,
-		as: 'Login'
-	},
-	{
+		name: 'Login',
+		useAsDefault: true
+	}),
+	new Route({
 		path: '/reset',
 		component: ResetPassword,
-		as: 'Reset'
-	},
-	{
+		name: 'Reset'
+	}),
+	new Route({
 		path: '/register',
 		component: Register,
-		as: 'Register'
-	}
+		name: 'Register'
+	})
 ])
 
 export class Auth {}
