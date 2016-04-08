@@ -49,6 +49,10 @@ let _refs: Map<any, any> = new Map();
 export class FirebaseArray {
 	ref: Firebase;
 
+	get length() {
+		return this._items.length;
+	}
+
 	private _subs: Array<any>[];
 	private _items = [];
 
