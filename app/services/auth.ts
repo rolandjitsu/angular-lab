@@ -1,5 +1,5 @@
-import Firebase from 'firebase';
 import {Observable} from 'rxjs/Observable';
+import Firebase from 'firebase';
 
 import {FIREBASE_APP_LINK} from './../common/constants';
 
