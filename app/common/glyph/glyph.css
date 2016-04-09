@@ -1,9 +1,9 @@
 /* Host Element (<glyph>) */
 :host {
+	margin: auto;
 	display: inline-block;
 	vertical-align: middle;
 	fill: currentColor;
-	color: inherit;
 	width: 24px;
 	height: 24px;
 }
