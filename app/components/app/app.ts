@@ -18,7 +18,7 @@ import {Login} from '../login/login';
 import {ResetPassword} from '../reset_password/reset_password';
 import {Register} from '../register/register';
 import {Account} from '../account/account';
-import {Todos} from '../todos/todos';
+import {Dashboard} from '../dashboard/dashboard';
 
 const COMPONENT_BASE_PATH = './app/components/app';
 
@@ -37,8 +37,8 @@ const COMPONENT_BASE_PATH = './app/components/app';
 @RouteConfig([
 	new Route({
 		path: '/',
-		component: Todos,
-		name: 'Todos',
+		component: Dashboard,
+		name: 'Dashboard',
 		useAsDefault: true
 	}),
 	new Route({
@@ -58,7 +58,7 @@ export class App {
 		client.session.subscribe((auth: FirebaseAuthData) => {
 			router.recognize(location.path()).then((instruction: Instruction) => {
 				if (auth && isAuthComponent(instruction)) {
-					router.navigate(['/Todos']);
+					router.navigate(['/Dashboard']);
 				} else if (!auth && !isAuthComponent(instruction)) {
 					router.navigate(['/Auth', 'Login']);
 				}

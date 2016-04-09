@@ -5,18 +5,18 @@ import {AuthClient, isUserAuthenticated, Chores} from '../../services';
 import {TodosCount} from '../todos_count/todos_count';
 import {TodoList} from '../todo_list/todo_list';
 
-const COMPONENT_BASE_PATH = './app/components/todos';
+const COMPONENT_BASE_PATH = './app/components/dashboard';
 
 class Form {
 	name: string;
 }
 
 @Component({
-	selector: 'todos',
+	selector: 'dashboard',
 	encapsulation: ViewEncapsulation.Emulated, // ViewEncapsulation.Emulated, ViewEncapsulation.Native, ViewEncapsulation.None (default)
-	templateUrl: `${COMPONENT_BASE_PATH}/todos.html`,
+	templateUrl: `${COMPONENT_BASE_PATH}/dashboard.html`,
 	styleUrls: [
-		`${COMPONENT_BASE_PATH}/todos.css`
+		`${COMPONENT_BASE_PATH}/dashboard.css`
 	],
 	directives: [
 		TodosCount,
@@ -26,7 +26,7 @@ class Form {
 
 @CanActivate(() => isUserAuthenticated())
 
-export class Todos {
+export class Dashboard {
 	form: Form = new Form();
 	private _chores: Chores;
 	private _client: AuthClient;
