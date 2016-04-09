@@ -1,19 +1,35 @@
-<form
-	class="register-form center-block"
-	#register="ngForm"
-	(ngSubmit)="submit()"
-	novalidate>
-	<label for="email" class="sr-only">Email</label>
-	<input type="email" class="form-control register-form-email" id="email" name="email" ngControl="email" [(ngModel)]="credentials.email" [disabled]="isRegistering" placeholder="Email" autocomplete="off" required userAvailability>
-	<label for="password" class="sr-only">Password</label>
-	<input type="password" class="form-control register-form-password" id="password" name="password" ngControl="password" [(ngModel)]="credentials.password" [disabled]="isRegistering" placeholder="Password" autocomplete="off" required>
-	<button type="submit" class="btn btn-primary btn-block" [disabled]="!register.form.valid || isRegistering">
-		Register
-	</button>
-	<div class="text-right">
-		<a [routerLink]="['../Login']">Back</a>
-	</div>
-</form>
+<md-card class="register-form">
+	<md-card-content>
+		<form #register="ngForm"
+			  (ngSubmit)="submit()"
+			  novalidate>
+			<div class="register-fields">
+				<md-input type="email" ngControl="email" [(ngModel)]="credentials.email" [disabled]="isRegistering" placeholder="Email" class="pull-left" required userAvailability></md-input>
+				<md-input type="password"
+						  ngControl="password"
+						  [(ngModel)]="credentials.password"
+						  [disabled]="isRegistering"
+						  placeholder="Password"
+						  class="pull-left"
+						  required></md-input>
+			</div>
+
+			<div class="clearfix">
+				<button type="submit"
+						md-raised-button
+						color="primary"
+						[disabled]="!register.form.valid || isRegistering"
+						class="pull-right">
+					Register
+				</button>
+
+				<div class="pull-left">
+					<a [routerLink]="['../Login']">Back</a>
+				</div>
+			</div>
+		</form>
+	</md-card-content>
+</md-card>
 
 <div
 	*ngIf="register.form.hasError('userAvailability', 'email')"

@@ -1,4 +1,23 @@
 body {
 	font-family: Roboto, 'Helvetica Neue', sans-serif;
 	height: 100vh;
+	margin: 0;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
 }

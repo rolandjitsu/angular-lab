@@ -3,16 +3,33 @@
 		<form #login="ngForm"
 			  (ngSubmit)="loginWithCredentials()"
 			  novalidate>
-			<md-input type="email" ngControl="email" [(ngModel)]="credentials.email" [disabled]="isAuthenticating" placeholder="Email" required></md-input>
-			<md-input type="password" ngControl="password" [(ngModel)]="credentials.password" [disabled]="isAuthenticating" placeholder="Password" required></md-input>
+			<div class="login-fields clearfix">
+				<md-input type="email"
+						  ngControl="email"
+						  [(ngModel)]="credentials.email"
+						  [disabled]="isAuthenticating"
+						  placeholder="Email"
+						  class="pull-left"
+						  required></md-input>
+				<md-input type="password"
+						  ngControl="password"
+						  [(ngModel)]="credentials.password"
+						  [disabled]="isAuthenticating"
+						  placeholder="Password"
+						  class="pull-left"
+						  required></md-input>
+			</div>
 
-			<div>
-				<md-checkbox ngControl="remember" [(ngModel)]="remember">
+			<div class="clearfix">
+				<md-checkbox ngControl="remember" [(ngModel)]="remember" class="pull-left">
 					Remember me
 				</md-checkbox>
-				<a [routerLink]="['../Reset']">Forgot your password?</a>
+				<a [routerLink]="['../Reset']" class="pull-right">
+					Forgot your password?
+				</a>
 			</div>
-			<ul class="list-inline">
+
+			<ul class="login-actions">
 				<li>
 					<button type="submit" md-raised-button color="primary" [disabled]="!login.form.valid || isAuthenticating">
 						Login
@@ -20,16 +37,17 @@
 				</li>
 				<li>or</li>
 				<li>
-					<a md-mini-fab href="#" (click)="loginWithGithub()" aria-label="Login with Github">
+					<a md-icon-button href="#" (click)="loginWithGithub()" aria-label="Login with Github">
 						<glyph src="assets/glyphs/github.svg"></glyph>
 					</a>
 				</li>
 				<li>
-					<a md-mini-fab href="#" (click)="loginWithGoogle()" aria-label="Login with Google">
+					<a md-icon-button color="accent" href="#" (click)="loginWithGoogle()" aria-label="Login with Google">
 						<glyph src="assets/glyphs/google.svg"></glyph>
 					</a>
 				</li>
 			</ul>
+
 			<div>
 				<small>
 					Don't have a Google or Git account?
