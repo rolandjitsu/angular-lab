@@ -4,7 +4,6 @@ import {
 	ViewEncapsulation,
 	Input
 } from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 
 import {Chores, Chore} from '../../services';
 
@@ -16,10 +15,6 @@ const COMPONENT_BASE_PATH = './app/components/todo_list_item';
 	templateUrl: `${COMPONENT_BASE_PATH}/todo_list_item.html`,
 	styleUrls: [
 		`${COMPONENT_BASE_PATH}/todo_list_item.css`
-	],
-	directives: [
-		CORE_DIRECTIVES,
-		FORM_DIRECTIVES
 	]
 })
 

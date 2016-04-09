@@ -5,7 +5,6 @@ import {
 	Component,
 	ViewEncapsulation
 } from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {Chores} from '../../services';
 import {TodoListItem} from '../todo_list_item/todo_list_item';
@@ -21,7 +20,6 @@ const COMPONENT_BASE_PATH = './app/components/todo_list';
 		`${COMPONENT_BASE_PATH}/todo_list.css`
 	],
 	directives: [
-		CORE_DIRECTIVES,
 		TodoListItem
 	]
 })

@@ -1,6 +1,7 @@
-import {ViewEncapsulation, Component} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
+import {
+	ViewEncapsulation,
+	Component
+} from 'angular2/core';
 
 import {AuthClient} from '../../services';
 
@@ -16,9 +17,6 @@ const COMPONENT_BASE_PATH = './app/components/register';
 		`${COMPONENT_BASE_PATH}/register.css`
 	],
 	directives: [
-		CORE_DIRECTIVES,
-		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES,
 		UserAvailabilityValidator
 	]
 })

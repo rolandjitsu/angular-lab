@@ -1,6 +1,14 @@
-import {ViewEncapsulation, Component} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES, Route, Router, RouteConfig, Location, Instruction} from 'angular2/router';
+import {
+	ViewEncapsulation,
+	Component
+} from 'angular2/core';
+import {
+	Route,
+	Router,
+	RouteConfig,
+	Location,
+	Instruction
+} from 'angular2/router';
 
 import {AuthClient} from '../../services';
 import {Tracker} from '../../services';
@@ -20,10 +28,6 @@ const COMPONENT_BASE_PATH = './app/components/app';
 	templateUrl: `${COMPONENT_BASE_PATH}/app.html`,
 	styleUrls: [
 		`${COMPONENT_BASE_PATH}/app.css`
-	],
-	directives: [
-		CORE_DIRECTIVES,
-		ROUTER_DIRECTIVES
 	],
 	pipes: [
 		LowerCasePipe

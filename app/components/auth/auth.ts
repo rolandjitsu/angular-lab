@@ -1,6 +1,5 @@
 import {ViewEncapsulation, Component} from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES, RouteConfig, Route} from 'angular2/router';
+import {RouteConfig, Route} from 'angular2/router';
 
 import {Login} from '../login/login';
 import {ResetPassword} from '../reset_password/reset_password';
@@ -14,10 +13,6 @@ const COMPONENT_BASE_PATH = './app/components/auth';
 	templateUrl: `${COMPONENT_BASE_PATH}/auth.html`,
 	styleUrls: [
 		`${COMPONENT_BASE_PATH}/auth.css`
-	],
-	directives: [
-		CORE_DIRECTIVES,
-		ROUTER_DIRECTIVES
 	]
 })
 

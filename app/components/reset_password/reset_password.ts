@@ -1,6 +1,4 @@
 import {ViewEncapsulation, Component} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
 
 import {AuthClient} from '../../services';
 
@@ -12,11 +10,6 @@ const COMPONENT_BASE_PATH = './app/components/reset_password';
 	templateUrl: `${COMPONENT_BASE_PATH}/reset_password.html`,
 	styleUrls: [
 		`${COMPONENT_BASE_PATH}/reset_password.css`
-	],
-	directives: [
-		CORE_DIRECTIVES,
-		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES
 	]
 })
 

@@ -5,7 +5,6 @@ import {
 	Component,
 	ViewEncapsulation
 } from 'angular2/core';
-import {CORE_DIRECTIVES} from 'angular2/common';
 
 import {Chores} from '../../services';
 
@@ -18,9 +17,6 @@ const COMPONENT_BASE_PATH = './app/components/todos_count';
 	templateUrl: `${COMPONENT_BASE_PATH}/todos_count.html`,
 	styleUrls: [
 		`${COMPONENT_BASE_PATH}/todos_count.css`
-	],
-	directives: [
-		CORE_DIRECTIVES
 	]
 })
 

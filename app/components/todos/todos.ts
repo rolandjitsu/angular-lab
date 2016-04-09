@@ -1,6 +1,5 @@
 import {Inject, Component, ViewEncapsulation} from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
-import {ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
+import {CanActivate} from 'angular2/router';
 
 import {AuthClient, isUserAuthenticated, Chores} from '../../services';
 import {TodosCount} from '../todos_count/todos_count';
@@ -20,9 +19,6 @@ class Form {
 		`${COMPONENT_BASE_PATH}/todos.css`
 	],
 	directives: [
-		CORE_DIRECTIVES,
-		FORM_DIRECTIVES,
-		ROUTER_DIRECTIVES,
 		TodosCount,
 		TodoList
 	]
