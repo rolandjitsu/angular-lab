@@ -15,6 +15,15 @@ import {
 	HashLocationStrategy
 } from 'angular2/router';
 
+import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
+import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
+import {MdCheckbox} from '@angular2-material/checkbox';
+import {
+	MdButton,
+	MdAnchor
+} from '@angular2-material/button';
+
+
 import {ENV_PROVIDERS, isProd} from './env';
 
 import {Checkbox} from './common/checkbox/checkbox';
@@ -47,6 +56,11 @@ bootstrap(App, [
 	ENV_PROVIDERS,
 	provide(PLATFORM_DIRECTIVES, {
 		useValue: [
+			MD_CARD_DIRECTIVES,
+			MD_INPUT_DIRECTIVES,
+			MdAnchor,
+			MdButton,
+			MdCheckbox,
 			Checkbox,
 			Glyph
 		],
