@@ -41,16 +41,7 @@ todo-list {
 
 
 /* Navigation */
-.nav {
-	position: fixed;
-	top: 20px;
-	right: 20px;
-}
-
-.nav li:first-of-type {
-	padding-right: 16px;
-}
-
-.nav a {
-	cursor: pointer;
+.nav [md-icon-button] {
+	padding: 8px;
+	color: #fff;
 }

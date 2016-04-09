@@ -4,6 +4,10 @@ body {
 	margin: 0;
 }
 
+.fill-remaining-space {
+	flex: 1 1 auto;
+}
+
 .clearfix:before,
 .clearfix:after {
 	content: " ";
