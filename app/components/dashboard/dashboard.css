@@ -6,11 +6,11 @@
 
 
 /* Sidenav */
-md-sidenav-layout {
+.dashboard {
 	height: 100vh;
 }
 
-md-sidenav {
+.dashboard md-sidenav {
 	width: 280px;
 }
 
@@ -19,4 +19,8 @@ md-sidenav {
 .nav [md-icon-button] {
 	padding: 8px;
 	color: #fff;
+}
+
+.dashboard md-list-item {
+	cursor: pointer;
 }

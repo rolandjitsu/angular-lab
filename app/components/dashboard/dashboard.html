@@ -1,16 +1,21 @@
-<md-sidenav-layout>
+<md-sidenav-layout class="dashboard">
 	<md-sidenav mode="side" opened="true" #start>
 		<md-toolbar color="primary" class="nav">
 			<span>NG2 Laboratory</span>
 		</md-toolbar>
+
+		<md-list>
+			<h3 md-subheader>Dashboard</h3>
+			<md-list-item [routerLink]="['./Account']">
+				<i md-list-avatar class="material-icons">person</i>
+				<h4 md-line>Account</h4>
+			</md-list-item>
+		</md-list>
 	</md-sidenav>
 
 	<md-toolbar color="primary" class="nav">
 		<span class="fill-remaining-space"></span>
 		<todos-count></todos-count>
-		<a md-icon-button [routerLink]="['./Account']" aria-label="Account">
-			<i class="material-icons md-24">dashboard</i>
-		</a>
 		<a md-icon-button (click)="logout($event)" aria-label="Logout">
 			<i class="material-icons md-24">lock</i>
 		</a>
