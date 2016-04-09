@@ -37,6 +37,9 @@ As package/typings managers:
 * [Typings](https://github.com/typings/typings)
 * [JSPM](http://jspm.io)
 
+UI:
+* [Angular 2 Material](https://github.com/angular/material2)
+
 
 # Table of Contents
 

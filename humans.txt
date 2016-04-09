@@ -21,7 +21,7 @@
 	HTML5, CSS3
 	Core JS, SystemJS
 	Angular 2
-	Material Design Lite, Material Icons
+	Angular 2 Material, Material Icons
 	Firebase
 	NPM, JSPM, Typings
 	Gulp, BrowserSync
