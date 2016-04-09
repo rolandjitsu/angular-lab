@@ -1,6 +1,17 @@
 /* Host Element (<todos>) */
 :host {
 	display: block;
+	height: 100vh;
+}
+
+
+/* Sidenav */
+md-sidenav-layout {
+	height: 100vh;
+}
+
+md-sidenav {
+	width: 280px;
 }
 
 

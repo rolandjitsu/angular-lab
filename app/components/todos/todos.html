@@ -1,27 +1,34 @@
-<md-toolbar color="primary" class="nav">
-	<span>NG2 Laboratory</span>
-	<span class="fill-remaining-space"></span>
-	<todos-count></todos-count>
-	<a md-icon-button [routerLink]="['/Account']" aria-label="Account">
-		<i class="material-icons md-24">dashboard</i>
-	</a>
-	<a md-icon-button (click)="logout($event)" aria-label="Logout">
-		<i class="material-icons md-24">lock</i>
-	</a>
-</md-toolbar>
+<md-sidenav-layout>
+	<md-sidenav mode="side" opened="true" #start>
+		<md-toolbar color="primary" class="nav">
+			<span>NG2 Laboratory</span>
+		</md-toolbar>
+	</md-sidenav>
 
-<main class="todos">
-	<div class="todos-form">
-		<form #todo="ngForm"
-			  (ngSubmit)="add()"
-			  novalidate>
-			<div>
-				<md-input type="text" ngControl="name" [(ngModel)]="form.name" [disabled]="isAuthenticating" placeholder="Name" required></md-input>
-			</div>
-			<button type="submit" md-mini-fab color="primary" [disabled]="!todo.form.valid">
-				<glyph src="assets/glyphs/plus.svg"></glyph>
-			</button>
-		</form>
-	</div>
-	<todo-list class="center-block"></todo-list>
-</main>
+	<md-toolbar color="primary" class="nav">
+		<span class="fill-remaining-space"></span>
+		<todos-count></todos-count>
+		<a md-icon-button [routerLink]="['/Account']" aria-label="Account">
+			<i class="material-icons md-24">dashboard</i>
+		</a>
+		<a md-icon-button (click)="logout($event)" aria-label="Logout">
+			<i class="material-icons md-24">lock</i>
+		</a>
+	</md-toolbar>
+
+	<main class="todos">
+		<div class="todos-form">
+			<form #todo="ngForm"
+				  (ngSubmit)="add()"
+				  novalidate>
+				<div>
+					<md-input type="text" ngControl="name" [(ngModel)]="form.name" [disabled]="isAuthenticating" placeholder="Name" required></md-input>
+				</div>
+				<button type="submit" md-mini-fab color="primary" [disabled]="!todo.form.valid">
+					<glyph src="assets/glyphs/plus.svg"></glyph>
+				</button>
+			</form>
+		</div>
+		<todo-list class="center-block"></todo-list>
+	</main>
+</md-sidenav-layout>
