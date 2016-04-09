@@ -20,7 +20,7 @@ import {MdAnchor, MdButton} from '@angular2-material/button';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 import {MdCheckbox} from '@angular2-material/checkbox';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
-import {MdToolbar} from '@angular2-material//toolbar';
+import {MdToolbar} from '@angular2-material/toolbar';
 
 import {ENV_PROVIDERS, isProd} from './env';
 
