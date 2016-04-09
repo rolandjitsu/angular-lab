@@ -1,9 +1,17 @@
-import {Inject, Component, ViewEncapsulation} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
+import {
+	Component,
+	ViewEncapsulation
+} from 'angular2/core';
+import {
+	Route,
+	RouteConfig,
+	CanActivate
+} from 'angular2/router';
 
-import {AuthClient, isUserAuthenticated, Chores} from '../../services';
+import {AuthClient, isUserAuthenticated} from '../../services';
 import {TodosCount} from '../todos_count/todos_count';
-import {TodoList} from '../todo_list/todo_list';
+import {Account} from "../account/account";
+import {Todos} from "../todos/todos";
 
 const COMPONENT_BASE_PATH = './app/components/dashboard';
 
@@ -19,28 +27,36 @@ class Form {
 		`${COMPONENT_BASE_PATH}/dashboard.css`
 	],
 	directives: [
-		TodosCount,
-		TodoList
+		TodosCount
 	]
 })
+
+@RouteConfig([
+	new Route({
+		path: '/',
+		component: Todos,
+		name: 'Todos',
+		useAsDefault: true
+	}),
+	new Route({
+		path: '/account',
+		component: Account,
+		name: 'Account'
+	})
+])
 
 @CanActivate(() => isUserAuthenticated())
 
 export class Dashboard {
 	form: Form = new Form();
-	private _chores: Chores;
 	private _client: AuthClient;
-	constructor(@Inject(Chores) csp: Promise<Chores>, _client: AuthClient) {
-		csp.then((cs) => this._chores = cs);
+
+	constructor(_client: AuthClient) {
 		this._client = _client;
 	}
+
 	logout(event) {
 		event.preventDefault();
 		this._client.logout();
-	}
-	add() {
-		this._chores.add(this.form.name);
-		this.form.name = '';
-		return false;
 	}
 }

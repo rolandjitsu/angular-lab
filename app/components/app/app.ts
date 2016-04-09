@@ -17,7 +17,6 @@ import {Auth} from '../auth/auth';
 import {Login} from '../login/login';
 import {ResetPassword} from '../reset_password/reset_password';
 import {Register} from '../register/register';
-import {Account} from '../account/account';
 import {Dashboard} from '../dashboard/dashboard';
 
 const COMPONENT_BASE_PATH = './app/components/app';
@@ -36,15 +35,10 @@ const COMPONENT_BASE_PATH = './app/components/app';
 
 @RouteConfig([
 	new Route({
-		path: '/',
+		path: '/...',
 		component: Dashboard,
 		name: 'Dashboard',
 		useAsDefault: true
-	}),
-	new Route({
-		path: '/account',
-		component: Account,
-		name: 'Account'
 	}),
 	new Route({
 		path: '/login/...',

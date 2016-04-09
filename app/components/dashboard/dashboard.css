@@ -15,24 +15,6 @@ md-sidenav {
 }
 
 
-/* Base */
-.todos-form,
-todo-list {
-	max-width: 400px;
-}
-
-
-/* Form */
-.todos-form {
-	padding-top: 80px;
-	padding-bottom: 40px;
-}
-
-.todos-form [md-mini-fab] glyph {
-	display: inline;
-}
-
-
 /* Navigation */
 .nav [md-icon-button] {
 	padding: 8px;

@@ -1,0 +1,16 @@
+/* Host Element (<todos>) */
+:host {
+	display: block;
+}
+
+
+/* Form */
+.todos-form {
+	padding-top: 80px;
+	padding-bottom: 40px;
+	max-width: 400px;
+}
+
+.todos-form [md-mini-fab] glyph {
+	display: inline;
+}
