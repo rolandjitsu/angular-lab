@@ -4,7 +4,9 @@
 }
 
 /* Header */
-.header {
-	height: 180px;
-	line-height: 180px;
+.auth {
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 80px;
+	max-width: 400px;
 }
