@@ -20,6 +20,7 @@ import {MdAnchor, MdButton} from '@angular2-material/button';
 import {MD_CARD_DIRECTIVES} from '@angular2-material/card';
 import {MdCheckbox} from '@angular2-material/checkbox';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
+import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
 import {MdToolbar} from '@angular2-material/toolbar';
 
 import {ENV_PROVIDERS, isProd} from './env';
@@ -55,6 +56,7 @@ bootstrap(App, [
 			ROUTER_DIRECTIVES,
 			MD_CARD_DIRECTIVES,
 			MD_INPUT_DIRECTIVES,
+			MD_SIDENAV_DIRECTIVES,
 			MdAnchor,
 			MdButton,
 			MdCheckbox,
