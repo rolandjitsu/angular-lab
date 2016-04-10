@@ -24,3 +24,7 @@
 .dashboard md-list-item {
 	cursor: pointer;
 }
+
+.dashboard md-list-item i {
+	line-height: 40px;
+}
