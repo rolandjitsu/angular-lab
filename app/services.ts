@@ -1,5 +1,6 @@
 import {provide} from 'angular2/core';
 import {Http} from 'angular2/http';
+import {MdLiveAnnouncer} from '@angular2-material/core/live-announcer/live-announcer';
 
 import {AuthClient} from './services/auth';
 import {Chores} from './services/chores';
@@ -8,6 +9,7 @@ import {Icon} from './services/icon';
 import {Tracker} from './services/tracker';
 import {User} from './services/user';
 
+export {MdLiveAnnouncer} from '@angular2-material/core/live-announcer/live-announcer';
 export * from './services/auth';
 export * from './services/chores';
 export * from './common/constants';
@@ -16,6 +18,9 @@ export * from './services/tracker';
 export * from './services/user';
 
 export const SERVICES_PROVIDERS: Array<any> = [
+	provide(MdLiveAnnouncer, {
+		useClass: MdLiveAnnouncer
+	}),
 	provide(Chores, {
 		useFactory: (promise: Promise<User>) => {
 			return new Promise((resolve) => {

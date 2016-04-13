@@ -1,6 +1,9 @@
-import {ViewEncapsulation, Component} from 'angular2/core';
+import {
+	Component,
+	ViewEncapsulation
+} from 'angular2/core';
 
-import {AuthClient} from '../../services';
+import {MdLiveAnnouncer, AuthClient} from 'app/services';
 
 const COMPONENT_BASE_PATH = './app/components/reset_password';
 
@@ -21,14 +24,20 @@ export class ResetPassword {
 	credentials: FirebaseResetPasswordCredentials = {
 		email: ''
 	};
+
+	private _live: MdLiveAnnouncer;
 	private _client: AuthClient;
-	constructor(client: AuthClient) {
+
+	constructor(live: MdLiveAnnouncer, client: AuthClient) {
+		this._live = live;
 		this._client = client;
 	}
+
 	submit() {
 		this.isResetAttemptFailed = false;
 		this.error = null;
 		this.isResetting = true;
+		this._live.announce(`Reset password for ${this.credentials.email}`);
 		this._client.resetPassword(this.credentials).then(
 			() => {
 				this.isResetAttemptSuccessful = true;
