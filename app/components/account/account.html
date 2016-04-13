@@ -1,80 +1,86 @@
-<form
-	class="change-form center-block m-t-lg"
-	(ngSubmit)="submit()"
-	#change="ngForm"
-	novalidate>
-	<label for="email" class="sr-only">Email</label>
-	<input
-		type="email"
-		class="form-control change-form-email"
-		id="email"
-		name="email"
-		ngControl="email"
-		[(ngModel)]="credentials.email"
-		[disabled]="isChanging"
-		placeholder="Email"
-		autocomplete="off"
-		required>
-	<label for="old-password" class="sr-only">Current Password</label>
-	<input
-		type="password"
-		class="form-control change-form-oldpassword"
-		id="old-password"
-		name="oldPassword"
-		ngControl="oldPassword"
-		[(ngModel)]="credentials.oldPassword"
-		[disabled]="isChanging"
-		placeholder="Current Password"
-		autocomplete="off"
-		required>
-	<label for="new-password" class="sr-only">New Password</label>
-	<input
-		type="password"
-		class="form-control change-form-newpassword"
-		id="new-password"
-		name="newPassword"
-		ngControl="newPassword"
-		[(ngModel)]="credentials.newPassword"
-		[disabled]="isChanging"
-		placeholder="New Password"
-		autocomplete="off"
-		required>
-	<input
-		type="password"
-		class="form-control change-form-retypenewpassword"
-		id="retype-new-password"
-		name="retypeNewPassword"
-		ngControl="retypeNewPassword"
-		[disabled]="isChanging"
-		placeholder="Retype New Password"
-		autocomplete="off"
-		required
-		equalTo="newPassword">
-	<button
-		type="submit"
-		class="btn btn-block btn-primary"
-		[disabled]="!change.form.valid || isChanging">
-		Change Password
-	</button>
-	<div class="text-right">
-		<a [routerLink]="['/Todos']">
-			Back
-		</a>
-	</div>
-</form>
+<md-card class="change-form">
+	<md-card-content>
+		<form #change="ngForm"
+			  (ngSubmit)="submit()"
+			  novalidate>
+			<div class="change-fields">
+				<md-input type="email"
+						  ngControl="email"
+						  #email="ngForm"
+						  [(ngModel)]="credentials.email"
+						  [dividerColor]="email.dirty && !email.valid ? 'accent' : 'primary'"
+						  [disabled]="isChanging"
+						  placeholder="Email"
+						  required>
+					<md-hint *ngIf="email.dirty && email.errors && email.errors.required" align="start">
+						Email is required.
+					</md-hint>
+				</md-input>
+			</div>
+			<div class="change-fields">
+				<md-input type="password"
+						  ngControl="oldPassword"
+						  #oldPassword="ngForm"
+						  [(ngModel)]="credentials.oldPassword"
+						  [dividerColor]="oldPassword.dirty && !oldPassword.valid ? 'accent' : 'primary'"
+						  [disabled]="isChanging"
+						  placeholder="Current password"
+						  required>
+					<md-hint *ngIf="oldPassword.dirty && oldPassword.errors && oldPassword.errors.required" align="start">
+						Current password is required.
+					</md-hint>
+				</md-input>
+			</div>
+			<div class="change-fields">
+				<md-input type="password"
+						  ngControl="newPassword"
+						  #newPassword="ngForm"
+						  [(ngModel)]="credentials.newPassword"
+						  [dividerColor]="newPassword.dirty && !newPassword.valid ? 'accent' : 'primary'"
+						  [disabled]="isChanging"
+						  placeholder="New password"
+						  required>
+					<md-hint *ngIf="newPassword.dirty && newPassword.errors && newPassword.errors.required" align="start">
+						A new password is required.
+					</md-hint>
+				</md-input>
+			</div>
+			<div class="change-fields">
+				<md-input type="password"
+						  ngControl="retypeNewPassword"
+						  #retypeNewPassword="ngForm"
+						  [dividerColor]="retypeNewPassword.dirty && !retypeNewPassword.valid ? 'accent' : 'primary'"
+						  [disabled]="isChanging"
+						  placeholder="Retype new password"
+						  required
+						  equalTo="newPassword">
+					<md-hint *ngIf="retypeNewPassword.dirty && retypeNewPassword.errors && retypeNewPassword.errors.equalTo" align="start">
+						Please make sure the new password and retyped new password are the same.
+					</md-hint>
+					<md-hint *ngIf="retypeNewPassword.dirty && retypeNewPassword.errors && retypeNewPassword.errors.required" align="start">
+						Please retype your new password.
+					</md-hint>
+				</md-input>
+			</div>
 
-<div
-	*ngIf="!change.form.valid && change.form.dirty"
-	class="alert alert-danger center-block"
-	role="alert">
-	There seems to be some errors in the form.
-	<ul>
-		<li *ngIf="change.form.hasError('required', 'oldPassword')">Current password is required.</li>
-		<li *ngIf="change.form.hasError('required', 'newPassword')">A new password is required.</li>
-		<li *ngIf="change.form.hasError('equalTo', 'retypeNewPassword')">Please make sure the new password and retyped new password are the same.</li>
-		<li *ngIf="change.form.hasError('required', 'retypeNewPassword')">Please retype your new password.</li>
-	</ul>
-</div>
+			<div class="clearfix">
+				<button type="submit"
+						md-raised-button
+						color="primary"
+						[disabled]="!change.form.valid || isChanging"
+						class="pull-right">
+					Change password
+				</button>
+				<div class="pull-left">
+					<a [routerLink]="['../Todos']">
+						Back
+					</a>
+				</div>
+			</div>
+		</form>
+	</md-card-content>
+</md-card>
+
 
 <div
 	*ngIf="isChangeAttemptFailed"

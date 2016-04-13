@@ -5,13 +5,12 @@
 }
 
 
-/* Sidenav */
-.dashboard {
-	height: 100vh;
-}
-
-.dashboard md-sidenav {
-	width: 280px;
+/* Outlet */
+.dashboard-outlet {
+	padding: 8px;
+	background-color: #f1f1f1;
+	height: calc(100vh - 64px);
+	box-sizing: border-box;
 }
 
 
@@ -27,4 +26,14 @@
 
 .dashboard md-list-item i {
 	line-height: 40px;
+}
+
+
+/* Sidenav */
+.dashboard {
+	height: 100vh;
+}
+
+.dashboard md-sidenav {
+	width: 280px;
 }

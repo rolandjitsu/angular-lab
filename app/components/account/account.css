@@ -1,51 +1,18 @@
 /* Host Element (<account>) */
 :host {
 	display: block;
-	height: 100vh;
 }
 
 
 /* Form */
+.change-form {}
 
-.change-form,
-.alert {
-	max-width: 400px;
+
+/* Fields */
+.change-fields {
+	margin-bottom: 16px;
 }
 
-.change-form-email,
-.change-form-oldpassword,
-.change-form-newpassword,
-.change-form-retypenewpassword {
-	position: relative;
-}
-
-.change-form-email {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.change-form-email,
-.change-form-oldpassword,
-.change-form-newpassword {
-	margin-bottom: -1px;
-}
-
-.change-form-email:focus,
-.change-form-oldpassword:focus,
-.change-form-newpassword:focus {
-	 z-index: 2;
-}
-
-.change-form-oldpassword,
-.change-form-newpassword {
-	border-radius: 0;
-}
-
-.change-form-retypenewpassword {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-}
-
-.btn {
-	margin-top: 8px;
+.change-fields md-input {
+	width: 100%;
 }
