@@ -1,13 +1,15 @@
 SystemJS.config({
 	trace: false,
 	production: false,
-	transpiler: 'babel',
+	transpiler: 'ts',
 	typescriptOptions: {
+		// Plugin config
 		'typeCheck': true,
 		'tsconfig': true,
 		'targetLib': 'es6',
-		'module': 'es6',
-		'target': 'es6'
+		// TS config
+		'module': 'system',
+		'target': 'es5'
 	},
 	paths: {
 		'github:*': '/jspm_packages/github/*',
@@ -15,23 +17,13 @@ SystemJS.config({
 	},
 	packages: {
 		'test': {
-			'defaultExtension': 'ts',
-			'meta': {
-				'*.ts': {
-					'loader': 'ts'
-				}
-			}
+			'defaultExtension': 'ts'
 		},
 		'app': {
 			'defaultExtension': 'ts',
 			'map': {
 				'./env': {
 					'~production': './env.dev'
-				}
-			},
-			'meta': {
-				'*.ts': {
-					'loader': 'ts'
 				}
 			}
 		}
@@ -55,7 +47,6 @@ SystemJS.config({
 		'@angular2-material/toolbar': 'npm:@angular2-material/toolbar@2.0.0-alpha.2',
 		'angular2': 'npm:angular2@2.0.0-beta.14',
 		'assert': 'github:jspm/nodelibs-assert@0.2.0-alpha',
-		'babel': 'npm:systemjs-plugin-babel@0.0.8',
 		'buffer': 'github:jspm/nodelibs-buffer@0.2.0-alpha',
 		'child_process': 'github:jspm/nodelibs-child_process@0.2.0-alpha',
 		'constants': 'github:jspm/nodelibs-constants@0.2.0-alpha',

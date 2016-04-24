@@ -88,7 +88,6 @@
 			"zone.js": "npm:zone.js@^0.6.5"
 		},
 		"devDependencies": {
-			"babel": "npm:systemjs-plugin-babel@^0.0.8",
 			"ts": "github:frankwallis/plugin-typescript@^4.0.2"
 		},
 		"peerDependencies": {
