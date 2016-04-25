@@ -4,13 +4,13 @@
 			<span>NG2 Laboratory</span>
 		</md-toolbar>
 
-		<md-list>
+		<md-nav-list>
 			<h3 md-subheader>Dashboard</h3>
-			<md-list-item [routerLink]="['./Account']">
-				<i md-list-avatar class="material-icons">person</i>
-				<h4 md-line>Account</h4>
-			</md-list-item>
-		</md-list>
+			<a md-list-item [routerLink]="['./Account']">
+				<i class="material-icons">person</i>
+				<span>Account</span>
+			</a>
+		</md-nav-list>
 	</md-sidenav>
 
 	<md-toolbar color="primary" class="nav">

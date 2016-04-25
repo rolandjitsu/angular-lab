@@ -75,7 +75,7 @@
 			"@angular2-material/button": "npm:@angular2-material/button@^2.0.0-alpha.2",
 			"@angular2-material/card": "npm:@angular2-material/card@^2.0.0-alpha.2",
 			"@angular2-material/checkbox": "npm:@angular2-material/checkbox@^2.0.0-alpha.2",
-			"@angular2-material/core": "npm:@angular2-material/core@^2.0.0-alpha.2",
+			"@angular2-material/core": "npm:@angular2-material/core@2.0.0-alpha.3",
 			"@angular2-material/input": "npm:@angular2-material/input@^2.0.0-alpha.2",
 			"@angular2-material/list": "npm:@angular2-material/list@^2.0.0-alpha.2",
 			"@angular2-material/sidenav": "npm:@angular2-material/sidenav@^2.0.0-alpha.2",
@@ -99,68 +99,70 @@
 			"es6-promise": "npm:es6-promise@^3.0.2",
 			"events": "github:jspm/nodelibs-events@^0.2.0-alpha",
 			"fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+			"os": "github:jspm/nodelibs-os@^0.2.0-alpha",
 			"path": "github:jspm/nodelibs-path@^0.2.0-alpha",
 			"process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+			"readline": "github:jspm/nodelibs-readline@^0.2.0-alpha",
 			"stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
 			"string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
 			"util": "github:jspm/nodelibs-util@^0.2.0-alpha",
 			"vm": "github:jspm/nodelibs-vm@^0.2.0-alpha"
 		},
 		"overrides": {
-			"github:firebase/firebase-bower@2.4.1": {
+			"github:firebase/firebase-bower@2.4.2": {
 				"main": "firebase",
 				"registry": "jspm"
 			},
-			"npm:@angular2-material/button@2.0.0-alpha.2": {
+			"npm:@angular2-material/button@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/card@2.0.0-alpha.2": {
+			"npm:@angular2-material/card@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/checkbox@2.0.0-alpha.2": {
+			"npm:@angular2-material/checkbox@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/core@2.0.0-alpha.2": {
+			"npm:@angular2-material/core@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/input@2.0.0-alpha.2": {
+			"npm:@angular2-material/input@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/list@2.0.0-alpha.2": {
+			"npm:@angular2-material/list@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/sidenav@2.0.0-alpha.2": {
+			"npm:@angular2-material/sidenav@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular2-material/toolbar@2.0.0-alpha.2": {
+			"npm:@angular2-material/toolbar@2.0.0-alpha.3": {
 				"meta": {
 					"*.js": {
 						"typings": true
@@ -195,26 +197,32 @@
 					}
 				}
 			},
+			"npm:esprima@2.7.2": {
+				"jspmNodeConversion": false
+			},
 			"npm:inherits@2.0.1": {
 				"ignore": [
 					"test.js"
 				]
 			},
+			"npm:readable-stream@1.0.34": {
+				"map": {
+					"stream": "stream-browserify/index"
+				},
+				"systemjs": {
+					"main": "readable.js"
+				},
+				"dependencies": {
+					"core-util-is": "~1.0.0",
+					"isarray": "0.0.1",
+					"string_decoder": "~0.10.0",
+					"inherits": "~2.0.1",
+					"stream-browserify": "~1.0.0"
+				}
+			},
 			"npm:reflect-metadata@0.1.2": {
 				"map": {
 					"crypto": "@empty"
-				}
-			},
-			"npm:typescript@1.8.9": {
-				"browser": {},
-				"map": {
-					"buffer": "@empty",
-					"child_process": "@empty",
-					"fs": "@empty",
-					"os": "@empty",
-					"path": "@empty",
-					"process": "@empty",
-					"readline": "@empty"
 				}
 			}
 		}
