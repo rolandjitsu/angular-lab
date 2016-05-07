@@ -2,17 +2,14 @@
 	"compilerOptions": {
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"module": "commonjs",
+		"module": "system",
 		"noImplicitAny": false,
 		"sourceMap": true,
 		"target": "es5",
 		"baseUrl": ".",
 		"paths": {
-			"angular2/*": [
-				"jspm_packages/npm/angular2@2.0.0-beta.14/*"
-			],
-			"rxjs/*": [
-				"jspm_packages/npm/rxjs@5.0.0-beta.2/*"
+			"*": [
+				"./app/*"
 			]
 		}
 	},

@@ -1,31 +1,12 @@
-import 'es6-shim';
-import 'zone.js';
+import 'core-js/shim';
 import 'reflect-metadata';
+import 'zone.js';
 
-import {setBaseTestProviders} from 'angular2/testing';
-import {TEST_BROWSER_PLATFORM_PROVIDERS, TEST_BROWSER_APPLICATION_PROVIDERS} from 'angular2/platform/testing/browser';
-import {UrlResolver} from 'angular2/compiler';
-import {provide} from 'angular2/core';
+import {setBaseTestProviders} from '@angular/core/testing';
+import {TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS, TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS} from '@angular/platform-browser-dynamic/testing';
 
 
 setBaseTestProviders(
-	TEST_BROWSER_PLATFORM_PROVIDERS,
-	TEST_BROWSER_APPLICATION_PROVIDERS.concat([
-		provide(UrlResolver, {useFactory: () => new FakeUrlResolver()})
-	])
+	TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+	TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
 );
-
-
-class FakeUrlResolver extends UrlResolver {
-	constructor() {
-		super();
-	}
-	resolve(baseUrl: string, url: string): string {
-		// We do not attempt to load any CSS,
-		// as it is irrelevant during unit tests.
-		if (url.substr(-4) === '.css') {
-			return '';
-		}
-		return super.resolve(baseUrl, url);
-	}
-}
