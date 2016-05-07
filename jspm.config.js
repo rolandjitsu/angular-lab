@@ -38,7 +38,7 @@ SystemJS.config({
 		'@angular/http': 'npm:@angular/http@2.0.0-rc.1',
 		'@angular/platform-browser': 'npm:@angular/platform-browser@2.0.0-rc.1',
 		'@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic@2.0.0-rc.1',
-		'@angular/router': 'npm:@angular/router-deprecated@2.0.0-rc.1',
+		'@angular/router': 'npm:@angular/router@2.0.0-rc.1',
 		'core-js': 'npm:core-js@2.3.0',
 		'firebase': 'github:firebase/firebase-bower@2.4.2',
 		'fs': 'github:jspm/nodelibs-fs@0.2.0-alpha',
