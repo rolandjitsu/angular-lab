@@ -32,6 +32,7 @@ const GULP_SIZE_DEFAULT_CONFIG = {
 
 const PATHS = {
 	typings: [
+		'node_modules/typescript/lib/lib.es2016.d.ts',
 		'typings/browser.d.ts'
 	],
 	src: {
@@ -171,7 +172,7 @@ gulp.task('serve/html', function () {
 
 gulp.task('build/js', function () {
 	return gulp
-		.src([].concat(PATHS.typings, PATHS.src.ts), {
+		.src(['!app/**/*.spec.ts'].concat(PATHS.typings, PATHS.src.ts), {
 			base: '.'
 		})
 		.pipe(changed(PATHS.dist, {

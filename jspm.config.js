@@ -3,6 +3,7 @@ SystemJS.config({
 	production: false,
 	transpiler: 'ts',
 	typescriptOptions: {
+		"module": "system",
 		'typeCheck': true,
 		'tsconfig': true
 	},
