@@ -26,135 +26,162 @@
 		"start": "gulp serve"
 	},
 	"dependencies": {
-		"@angular/common": "^2.0.0-rc.1",
-		"@angular/compiler": "^2.0.0-rc.1",
-		"@angular/core": "^2.0.0-rc.1",
-		"@angular/http": "^2.0.0-rc.1",
-		"@angular/platform-browser": "^2.0.0-rc.1",
-		"@angular/platform-browser-dynamic": "^2.0.0-rc.1",
-		"@angular/router": "^2.0.0-rc.1",
-		"core-js": "^2.3.0",
+		"@angular/common": "^2.0.0-rc.2",
+		"@angular/compiler": "^2.0.0-rc.2",
+		"@angular/core": "^2.0.0-rc.2",
+		"@angular/http": "^2.0.0-rc.2",
+		"@angular/platform-browser": "^2.0.0-rc.2",
+		"@angular/platform-browser-dynamic": "^2.0.0-rc.2",
+		"@angular/router": "^3.0.0-alpha.7",
+		"core-js": "^2.4.0",
 		"reflect-metadata": "^0.1.3",
 		"rxjs": "5.0.0-beta.6",
 		"zone.js": "^0.6.12"
 	},
 	"devDependencies": {
-		"babel-core": "^6.8.0",
-		"babel-preset-es2015": "6.6.x",
-		"babel-preset-stage-0": "6.5.x",
-		"browser-sync": "^2.12.5",
-		"del": "2.2.x",
+		"babel-core": "^6.9.1",
+		"babel-polyfill": "^6.9.1",
+		"babel-preset-es2015": "^6.9.0",
+		"babel-preset-stage-0": "^6.5.0",
+		"browser-sync": "^2.13.0",
+		"del": "^2.2.0",
 		"firebase-tools": "2.2.x",
 		"gulp": "gulpjs/gulp#4.0",
-		"gulp-autoprefixer": "3.1.x",
-		"gulp-changed": "1.3.x",
-		"gulp-plumber": "1.1.x",
-		"gulp-size": "2.1.x",
+		"gulp-autoprefixer": "^3.1.0",
+		"gulp-changed": "^1.3.0",
+		"gulp-plumber": "^1.1.0",
+		"gulp-size": "^2.1.0",
 		"gulp-sourcemaps": "^1.6.0",
 		"gulp-tslint": "^5.0.0",
-		"gulp-typescript": "^2.13.3",
-		"gulp-util": "3.0.x",
-		"jasmine": "2.4.x",
-		"jasmine-core": "2.4.x",
-		"jasmine-spec-reporter": "2.4.x",
+		"gulp-typescript": "^2.13.6",
+		"gulp-util": "^3.0.7",
+		"jasmine": "^2.4.1",
+		"jasmine-core": "^2.4.1",
+		"jasmine-spec-reporter": "^2.5.0",
 		"jspm": "beta",
-		"karma": "0.13.x",
+		"karma": "^0.13.22",
 		"karma-chrome-launcher": "^1.0.1",
 		"karma-cli": "^1.0.0",
 		"karma-jasmine": "^1.0.2",
-		"karma-jspm": "2.1.x",
+		"karma-jspm": "^2.1.1",
 		"karma-sauce-launcher": "^1.0.0",
-		"karma-spec-reporter": "0.0.x",
-		"open": "0.0.x",
+		"karma-spec-reporter": "^0.0.26",
+		"open": "^0.0.5",
 		"protractor": "^3.3.0",
-		"protractor-accessibility-plugin": "0.1.x",
-		"protractor-console-plugin": "0.1.x",
-		"sauce-connect-launcher": "0.14.x",
-		"split2": "2.0.x",
-		"through2": "2.0.x",
+		"protractor-accessibility-plugin": "^0.1.0",
+		"protractor-console-plugin": "^0.1.1",
+		"sauce-connect-launcher": "^0.14.0",
+		"split2": "^2.1.0",
+		"through2": "^2.0.1",
 		"tslint": "next",
 		"typescript": "next",
-		"typings": "^0.8.1",
-		"yargs": "^4.7.0"
+		"typings": "^1.3.0",
+		"yargs": "^4.7.1"
 	},
 	"engines": {
 		"node": "5.10.x"
 	},
-	"private": true,
+	"private": false,
 	"jspm": {
-		"name": "ng2-lab",
+		"name": "app",
+		"main": "app.js",
 		"dependencies": {
-			"@angular/common": "npm:@angular/common@^2.0.0-rc.1",
-			"@angular/compiler": "npm:@angular/compiler@^2.0.0-rc.1",
-			"@angular/core": "npm:@angular/core@2.0.0-rc.1",
-			"@angular/http": "npm:@angular/http@^2.0.0-rc.1",
-			"@angular/platform-browser": "npm:@angular/platform-browser@^2.0.0-rc.1",
-			"@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@^2.0.0-rc.1",
-			"@angular/router": "npm:@angular/router@^2.0.0-rc.1",
+			"@angular/http": "npm:@angular/http@^2.0.0-rc.2",
+			"@angular/router": "npm:@angular/router@^3.0.0-alpha.7",
 			"core-js": "npm:core-js@^2.2.2",
-			"firebase": "github:firebase/firebase-bower@^2.4.2",
-			"reflect-metadata": "npm:reflect-metadata@^0.1.3",
-			"rxjs": "npm:rxjs@^5.0.0-beta.6",
-			"zone.js": "npm:zone.js@^0.6.12"
+			"reflect-metadata": "npm:reflect-metadata@^0.1.3"
 		},
 		"devDependencies": {
-			"os": "github:jspm/nodelibs-os@^0.2.0-alpha",
-			"process": "github:jspm/nodelibs-process@^0.2.0-alpha",
-			"ts": "github:frankwallis/plugin-typescript@^4.0.9"
+			"plugin-babel": "npm:systemjs-plugin-babel@^0.0.12",
+			"plugin-typescript": "github:frankwallis/plugin-typescript@^4.0.16"
 		},
 		"peerDependencies": {
+			"@angular/common": "npm:@angular/common@2.0.0-rc.2",
+			"@angular/compiler": "npm:@angular/compiler@^2.0.0-rc.2",
+			"@angular/core": "npm:@angular/core@^2.0.0-rc.2",
+			"@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.2",
+			"@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@^2.0.0-rc.2",
 			"fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
-			"path": "github:jspm/nodelibs-path@^0.2.0-alpha"
+			"os": "github:jspm/nodelibs-os@^0.2.0-alpha",
+			"path": "github:jspm/nodelibs-path@^0.2.0-alpha",
+			"process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+			"rxjs": "npm:rxjs@5.0.0-beta.6",
+			"zone.js": "npm:zone.js@^0.6.6"
 		},
 		"overrides": {
-			"npm:@angular/common@2.0.0-rc.1": {
+			"npm:@angular/common@2.0.0-rc.2": {
 				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular/compiler@2.0.0-rc.1": {
+			"npm:@angular/compiler@2.0.0-rc.2": {
 				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular/core@2.0.0-rc.1": {
+			"npm:@angular/core@2.0.0-rc.2": {
 				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular/http@2.0.0-rc.1": {
+			"npm:@angular/http@2.0.0-rc.2": {
 				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular/platform-browser@2.0.0-rc.1": {
+			"npm:@angular/platform-browser-dynamic@2.0.0-rc.2": {
 				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
 				}
 			},
-			"npm:@angular/platform-browser-dynamic@2.0.0-rc.1": {
+			"npm:@angular/platform-browser@2.0.0-rc.2": {
 				"meta": {
-					"*.js": {
-						"typings": true
-					}
-				}
-			},
-			"github:firebase/firebase-bower@2.4.2": {
-				"main": "firebase",
-				"registry": "jspm"
-			},
-			"npm:@angular/router@2.0.0-rc.1": {
-				"meta": {
+					"src/*.js": {
+						"deps": [
+							"reflect-metadata",
+							"zone.js"
+						]
+					},
 					"*.js": {
 						"typings": true
 					}
@@ -166,13 +193,6 @@
 					"crypto": {
 						"node": "@node/crypto",
 						"default": "@empty"
-					}
-				}
-			},
-			"npm:rxjs@5.0.0-beta.6": {
-				"meta": {
-					"*.js": {
-						"typings": true
 					}
 				}
 			},

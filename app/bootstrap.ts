@@ -1,7 +1,6 @@
 import 'core-js/shim';
 import 'reflect-metadata';
 import 'zone.js';
-import 'firebase';
 
 import {
 	APP_BASE_HREF,
@@ -14,15 +13,11 @@ import {
 import {
 	PLATFORM_DIRECTIVES,
 	provide,
-	enableProdMode,
-	Type
+	enableProdMode
 } from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
 import {bootstrap} from '@angular/platform-browser-dynamic';
-import {
-	ROUTER_DIRECTIVES,
-	ROUTER_PROVIDERS
-} from '@angular/router';
+import {ROUTER_DIRECTIVES} from '@angular/router';
 
 import {ENV_PROVIDERS, isProd} from './env';
 
@@ -32,15 +27,14 @@ if (isProd) {
 	enableProdMode();
 }
 
-bootstrap(<Type>App, [
+bootstrap(App, [
 	FORM_PROVIDERS,
 	HTTP_PROVIDERS,
-	ROUTER_PROVIDERS,
 	provide(APP_BASE_HREF, {
 		useValue: '/'
 	}),
 	provide(LocationStrategy, {
-		useClass: <Type>HashLocationStrategy
+		useClass: HashLocationStrategy
 	}),
 	ENV_PROVIDERS,
 	provide(PLATFORM_DIRECTIVES, {

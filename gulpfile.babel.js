@@ -1,3 +1,7 @@
+// Add unsupported ES6/7 methods
+import 'babel-polyfill';
+
+
 import autoprefixer from 'gulp-autoprefixer';
 import changed from 'gulp-changed';
 import {create as createBrowserSyncServer} from 'browser-sync';
@@ -33,7 +37,7 @@ const GULP_SIZE_DEFAULT_CONFIG = {
 const PATHS = {
 	typings: [
 		'node_modules/typescript/lib/lib.es2016.d.ts',
-		'typings/browser.d.ts'
+		'typings/index.d.ts'
 	],
 	src: {
 		static: [
@@ -172,7 +176,8 @@ gulp.task('serve/html', function () {
 
 gulp.task('build/js', function () {
 	return gulp
-		.src(['!app/**/*.spec.ts'].concat(PATHS.typings, PATHS.src.ts), {
+		// TODO: do not build spec files
+		.src([].concat(PATHS.typings, PATHS.src.ts), {
 			base: '.'
 		})
 		.pipe(changed(PATHS.dist, {
@@ -380,6 +385,7 @@ gulp.task('test/e2e:sauce', gulp.series(
  * Firebase Deployments
  */
 
+// TODO: migrate to new API 3.0
 gulp.task(function deploy() {
 	return runFirebaseCommand('deploy');
 });

@@ -9,6 +9,6 @@
 		"target": "es5"
 	},
 	"files": [
-		"typings/browser.d.ts"
+		"typings/index.d.ts"
 	]
 }
