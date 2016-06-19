@@ -1,44 +1,51 @@
 {
-	"firebase": "ng2-lab",
-	"public": "dist",
-	"rules": "./rules.json",
-	"headers": [{
-		"source" : "**/*.@(js|html|css|map)",
-		"headers" : [{
-			"key" : "Cache-Control",
-			"value" : "max-age=3600"
-		}]
-	}],
-	"ignore": [
-		"./app",
-		"./assets",
-		"./e2e",
-		"./jspm_packages",
-		"./media",
-		"./node_modules",
-		"./scripts",
-		"./test",
-		"./typings",
-		"./.*",
-		"./apple-touch-icon.png",
-		"browsers.config.js",
-		"bs.config.js",
-		"./favicon.ico",
-		"firebase.json",
-		"gulpfile.babel.js",
-		"./humans.txt",
-		"./index.html",
-		"./jspm.browser.js",
-		"./jspm.config.js",
-		"karma.config.js",
-		"./LICENSE",
-		"package.json",
-		"protractor.config.js",
-		"README.md",
-		"./robots.txt",
-		"rules.json",
-		"tsconfig.js",
-		"tslint.json",
-		"typings.json"
-	]
+	"database": {
+		"rules": "./rules.json"
+	},
+	"hosting": {
+		"public": "dist",
+		"headers": [
+			{
+				"source": "**/*.@(js|html|css|map)",
+				"headers": [
+					{
+						"key": "Cache-Control",
+						"value": "max-age=0"
+					}
+				]
+			}
+		],
+		"ignore": [
+			"./app",
+			"./assets",
+			"./e2e",
+			"./jspm_packages",
+			"./media",
+			"./node_modules",
+			"./scripts",
+			"./test",
+			"./typings",
+			"./.*",
+			"./apple-touch-icon.png",
+			"browsers.config.js",
+			"bs.config.js",
+			"./favicon.ico",
+			"firebase.json",
+			"gulpfile.babel.js",
+			"./humans.txt",
+			"./index.html",
+			"./jspm.browser.js",
+			"./jspm.config.js",
+			"karma.config.js",
+			"./LICENSE",
+			"package.json",
+			"protractor.config.js",
+			"README.md",
+			"./robots.txt",
+			"rules.json",
+			"tsconfig.js",
+			"tslint.json",
+			"typings.json"
+		]
+	}
 }
