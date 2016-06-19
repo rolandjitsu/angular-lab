@@ -12,7 +12,6 @@ import {
 } from '@angular/common';
 import {
 	PLATFORM_DIRECTIVES,
-	provide,
 	enableProdMode
 } from '@angular/core';
 import {HTTP_PROVIDERS} from '@angular/http';
@@ -30,19 +29,22 @@ if (isProd) {
 bootstrap(App, [
 	FORM_PROVIDERS,
 	HTTP_PROVIDERS,
-	provide(APP_BASE_HREF, {
-		useValue: '/'
-	}),
-	provide(LocationStrategy, {
-		useClass: HashLocationStrategy
-	}),
 	ENV_PROVIDERS,
-	provide(PLATFORM_DIRECTIVES, {
+	{
+		provide: APP_BASE_HREF,
+		useValue: '/'
+	},
+	{
+		provide: LocationStrategy,
+		useClass: HashLocationStrategy
+	},
+	{
+		provide: PLATFORM_DIRECTIVES,
 		useValue: [
 			CORE_DIRECTIVES,
 			FORM_DIRECTIVES,
 			ROUTER_DIRECTIVES
 		],
 		multi: true
-	})
+	}
 ]);
