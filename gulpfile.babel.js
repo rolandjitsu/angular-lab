@@ -6,8 +6,9 @@ import autoprefixer from 'gulp-autoprefixer';
 import changed from 'gulp-changed';
 import {create as createBrowserSyncServer} from 'browser-sync';
 import {colors, env, log} from 'gulp-util';
-import {exec, spawn} from 'child_process';
+import {spawn} from 'child_process';
 import del from 'del';
+import firebase from 'firebase-tools';
 import gulp from 'gulp';
 import jspmConfig from 'jspm/lib/config';
 import karma from 'karma';
@@ -36,7 +37,10 @@ const GULP_SIZE_DEFAULT_CONFIG = {
 
 const PATHS = {
 	typings: [
-		'node_modules/typescript/lib/lib.es2016.d.ts',
+		// Ensures ES6/7 API definitions are available when transpiling TS to JS.
+		'node_modules/typescript/lib/lib.es2017.d.ts',
+		'node_modules/typescript/lib/lib.dom.d.ts',
+		// Typings definitions for 3rd party libs
 		'typings/index.d.ts'
 	],
 	src: {
@@ -55,8 +59,8 @@ const PATHS = {
 			'app/**/*.html',
 			'index.html'
 		],
-		scss: [
-			'app/**/*.scss'
+		css: [
+			'app/**/*.css'
 		]
 	},
 	dist: 'dist'
@@ -81,7 +85,7 @@ gulp.task(function server(done) {
  * Copy JSPM assets
  */
 
-gulp.task('deps/jspm:packages', function () {
+gulp.task('jspm:packages', function () {
 	return gulp
 		.src([
 			'jspm_packages/**/.*',
@@ -94,15 +98,7 @@ gulp.task('deps/jspm:packages', function () {
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('deps/jspm:browser', function () {
-	return gulp
-		.src('jspm.browser.js')
-		.pipe(changed(PATHS.dist))
-		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
-});
-
-gulp.task('deps/jspm:config', function () {
+gulp.task('jspm:config', function () {
 	jspmConfig.loadSync();
 	return gulp
 		.src('jspm.config.js')
@@ -114,18 +110,6 @@ gulp.task('deps/jspm:config', function () {
 
 function transform(config) {
 	config.production = true;
-	config.transpiler = 'none';
-	delete config.typescriptOptions;
-	delete config.packages.test;
-	config.packages.app = {
-		defaultExtension: 'ts',
-			map: {
-			'./env': {
-				'~production': './env.dev'
-			}
-		}
-	};
-
 	return through.obj((chunk, enc, callback) => {
 		chunk.contents = new Buffer(`SystemJS.config(${JSON.stringify(config)})`, 'utf8');
 		callback(null, chunk);
@@ -133,10 +117,9 @@ function transform(config) {
 }
 
 
-gulp.task('deps', gulp.parallel(
-	'deps/jspm:packages',
-	'deps/jspm:browser',
-	'deps/jspm:config'
+gulp.task('build/deps', gulp.parallel(
+	'jspm:packages',
+	'jspm:config'
 ));
 
 
@@ -144,7 +127,7 @@ gulp.task('deps', gulp.parallel(
  * Copy static assets
  */
 
-gulp.task('serve/static', function () {
+gulp.task('build/static', function () {
 	return gulp
 		.src(PATHS.src.static, {
 			base: '.'
@@ -159,7 +142,7 @@ gulp.task('serve/static', function () {
  * Copy HTML
  */
 
-gulp.task('serve/html', function () {
+gulp.task('build/html', function () {
 	return gulp
 		.src(PATHS.src.html, {
 			base: '.'
@@ -201,7 +184,7 @@ gulp.task('build/js', function () {
 
 gulp.task('build/css', function () {
 	return gulp
-		.src(PATHS.src.scss, {
+		.src(PATHS.src.css, {
 			base: '.'
 		})
 		.pipe(changed(PATHS.dist, {
@@ -221,9 +204,9 @@ gulp.task('build/css', function () {
  */
 
 gulp.task('build', gulp.parallel(
-	'deps',
-	'serve/static',
-	'serve/html',
+	'build/deps',
+	'build/static',
+	'build/html',
 	'build/js',
 	'build/css'
 ));
@@ -385,43 +368,25 @@ gulp.task('test/e2e:sauce', gulp.series(
  * Firebase Deployments
  */
 
-// TODO: migrate to new API 3.0
-gulp.task(function deploy() {
-	return runFirebaseCommand('deploy');
-});
-
-// Run Firebase commands such as: `deploy:rules`, etc.
-// https://github.com/firebase/firebase-tools#commands
-function runFirebaseCommand(cmd, args = []) {
-	let binary = process.platform === 'win32' ? 'node_modules\\.bin\\firebase' : 'node_modules/.bin/firebase';
+gulp.task(function deploy(done) {
 	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
-
 	if (!TOKEN) {
 		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
-		return Promise.reject();
+		return done(1);
 	}
 
-	const defaultArgs = [
-		'--non-interactive',
-		'--token',
-		`"${TOKEN}"`
-	];
-
-	if (Array.isArray(args)) {
-		args.unshift.apply(args, defaultArgs);
-	} else {
-		args = defaultArgs;
-	}
-
-	binary += ` ${cmd}`;
-	args.unshift(binary);
-
-	const proc = exec(args.join(' '));
-
-	streamProcLog(proc);
-
-	return proc;
-}
+	firebase.deploy({token: TOKEN}).then(
+		() => {
+			log(colors.green('Deployment successful.'));
+			done();
+			process.exit();
+		},
+		(error) => {
+			log(colors.red(error.message));
+			done();
+			process.exit(1);
+		});
+});
 
 
 /**
