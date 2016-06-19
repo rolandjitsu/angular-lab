@@ -13,6 +13,19 @@ SystemJS.config({
 			"app/": "app/"
 		}
 	},
+	devConfig: {
+		"map": {
+			"plugin-babel": "npm:systemjs-plugin-babel@0.0.12",
+			"plugin-typescript": "github:frankwallis/plugin-typescript@4.0.16"
+		},
+		"packages": {
+			"github:frankwallis/plugin-typescript@4.0.16": {
+				"map": {
+					"typescript": "npm:typescript@1.8.10"
+				}
+			}
+		}
+	},
 	transpiler: "plugin-typescript",
 	typescriptOptions: {
 		"module": "system",
