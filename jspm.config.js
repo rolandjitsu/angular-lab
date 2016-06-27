@@ -15,19 +15,19 @@ SystemJS.config({
 		}
 	},
 	productionConfig: {
-		transpiler: 'none',
-		packages: {
+		"transpiler": "none",
+		"packages": {
 			"app": {
 				"defaultExtension": "js"
 			}
 		}
 	},
 	devConfig: {
-		map: {
+		"map": {
 			"plugin-babel": "npm:systemjs-plugin-babel@0.0.12",
 			"plugin-typescript": "github:frankwallis/plugin-typescript@4.0.16"
 		},
-		packages: {
+		"packages": {
 			"github:frankwallis/plugin-typescript@4.0.16": {
 				"map": {
 					"typescript": "npm:typescript@1.8.10"
@@ -60,13 +60,13 @@ SystemJS.config({
 		"npm:*.json"
 	],
 	map: {
-		"@angular/common": "npm:@angular/common@2.0.0-rc.2",
-		"@angular/compiler": "npm:@angular/compiler@2.0.0-rc.2",
-		"@angular/core": "npm:@angular/core@2.0.0-rc.2",
-		"@angular/http": "npm:@angular/http@2.0.0-rc.2",
-		"@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.2",
-		"@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.2",
-		"@angular/router": "npm:@angular/router@3.0.0-alpha.7",
+		"@angular/common": "npm:@angular/common@2.0.0-rc.3",
+		"@angular/compiler": "npm:@angular/compiler@2.0.0-rc.3",
+		"@angular/core": "npm:@angular/core@2.0.0-rc.3",
+		"@angular/http": "npm:@angular/http@2.0.0-rc.3",
+		"@angular/platform-browser": "npm:@angular/platform-browser@2.0.0-rc.3",
+		"@angular/platform-browser-dynamic": "npm:@angular/platform-browser-dynamic@2.0.0-rc.3",
+		"@angular/router": "npm:@angular/router@3.0.0-alpha.8",
 		"core-js": "npm:core-js@2.4.0",
 		"fs": "github:jspm/nodelibs-fs@0.2.0-alpha",
 		"os": "github:jspm/nodelibs-os@0.2.0-alpha",
