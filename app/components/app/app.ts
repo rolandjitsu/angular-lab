@@ -1,3 +1,5 @@
+// TODO: implement relative paths using a helper function base on the article below
+// http://blog.thoughtram.io/angular/2016/06/08/component-relative-paths-in-angular-2.html
 import {
 	Component,
 	ViewEncapsulation
