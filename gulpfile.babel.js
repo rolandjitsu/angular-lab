@@ -324,7 +324,14 @@ gulp.task('webdriver/update', function () {
 		? 'node_modules\\.bin\\webdriver-manager'
 		: 'node_modules/.bin/webdriver-manager';
 	let proc = spawn(binary, ['update']);
-	streamProcLog(proc);
+
+	proc.stdout.pipe(split()).on('data', (line) => {
+		log(colors.white(line));
+	});
+	proc.stderr.pipe(split()).on('data', (line) => {
+		log(colors.red(line));
+	});
+
 	return proc;
 });
 
@@ -335,7 +342,14 @@ gulp.task('test/e2e:local', gulp.series(
 	function test(done) {
 		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
 		const proc = spawn(binary, ['protractor.config.js']);
-		streamProcLog(proc);
+
+		proc.stdout.pipe(split()).on('data', (line) => {
+			console.log(line);
+		});
+		proc.stderr.pipe(split()).on('data', (line) => {
+			console.log(line);
+		});
+
 		return proc.on('close', () => {
 			done();
 			process.exit();
@@ -353,7 +367,14 @@ gulp.task('test/e2e:sauce', gulp.series(
 		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
 		startSauceConnect().then((scp) => {
 			let proc = spawn(binary, ['protractor.config.js', '--sc']);
-			streamProcLog(proc);
+
+			proc.stdout.pipe(split()).on('data', (line) => {
+				console.log(line);
+			});
+			proc.stderr.pipe(split()).on('data', (line) => {
+				console.log(line);
+			});
+
 			proc.on('close', () => {
 				done();
 				scp.close();
@@ -451,13 +472,4 @@ function startSauceConnect() {
 			});
 		});
 	}
-}
-
-function streamProcLog(proc) {
-	proc.stdout.pipe(split()).on('data', (line) => {
-		log(colors.white(line));
-	});
-	proc.stderr.pipe(split()).on('data', (line) => {
-		log(colors.red(line));
-	});
 }
