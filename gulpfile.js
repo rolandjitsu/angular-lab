@@ -216,9 +216,10 @@ gulp.task(function lint(done) {
 		.src(PATHS.src.ts)
 		.pipe(plumber())
 		.pipe(tslint({
-			tslint: require('tslint') // Use a different version of tslint
+			tslint: require('tslint'), // Use a different version of tslint,
+			formatter: "verbose"
 		}))
-		.pipe(tslint.report('verbose', {
+		.pipe(tslint.report({
 			summarizeFailureOutput: true,
 			emitError: true
 		}))
