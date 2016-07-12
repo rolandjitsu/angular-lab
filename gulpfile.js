@@ -41,22 +41,19 @@ const PATHS = {
 	],
 	src: {
 		static: [
-			'assets/**/*.{svg,jpg,png,ico,txt}',
+			// 'assets/**/*.{svg,jpg,png,ico,txt}',
 			'apple-touch-icon.png',
 			'favicon.ico',
 			'humans.txt',
+			'robots.txt',
 			'LICENSE',
-			'robots.txt'
+			'README.md'
 		],
-		ts: [
-			'app/**/*.ts'
-		],
+		ts: ['app/**/*.ts'],
+		css: ['app/**/*.css'],
 		html: [
 			'app/**/*.html',
 			'index.html'
-		],
-		css: [
-			'app/**/*.css'
 		]
 	},
 	dist: 'dist'
