@@ -17,10 +17,8 @@
 		],
 		"ignore": [
 			"./app",
-			"./assets",
 			"./e2e",
 			"./jspm_packages",
-			"./media",
 			"./node_modules",
 			"./scripts",
 			"./test",
@@ -34,7 +32,6 @@
 			"gulpfile.js",
 			"./humans.txt",
 			"./index.html",
-			"./jspm.browser.js",
 			"./jspm.config.js",
 			"karma.config.js",
 			"./LICENSE",
