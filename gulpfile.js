@@ -13,7 +13,6 @@ const typescript = require('gulp-typescript');
 const {colors, env, log} = require('gulp-util');
 const jspmConfig = require('jspm/lib/config');
 const karma = require('karma');
-const open = require('open');
 const sauceConnectLauncher = require('sauce-connect-launcher');
 const split = require('split2');
 const through = require('through2');
