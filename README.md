@@ -63,9 +63,8 @@ Make sure you have [Node](http://nodejs.org) (*if not already installed*) then c
 # Node Binaries
 export PATH=$PATH:$PWD/node_modules/.bin
 ```
-I prefer not having anything installed globally and keep everything isolated per project.
 
-After you have the above tools setup, install all runtime/dev dependencies by running:
+After you have installed the above tools, install all runtime/dev dependencies by running:
 
 ```shell
 $(node bin)/npm install
@@ -75,7 +74,7 @@ $(npm bin)/jspm install
 
 **Note**: If you change any of the deps (remove/add) in either `package.json` or `typings.json`, make sure that you run the above commands again.
 
-Now start the webserver and the build/watch processes (to watch for file changes) and the app will open in your default browser:
+Now start the webserver and the app will open in your default browser:
 
 ```shell
 $(node bin)/npm start # `$(npm bin)/gulp serve`
@@ -87,20 +86,17 @@ $(node bin)/npm start # `$(npm bin)/gulp serve`
 #### Hosting
 
 If you want to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart), then you have to do a few things in order to make it work.
+
 First make sure that you have ran `$(node bin)/npm install` so that the [firebase-tools](https://github.com/firebase/firebase-tools) dependency is installed. Run the following command to get an auth token (follow the steps you are given by the command):
 
 ```shell
 $(npm bin)/firebase login:ci
 ```
 
-Next you will need use the token you got from running the above command when a deployment is done.
-
-```shell
-$(npm bin)/firebase prefs:token
-```
-
 Copy the token and put it somewhere safe for further usage.
+
 Also change the `"default": "firebase-ng2-lab"` property from `.firebaserc` to the name of you Firebase app.
+
 Now you can deploy the app to you own Firebase by running:
 
 ```shell
@@ -108,6 +104,7 @@ $(npm bin)/gulp deploy --token <your firebase token>
 ```
 
 **Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy` so you won't need to provide the `--token` option every time you run the command.
+
 Also, you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build yet.
 
 
