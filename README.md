@@ -7,9 +7,9 @@
 
 This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
-* [SystemJS](https://github.com/systemjs/systemjs) - ES& module loader
+* [SystemJS](https://github.com/systemjs/systemjs) - ES6 module loader
 * [Angular 2](http://angular.io/)
-* [ES6 Shim](https://github.com/paulmillr/es6-shim) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project (if you require more feature coverage consider using [Core JS](https://github.com/zloirock/core-js))
+* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project
 
 Hosting:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
@@ -40,12 +40,13 @@ UI:
 # Table of Contents
 
 * [Setup](#setup)
+* [Firebase](#firebase)
+	* [Hosting](#hosting)
 * [Travis CI](#travis-ci)
 * [Development](#development)
 	* [Info](#info)
 	* [Running Tests](#running-tests)
 	* [Other Tasks](#other-tasks)
-* [Browser Support](#browser-support)
 * [Learning Material](#learning-material)
 * [Credits](#credits)
 
@@ -62,14 +63,14 @@ Make sure you have [Node](http://nodejs.org) (*if not already installed*) then c
 # Node Binaries
 export PATH=$PATH:$PWD/node_modules/.bin
 ```
-As a preference, I prefer not having anything installed globally and keep everything isolated per project.
+I prefer not having anything installed globally and keep everything isolated per project.
 
 After you have the above tools setup, install all runtime/dev dependencies by running:
 
 ```shell
 $(node bin)/npm install
-$(npm bin)/jspm install
 $(npm bin)/typings install
+$(npm bin)/jspm install
 ```
 
 **Note**: If you change any of the deps (remove/add) in either `package.json` or `typings.json`, make sure that you run the above commands again.
@@ -83,73 +84,57 @@ $(node bin)/npm start # `$(npm bin)/gulp serve`
 
 ### Firebase
 ------------
-If you wish to have your own Firebase account used with this setup you have to change the `FIREBASE_APP_LINK` located in `src/app/services/constants.ts` to your own Firebase app link:
-
-![Firebase App Link](media/firebase_app_link.png)
-
-#### Authentication
-
-Furthermore, the authentication implementation uses Firebase as well, thus you need to follow a few steps if you decide to use your own Firebase account.
-Enable **Email & Password** authentication from the **Login & Auth** tab in your app's Firebase dashboard.
-
-![Firebase App Link](media/firebase_auth_tab.png)
-
-Enable **Github** and **Google** auth from the same **Login & Auth** tab and follow the instructions in the [Github](https://www.firebase.com/docs/web/guide/login/github.html) and [Google](https://www.firebase.com/docs/web/guide/login/google.html) guides.
-
 #### Hosting
 
-Finally, if you want to use your own Firebase's [hosting](https://www.firebase.com/docs/hosting/quickstart.html) service, then you have to do a few things in order to make it work.
-First make sure that you have ran `$(node bin)/npm install` so that the [firebase-tools](https://github.com/firebase/firebase-tools) dependency is installed. Then make sure that you are logged in the Firebase dashboard and run:
+If you want to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart), then you have to do a few things in order to make it work.
+First make sure that you have ran `$(node bin)/npm install` so that the [firebase-tools](https://github.com/firebase/firebase-tools) dependency is installed. Run the following command to get an auth token (follow the steps you are given by the command):
 
 ```shell
-$(npm bin)/firebase login
+$(npm bin)/firebase login:ci
 ```
 
-And follow all the steps (a browser window will be opened so you can authenticate the client). Next you will need to get the token used for authentication when a deployment is done, do this by running:
+Next you will need use the token you got from running the above command when a deployment is done.
 
 ```shell
 $(npm bin)/firebase prefs:token
 ```
 
-Copy the token and put it somewhere safe for further usage. Also change the `"firebase": "ng2-lab"` value from `firebase.json` to the name of you Firebase app.
-Now you can deploy the app to you own Firebase app by running (note that you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build):
+Copy the token and put it somewhere safe for further usage.
+Also change the `"default": "firebase-ng2-lab"` property from `.firebaserc` to the name of you Firebase app.
+Now you can deploy the app to you own Firebase by running:
 
 ```shell
-$(npm bin)/gulp deploy/hosting --token <your firebase token>
+$(npm bin)/gulp deploy --token <your firebase token>
 ```
 
-**Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy/hosting` so you won't need to provide the `--token` option every time you run the command.
+**Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy` so you won't need to provide the `--token` option every time you run the command.
+Also, you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build yet.
 
 
 ### Travis CI
 -------------
 If you plan on using this setup with your own projects and you wish to setup Travis CI, then you must make sure of a couple of things in order to have everything working properly on the CI:
 
-1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase prefs:token` so that your deployments to firebase will work. If you do not use Firebase, skip this step. Also, you may want to encript the token if the source code is available for public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
+1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci` so that your deployments to firebase will work. If you do not use Firebase, skip this step. You may want to encrypt the token if the source code is public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
 2. In case you use SauceLabs, set the env var `SAUCE_USERNAME` to your own username and create a new env variable `SAUCE_ACCESS_KEY` containing the access key you can get from the SauceLabs dashboard (read more about setting up SauceLabs with Travis [here](https://docs.travis-ci.com/user/sauce-connect/)).
 3. If you do not use the deployment to Firebase, remove that step from `.travis.yml`.
 
 Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account. So I suggest you start out with a clean project and start git from scratch (`git init`), then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
 
 
-### Google Analytics
---------------------
-This app is also using [Google Analytics](https://analytics.google.com) to track pageviews (and in the future some other user behaviour events); if you plan on using this app for your own purposes, please make sure to change the `NG2_LAB_TRACKING_CODE` (located in `app/services/tracker.ts`) to your own.
-
-
 ### Development
 ---------------
-Bellow you can find a couple of things to help understanding how this setup works and how to make it easier when developing on this app (or starting your own and use this as a guideline).
+Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app (or starting your own and use this as a guideline).
 
 #### Info
 
-During development, when running the app in the browser, all TS is being compiled at runtime. Therefore, there might be a slight delay (around 15 - 20 sec) after the first page refresh, but it should run smoothly from there on.
+During development, when running the app in the browser, all TS is being compiled at runtime. Therefore, there might be a slight delay (around 15 - 20 sec at worst) after the first page refresh, but it should run smoothly from there on.
 
-Note that there is no build required to be able to run the app, thus all you need to get it started is `$(npm bin)/gulp serve` which will start the BrowserSync static webserver and open the app in the default browser.
+Note that there is no build required to be able to run the app, thus all you need to get it started is `$(npm bin)/gulp serve` which will start the a static webserver and open the app in the default browser.
 
-Unit tests run the same way, so there is no need to rerun builds when a spec or source file is changed. For further info about unit tests read bellow.
+Unit tests run the same way, so there is no need to rerun builds when a spec or source file is changed. For further info about unit tests read below.
 
-E2E tests need no compilation as you will be writing them in ES6 and the latest versions of node have implemented most of the ES6 features.
+E2E tests need no compilation as you will be writing them in ES6.
 
 #### Running Tests
 
@@ -171,12 +156,6 @@ And if you want to deploy the app to Firebase (security rules and app files), us
 And of course to see what other tasks are available, run `$(npm bin)/gulp --tasks`.
 
 
-### Browser Support
--------------------
-Even though all source code is compiled/transpiled to ES5 and some [shims](https://github.com/paulmillr/es6-shim) are provided, this app has no official indication of what browsers it supports (lack of enough unit/e2e tests).
-Though, you can check out the browser support for [Angular 2](https://github.com/angular-class/awesome-angular2#current-browser-support-for-angular-2) and assume that the app will work where Angular 2 works.
-
-
 ### Learning Material
 ---------------------
 * [Angular 2 Education](https://github.com/timjacobi/angular2-education)
@@ -186,7 +165,7 @@ Though, you can check out the browser support for [Angular 2](https://github.com
 
 ### Credits
 -----------
-In the making of this simple app, I have made use of whatever resources I could find out there (since the docs on some of the Angular 2 features usage are not that extensive and it's constantly changing for the moment), thus it's worth mentioning that the following projects have served as inspiration and help:
+In the making of this simple app, I have made use of whatever resources I could find out there, thus, it's worth mentioning that the following projects have served as inspiration and help:
 
 * [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
 * [angular2-webpack-starter](https://github.com/angular-class/angular2-webpack-starter)
