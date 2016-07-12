@@ -61,12 +61,13 @@ const PATHS = {
 
 
 /**
- * Start a web server using BS
+ * Start a web server using BS and signal task done.
+ * When the current process is stopped, the server will also be stopped.
  * See https://www.browsersync.io/docs
  */
 
-gulp.task(function server() {
-	bs.init(BS_CONFIG);
+gulp.task(function server(done) {
+	bs.init(BS_CONFIG, done);
 	// When process exits kill browser-sync server
 	process.on('exit', () => {
 		bs.exit();
@@ -409,12 +410,9 @@ gulp.task(function deploy(done) {
  */
 
 // TODO: we need to figure out a way to reload the browser or code when there are changes, look into systemjs hot reloader
-gulp.task('serve', gulp.series(
-	'server',
-	function start() {
-		open(`http://localhost:${BS_CONFIG.port}`);
-	}
-));
+gulp.task(function serve() {
+	bs.init(BS_CONFIG);
+});
 
 
 /**

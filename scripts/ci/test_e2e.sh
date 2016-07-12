@@ -13,7 +13,7 @@ $(npm bin)/webdriver-manager update
 
 # Start a web server required by protractor to run the tests.
 # Save the process PID so that on exit we can kill the process and stop the server.
-$(npm bin)/browser-sync start --config ./bs.config.js & webServerPid=$!
+$(npm bin)/browser-sync start --no-open --config ./bs.config.js & webServerPid=$!
 
 # On EXIT kill the servers
 trap killServers EXIT

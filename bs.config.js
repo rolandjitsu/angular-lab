@@ -5,6 +5,6 @@ module.exports = {
 	port: 3000,
 	ghostMode: false,
 	online: false,
-	open: false,
+	open: true,
 	notify: false
 };
