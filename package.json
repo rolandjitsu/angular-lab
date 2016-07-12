@@ -63,7 +63,7 @@
 		"karma-sauce-launcher": "^1.0.0",
 		"karma-spec-reporter": "^0.0.26",
 		"open": "^0.0.5",
-		"protractor": "^3.3.0",
+		"protractor": "^4.0.0",
 		"protractor-accessibility-plugin": "^0.1.1",
 		"protractor-console-plugin": "^0.1.1",
 		"sauce-connect-launcher": "^0.15.1",
