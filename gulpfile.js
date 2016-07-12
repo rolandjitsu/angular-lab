@@ -65,8 +65,8 @@ const PATHS = {
  * See https://www.browsersync.io/docs
  */
 
-gulp.task(function server(done) {
-	bs.init(BS_CONFIG, done);
+gulp.task(function server() {
+	bs.init(BS_CONFIG);
 	// When process exits kill browser-sync server
 	process.on('exit', () => {
 		bs.exit();
