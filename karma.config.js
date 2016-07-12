@@ -1,4 +1,4 @@
-import {CUSTOM_LAUNCHERS} from './browsers.config.js';
+const {CUSTOM_LAUNCHERS} = require('./browsers.config.js');
 
 const karmaConfig = {};
 const sauceLabsConfig = {
