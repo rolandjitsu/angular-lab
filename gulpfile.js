@@ -1,33 +1,29 @@
-// Add unsupported ES6/7 methods
-import 'babel-polyfill';
+const {create} = require('browser-sync');
+const {spawn} = require('child_process');
+const del = require('del');
+const firebase = require('firebase-tools');
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const changed = require('gulp-changed');
+const plumber = require('gulp-plumber');
+const size = require('gulp-size');
+const sourcemaps = require('gulp-sourcemaps');
+const tslint = require('gulp-tslint');
+const typescript = require('gulp-typescript');
+const {colors, env, log} = require('gulp-util');
+const jspmConfig = require('jspm/lib/config');
+const karma = require('karma');
+const open = require('open');
+const sauceConnectLauncher = require('sauce-connect-launcher');
+const split = require('split2');
+const through = require('through2');
 
+const bs = create('NG2 Lab');
 
-import autoprefixer from 'gulp-autoprefixer';
-import changed from 'gulp-changed';
-import {create as createBrowserSyncServer} from 'browser-sync';
-import {colors, env, log} from 'gulp-util';
-import {spawn} from 'child_process';
-import del from 'del';
-import firebase from 'firebase-tools';
-import gulp from 'gulp';
-import jspmConfig from 'jspm/lib/config';
-import karma from 'karma';
-import open from 'open';
-import plumber from 'gulp-plumber';
-import sauceConnectLauncher from 'sauce-connect-launcher';
-import size from 'gulp-size';
-import sourcemaps from 'gulp-sourcemaps';
-import split from 'split2';
-import through from 'through2';
-import tslint from 'gulp-tslint';
-import typescript from 'gulp-typescript';
-
-const bs = createBrowserSyncServer('NG2 Lab');
-
-import {
+const {
 	SAUCE_ALIASES,
 	providers
-} from './browsers.config';
+} = require('./browsers.config');
 const KARMA_CONFIG = {configFile: `${__dirname}/karma.config.js`};
 const BS_CONFIG = require('./bs.config');
 const GULP_SIZE_DEFAULT_CONFIG = {

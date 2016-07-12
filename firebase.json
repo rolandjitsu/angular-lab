@@ -31,7 +31,7 @@
 			"bs.config.js",
 			"./favicon.ico",
 			"firebase.json",
-			"gulpfile.babel.js",
+			"gulpfile.js",
 			"./humans.txt",
 			"./index.html",
 			"./jspm.browser.js",

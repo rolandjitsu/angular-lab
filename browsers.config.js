@@ -1,7 +1,7 @@
-import {env} from 'gulp-util';
+const {env} = require('gulp-util');
 
 
-export function providers() {
+function providers() {
 	let isSauce = false;
 	const rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
 	const inputList = rawInput.replace(' ', '').split(',');
@@ -32,7 +32,7 @@ export function providers() {
 }
 
 
-export const SAUCE_ALIASES = {
+const SAUCE_ALIASES = {
 	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE9', 'SL_IE10', 'SL_IE11', 'SL_EDGE', 'SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
 	'MOBILE': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5', 'SL_IOS7', 'SL_IOS8', 'SL_IOS9'],
 	'ANDROID': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5'],
@@ -62,7 +62,7 @@ export const SAUCE_ALIASES = {
 	]
 };
 
-export const CUSTOM_LAUNCHERS = {
+const CUSTOM_LAUNCHERS = {
 	// Use Chromium preinstalled with Travis VM
 	// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
 	'CHROME_TRAVIS_CI': {
@@ -191,4 +191,11 @@ export const CUSTOM_LAUNCHERS = {
 		platform: 'Linux',
 		version: '5.1'
 	}
+};
+
+
+module.exports = {
+	SAUCE_ALIASES,
+	CUSTOM_LAUNCHERS,
+	providers
 };

@@ -7,34 +7,30 @@
 
 This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
-* [SystemJS](https://github.com/systemjs/systemjs) - loading and compiling `.ts` to `.js` in the browser during dev mode
+* [SystemJS](https://github.com/systemjs/systemjs) - ES& module loader
 * [Angular 2](http://angular.io/)
-* [reflect-metadata](https://github.com/rbuckton/ReflectDecorators) - dep of Angular 2 (used for making DI possible)
 * [ES6 Shim](https://github.com/paulmillr/es6-shim) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project (if you require more feature coverage consider using [Core JS](https://github.com/zloirock/core-js))
-* [RxJS](https://github.com/ReactiveX/RxJS) - also a dependency of Angular 2 but used by some of the app components
-* [zone.js](https://github.com/angular/zone.js) - dependency of Angular 2
 
-Hosted services:
+Hosting:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
-* [Google Analytics](https://analytics.google.com) - tracking page views and/or other events
 
-For unit/e2e tests:
+Unit/E2E tests:
 * [Protractor](https://angular.github.io/protractor) - e2e test framework
 * [Karma](http://karma-runner.github.io) - test runner for the app unit tests
 * [Jasmine](http://jasmine.github.io) - assertion lib
 
-As a CI/CD:
+CI/CD:
 * [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
 * [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
 
-Task runner and dev tools:
+Tools:
 * [BrowserSync](http://browsersync.io) - used as a static webserver for local development
 * [Gulp](http://gulpjs.com) - task runner
 
-As package/typings managers:
-* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependecies version's
-* [NPM](https://npmjs.com)
+Package/Typings manager:
+* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependencies version's
 * [Typings](https://github.com/typings/typings)
+* [NPM](https://npmjs.com)
 * [JSPM](http://jspm.io)
 
 UI:
@@ -44,11 +40,7 @@ UI:
 # Table of Contents
 
 * [Setup](#setup)
-* [Firebase](#firebase)
-	* [Authentication](#authentication)
-	* [Hosting](#hosting)
 * [Travis CI](#travis-ci)
-* [Google Analytics](#google-analytics)
 * [Development](#development)
 	* [Info](#info)
 	* [Running Tests](#running-tests)

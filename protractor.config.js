@@ -84,9 +84,6 @@ module.exports.config = Object.assign(config, {
 	onPrepare: function () {
 		// Add jasmine spec reporter
 		jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
-		// Add babel for ES6 support
-		// (some features that are not already implemented in Node).
-		require("babel-core/register");
 	},
 	plugins: [
 		{
