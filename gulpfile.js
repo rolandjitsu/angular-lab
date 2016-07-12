@@ -67,7 +67,7 @@ const PATHS = {
  */
 
 gulp.task(function server(done) {
-	bs.init(BS_CONFIG, done);
+	bs.init(Object.assign(BS_CONFIG, {open: false}), done);
 	// When process exits kill browser-sync server
 	process.on('exit', () => {
 		bs.exit();
@@ -321,10 +321,10 @@ gulp.task('webdriver/update', function () {
 	let proc = spawn(binary, ['update']);
 
 	proc.stdout.pipe(split()).on('data', (line) => {
-		log(colors.white(line));
+		console.log(line);
 	});
 	proc.stderr.pipe(split()).on('data', (line) => {
-		log(colors.red(line));
+		console.log(line);
 	});
 
 	return proc;
