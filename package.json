@@ -74,12 +74,9 @@
 		"yargs": "^4.8.0"
 	},
 	"engines": {
-		"node": "5.10.x"
+		"node": ">= 6.3"
 	},
-	"private": false,
 	"jspm": {
-		"name": "app",
-		"main": "app.js",
 		"dependencies": {
 			"@angular/http": "npm:@angular/http@^2.0.0-rc.4",
 			"@angular/router": "npm:@angular/router@^3.0.0-beta.2",
