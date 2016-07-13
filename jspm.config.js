@@ -1,55 +1,22 @@
 SystemJS.config({
 	production: false,
-	browserConfig: {
-		"paths": {
-			"github:": "/jspm_packages/github/",
-			"npm:": "/jspm_packages/npm/",
-			"app/": "/app/"
-		}
-	},
-	nodeConfig: {
-		"paths": {
-			"github:": "jspm_packages/github/",
-			"npm:": "jspm_packages/npm/",
-			"app/": "app/"
-		}
-	},
-	productionConfig: {
-		"transpiler": "none",
-		"packages": {
-			"app": {
-				"defaultExtension": "js"
-			}
-		}
-	},
-	devConfig: {
-		"map": {
-			"plugin-babel": "npm:systemjs-plugin-babel@0.0.12",
-			"plugin-typescript": "github:frankwallis/plugin-typescript@4.0.16"
-		},
-		"packages": {
-			"github:frankwallis/plugin-typescript@4.0.16": {
-				"map": {
-					"typescript": "npm:typescript@1.8.10"
-				}
-			}
-		}
+	transpiler: false,
+	nodeConfig: {},
+	browserConfig: {},
+	productionConfig: {},
+	paths: {
+		"github:": "/jspm_packages/github/",
+		"npm:": "/jspm_packages/npm/",
+		"app/": "/app/"
 	},
 	packages: {
 		"app": {
-			"defaultExtension": "ts",
 			"map": {
 				"./env": {
 					"~production": "./env.dev"
 				}
 			}
 		}
-	},
-	transpiler: "plugin-typescript",
-	typescriptOptions: {
-		"module": "system",
-		"typeCheck": true,
-		"tsconfig": true
 	}
 });
 

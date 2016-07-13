@@ -33,10 +33,10 @@ module.exports = function (config) {
 		],
 		jspm: {
 			config: 'jspm.config.js',
-			serveFiles: ['tsconfig.json', 'app/**/*!(*.spec).ts', 'typings/**/*.d.ts'],
+			serveFiles: ['tsconfig.json', 'src/app/**/*!(*.spec).ts', 'typings/**/*.d.ts'],
 			loadFiles: [
 				'test/setup.ts',
-				'app/**/*.spec.ts'
+				'src/app/**/*.spec.ts'
 			]
 		},
 		plugins: [

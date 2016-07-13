@@ -6,8 +6,8 @@
 > Playground for experimenting with some of the core features of [Angular 2.0](https://angular.io) and integration with other software and services.
 
 This setup is using:
-* [TypeScript](http://www.typescriptlang.org)
-* [SystemJS](https://github.com/systemjs/systemjs) - ES6 module loader
+* [TypeScript](http://www.typescriptlang.org) - programming lang
+* [SystemJS](https://github.com/systemjs/systemjs) - the ES6 module loader used by [JSPM](http://jspm.io)
 * [Angular 2](http://angular.io/)
 * [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project
 
@@ -125,13 +125,11 @@ Below you can find a few of things to help understand how this setup works and h
 
 #### Info
 
-During development, when running the app in the browser, all TS is being compiled at runtime. Therefore, there might be a slight delay (around 15 - 20 sec at worst) after the first page refresh, but it should run smoothly from there on.
-
-Note that there is no build required to be able to run the app, thus all you need to get it started is `$(npm bin)/gulp serve` which will start the a static webserver and open the app in the default browser.
+During development, when running the app in the browser, all TS is being compiled offline. To get started use `$(npm bin)/gulp serve` which will start a static webserver and rerun builds on file changes.
 
 Unit tests run the same way, so there is no need to rerun builds when a spec or source file is changed. For further info about unit tests read below.
 
-E2E tests need no compilation as you will be writing them in ES6.
+E2E tests specs need no compilation as you will be writing them in ES6.
 
 #### Running Tests
 

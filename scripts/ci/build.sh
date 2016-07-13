@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-$(npm bin)/gulp build
+$(npm bin)/gulp build --production

@@ -1,5 +1,5 @@
 const {create} = require('browser-sync');
-const {spawn} = require('child_process');
+const {spawn, exec} = require('child_process');
 const del = require('del');
 const firebase = require('firebase-tools');
 const gulp = require('gulp');
@@ -11,6 +11,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
 const typescript = require('gulp-typescript');
 const {colors, env, log} = require('gulp-util');
+const jspm = require('jspm');
 const jspmConfig = require('jspm/lib/config');
 const karma = require('karma');
 const sauceConnectLauncher = require('sauce-connect-launcher');
@@ -40,19 +41,15 @@ const PATHS = {
 	],
 	src: {
 		static: [
-			// 'assets/**/*.{svg,jpg,png,ico,txt}',
-			'apple-touch-icon.png',
-			'favicon.ico',
-			'humans.txt',
-			'robots.txt',
+			'src/**/*.{svg,jpg,png,ico,txt}',
 			'LICENSE',
 			'README.md'
 		],
-		ts: ['app/**/*.ts'],
-		css: ['app/**/*.css'],
+		ts: ['src/app/**/*.ts'],
+		css: ['src/**/*.css'],
 		html: [
-			'app/**/*.html',
-			'index.html'
+			'src/app/**/*.html',
+			'src/index.html'
 		]
 	},
 	dist: 'dist'
@@ -64,9 +61,8 @@ const PATHS = {
  * When the current process is stopped, the server will also be stopped.
  * See https://www.browsersync.io/docs
  */
-
 gulp.task(function server(done) {
-	bs.init(Object.assign(BS_CONFIG, {open: false}), done);
+	bs.init(Object.assign(BS_CONFIG, {open: false, notify: false}), done);
 	// When process exits kill browser-sync server
 	process.on('exit', () => {
 		bs.exit();
@@ -75,86 +71,121 @@ gulp.task(function server(done) {
 
 
 /**
- * Copy JSPM assets
+ * Copy JSPM config files
  */
-
-gulp.task('jspm:packages', function () {
+gulp.task('jspm/config:copy', function () {
 	return gulp
 		.src([
-			'jspm_packages/**/.*',
-			'jspm_packages/**/*'
-		], {
-			base: '.'
-		})
+			'jspm.config.js',
+			'package.json'
+		])
 		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-gulp.task('jspm:config', function () {
+/**
+ * Update JSPM config:
+ * 1. Set env production mode (enabled via `--production` option or via env var `ENABLE_PROD_MODE`)
+ */
+gulp.task('jspm/config:build', function () {
+	// Set JSPM config path
+	jspm.setPackagePath(PATHS.dist);
+	// Load JSPM config
 	jspmConfig.loadSync();
+	// Get JSPM config
+	const JSPM_CONFIG = jspmConfig.loader.getConfig();
 	return gulp
-		.src('jspm.config.js')
-		.pipe(changed(PATHS.dist))
-		.pipe(transform(jspmConfig.loader.getConfig()))
+		.src(`${PATHS.dist}/jspm.config.js`)
+		.pipe(plumber())
+		.pipe(updateEnv(JSPM_CONFIG))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
 		.pipe(gulp.dest(PATHS.dist));
 });
 
-function transform(config) {
-	config.production = true;
+function updateEnv(config) {
+	config.production = env.ENABLE_PROD_MODE || env.production || false;
 	return through.obj((chunk, enc, callback) => {
 		chunk.contents = new Buffer(`SystemJS.config(${JSON.stringify(config)})`, 'utf8');
 		callback(null, chunk);
 	});
 }
 
+/**
+ * Install JSPM dependencies
+ */
+gulp.task('jspm/install', function () {
+	let proc = exec(`${__dirname}/node_modules/.bin/jspm install`, {cwd: PATHS.dist});
 
-gulp.task('build/deps', gulp.parallel(
-	'jspm:packages',
-	'jspm:config'
+	proc.stdout
+		.pipe(split())
+		.on('data', (data) => log(data));
+
+	proc.stderr
+		.pipe(split())
+		.on('data', (data) => log(data));
+
+	proc.on('close', () => {
+		// Reload the browser.
+		// Only when BS is running.
+		bs.reload('jspm.config.js');
+	});
+
+	return proc;
+});
+
+
+/**
+ * Build dependencies
+ */
+gulp.task('build/deps', gulp.series(
+	'jspm/config:copy',
+	'jspm/config:build',
+	'jspm/install'
 ));
 
 
 /**
  * Copy static assets
  */
-
 gulp.task('build/static', function () {
 	return gulp
 		.src(PATHS.src.static, {
-			base: '.'
+			base: './src'
 		})
 		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(bs.stream({
+			match: '**/*.{svg,jpg,png,ico,txt}'
+		}));
 });
 
 
 /**
  * Copy HTML
  */
-
 gulp.task('build/html', function () {
 	return gulp
 		.src(PATHS.src.html, {
-			base: '.'
+			base: './src'
 		})
 		.pipe(changed(PATHS.dist))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(bs.stream({
+			match: '**/*.html'
+		}));
 });
 
 
 /**
  * Build JS
  */
-
 gulp.task('build/js', function () {
 	return gulp
-		// TODO: do not build spec files
 		.src([].concat(PATHS.typings, PATHS.src.ts), {
-			base: '.'
+			base: './src'
 		})
 		.pipe(changed(PATHS.dist, {
 			extension: '.js'
@@ -167,18 +198,20 @@ gulp.task('build/js', function () {
 		.js
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(bs.stream({
+			match: '**/*.js'
+		}));
 });
 
 
 /**
  * Build CSS
  */
-
 gulp.task('build/css', function () {
 	return gulp
 		.src(PATHS.src.css, {
-			base: '.'
+			base: './src'
 		})
 		.pipe(changed(PATHS.dist, {
 			extension: '.css'
@@ -188,14 +221,16 @@ gulp.task('build/css', function () {
 		.pipe(autoprefixer())
 		.pipe(sourcemaps.write('.'))
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(bs.stream({
+			match: '**/*.css'
+		}));
 });
 
 
 /**
  * Build everything
  */
-
 gulp.task('build', gulp.parallel(
 	'build/deps',
 	'build/static',
@@ -210,7 +245,6 @@ gulp.task('build', gulp.parallel(
  * `tslint.json` contains enabled rules.
  * See https://github.com/palantir/tslint#supported-rules for more rules.
  */
-
 gulp.task(function lint(done) {
 	return gulp
 		.src(PATHS.src.ts)
@@ -310,14 +344,13 @@ function createKarmaServer(config = {}, callback = () => {}) {
 
 
 /**
- * E2E Tests
+ * Update selenium webdriver
  */
-
 gulp.task('webdriver/update', function () {
-	const binary = process.platform === 'win32'
-		? 'node_modules\\.bin\\webdriver-manager'
-		: 'node_modules/.bin/webdriver-manager';
-	let proc = spawn(binary, ['update']);
+	const proc = spawn(
+		process.platform === 'win32' ? 'node_modules\\.bin\\webdriver-manager' : 'node_modules/.bin/webdriver-manager',
+		['update']
+	);
 
 	proc.stdout.pipe(split()).on('data', (line) => {
 		console.log(line);
@@ -329,13 +362,24 @@ gulp.task('webdriver/update', function () {
 	return proc;
 });
 
-// Run tests locally on Chrome.
+/**
+ * Run E2E tests locally on Chrome:
+ * 1. Build the app
+ * 2. Update selenium webdriver
+ * 3. Start webserver
+ * 4. Run tests
+ */
 gulp.task('test/e2e:local', gulp.series(
-	'webdriver/update',
+	gulp.parallel(
+		'build',
+		'webdriver/update'
+	),
 	'server',
 	function test(done) {
-		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
-		const proc = spawn(binary, ['protractor.config.js']);
+		const proc = spawn(
+			process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor',
+			['protractor.config.js']
+		);
 
 		proc.stdout.pipe(split()).on('data', (line) => {
 			console.log(line);
@@ -344,23 +388,38 @@ gulp.task('test/e2e:local', gulp.series(
 			console.log(line);
 		});
 
-		return proc.on('close', () => {
-			done();
-			process.exit();
+		proc.on('close', (error) => {
+			if (error) {
+				// Let gulp know that the tests failed
+				done(new Error('Some specs have failed.'));
+			} else {
+				done();
+			}
+			process.exit(error);
 		});
 	}
 ));
 
-// Run tests on SauceLabs browsers.
-// Expects that SAUCE_USERNAME and SAUCE_ACCESS_KEY are set as env variables,
-// or passed as args.
+/**
+ * Run tests on SauceLabs browsers.
+ * NOTE: Expects that SAUCE_USERNAME and SAUCE_ACCESS_KEY are set as env variables (or passed as args).
+ * 1. Build the app
+ * 2. Update selenium webdriver
+ * 3. Start webserver
+ * 4. Run tests
+ */
 gulp.task('test/e2e:sauce', gulp.series(
-	'webdriver/update',
+	gulp.parallel(
+		'build',
+		'webdriver/update'
+	),
 	'server',
 	function test(done) {
-		const binary = process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor';
 		startSauceConnect().then((scp) => {
-			let proc = spawn(binary, ['protractor.config.js', '--sc']);
+			let proc = spawn(
+				process.platform === 'win32' ? 'node_modules\\.bin\\protractor' : 'node_modules/.bin/protractor',
+				['protractor.config.js', '--sc']
+			);
 
 			proc.stdout.pipe(split()).on('data', (line) => {
 				console.log(line);
@@ -369,10 +428,15 @@ gulp.task('test/e2e:sauce', gulp.series(
 				console.log(line);
 			});
 
-			proc.on('close', () => {
-				done();
+			proc.on('close', (error) => {
 				scp.close();
-				process.exit();
+				if (error) {
+					// Let gulp know that the tests failed
+					done(new Error('Some specs have failed.'));
+				} else {
+					done();
+				}
+				process.exit(error);
 			});
 		});
 	}
@@ -381,50 +445,58 @@ gulp.task('test/e2e:sauce', gulp.series(
 
 /**
  * Firebase Deployments
+ * NOTE: Make sure to run `gulp build --production` before you run this task.
  */
-
 gulp.task(function deploy(done) {
 	const TOKEN = process.env.FIREBASE_TOKEN || env.token;
 	if (!TOKEN) {
-		log(colors.red('No FIREBASE_TOKEN found in env or --token option passed.'));
-		return done(1);
+		return done(new Error('No FIREBASE_TOKEN found in env or --token option passed.'));
 	}
 
+	log('Starting Firebase deployment ...');
 	firebase.deploy({token: TOKEN}).then(
 		() => {
-			log(colors.green('Deployment successful.'));
+			log(colors.green('Deployment successful'));
 			done();
 			process.exit();
 		},
 		(error) => {
-			log(colors.red(error.message));
-			done();
+			done(error);
 			process.exit(1);
 		});
 });
 
 
 /**
- * Start server and open app in browser
+ * Serve app:
+ * 1. Build app
+ * 2. Watch for file changes and rebuild on change
+ * 3. Start BS webserver
  */
-
-// TODO: we need to figure out a way to reload the browser or code when there are changes, look into systemjs hot reloader
-gulp.task(function serve() {
-	bs.init(BS_CONFIG);
-});
+gulp.task('serve', gulp.series(
+	'build',
+	function start() {
+		// Start watching files for changes
+		gulp.watch('jspm.config.js', gulp.task('build/deps')); // When a new jspm package was installed or the config changed, rerun deps build
+		gulp.watch(PATHS.src.static, gulp.task('build/static'));
+		gulp.watch(PATHS.src.html, gulp.task('build/html'));
+		gulp.watch(PATHS.src.ts, gulp.task('build/js'));
+		gulp.watch(PATHS.src.css, gulp.task('build/css'));
+		// Start BS server
+		bs.init(BS_CONFIG);
+	}
+));
 
 
 /**
- * Default
+ * Default task
  */
-
 gulp.task('default', gulp.task('serve'));
 
 
 /**
  * Clean
  */
-
 gulp.task(function clean() {
 	return del([PATHS.dist]);
 });
@@ -441,7 +513,7 @@ process.on('SIGINT', function () {
  */
 
 function startSauceConnect() {
-	log(colors.white('Starting sauce connect ...'));
+	log(colors.white('Starting sauce connect (might take a while) ...'));
 	const SAUCE_USERNAME = process.env.SAUCE_USERNAME || env.username;
 	const SAUCE_ACCESS_KEY = process.env.SAUCE_ACCESS_KEY || env.accessKey;
 	if (!SAUCE_USERNAME) {

@@ -1,19 +1,6 @@
 {
 	"rules": {
 		".write": false,
-		".read": false,
-		"users": {
-			".read": true,
-			".indexOn": ["email", "key"],
-			"$user": {
-				".write": "auth != null"
-			}
-		},
-		"chores": {
-			".read": true,
-			"$chore": {
-				".write": "auth != null"
-			}
-		}
+		".read": false
 	}
 }
