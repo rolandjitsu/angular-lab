@@ -162,6 +162,7 @@ And of course to see what other tasks are available, run `$(npm bin)/gulp --task
 ### Browser Support
 -------------------
 You can expect the app to run wherever Angular 2 does (see table below).
+
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/angular2-ci.svg)](https://saucelabs.com/u/angular2-ci)
 
 
