@@ -48,6 +48,7 @@ UI:
 	* [Running Tests](#running-tests)
 	* [Other Tasks](#other-tasks)
 * [Learning Material](#learning-material)
+* [Browser Support](#browser-support)
 * [Credits](#credits)
 
 
@@ -156,6 +157,12 @@ And of course to see what other tasks are available, run `$(npm bin)/gulp --task
 * [Angular 2 Education](https://github.com/timjacobi/angular2-education)
 * [Awesome Angular 2](https://github.com/angular-class/awesome-angular2)
 * [Angular Docs](https://angular.io)
+
+
+### Browser Support
+-------------------
+You can expect the app to run wherever Angular 2 does (see table below).
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/angular2-ci.svg)](https://saucelabs.com/u/angular2-ci)
 
 
 ### Credits
