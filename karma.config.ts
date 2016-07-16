@@ -25,35 +25,31 @@ if (process.env.TRAVIS) {
 module.exports = function (config) {
 	config.set(Object.assign(karmaConfig, {
 		frameworks: [
-			'jasmine'
-			// 'jspm'
-		],
-		files: [
-			'dist/app/**/*.spec.js'
+			'jasmine',
+			'jspm'
 		],
 		reporters: [
 			'spec'
 		],
-		// jspm: {
-		// 	config: 'jspm.config.js',
-		// 	serveFiles: ['tsconfig.json', 'dist/app/**/*!(*.spec).js', 'typings/**/*.d.ts'],
-		// 	loadFiles: [
-		// 		// 'test/setup.ts',
-		// 		'dist/app/**/*.spec.js'
-		// 	]
-		// },
+		jspm: {
+			config: 'jspm.config.js',
+			serveFiles: ['dist/app/**/*!(*.spec).js'],
+			loadFiles: [
+				// TODO: for A2 we need to run some test setup, figure out how to do it
+				// 'test/setup.ts',
+				'dist/app/**/*.spec.js'
+			]
+		},
 		plugins: [
 			'karma-chrome-launcher',
 			'karma-jasmine',
-			// 'karma-jspm',
+			'karma-jspm',
 			'karma-sauce-launcher',
 			'karma-spec-reporter'
 		],
 		proxies: {
-			// '/jspm_packages/': '/base/jspm_packages/',
-			// '/app/': '/base/app/',
-			// '/tsconfig.json': '/base/tsconfig.json',
-			// '/typings/': '/base/typings/'
+			'/jspm_packages/': '/base/jspm_packages/',
+			'/dist/app/': '/base/dist/app/'
 		},
 		captureTimeout: 60000,
 		browserDisconnectTimeout : 60000,
