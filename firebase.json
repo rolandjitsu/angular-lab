@@ -29,7 +29,7 @@
 			"firebase.json",
 			"gulpfile.js",
 			"./jspm.config.js",
-			"karma.config.js",
+			"karma.config.ts",
 			"./LICENSE",
 			"package.json",
 			"protractor.config.js",

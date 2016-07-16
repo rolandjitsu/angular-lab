@@ -1,7 +1,7 @@
 const {CUSTOM_LAUNCHERS} = require('./browsers.config.js');
 
-const karmaConfig = {};
-const sauceLabsConfig = {
+const karmaConfig: any = {};
+const sauceLabs: any = {
 	testName: 'NG2 Lab - UNIT',
 	retryLimit: 3,
 	startConnect: false,
@@ -16,8 +16,8 @@ const sauceLabsConfig = {
 };
 
 if (process.env.TRAVIS) {
-	sauceLabsConfig.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
-	sauceLabsConfig.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+	sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
+	sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
 	// TODO: remove once SauceLabs supports websockets.
 	karmaConfig.transports = ['polling'];
 }
@@ -60,7 +60,7 @@ module.exports = function (config) {
 		browserDisconnectTolerance : 3,
 		browserNoActivityTimeout : 60000,
 		customLaunchers: CUSTOM_LAUNCHERS,
-		sauceLabs: sauceLabsConfig,
+		sauceLabs,
 		browsers: [
 			'Chrome'
 		]

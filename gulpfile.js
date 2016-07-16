@@ -24,7 +24,7 @@ const {
 	SAUCE_ALIASES,
 	providers
 } = require('./browsers.config');
-const KARMA_CONFIG = {configFile: `${__dirname}/karma.config.js`};
+const KARMA_CONFIG = {configFile: `${__dirname}/karma.config.ts`};
 const BS_CONFIG = require('./bs.config');
 const GULP_SIZE_DEFAULT_CONFIG = {
 	showFiles: true,
