@@ -2,6 +2,7 @@ const {create} = require('browser-sync');
 const {spawn, exec} = require('child_process');
 const del = require('del');
 const firebase = require('firebase-tools');
+const fs = require('fs');
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const changed = require('gulp-changed');
@@ -11,8 +12,6 @@ const sourcemaps = require('gulp-sourcemaps');
 const tslint = require('gulp-tslint');
 const typescript = require('gulp-typescript');
 const {colors, env, log} = require('gulp-util');
-const jspm = require('jspm');
-const jspmConfig = require('jspm/lib/config');
 const karma = require('karma');
 const sauceConnectLauncher = require('sauce-connect-launcher');
 const split = require('split2');
@@ -45,7 +44,7 @@ const PATHS = {
 			'LICENSE',
 			'README.md'
 		],
-		ts: ['src/app/**/*.ts'],
+		ts: ['src/**/*.ts'],
 		css: ['src/**/*.css'],
 		html: [
 			'src/app/**/*.html',
@@ -73,13 +72,15 @@ gulp.task(function server(done) {
 /**
  * Copy JSPM config files
  */
-gulp.task('jspm/config:copy', function () {
+gulp.task('jspm/config', function () {
 	return gulp
 		.src([
 			'jspm.config.js',
 			'package.json'
 		])
 		.pipe(changed(PATHS.dist))
+		.pipe(gulp.dest(PATHS.dist))
+		.pipe(updateEnv())
 		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
 		.pipe(gulp.dest(PATHS.dist));
 });
@@ -88,26 +89,26 @@ gulp.task('jspm/config:copy', function () {
  * Update JSPM config:
  * 1. Set env production mode (enabled via `--production` option or via env var `ENABLE_PROD_MODE`)
  */
-gulp.task('jspm/config:build', function () {
-	// Set JSPM config path
-	jspm.setPackagePath(PATHS.dist);
-	// Load JSPM config
-	jspmConfig.loadSync();
-	// Get JSPM config
-	const JSPM_CONFIG = jspmConfig.loader.getConfig();
-	return gulp
-		.src(`${PATHS.dist}/jspm.config.js`)
-		.pipe(plumber())
-		.pipe(updateEnv(JSPM_CONFIG))
-		.pipe(size(GULP_SIZE_DEFAULT_CONFIG))
-		.pipe(gulp.dest(PATHS.dist));
-});
+function updateEnv() {
+	const isProduction = env.ENABLE_PROD_MODE
+		|| env.production
+		|| false;
 
-function updateEnv(config) {
-	config.production = env.ENABLE_PROD_MODE || env.production || false;
-	return through.obj((chunk, enc, callback) => {
-		chunk.contents = new Buffer(`SystemJS.config(${JSON.stringify(config)})`, 'utf8');
-		callback(null, chunk);
+	return through.obj((chunk, enc, done) => {
+		if (chunk.path.endsWith('jspm.config.js')) {
+			let contentsStr = chunk.contents.toString('utf8');
+
+			// Replace <anything> in {production: <anything>} with the right value.
+			// See following posts for info about the regex:
+			// http://stackoverflow.com/questions/26769306/regex-replace-on-json-is-removing-an-object-from-array
+			// http://stackoverflow.com/questions/11005991/javascript-replace-matched-group
+			contentsStr = contentsStr.replace(/(")?(production)\1:(.*?)(?:,)/g, `$2: ${isProduction},`);
+
+			// Update the file
+			chunk.contents = new Buffer(contentsStr, 'utf8');
+		}
+
+		done(null, chunk);
 	});
 }
 
@@ -139,8 +140,7 @@ gulp.task('jspm/install', function () {
  * Build dependencies
  */
 gulp.task('build/deps', gulp.series(
-	'jspm/config:copy',
-	'jspm/config:build',
+	'jspm/config',
 	'jspm/install'
 ));
 
@@ -249,10 +249,7 @@ gulp.task(function lint(done) {
 	return gulp
 		.src(PATHS.src.ts)
 		.pipe(plumber())
-		.pipe(tslint({
-			tslint: require('tslint'), // Use a different version of tslint,
-			formatter: "verbose"
-		}))
+		.pipe(tslint({formatter: "verbose"}))
 		.pipe(tslint.report({
 			summarizeFailureOutput: true,
 			emitError: true
