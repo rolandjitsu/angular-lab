@@ -2,12 +2,10 @@ language: node_js
 node_js:
   - "7.4"
 
-
 cache:
   yarn: true
   directories:
     - node_modules
-
 
 addons:
   # Saucelabs
@@ -23,22 +21,15 @@ addons:
     packages:
       - g++-4.8
 
-
 env:
   global:
     # Requirement for installing Node 5+
     - CXX=g++-4.8
 
-
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-
-
-install:
-  - yarn
-
 
 script:
   # Code style/format check with tslint.
@@ -48,9 +39,7 @@ script:
   # E2E tests.
   - npm run e2e:ci
 
-
 # after_success: ./scripts/ci/deploy.sh
-
 
 notifications:
   email:
