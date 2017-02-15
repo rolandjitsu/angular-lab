@@ -1,0 +1,19 @@
+@import "~@angular/material/core/theming/theming";
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss (imported above).
+// For each palette, you can optionally specify a default, lighter, and darker hue.
+// Primary palette
+$lab-primary-palette: md-palette($md-light-blue);
+// Use this for highlighting secondary actions.
+$lab-accent-palette: md-palette($md-pink);
+// Use this for highlighting errors or such.
+$lab-warn-palette: md-palette($md-red);
+
+
+// Define some colors for reusability
+$lab-background-color: map_get($md-light-theme-background, background);
+
+$lab-primary-color: md-color($lab-primary-palette);
+$lab-accent-color: md-color($lab-accent-palette);
+$lab-warn-color: md-color($lab-warn-palette);

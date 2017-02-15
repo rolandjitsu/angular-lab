@@ -1,0 +1,7 @@
+@import "variables";
+
+
+@mixin spinner-size($size: 24px) {
+	width: $size;
+	height: $size;
+}

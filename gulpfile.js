@@ -104,6 +104,8 @@ function updateEnv() {
 			// http://stackoverflow.com/questions/11005991/javascript-replace-matched-group
 			contentsStr = contentsStr.replace(/(")?(production)\1:(.*?)(?:,)/g, `$2: ${isProduction},`);
 
+			// TODO: if the config does not exist we should add it
+
 			// Update the file
 			chunk.contents = new Buffer(contentsStr, 'utf8');
 		}

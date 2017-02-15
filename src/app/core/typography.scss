@@ -1,0 +1,54 @@
+/* Typography */
+/* TODO(rolandjitsu): Needs to be removed too once AM2 has these figured out */
+.md-display-4 {
+	font-size: 112px;
+	font-weight: 300;
+}
+
+.md-display-3,
+.md-display-2,
+.md-display-1,
+.md-headline,
+.md-subhead,
+.md-body-1,
+.md-caption {
+	font-weight: 400;
+}
+
+.md-display-3 {
+	font-size: 56px;
+}
+
+.md-display-2 {
+	font-size: 45px;
+}
+
+.md-display-1 {
+	font-size: 34px;
+}
+
+.md-headline {
+	font-size: 24px;
+}
+
+.md-title {
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.md-subhead {
+	font-size: 16px;
+}
+
+.md-body-1,
+.md-body-2 {
+	font-size: 14px;
+}
+
+.md-body-2 {
+	font-weight: 500;
+}
+
+.md-caption {
+	font-size: 12px;
+}
