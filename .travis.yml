@@ -2,17 +2,19 @@ language: node_js
 node_js:
   - "7.4"
 
+
 cache:
   yarn: true
   directories:
     - node_modules
 
+
 addons:
   # Saucelabs
   sauce_connect:
-      username: "rolandjitsu"
-    jwt:
-      secure: "JCabDo1wjn+rcfl9R3lXnF0XqPn5xOcm4zUo0+dSAgMiv+/3mC38KGo/fvbsdQzyxTU3hrYUOYk3cp/iI6MQE/h+u/sD0Ixo1B77inGZarSiQqyh93lDPF02NBziwWKOw/KA9PGehlE6SZ4qa55V4A3iOV4+fbwHGzmr/I9QNomAKybAiHrBx/1yA5Q8mFD9AtSgeP9f9vGFqFFFPJIikHdNQL4kF/PoDrn763jHLFVdk1BFd8U/ZV61fArtfxvb1ySMZuIp6GVvOjbDp/hG4hCdcuWiSF0TGQWcvxrzty26mP5qh75yKu9G28l7ln1PLqN/xLEDX7Bv2O5v57eeAGVh49AJjAab3brm69L6KOdJdOnYpCTb6ssrajJMCv+10UV97PYt8yYsUsn+Kg8f8jB0qOHeFwGX0EE9xNKXJOORjRt9gIg/H71XBGXQCMnqHWU2/3NY4XcT6aj4NNv8PkdxXkgV1x2HXs7MqUIk4pfhV+RJd9pbK0WaKc9sAOydyYW+ziEZXk6vCXnTlVoCuCzAFOx74OTuwk0fmNRD8knMW++evyImd5aSc6ENGhvu7MTUehfNSTH+fCSZhT1Ao1E2pSrOAWYl0wHBPPNRsQNEHf7MrzcWB42uM3icPsmoKZHs7+UB+lmY0ejxkI/jj8U2+BBVtf+QthETCDLj1k4="
+    username: "rolandjitsu"
+  jwt:
+    secure: "JCabDo1wjn+rcfl9R3lXnF0XqPn5xOcm4zUo0+dSAgMiv+/3mC38KGo/fvbsdQzyxTU3hrYUOYk3cp/iI6MQE/h+u/sD0Ixo1B77inGZarSiQqyh93lDPF02NBziwWKOw/KA9PGehlE6SZ4qa55V4A3iOV4+fbwHGzmr/I9QNomAKybAiHrBx/1yA5Q8mFD9AtSgeP9f9vGFqFFFPJIikHdNQL4kF/PoDrn763jHLFVdk1BFd8U/ZV61fArtfxvb1ySMZuIp6GVvOjbDp/hG4hCdcuWiSF0TGQWcvxrzty26mP5qh75yKu9G28l7ln1PLqN/xLEDX7Bv2O5v57eeAGVh49AJjAab3brm69L6KOdJdOnYpCTb6ssrajJMCv+10UV97PYt8yYsUsn+Kg8f8jB0qOHeFwGX0EE9xNKXJOORjRt9gIg/H71XBGXQCMnqHWU2/3NY4XcT6aj4NNv8PkdxXkgV1x2HXs7MqUIk4pfhV+RJd9pbK0WaKc9sAOydyYW+ziEZXk6vCXnTlVoCuCzAFOx74OTuwk0fmNRD8knMW++evyImd5aSc6ENGhvu7MTUehfNSTH+fCSZhT1Ao1E2pSrOAWYl0wHBPPNRsQNEHf7MrzcWB42uM3icPsmoKZHs7+UB+lmY0ejxkI/jj8U2+BBVtf+QthETCDLj1k4="
   # Node 5+ requires a C++11 standard compliant compiler, so we'll use gcc.
   # See more info at https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Node.js-v4-(or-io.js-v3)-compiler-requirements.
   apt:
@@ -21,20 +23,22 @@ addons:
     packages:
       - g++-4.8
 
+
 env:
   global:
     # Requirement for installing Node 5+
     - CXX=g++-4.8
+
 
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
+
 install:
   - yarn
 
-#before_script: ./scripts/ci/clean.sh
 
 script:
   # Code style/format check with tslint.
@@ -44,7 +48,9 @@ script:
   # E2E tests.
   - npm run e2e:ci
 
+
 # after_success: ./scripts/ci/deploy.sh
+
 
 notifications:
   email:
