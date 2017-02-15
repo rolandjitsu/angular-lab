@@ -12,8 +12,8 @@
 	ES6, TypeScript
 	HTML5, CSS3
 	Angular CLI
-	Angular 2
-	Material 2, Material Icons
+	Angular, CoreJS
+	Material 2, HammerJS, Material Icons
 	Firebase
 	NPM, Yarn
 	Protractor, Karma, Jasmine

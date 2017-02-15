@@ -1,15 +1,16 @@
-# Angular 2 Laboratory
+# Angular Lab
 
 [![Build Status](https://travis-ci.org/rolandjitsu/ng2-lab.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-lab)
 [![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-lab.svg)](https://gemnasium.com/rolandjitsu/ng2-lab)
 [![Join the chat at https://gitter.im/rolandjitsu/ng2-lab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-lab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-> Playground for experimenting with some of the core features of [Angular 2.0](https://angular.io) and integration with other software and services.
+> Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
 This setup is using:
-* [TypeScript](http://www.typescriptlang.org) - programming lang
-* [SystemJS](https://github.com/systemjs/systemjs) - the ES6 module loader used by [JSPM](http://jspm.io)
-* [Angular 2](http://angular.io/)
-* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features used by Angular 2 and this project
+* [TypeScript](http://www.typescriptlang.org)
+* [Angular](http://angular.io)
+* [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features required by Angular
+* [Material 2](https://material.angular.io)
+* [HammerJS](http://hammerjs.github.io) - adds support for touch gestures in Material 2
 
 Hosting:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
@@ -20,71 +21,58 @@ Unit/E2E tests:
 * [Jasmine](http://jasmine.github.io) - assertion lib
 
 CI/CD:
-* [Travis CI](https://travis-ci.org) - used as both continuous integration and delivery service for the app
-* [Saucelabs](https://saucelabs.com) - browser provider for running the app tests on the CI server
+* [Travis CI](https://travis-ci.org) - CI/CD
+* [Saucelabs](https://saucelabs.com) - browser provider for running tests on the CI server
 
 Tools:
-* [BrowserSync](http://browsersync.io) - used as a static webserver for local development
-* [Gulp](http://gulpjs.com) - task runner
+* [Angular CLI](https://cli.angular.io)
 
-Package/Typings manager:
-* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependencies version's
-* [Typings](https://github.com/typings/typings)
-* [NPM](https://npmjs.com)
-* [JSPM](http://jspm.io)
-
-UI:
-* [Angular 2 Material](https://github.com/angular/material2)
+Package management:
+* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependencies versions
+* [Yarn](https://yarnpkg.com/en)
 
 
 # Table of Contents
 
 * [Setup](#setup)
-* [Firebase](#firebase)
+	* [Firebase](#firebase)
 	* [Hosting](#hosting)
-* [Travis CI](#travis-ci)
+	* [Travis CI](#travis-ci)
 * [Development](#development)
 	* [Info](#info)
-	* [Running Tests](#running-tests)
-	* [Other Tasks](#other-tasks)
+	* [Run Tests](#run-tests)
+	* [Angular CLI](#angular-cli)
+* [Deployments](#deployments)
 * [Learning Material](#learning-material)
 * [Browser Support](#browser-support)
+* [Contribute](#contribute)
 * [Credits](#credits)
 
 
 ### Setup
 ---------
-Make sure you have [Node](http://nodejs.org) (*if not already installed*) then clone this repo and setup the following tools on your machine using `npm install -g <package>`:
-* [JSPM](http://jspm.io)
-* [Typings](https://github.com/typings/typings)
-* [Gulp](http://gulpjs.com/)
+Make sure you have [Node](http://nodejs.org) version `v7` (or above) installed.
 
-**Note**: All the above tools are only necessary to install globally to avoid writing `./node_modules/.bin/<command>`/`$(npm bin)/<command>` every time you want to run a command. Users running OS X or Linux based systems (soon Windows as well) could also use tools like [direnv](http://direnv.net) to expose the local npm binaries using a `.envrc` file:
-```shell
-# Node Binaries
-export PATH=$PATH:$PWD/node_modules/.bin
-```
+If you'd like to use [Yarn](https://yarnpkg.com/en), follow their [instructions](https://yarnpkg.com/en/docs/install) to install it on your platform,
+otherwise make sure at least [NPM 3](https://docs.npmjs.com/getting-started/installing-node#updating-npm) is installed, you can check the version with `npm --version`.
 
-After you have installed the above tools, install all runtime/dev dependencies by running:
+Follow the instructions for setting up the app:
 
-```shell
-$(node bin)/npm install
-$(npm bin)/typings install
-$(npm bin)/jspm install
-```
+1. Clone the repository: `git clone https://github.com/rolandjitsu/ng2-lab.git`;
+2. From the root of the project, install dependencies: `npm install`; 
 
-**Note**: If you change any of the deps (remove/add) in either `package.json` or `typings.json`, make sure that you run the above commands again.
+**NOTE**: Keep in mind that every package that was installed has to be invoked with either `$(npm bin)/<package>` or `node_modules/.bin/<package>`.
+Or if you want to avoid writing all of that every time:
 
-Now start the webserver and the app will open in your default browser:
+1. Install [direnv](http://direnv.net);
+2. Setup `.envrc` (just a file) with `export PATH=$PATH:$PWD/node_modules/.bin`;
+3. Run `direnv allow` at the root of the project where `.envrc` resides.
 
-```shell
-$(node bin)/npm start # `$(npm bin)/gulp serve`
-```
+Now you can simply run `<package>`.
 
 
-### Firebase
-------------
-#### Hosting
+#### Firebase
+##### Hosting
 
 If you want to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart), then you have to do a few things in order to make it work.
 
@@ -108,48 +96,50 @@ $(npm bin)/gulp deploy --token <your firebase token>
 
 Also, you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build yet.
 
+#### Travis CI
+If you plan on using this setup with your own projects and you wish to setup Travis CI,
+then you must make sure of a couple of things in order to have everything working properly on the CI:
 
-### Travis CI
--------------
-If you plan on using this setup with your own projects and you wish to setup Travis CI, then you must make sure of a couple of things in order to have everything working properly on the CI:
-
-1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci` so that your deployments to firebase will work. If you do not use Firebase, skip this step. You may want to encrypt the token if the source code is public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it.
-2. In case you use SauceLabs, set the env var `SAUCE_USERNAME` to your own username and create a new env variable `SAUCE_ACCESS_KEY` containing the access key you can get from the SauceLabs dashboard (read more about setting up SauceLabs with Travis [here](https://docs.travis-ci.com/user/sauce-connect/)).
+1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci` so that your deployments to firebase will work. If you do not use Firebase, skip this step. You may want to encrypt the token if the source code is public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it;
+2. In case you use SauceLabs, see these [instructions](https://docs.travis-ci.com/user/sauce-connect) and replace the appropriate things in `.travis.yml`;
 3. If you do not use the deployment to Firebase, remove that step from `.travis.yml`.
 
-Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account. So I suggest you start out with a clean project and start git from scratch (`git init`), then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
+Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account.
+So I suggest you start out with a clean project and start git from scratch (`git init`),
+then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
 
 
 ### Development
 ---------------
-Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app (or starting your own and use this as a guideline).
+All you need to get started is `npm start`.
+Now you should see the app running in the browser.
+
+Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app.
 
 #### Info
+[Angular CLI](https://cli.angular.io) is used to handle every aspect of the development of the app (e.g. building, testing, etc.).
+To get started, `npm start` will start a static webserver, rerun builds on file changes (styles, scripts, etc.), and reload the browser after builds are done.
 
-During development, when running the app in the browser, all TS is being compiled offline. To get started use `$(npm bin)/gulp serve` which will start a static webserver and rerun builds on file changes.
+Unit tests run the same way, whenever there is a change the tests will rerun on the new code. For further info about tests read below.
 
-Unit tests run the same way, so there is no need to rerun builds when a spec or source file is changed. For further info about unit tests read below.
-
-E2E tests specs need no compilation as you will be writing them in ES6.
-
-#### Running Tests
-
+#### Run Tests
 Tests can be run selectively as it follows:
 
-* `$(npm bin)/gulp lint`: runs [tslint](http://palantir.github.io/tslint/) and checks all `.ts` files according to the `tslint.json` rules file
-* `$(npm bin)/gulp test/unit:continuous`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated)
-* `$(npm bin)/gulp test/unit:single`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes
-* `$(npm bin)/gulp test/e2e:local`: e2e tests in a browser; runs in single run mode
+* `npm run lint`/`$(npm bin)/ng lint`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
+* `npm run test`/`$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
+* `$(npm bin)/ng test --single-run`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes;
+* `$(npm bin)/ng e2e`: e2e tests in a browser.
 
-And if you have a Saucelabs account, you can also run unit tests on some of the SL browsers provided in `browsers.config.js`. Just call `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox, iOS9` (and whatever other browsers you wish) and make sure that you have the `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env variables set. You can also pass the two env variables as options if you prefer it: `$(npm bin)/gulp test/unit:sauce --browsers=Chrome, Firefox --username=<your sauce username> --acessKey=<you sauce access key>`.
+#### Angular CLI
+In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:staging`/`npm run build:production` if the build is for staging, production respectively).
 
-#### Other Tasks
+To see what other commands are available, run `$(npm bin)/ng help`.
 
-If you just want to build everything, run `$(npm bin)/gulp build`.
 
-And if you want to deploy the app to Firebase (security rules and app files), use `$(npm bin)/gulp deploy`. Just make sure you provide the auth token either as an env variable (`FIREBASE_TOKEN`) or as an option (`--token`).
-
-And of course to see what other tasks are available, run `$(npm bin)/gulp --tasks`.
+### Deployments
+---------------
+Deployments are handled by [Travis CI](https://travis-ci.org).
+Pushing to the `production`/`staging` branch will automatically deploy the app, given that all tests pass.
 
 
 ### Learning Material
@@ -157,20 +147,33 @@ And of course to see what other tasks are available, run `$(npm bin)/gulp --task
 * [Angular 2 Education](https://github.com/timjacobi/angular2-education)
 * [Awesome Angular 2](https://github.com/angular-class/awesome-angular2)
 * [Angular Docs](https://angular.io)
+* [Material 2 Docs](https://material.angular.io/guide/getting-started)
+* [Google Material](http://material.io)
+* [Thoughtram](https://blog.thoughtram.io/exploring-angular-2)
+* [Egghead](https://egghead.io/technologies/angular2)
 
 
 ### Browser Support
 -------------------
-You can expect the app to run wherever Angular 2 does (see table below).
+You can expect the app to run wherever Angular does (see table below).
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/angular2-ci.svg)](https://saucelabs.com/u/angular2-ci)
 
 
+### Contribute
+--------------
+If you wish to contribute, please use the following guidelines:
+* Use [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md) when committing changes
+* Follow [Angular Styleguide](https://angular.io/styleguide)
+* Use `npm run lint` to fix any TS warnings/errors before you check in anything:
+	* It will run [TSLint](http://palantir.github.io/tslint) to check for any inconsistencies
+	* It will check against Angular styleguide using [codelyzer](https://www.npmjs.com/package/codelyzer)
+* Use `[ci skip]` in commit messages to skip a build (e.g. when making docs changes)
+
+
 ### Credits
 -----------
-In the making of this simple app, I have made use of whatever resources I could find out there, thus, it's worth mentioning that the following projects have served as inspiration and help:
+In the making of this simple app, I have made use of whatever resources I could find out there,
+thus, it's worth mentioning that the following projects have served as inspiration and help:
 
 * [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
-* [angular2-webpack-starter](https://github.com/angular-class/angular2-webpack-starter)
-* [angular2-authentication-sample](https://github.com/auth0/angular2-authentication-sample)
-* [ng2do](https://github.com/davideast/ng2do)
