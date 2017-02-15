@@ -4,13 +4,23 @@
 /* global jasmine */
 const SpecReporter = require('jasmine-spec-reporter');
 
+const config = {};
 
-exports.config = {
-	allScriptsTimeout: 11000,
-	specs: [
-		'./e2e/**/*.e2e-spec.ts'
-	],
-	capabilities: {
+const argv = require('yargs')
+	.wrap(null)
+	.usage('Angular Lab E2E test options. Usage: $0 --browsers CHROME_DESKTOP')
+	.options({
+		browsers: {
+			describe: 'Comma separated list of preconfigured browsers to use.',
+			default: 'CHROME_DESKTOP',
+			type: 'string'
+		}
+	})
+	.help('help')
+	.argv;
+
+const capabilities = {
+	CHROME_DESKTOP: {
 		browserName: 'chrome',
 		chromeOptions: {
 			'args': ['--js-flags=--expose-gc'],
@@ -22,7 +32,40 @@ exports.config = {
 			performance: 'ALL',
 			browser: 'ALL'
 		}
-	},
+	}
+};
+
+
+// On Travis we use Saucelabs browsers.
+if (process.env.TRAVIS) {
+	Object.keys(capabilities)
+		.forEach((key) => {
+			capabilities[key].build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
+			capabilities[key]['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
+			capabilities[key].name = 'E2E - Angular Lab';
+		});
+
+	config.sauceUser = process.env.SAUCE_USERNAME;
+	config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+}
+
+
+exports.config = Object.assign(config, {
+	allScriptsTimeout: 11000,
+	specs: [
+		'./e2e/**/*.e2e-spec.ts'
+	],
+	multiCapabilities: argv.browsers
+		.split(',')
+		.map((browser) => {
+			const caps = capabilities[browser];
+			console.log(`Testing against: ${browser}`);
+
+			if (!caps) {
+				throw new Error(`There is no browser with name "${browser};" configured.`);
+			}
+		return caps;
+	}),
 	directConnect: true,
 	baseUrl: `http://localhost:4200/`,
 	framework: 'jasmine',
@@ -42,9 +85,10 @@ exports.config = {
 		require('jasmine-expect');
 	},
 	beforeLaunch: function () {
-		require('ts-node').register({
-			project: 'e2e'
-		});
+		require('ts-node')
+			.register({
+				project: 'e2e'
+			});
 	},
 	plugins: [
 		{
@@ -63,4 +107,4 @@ exports.config = {
 			]
 		}
 	]
-};
+});
