@@ -98,7 +98,7 @@ Also, you need to build the app using `$(npm bin)/gulp build` before any deploym
 
 #### Travis CI
 If you plan on using this setup with your own projects and you wish to setup Travis CI,
-then you must make sure of a couple of things in order to have everything working properly on the CI:
+then you must make sure of a few of things in order to have everything working properly on the CI:
 
 1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci` so that your deployments to firebase will work. If you do not use Firebase, skip this step. You may want to encrypt the token if the source code is public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it;
 2. In case you use SauceLabs, see these [instructions](https://docs.travis-ci.com/user/sauce-connect) and replace the appropriate things in `.travis.yml`;
