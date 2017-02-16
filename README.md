@@ -1,7 +1,7 @@
 # Angular Lab
 
 [![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://github.com/rolandjitsu/ng2-lab.git)
-[![Dependency Status](https://img.shields.io/gemnasium/mathiasbynens/he.svg?style=flat-square)](https://gemnasium.com/rolandjitsu/ng2-lab)
+[![Dependency Status](https://img.shields.io/gemnasium/mathiasbynens/he.svg?style=flat-square)](https://gemnasium.com/github.com/rolandjitsu/ng2-lab)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/ng2-lab)
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
