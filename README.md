@@ -13,7 +13,7 @@ This setup is using:
 * [Angular Flex Layout](https://github.com/angular/flex-layout)
 * [Material 2](https://material.angular.io)
 
-Hosting:
+PaaS:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
 
 Unit/E2E tests:
