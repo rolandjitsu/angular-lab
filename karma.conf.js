@@ -11,7 +11,6 @@ const sauceLabs = {
 	recordVideo: false,
 	recordScreenshots: false,
 	options:  {
-		'selenium-version': '2.53.1',
 		'command-timeout': 600,
 		'idle-timeout': 600,
 		'max-duration': 5400
