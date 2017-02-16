@@ -159,7 +159,7 @@ Pushing to the `production`/`staging` branch will automatically deploy the app, 
 
 ### Browser Support
 -------------------
-You can expect the app to run wherever Angular does (see table below).
+You can expect the app to run wherever Angular does, but check the matrix below to see where the project tests pass.
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/rolandjitsu.svg)](https://saucelabs.com/u/rolandjitsu)
 
