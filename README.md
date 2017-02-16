@@ -161,7 +161,7 @@ Pushing to the `production`/`staging` branch will automatically deploy the app, 
 -------------------
 You can expect the app to run wherever Angular does (see table below).
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/angular2-ci.svg)](https://saucelabs.com/u/angular2-ci)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/rolandjitsu.svg)](https://saucelabs.com/u/rolandjitsu)
 
 
 ### Contribute
