@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 
 import {IssService} from './shared/iss.service';
-import {PoolingService} from './shared/pooling.service';
 import {IssComponent} from './iss.component';
 import {AstronautsComponent} from './astronauts/astronauts.component';
 import {LocationComponent} from './location/location.component';
@@ -27,8 +26,7 @@ const ENTRY_COMPONENTS = [
 	declarations: [...ENTRY_COMPONENTS],
 	entryComponents: [...ENTRY_COMPONENTS],
 	providers: [
-		IssService,
-		PoolingService
+		IssService
 	]
 })
 export class IssModule {}

@@ -15,7 +15,7 @@ import 'rxjs/add/operator/switchMapTo';
 import {visible} from '../../shared/animations';
 import {MapboxMap, LngLat} from '../../shared/mapbox';
 import {MapboxService} from '../../shared/map.service';
-import {PoolingService} from '../shared/pooling.service';
+import {PoolingService} from '../../shared/pooling.service';
 import {IssService} from '../shared/iss.service';
 import {IssPosition} from '../shared/position';
 
@@ -40,6 +40,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 
 	constructor(private iss: IssService, private map: MapboxService, private pooling: PoolingService) {}
 
+	// tslint:disable: no-magic-numbers
 	ngOnInit(): void {
 		this.mapbox = this.map.create(this.mapRef.nativeElement);
 		const position = this.pooling.execute(() => this.iss.position(), 1500)
@@ -68,9 +69,8 @@ export class LocationComponent implements OnInit, OnDestroy {
 					const [longitude, latitude] = position.coordinates;
 
 					map.flyTo({
-						zoom: 4,
 						center: new LngLat(longitude, latitude),
-						pitch: 0,
+						zoom: 4
 					});
 				})
 		]);

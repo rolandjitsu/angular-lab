@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import 'rxjs/add/operator/map';
 
 import {visible} from '../../shared/animations';
 import {Astronaut, IssService} from '../shared/iss.service';
@@ -19,10 +18,10 @@ import {Astronaut, IssService} from '../shared/iss.service';
 	]
 })
 export class AstronautsComponent implements OnInit {
+	isLoading = true;
+
 	private peopleSource: BehaviorSubject<Astronaut[]> = new BehaviorSubject<Astronaut[]>([]);
 	people: Observable<Astronaut[]> = this.peopleSource.asObservable(); // tslint:disable-line:member-ordering
-
-	isLoading = true;
 
 	constructor(private iss: IssService) {}
 
@@ -32,7 +31,6 @@ export class AstronautsComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.iss.astronauts()
-			.map(({people}) => people)
 			.subscribe((people) => {
 				this.peopleSource.next(people);
 				this.isLoading = false;

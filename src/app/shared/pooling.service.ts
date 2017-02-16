@@ -8,6 +8,6 @@ import 'rxjs/add/operator/mergeMap';
 export class PoolingService {
 	execute<T>(operation: () => Observable<T>, frequency: number = 1000): Observable<T> {
 		return Observable.interval(frequency)
-			.mergeMap(operation)
+			.mergeMap(operation);
 	}
 }

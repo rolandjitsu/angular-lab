@@ -7,6 +7,7 @@ import {MaterialModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {MapboxService} from './map.service';
+import {PoolingService} from './pooling.service';
 import {ViewTitleComponent} from './view-title/view-title.component';
 
 
@@ -29,7 +30,8 @@ const SHARED_ENTRY_COMPONENTS = [];
 const SHARED_DIRECTIVES = [];
 const SHARED_PIPES = [];
 const SHARED_PROVIDERS = [
-	MapboxService
+	MapboxService,
+	PoolingService
 ];
 
 

@@ -12,6 +12,7 @@ export class MapboxMap {
 	constructor(private readonly map: mapboxgl.Map) {}
 
 	// More details at https://www.mapbox.com/mapbox-gl-js/example/animate-point-along-line.
+	// tslint:disable: no-magic-numbers
 	addPoint(coordinates: GeoJSON.Position, paint: mapboxgl.CirclePaint): any {
 		const id = Math.random()
 			.toString(36)

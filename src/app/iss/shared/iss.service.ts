@@ -31,16 +31,10 @@ export class IssService {
 			.share();
 	}
 
-	astronauts(): Observable<{
-		people: Astronaut[],
-		number: number
-	}> {
+	astronauts(): Observable<Astronaut[]> {
 		return this.http.get('http://api.open-notify.org/astros.json')
 			.map((response) => response.json())
-			.map(({people, number}) => ({
-				people,
-				number
-			}))
+			.map(({people}) => people)
 			.share();
 	}
 }
