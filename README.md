@@ -1,8 +1,8 @@
 # Angular Lab
 
-[![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://travis-ci.org/rolandjitsu/ng2-lab)
-[![Dependency Status](https://david-dm.org/rolandjitsu/ng2-lab.svg?style=flat-square)](https://github.com/rolandjitsu/ng2-lab)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/ng2-lab)
+[![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://travis-ci.org/rolandjitsu/angular-lab)
+[![Dependency Status](https://david-dm.org/rolandjitsu/angular-lab.svg?style=flat-square)](https://github.com/rolandjitsu/angular-lab)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/angular-lab)
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
 This setup is using:
@@ -59,7 +59,7 @@ otherwise make sure at least [NPM 3](https://docs.npmjs.com/getting-started/inst
 
 Follow the instructions for setting up the app:
 
-1. Clone the repository: `git clone https://github.com/rolandjitsu/ng2-lab.git`;
+1. Clone the repository: `git clone https://github.com/rolandjitsu/angular-lab.git`;
 2. From the root of the project, install dependencies: `yarn`/`npm install`; 
 
 **NOTE**: Keep in mind that every package that was installed has to be invoked with either `$(npm bin)/<package>` or `node_modules/.bin/<package>`.
