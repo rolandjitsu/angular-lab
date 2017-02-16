@@ -17,7 +17,8 @@ const ANGULAR_SHARED_MODULES = [
 	ReactiveFormsModule,
 	RouterModule,
 	FlexLayoutModule,
-	HttpModule
+	HttpModule,
+	MaterialModule
 ];
 
 
@@ -44,8 +45,6 @@ const SHARED_PROVIDERS = [
 	imports: [
 		// Angular
 		...ANGULAR_SHARED_MODULES,
-		// Material
-		MaterialModule.forRoot(),
 		// App
 		...SHARED_MODULES
 	],
@@ -66,8 +65,6 @@ const SHARED_PROVIDERS = [
 	exports: [
 		// Angular
 		...ANGULAR_SHARED_MODULES,
-		// Material
-		MaterialModule,
 		// App
 		...SHARED_MODULES,
 		...SHARED_DIRECTIVES,

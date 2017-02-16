@@ -4,10 +4,10 @@
 
 // Include the base styles for Angular Material core.
 // We include this here so that you only have to load a single css file for Angular Material in your app.
-@include md-core();
+@include mat-core();
 
 // Create the theme object.
-$lab-theme: md-light-theme($lab-primary-palette, $lab-accent-palette, $lab-warn-palette);
+$lab-theme: mat-light-theme($lab-primary-palette, $lab-accent-palette, $lab-warn-palette);
 
 // Include theme styles for core and each component used in your app.
 @include angular-material-theme($lab-theme);

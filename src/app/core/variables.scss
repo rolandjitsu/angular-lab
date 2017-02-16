@@ -4,16 +4,16 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss (imported above).
 // For each palette, you can optionally specify a default, lighter, and darker hue.
 // Primary palette
-$lab-primary-palette: md-palette($md-light-blue);
+$lab-primary-palette: mat-palette($mat-light-blue);
 // Use this for highlighting secondary actions.
-$lab-accent-palette: md-palette($md-pink);
+$lab-accent-palette: mat-palette($mat-pink);
 // Use this for highlighting errors or such.
-$lab-warn-palette: md-palette($md-red);
+$lab-warn-palette: mat-palette($mat-red);
 
 
 // Define some colors for reusability
-$lab-background-color: map_get($md-light-theme-background, background);
+$lab-background-color: map_get($mat-light-theme-background, background);
 
-$lab-primary-color: md-color($lab-primary-palette);
-$lab-accent-color: md-color($lab-accent-palette);
-$lab-warn-color: md-color($lab-warn-palette);
+$lab-primary-color: mat-color($lab-primary-palette);
+$lab-accent-color: mat-color($lab-accent-palette);
+$lab-warn-color: mat-color($lab-warn-palette);
