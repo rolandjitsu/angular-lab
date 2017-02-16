@@ -94,14 +94,14 @@ exports.config = Object.assign(config, {
 		{
 			package: 'protractor-accessibility-plugin',
 			chromeA11YDevTools: {
-				treatWarningsAsFailures: true
+				treatWarningsAsFailures: false
 			}
 		},
 		{
 			package: 'protractor-console-plugin',
 			failOnWarning: false,
 			failOnError: true,
-			logWarnings: true,
+			logWarnings: false,
 			exclude: [
 				'info'
 			]
