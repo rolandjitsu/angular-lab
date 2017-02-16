@@ -81,7 +81,7 @@ const CUSTOM_LAUNCHERS = {
 	'SL_SAFARI10': {
 		base: 'SauceLabs',
 		browserName: 'safari',
-		platform: 'MacOS 10.12',
+		platform: 'macOS 10.12',
 		version: '10.0'
 	},
 	// IE
