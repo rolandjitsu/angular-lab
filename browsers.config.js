@@ -18,6 +18,7 @@ const SAUCE_ALIASES = {
 };
 
 // Source: https://github.com/angular/angular/blob/master/browser-providers.conf.js.
+// NOTE: For config, see https://wiki.saucelabs.com/display/DOCS/Platform+Configurator.
 const CUSTOM_LAUNCHERS = {
 	// Use Chromium preinstalled with Travis VM
 	// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
