@@ -32,7 +32,7 @@
 		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11 --single-run",
 		"wd:update": "webdriver-manager update --standalone false --gecko false",
 		"e2e": "npm run wd:update && ng e2e",
-		"e2e:ci": "npm run wd:update && ng e2e --no-progress --browsers SL_CHROME"
+		"e2e:ci": "npm run wd:update && ng e2e --no-progress --target=production --environment=prod --browsers SL_CHROME"
 	},
 	"dependencies": {
 		"@angular/common": "^2.4.7",
