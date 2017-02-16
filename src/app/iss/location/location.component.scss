@@ -1,0 +1,4 @@
+@import "../../core/mixins";
+:host {
+	@include fullscreen;
+}

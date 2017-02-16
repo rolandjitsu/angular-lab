@@ -5,3 +5,8 @@
 	width: $size;
 	height: $size;
 }
+
+@mixin fullscreen() {
+	display: flex;
+	flex: 1;
+}

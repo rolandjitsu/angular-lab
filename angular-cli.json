@@ -19,6 +19,7 @@
 			"tsconfig": "tsconfig.json",
 			"prefix": "app",
 			"styles": [
+				"../node_modules/mapbox-gl/dist/mapbox-gl.css",
 				"main.scss"
 			],
 			"scripts": [

@@ -1,0 +1,38 @@
+<md-sidenav-container fxFlexFill>
+	<md-sidenav [mode]="mode" #sidenav>
+		<md-toolbar color="primary">
+			<button md-icon-button routerLink="/" margin-right>
+				<md-icon>home</md-icon>
+			</button>
+			Angular Lab
+		</md-toolbar>
+
+		<md-nav-list>
+			<h3 md-subheader>ISS</h3>
+			<a md-list-item (click)="navigate(['/iss/astronauts'])">
+				<md-icon md-list-icon>people</md-icon>
+				<span md-line>Astronauts</span>
+			</a>
+			<a md-list-item (click)="navigate(['/iss/location'])">
+				<md-icon md-list-icon>location_searching</md-icon>
+				<span md-line>Location</span>
+			</a>
+		</md-nav-list>
+	</md-sidenav>
+
+	<div fxLayout="column" fxFlexFill>
+		<md-toolbar color="primary">
+			<button *ngIf="showMenuButton"
+					(click)="toggleSidenav()"
+					md-icon-button
+					margin-right>
+				<md-icon>menu</md-icon>
+			</button>
+			<rj-view-title></rj-view-title>
+		</md-toolbar>
+
+		<div fxLayout="column" fxFlex>
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</md-sidenav-container>

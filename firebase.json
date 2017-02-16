@@ -3,41 +3,23 @@
 		"rules": "./rules.json"
 	},
 	"hosting": {
-		"public": "dist",
-		"headers": [
-			{
-				"source": "**/*.@(js|html|css|map)",
-				"headers": [
-					{
-						"key": "Cache-Control",
-						"value": "max-age=0"
-					}
-				]
-			}
-		],
+		"public": "./dist",
 		"ignore": [
 			"./e2e",
-			"./jspm_packages",
 			"./node_modules",
 			"./scripts",
 			"./src",
-			"./test",
-			"./typings",
 			"./.*",
-			"browsers.config.js",
-			"bs.config.js",
+			"angular-cli.json",
 			"firebase.json",
-			"gulpfile.js",
-			"./jspm.config.js",
-			"karma.config.ts",
+			"karma.conf.js",
 			"./LICENSE",
 			"package.json",
-			"protractor.config.js",
+			"protractor.conf.js",
 			"./README.md",
 			"rules.json",
-			"tsconfig.js",
 			"tslint.json",
-			"typings.json"
+			"yarn.lock"
 		]
 	}
 }

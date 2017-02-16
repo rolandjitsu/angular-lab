@@ -10,6 +10,7 @@ This setup is using:
 * [HammerJS](http://hammerjs.github.io) - adds support for touch gestures in Material 2
 * [TypeScript](http://www.typescriptlang.org)
 * [Angular](http://angular.io)
+* [Angular Flex Layout](https://github.com/angular/flex-layout)
 * [Material 2](https://material.angular.io)
 
 Hosting:
@@ -147,6 +148,7 @@ Pushing to the `production`/`staging` branch will automatically deploy the app, 
 * [Angular 2 Education](https://github.com/timjacobi/angular2-education)
 * [Awesome Angular 2](https://github.com/angular-class/awesome-angular2)
 * [Angular Docs](https://angular.io)
+* [Flex Layout](https://github.com/angular/flex-layout/wiki/API-Overview)
 * [Material 2 Docs](https://material.angular.io/guide/getting-started)
 * [Google Material](http://material.io)
 * [Thoughtram](https://blog.thoughtram.io/exploring-angular-2)

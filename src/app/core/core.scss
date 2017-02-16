@@ -1,0 +1,20 @@
+/* Margins */
+[margin-right] {
+	margin-right: 8px !important;
+}
+
+[margin-left] {
+	margin-left: 8px !important;
+}
+
+/* Box model */
+/* TODO(rolandjitsu): Needs to be removed if Material has these figured out */
+[padding] {
+	padding: 8px;
+}
+
+@media (min-width: 960px) {
+	[padding] {
+		padding: 16px;
+	}
+}
