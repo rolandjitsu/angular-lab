@@ -37,7 +37,7 @@ Package management:
 
 * [Setup](#setup)
 	* [Firebase](#firebase)
-	* [Hosting](#hosting)
+		* [Hosting](#hosting)
 	* [Travis CI](#travis-ci)
 * [Development](#development)
 	* [Info](#info)
