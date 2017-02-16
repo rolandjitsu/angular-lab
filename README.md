@@ -112,7 +112,7 @@ then copy over things from this project (obviously, do not include `.git` - not 
 
 ### Development
 ---------------
-All you need to get started is `npm start`.
+All you need to get started is `npm start` (or `npm start:staging`/`npm start:prod` if you need a different environment).
 Now you should see the app running in the browser.
 
 Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app.
@@ -127,9 +127,11 @@ Unit tests run the same way, whenever there is a change the tests will rerun on 
 Tests can be run selectively as it follows:
 
 * `npm run lint`/`$(npm bin)/ng lint`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
-* `npm run test`/`$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
-* `$(npm bin)/ng test --single-run`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes;
-* `$(npm bin)/ng e2e`: e2e tests in a browser.
+* `$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
+* `npm run test`/`$(npm bin)/ng test --single-run`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes;
+* `npm run test:ci`: unit tests on the CI server; same as `npm run test`, but it runs on [Saucelabs](https://saucelabs.com) browsers;
+* `npm run e2e`/`$(npm bin)/ng e2e`: e2e tests in Chrome (the latter command needs `npm run wd:update` to be run beforehand);
+* `npm run e2e:ci`: e2e tests on the CI server, in Chrome but on [Saucelabs](https://saucelabs.com) servers.
 
 #### Angular CLI
 In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:staging`/`npm run build:production` if the build is for staging, production respectively).

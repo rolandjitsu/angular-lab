@@ -1,67 +1,23 @@
-const {env} = require('gulp-util');
-
-
-function providers() {
-	let isSauce = false;
-	const rawInput = env.browsers ? env.browsers : 'CHROME_TRAVIS_CI';
-	const inputList = rawInput.replace(' ', '').split(',');
-	let outputList = [];
-	for (let i = 0; i < inputList.length; i++) {
-		const input = inputList[i];
-		if (CUSTOM_LAUNCHERS.hasOwnProperty(input)) {
-			// Non-sauce browsers case.
-			// Overrides everything,
-			// ignore other options.
-			outputList = [input];
-			isSauce = false;
-			break;
-		} else if (CUSTOM_LAUNCHERS.hasOwnProperty(`SL_${input.toUpperCase()}`)) {
-			isSauce = true;
-			outputList.push(`SL_${input.toUpperCase()}`);
-		} else if (SAUCE_ALIASES.hasOwnProperty(input.toUpperCase())) {
-			outputList = outputList.concat(SAUCE_ALIASES[input]);
-			isSauce = true;
-		} else {
-			throw new Error('Browser name(s) passed as option could not be found in CUSTOM_LAUNCHERS. Check available browsers in "browsers.config.js".');
-		}
-	}
-	return {
-		browsers: outputList.filter((item, pos, self) => self.indexOf(item) == pos),
-		isSauce: isSauce
-	}
-}
-
-
 const SAUCE_ALIASES = {
-	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE9', 'SL_IE10', 'SL_IE11', 'SL_EDGE', 'SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
-	'MOBILE': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5', 'SL_IOS7', 'SL_IOS8', 'SL_IOS9'],
+	'DESKTOP': ['SL_CHROME', 'SL_FIREFOX', 'SL_IE9', 'SL_IE10', 'SL_IE11', 'SL_EDGE', 'SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9', 'SL_SAFARI10'],
+	'MOBILE': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5', 'SL_IOS7', 'SL_IOS8', 'SL_IOS9', 'SL_IOS10'],
 	'ANDROID': ['SL_ANDROID4.1', 'SL_ANDROID4.2', 'SL_ANDROID4.3', 'SL_ANDROID4.4', 'SL_ANDROID5'],
-	'IE': ['SL_IE9', 'SL_IE10', 'SL_IE11'],
-	'IOS': ['SL_IOS7', 'SL_IOS8', 'SL_IOS9'],
-	'SAFARI': ['SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9'],
+	'IE': ['SL_IE9', 'SL_IE10', 'SL_IE11', 'SL_EDGE'],
+	'IOS': ['SL_IOS7', 'SL_IOS8', 'SL_IOS9', 'SL_IOS10'],
+	'SAFARI': ['SL_SAFARI7', 'SL_SAFARI8', 'SL_SAFARI9', 'SL_SAFARI10'],
 	'BETA': ['SL_CHROMEBETA', 'SL_FIREFOXBETA'],
 	'DEV': ['SL_CHROMEDEV', 'SL_FIREFOXDEV'],
 	'CI': [
-		'SL_CHROME'
-		// 'SL_SAFARI7',
-		// 'SL_SAFARI8',
-		// 'SL_SAFARI9',
-		// 'SL_IOS7',
-		// 'SL_IOS8',
-		// 'SL_IOS9',
-		// 'SL_FIREFOX',
-		// 'SL_IE9',
-		// 'SL_IE10',
-		// 'SL_IE11',
-		// 'SL_EDGE',
-		// 'SL_ANDROID4.1',
-		// 'SL_ANDROID4.2',
-		// 'SL_ANDROID4.3',
-		// 'SL_ANDROID4.4',
-		// 'SL_ANDROID5.1'
+		'SL_CHROME',
+		'SL_SAFARI10',
+		'SL_IOS10',
+		'SL_FIREFOX',
+		'SL_EDGE',
+		'SL_ANDROID5.1'
 	]
 };
 
+// Source: https://github.com/angular/angular/blob/master/browser-providers.conf.js.
 const CUSTOM_LAUNCHERS = {
 	// Use Chromium preinstalled with Travis VM
 	// http://stackoverflow.com/questions/19255976/how-to-make-travis-execute-angular-tests-on-chrome-please-set-env-variable-chr
@@ -74,7 +30,7 @@ const CUSTOM_LAUNCHERS = {
 	'SL_CHROME': {
 		base: 'SauceLabs',
 		browserName: 'chrome',
-		version: '50'
+		version: 54
 	},
 	'SL_CHROMEBETA': {
 		base: 'SauceLabs',
@@ -86,10 +42,11 @@ const CUSTOM_LAUNCHERS = {
 		browserName: 'chrome',
 		version: 'dev'
 	},
+	// Firefox
 	'SL_FIREFOX': {
 		base: 'SauceLabs',
 		browserName: 'firefox',
-		version: '45'
+		version: 50
 	},
 	'SL_FIREFOXBETA': {
 		base: 'SauceLabs',
@@ -101,17 +58,18 @@ const CUSTOM_LAUNCHERS = {
 		browserName: 'firefox',
 		version: 'dev'
 	},
+	// Safari
 	'SL_SAFARI7': {
 		base: 'SauceLabs',
 		browserName: 'safari',
 		platform: 'OS X 10.9',
-		version: '7'
+		version: '7.0'
 	},
 	'SL_SAFARI8': {
 		base: 'SauceLabs',
 		browserName: 'safari',
 		platform: 'OS X 10.10',
-		version: '8'
+		version: '8.0'
 	},
 	'SL_SAFARI9': {
 		base: 'SauceLabs',
@@ -119,6 +77,38 @@ const CUSTOM_LAUNCHERS = {
 		platform: 'OS X 10.11',
 		version: '9.0'
 	},
+	'SL_SAFARI10': {
+		base: 'SauceLabs',
+		browserName: 'safari',
+		platform: 'OS X 10.12',
+		version: '10.0'
+	},
+	// IE
+	'SL_IE9': {
+		base: 'SauceLabs',
+		browserName: 'internet explorer',
+		platform: 'Windows 2008',
+		version: 9
+	},
+	'SL_IE10': {
+		base: 'SauceLabs',
+		browserName: 'internet explorer',
+		platform: 'Windows 2012',
+		version: '10.0'
+	},
+	'SL_IE11': {
+		base: 'SauceLabs',
+		browserName: 'internet explorer',
+		platform: 'Windows 8.1',
+		version: 11
+	},
+	'SL_EDGE': {
+		base: 'SauceLabs',
+		browserName: 'MicrosoftEdge',
+		platform: 'Windows 10',
+		version: '13.10586'
+	},
+	// iOS
 	'SL_IOS7': {
 		base: 'SauceLabs',
 		browserName: 'iphone',
@@ -135,32 +125,15 @@ const CUSTOM_LAUNCHERS = {
 		base: 'SauceLabs',
 		browserName: 'iphone',
 		platform: 'OS X 10.10',
-		version: '9.1'
+		version: '9.3'
 	},
-	'SL_IE9': {
+	'SL_IOS10': {
 		base: 'SauceLabs',
-		browserName: 'internet explorer',
-		platform: 'Windows 2008',
-		version: '9'
+		browserName: 'iphone',
+		platform: 'OS X 10.10',
+		version: '10.0'
 	},
-	'SL_IE10': {
-		base: 'SauceLabs',
-		browserName: 'internet explorer',
-		platform: 'Windows 2012',
-		version: '10'
-	},
-	'SL_IE11': {
-		base: 'SauceLabs',
-		browserName: 'internet explorer',
-		platform: 'Windows 8.1',
-		version: '11'
-	},
-	'SL_EDGE': {
-		base: 'SauceLabs',
-		browserName: 'MicrosoftEdge',
-		platform: 'Windows 10',
-		version: '13.10586'
-	},
+	// Android
 	'SL_ANDROID4.1': {
 		base: 'SauceLabs',
 		browserName: 'android',
@@ -195,7 +168,6 @@ const CUSTOM_LAUNCHERS = {
 
 
 module.exports = {
-	SAUCE_ALIASES,
 	CUSTOM_LAUNCHERS,
-	providers
+	SAUCE_ALIASES
 };

@@ -109,8 +109,6 @@ Object.assign(config, {
 	]
 });
 
-console.log(config);
-
 
 module.exports = {
 	config
