@@ -52,7 +52,7 @@ if (process.env.TRAVIS) {
 
 
 Object.assign(config, {
-	allScriptsTimeout: 11000,
+	allScriptsTimeout: 120000,
 	specs: [
 		'./e2e/**/*.e2e-spec.ts'
 	],
@@ -67,12 +67,14 @@ Object.assign(config, {
 			}
 			return caps;
 		}),
-	directConnect: true,
+	// https://github.com/angular/protractor/blob/master/docs/server-setup.md#connecting-directly-to-browser-drivers
+	directConnect: !process.env.TRAVIS,
 	baseUrl: `http://localhost:4200/`,
 	framework: 'jasmine',
 	jasmineNodeOpts: {
 		showColors: true,
-		defaultTimeoutInterval: 30000,
+		showTiming: true,
+		defaultTimeoutInterval: 120000,
 		print: function () {} // Remove protractor dot reporter
 	},
 	// Special option for Angular2, to test against all Angular2 applications on the page.
