@@ -107,7 +107,7 @@ const CUSTOM_LAUNCHERS = {
 		base: 'SauceLabs',
 		browserName: 'MicrosoftEdge',
 		platform: 'Windows 10',
-		version: '13.10586'
+		version: '14.14393'
 	},
 	// iOS
 	'SL_IOS7': {
