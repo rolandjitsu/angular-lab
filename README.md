@@ -1,8 +1,8 @@
 # Angular Lab
 
-[![Build Status](https://travis-ci.org/rolandjitsu/ng2-lab.svg?branch=master)](https://travis-ci.org/rolandjitsu/ng2-lab)
-[![Dependency Status](https://gemnasium.com/rolandjitsu/ng2-lab.svg)](https://gemnasium.com/rolandjitsu/ng2-lab)
-[![Join the chat at https://gitter.im/rolandjitsu/ng2-lab](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rolandjitsu/ng2-lab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://github.com/rolandjitsu/ng2-lab.git)
+[![Dependency Status](https://img.shields.io/gemnasium/mathiasbynens/he.svg?style=flat-square)](https://gemnasium.com/rolandjitsu/ng2-lab)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/ng2-lab)
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
 This setup is using:
