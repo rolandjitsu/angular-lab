@@ -50,7 +50,7 @@ if (process.env.TRAVIS) {
 }
 
 
-exports.config = Object.assign(config, {
+Object.assign(config, {
 	allScriptsTimeout: 11000,
 	specs: [
 		'./e2e/**/*.e2e-spec.ts'
@@ -64,8 +64,8 @@ exports.config = Object.assign(config, {
 			if (!caps) {
 				throw new Error(`There is no browser with name "${browser};" configured.`);
 			}
-		return caps;
-	}),
+			return caps;
+		}),
 	directConnect: true,
 	baseUrl: `http://localhost:4200/`,
 	framework: 'jasmine',
@@ -108,3 +108,10 @@ exports.config = Object.assign(config, {
 		}
 	]
 });
+
+console.log(config);
+
+
+module.exports = {
+	config
+};
