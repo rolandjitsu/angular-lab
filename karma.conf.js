@@ -29,13 +29,14 @@ if (process.env.TRAVIS) {
 module.exports = function (config) {
 	config.set({
 		sauceLabs,
-		customLaunchers: CUSTOM_LAUNCHERS,
 		basePath: '',
+		customLaunchers: CUSTOM_LAUNCHERS,
 		frameworks: ['jasmine', '@angular/cli'],
 		plugins: [
 			require('karma-jasmine'),
 			require('karma-chrome-launcher'),
 			require('karma-phantomjs-launcher'),
+			require('karma-sauce-launcher'),
 			require('karma-coverage-istanbul-reporter'),
 			require('@angular/cli/plugins/karma')
 		],
