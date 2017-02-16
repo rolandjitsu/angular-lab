@@ -103,7 +103,8 @@ Object.assign(config, {
 		{
 			package: 'protractor-console-plugin',
 			failOnWarning: false,
-			failOnError: true,
+			// TODO: Disable this until we can run a web server without livereload
+			failOnError: false,
 			logWarnings: false,
 			exclude: [
 				'info'
