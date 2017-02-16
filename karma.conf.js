@@ -21,8 +21,6 @@ const sauceLabs = {
 if (process.env.TRAVIS) {
 	sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
 	sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
-	// TODO: remove once SauceLabs supports websockets.
-	//karmaConfig.transports = ['polling'];
 }
 
 
