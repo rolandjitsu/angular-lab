@@ -1,9 +1,10 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
-
 /* global jasmine */
 const SpecReporter = require('jasmine-spec-reporter');
 
+
+const {CUSTOM_LAUNCHERS} = require('./browsers.config.js');
 const config = {};
 
 const argv = require('yargs')
@@ -19,7 +20,7 @@ const argv = require('yargs')
 	.help('help')
 	.argv;
 
-const capabilities = {
+const capabilities = Object.assign({
 	CHROME_DESKTOP: {
 		browserName: 'chrome',
 		chromeOptions: {
@@ -33,7 +34,7 @@ const capabilities = {
 			browser: 'ALL'
 		}
 	}
-};
+}, CUSTOM_LAUNCHERS);
 
 
 // On Travis we use Saucelabs browsers.
