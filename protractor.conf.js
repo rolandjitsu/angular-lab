@@ -79,7 +79,7 @@ Object.assign(config, {
 	},
 	// Special option for Angular2, to test against all Angular2 applications on the page.
 	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
-	useAllAngular2AppRoots: true,
+	rootElement: 'rj-lab',
 	onPrepare: function () {
 		// Add jasmine spec reporter
 		jasmine.getEnv()
@@ -94,12 +94,13 @@ Object.assign(config, {
 			});
 	},
 	plugins: [
-		{
-			package: 'protractor-accessibility-plugin',
-			chromeA11YDevTools: {
-				treatWarningsAsFailures: false
-			}
-		},
+		// TODO: This is not compatible with Protractor 5 currently
+		// {
+		// 	package: 'protractor-accessibility-plugin',
+		// 	chromeA11YDevTools: {
+		// 		treatWarningsAsFailures: false
+		// 	}
+		// },
 		{
 			package: 'protractor-console-plugin',
 			failOnWarning: false,

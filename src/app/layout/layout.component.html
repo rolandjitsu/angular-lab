@@ -1,7 +1,10 @@
 <md-sidenav-container fxFlexFill>
 	<md-sidenav [mode]="mode" #sidenav>
 		<md-toolbar color="primary">
-			<button md-icon-button routerLink="/" margin-right>
+			<button md-icon-button
+					(click)="navigate(['/'])"
+					class="home-route"
+					margin-right>
 				<md-icon>home</md-icon>
 			</button>
 			Angular Lab
@@ -9,11 +12,11 @@
 
 		<md-nav-list>
 			<h3 md-subheader>ISS</h3>
-			<a md-list-item (click)="navigate(['/iss/astronauts'])">
+			<a md-list-item (click)="navigate(['/iss/astronauts'])" class="iss-astronauts-route">
 				<md-icon md-list-icon>people</md-icon>
 				<span md-line>Astronauts</span>
 			</a>
-			<a md-list-item (click)="navigate(['/iss/location'])">
+			<a md-list-item (click)="navigate(['/iss/location'])" class="iss-location-route">
 				<md-icon md-list-icon>location_searching</md-icon>
 				<span md-line>Location</span>
 			</a>

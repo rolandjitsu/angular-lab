@@ -30,9 +30,8 @@
 		"lint": "ng lint",
 		"test": "ng test --single-run",
 		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11 --single-run",
-
 		"e2e": "ng e2e",
-		"e2e:ci": "npm run wd:update && ng e2e --no-progress --target=production --environment=prod --browsers SL_CHROME"
+		"e2e:ci": "ng e2e --no-progress --target=production --environment=prod --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11"
 	},
 	"dependencies": {
 		"@angular/common": "^2.4.7",
@@ -75,14 +74,13 @@
 		"karma-phantomjs-launcher": "^1.0.2",
 		"karma-sauce-launcher": "^1.1.0",
 		"phantomjs-prebuilt": "^2.1.13",
-		"protractor": "^4.0.14",
+		"protractor": "^5.1.1",
 		"protractor-accessibility-plugin": "^0.3.0",
 		"protractor-console-plugin": "^0.1.1",
 		"ts-helpers": "^1.1.2",
 		"ts-node": "^1.7.0",
 		"tslint": "^4.4.2",
 		"typescript": "2.0.10",
-		"webdriver-manager": "^12.0.2",
 		"yargs": "^6.6.0"
 	},
 	"engines": {
