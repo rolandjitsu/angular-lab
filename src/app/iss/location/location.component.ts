@@ -9,6 +9,7 @@ import {
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/switchMapTo';
 
 import {visible} from '../../shared/animations';
@@ -42,7 +43,9 @@ export class LocationComponent implements OnInit, OnDestroy {
 	// tslint:disable: no-magic-numbers
 	ngOnInit(): void {
 		this.mapbox = this.map.create(this.mapRef.nativeElement);
-		const position = this.pooling.execute(() => this.iss.position(), 1500);
+		// NOTE: It will try to get the ISS position if it fails for 10 times before it throws.
+		const position = this.pooling.execute(() => this.iss.position()
+			.retry(10), 1500);
 
 		this.subs.push(...[
 			position.switchMapTo(this.mapbox, (...args: any[]) => args)
