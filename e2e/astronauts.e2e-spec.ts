@@ -20,5 +20,5 @@ describe('Astronauts', () => {
 					.toBeNonEmptyString();
 			});
 		});
-	})
+	});
 });
