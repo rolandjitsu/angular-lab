@@ -27,9 +27,6 @@ export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void
 @NgModule({
 	imports: [
 		BrowserModule
-	],
-	providers: [
-		ViewTitleService
 	]
 })
 export class CoreModule {
@@ -56,7 +53,8 @@ export class CoreModule {
 						ViewTitleService
 					],
 					multi: true
-				}
+				},
+				ViewTitleService
 			]
 		};
 	}
