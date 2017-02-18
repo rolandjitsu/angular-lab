@@ -1,6 +1,6 @@
 # Angular Lab
 
-[![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)](https://travis-ci.org/rolandjitsu/angular-lab)
+[![Build Status](https://img.shields.io/travis/rolandjitsu/angular-lab.svg?style=flat-square)](https://travis-ci.org/rolandjitsu/angular-lab)
 [![Dependency Status](https://david-dm.org/rolandjitsu/angular-lab.svg?style=flat-square)](https://github.com/rolandjitsu/angular-lab)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/angular-lab)
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
