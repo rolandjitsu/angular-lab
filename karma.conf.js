@@ -31,12 +31,17 @@ module.exports = function (config) {
 		frameworks: ['jasmine', '@angular/cli'],
 		plugins: [
 			require('karma-jasmine'),
+			require('karma-jasmine-html-reporter'),
 			require('karma-chrome-launcher'),
 			require('karma-phantomjs-launcher'),
 			require('karma-sauce-launcher'),
 			require('karma-coverage-istanbul-reporter'),
 			require('@angular/cli/plugins/karma')
 		],
+		client:{
+			// Leave Jasmine Spec Runner output visible in browser.
+			clearContext: false
+		},
 		files: [
 			{pattern: './src/test.ts', watched: false}
 		],
@@ -51,10 +56,10 @@ module.exports = function (config) {
 			fixWebpackSourcePaths: true
 		},
 		angularCli: {
-			config: './angular-cli.json',
+			config: './.angular-cli.json',
 			environment: 'dev'
 		},
-		reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress'],
+		reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'],
 		port: 9876,
 		colors: true,
 		logLevel: config.LOG_INFO,

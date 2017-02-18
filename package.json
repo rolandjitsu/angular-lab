@@ -27,11 +27,11 @@
 		"build": "ng build --sourcemaps --output-hashing=bundles",
 		"build:staging": "ng build --target=production --environment=staging --sourcemaps --output-hashing=bundles --no-progress",
 		"build:prod": "ng build --target=production --environment=prod --output-hashing=bundles --no-progress",
-		"lint": "ng lint",
+		"lint": "ng lint --format stylish",
 		"test": "ng test --single-run",
 		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11 --single-run",
-		"e2e": "ng e2e",
-		"e2e:ci": "ng e2e --no-progress --target=production --environment=prod --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11"
+		"e2e": "ng e2e --no-watch",
+		"e2e:ci": "ng e2e --no-progress --no-watch --target=production --environment=prod --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IE11"
 	},
 	"dependencies": {
 		"@angular/common": "^2.4.7",
@@ -71,6 +71,7 @@
 		"karma-cli": "^1.0.1",
 		"karma-coverage-istanbul-reporter": "^0.2.0",
 		"karma-jasmine": "^1.1.0",
+		"karma-jasmine-html-reporter": "^0.2.2",
 		"karma-phantomjs-launcher": "^1.0.2",
 		"karma-sauce-launcher": "^1.1.0",
 		"phantomjs-prebuilt": "^2.1.13",
