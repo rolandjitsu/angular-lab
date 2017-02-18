@@ -18,7 +18,7 @@ describe('PoolingService', () => {
 	});
 
 	describe('execute()', () => {
-		it('should execute the operation every n seconds', async(inject([PoolingService], (pooling: PoolingService) => {
+		it('should execute the operation every n ms', async(inject([PoolingService], (pooling: PoolingService) => {
 			const spy = jasmine.createSpy('count');
 
 			const operation: () => Observable<any> = () => {
