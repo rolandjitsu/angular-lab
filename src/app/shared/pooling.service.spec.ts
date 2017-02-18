@@ -4,7 +4,7 @@ import {Observer} from 'rxjs/Observer';
 import {TestScheduler} from 'rxjs/testing/TestScheduler';
 import {PoolingService} from './pooling.service';
 
-
+// tslint:disable: no-magic-numbers
 describe('PoolingService', () => {
 	let scheduler: TestScheduler;
 
@@ -21,12 +21,10 @@ describe('PoolingService', () => {
 		it('should execute the operation every n ms', async(inject([PoolingService], (pooling: PoolingService) => {
 			const spy = jasmine.createSpy('count');
 
-			const operation: () => Observable<any> = () => {
-				return Observable.create((observer: Observer<any>) => {
-					observer.next(true);
-					spy();
-				})
-			};
+			const operation: () => Observable<any> = () => Observable.create((observer: Observer<any>) => {
+				observer.next(true);
+				spy();
+			});
 
 			pooling.execute(() => operation(), 1000, scheduler)
 				.subscribe(() => {});
