@@ -1,6 +1,6 @@
 import {browser, by, element} from 'protractor';
 
-export class HomePage {
+export class LayoutPage {
 	navigation = {
 		home: element(by.deepCss('.home-route')),
 		astronauts: element(by.deepCss('.iss-astronauts-route')),
