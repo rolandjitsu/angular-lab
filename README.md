@@ -60,7 +60,7 @@ otherwise make sure at least [NPM 3](https://docs.npmjs.com/getting-started/inst
 Follow the instructions for setting up the app:
 
 1. Clone the repository: `git clone https://github.com/rolandjitsu/angular-lab.git`;
-2. From the root of the project, install dependencies: `yarn`/`npm install`; 
+2. From the root of the project, install dependencies: `yarn install`/`npm install`; 
 
 **NOTE**: Keep in mind that every package that was installed has to be invoked with either `$(npm bin)/<package>` or `node_modules/.bin/<package>`.
 Or if you want to avoid writing all of that every time:
@@ -113,7 +113,7 @@ then copy over things from this project (obviously, do not include `.git` - not 
 ### Development
 ---------------
 All you need to get started is `npm start` (or `npm start:staging`/`npm start:prod` if you need a different environment).
-Now you should see the app running in the browser.
+Now you should see the app running in the browser (might take a while when compiling the first time).
 
 Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app.
 
@@ -130,11 +130,11 @@ Tests can be run selectively as it follows:
 * `$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
 * `npm run test`/`$(npm bin)/ng test --single-run`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes;
 * `npm run test:ci`: unit tests on the CI server; same as `npm run test`, but it runs on [Saucelabs](https://saucelabs.com) browsers;
-* `npm run e2e`/`$(npm bin)/ng e2e`: e2e tests in Chrome (the latter command needs `npm run wd:update` to be run beforehand);
+* `npm run e2e`/`$(npm bin)/ng e2e`: e2e tests in Chrome;
 * `npm run e2e:ci`: e2e tests on the CI server, in Chrome but on [Saucelabs](https://saucelabs.com) servers.
 
 #### Angular CLI
-In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:staging`/`npm run build:production` if the build is for staging, production respectively).
+In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:staging`/`npm run build:prod` if the build is for staging, production respectively).
 
 To see what other commands are available, run `$(npm bin)/ng help`.
 
