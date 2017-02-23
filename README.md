@@ -79,7 +79,8 @@ In order to use your own Firebase account for [hosting](https://firebase.google.
 1. Make sure that you ran `$(node bin)/npm install` so that [firebase-tools](https://github.com/firebase/firebase-tools) is installed.
 Now run `$(npm bin)/firebase login:ci` to get an auth token (follow the steps you are given by the command);
 2. Copy the token that was echoed in the terminal and put it somewhere safe for further usage;
-3. Alternatively, export the token (`export FIREBASE_TOKEN=<your Firebase token here>`).
+3. Alternatively, export the token (`export FIREBASE_TOKEN=<your Firebase token here>`);
+4. Replace `angular-lab-da3a7` with your own Firebase project id in `.firebaserc`.
 
 Given that you have `FIREBASE_TOKEN` exported as env var, you can deploy the app to your own Firebase account with:
 ```shell
