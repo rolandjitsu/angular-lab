@@ -96,19 +96,21 @@ If you plan on using this setup with your own projects and you wish to setup Tra
 you must make sure of a few of things in order to have everything working properly on the CI:
 
 1. For deployments, setup the env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci`:
-	a. Encrypt the token using `travis encrypt FIREBASE_TOKEN=<your Firebase token>`, see [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to find out more about it;
-	b. Replace the `secure` key's value, where the Firebase token is in `.travis.yml`, with your own encrypted string generated from the previous step;
+	- Encrypt the token using `travis encrypt FIREBASE_TOKEN=<your Firebase token>`, see [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to find out more about it;
+	- Replace the `secure` key's value, where the Firebase token is in `.travis.yml`, with your own encrypted string generated from the previous step;
 2. For tests that run on Saucelabs, setup the env variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`:
-	a. Replace `SAUCE_USERNAME` with your own username (no need to encrypt);
-	b. Encrypt the access key `SAUCE_ACCESS_KEY` using `travis encrypt SAUCE_ACCESS_KEY=<your Saucelabs access key>`;
-	c. Replace the `secure` key's value with the string generated from the previous step (it's right below `SAUCE_USERNAME` in `.travis.yml`);
+	- Replace `SAUCE_USERNAME` with your own username (no need to encrypt);
+	- Encrypt the access key `SAUCE_ACCESS_KEY` using `travis encrypt SAUCE_ACCESS_KEY=<your Saucelabs access key>`;
+	- Replace the `secure` key's value with the string generated from the previous step (it's right below `SAUCE_USERNAME` in `.travis.yml`);
 3. Remove the `webhooks` section from `notifications` in `.travis.yml`.
 
-If you don't want to deploy to Firebase on push, remove the `after_success: npm run deploy:ci` step and the encrypted `FIREBASE_TOKEN` env var from `.travis.yml`, and skip the 1st step in the instructions above.
+If you don't want to deploy to Firebase on push skip the 1st step in the instructions above and remove the following in `.travis.yml`:
+* `after_success: npm run deploy:ci` step;
+* Encrypted `FIREBASE_TOKEN` env var.
 
 If you don't use Saucelabs, skip the 2nd step and remove the following in `.travis.yml`;
 * `sauce_connect` section from `addons`;
-* Env var `SAUCE_USERNAME` and encrypted `SAUCE_ACCESS_KEY` access key.
+* `SAUCE_USERNAME` and encrypted `SAUCE_ACCESS_KEY` env vars.
 
 Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you wish to set it up with your own account.
 So I suggest you start out with a clean project and start git from scratch (`git init`),
