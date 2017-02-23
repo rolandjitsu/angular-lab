@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# Only make deployments from the master,
+# PRs will not be deployed.
 if [[ "${TRAVIS_PULL_REQUEST}" == "false" ]] && [[ "${TRAVIS_BRANCH}" == "master" ]]; then
-	$(npm bin)/gulp deploy
+	$(npm bin)/firebase deploy --token ${FIREBASE_TOKEN}
 fi

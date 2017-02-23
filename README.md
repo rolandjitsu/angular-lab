@@ -74,45 +74,50 @@ Now you can simply run `<package>`.
 
 #### Firebase
 ##### Hosting
+In order to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart) the app, follow the instructions below:
 
-If you want to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart), then you have to do a few things in order to make it work.
+1. Make sure that you ran `$(node bin)/npm install` so that [firebase-tools](https://github.com/firebase/firebase-tools) is installed.
+Now run `$(npm bin)/firebase login:ci` to get an auth token (follow the steps you are given by the command);
+2. Copy the token that was echoed in the terminal and put it somewhere safe for further usage;
+3. Alternatively, export the token (`export FIREBASE_TOKEN=<your Firebase token here>`).
 
-First make sure that you have ran `$(node bin)/npm install` so that the [firebase-tools](https://github.com/firebase/firebase-tools) dependency is installed. Run the following command to get an auth token (follow the steps you are given by the command):
-
+Given that you have `FIREBASE_TOKEN` exported as env var, you can deploy the app to your own Firebase account with:
 ```shell
-$(npm bin)/firebase login:ci
+npm run deploy
 ```
 
-Copy the token and put it somewhere safe for further usage.
-
-Also change the `"default": "firebase-ng2-lab"` property from `.firebaserc` to the name of you Firebase app.
-
-Now you can deploy the app to you own Firebase by running:
-
+Or you can also use the following to set `FIREBASE_TOKEN` and deploy:
 ```shell
-$(npm bin)/gulp deploy --token <your firebase token>
+FIREBASE_TOKEN=<your Firebase token here> npm run deploy
 ```
-
-**Note**: If you use tools like [direnv](http://direnv.net/) you can export a `FIREBASE_TOKEN` which will be picked up by the `$(npm bin)/gulp deploy` so you won't need to provide the `--token` option every time you run the command.
-
-Also, you need to build the app using `$(npm bin)/gulp build` before any deployments if there were changes to the code and it has not been build yet.
 
 #### Travis CI
 If you plan on using this setup with your own projects and you wish to setup Travis CI,
-then you must make sure of a few of things in order to have everything working properly on the CI:
+you must make sure of a few of things in order to have everything working properly on the CI:
 
-1. Setup and env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci` so that your deployments to firebase will work. If you do not use Firebase, skip this step. You may want to encrypt the token if the source code is public, use the Travis [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to see how to do it;
-2. In case you use SauceLabs, see these [instructions](https://docs.travis-ci.com/user/sauce-connect) and replace the appropriate things in `.travis.yml`;
-3. If you do not use the deployment to Firebase, remove that step from `.travis.yml`.
+1. For deployments, setup the env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci`:
+	a. Encrypt the token using `travis encrypt FIREBASE_TOKEN=<your Firebase token>`, see [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to find out more about it;
+	b. Replace the `secure` key's value, where the Firebase token is in `.travis.yml`, with your own encrypted string generated from the previous step;
+2. For tests that run on Saucelabs, setup the env variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`:
+	a. Replace `SAUCE_USERNAME` with your own username (no need to encrypt);
+	b. Encrypt the access key `SAUCE_ACCESS_KEY` using `travis encrypt SAUCE_ACCESS_KEY=<your Saucelabs access key>`;
+	c. Replace the `secure` key's value with the string generated from the previous step (it's right below `SAUCE_USERNAME` in `.travis.yml`);
+3. Remove the `webhooks` section from `notifications` in `.travis.yml`.
 
-Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you setup your own account.
+If you don't want to deploy to Firebase on push, remove the `after_success: npm run deploy:ci` step and the encrypted `FIREBASE_TOKEN` env var from `.travis.yml`, and skip the 1st step in the instructions above.
+
+If you don't use Saucelabs, skip the 2nd step and remove the following in `.travis.yml`;
+* `sauce_connect` section from `addons`;
+* Env var `SAUCE_USERNAME` and encrypted `SAUCE_ACCESS_KEY` access key.
+
+Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you wish to set it up with your own account.
 So I suggest you start out with a clean project and start git from scratch (`git init`),
 then copy over things from this project (obviously, do not include `.git` - not visible on most UNIX base systems).
 
 
 ### Development
 ---------------
-All you need to get started is `npm start` (or `npm start:staging`/`npm start:prod` if you need a different environment).
+All you need to get started is `npm start` (or `npm start:prod` if you need to emulate a production environment).
 Now you should see the app running in the browser (might take a while when compiling the first time).
 
 Below you can find a few of things to help understand how this setup works and how to make it easier when developing on this app.
@@ -134,7 +139,7 @@ Tests can be run selectively as it follows:
 * `npm run e2e:ci`: e2e tests on the CI server, in Chrome but on [Saucelabs](https://saucelabs.com) servers.
 
 #### Angular CLI
-In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:staging`/`npm run build:prod` if the build is for staging, production respectively).
+In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:prod` if the build is for production).
 
 To see what other commands are available, run `$(npm bin)/ng help`.
 
@@ -142,7 +147,7 @@ To see what other commands are available, run `$(npm bin)/ng help`.
 ### Deployments
 ---------------
 Deployments are handled by [Travis CI](https://travis-ci.org).
-Pushing to the `production`/`staging` branch will automatically deploy the app, given that all tests pass.
+Pushing to `master` will automatically deploy the app, given that all tests pass.
 
 
 ### Learning Material
