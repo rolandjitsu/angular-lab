@@ -75,12 +75,12 @@ Object.assign(config, {
 		showColors: true,
 		showTiming: true,
 		defaultTimeoutInterval: 120000,
-		print: function () {} // Remove protractor dot reporter
+		print: () => {} // Remove protractor dot reporter
 	},
 	// Special option for Angular2, to test against all Angular2 applications on the page.
 	// This means that Protractor will wait for every app to be stable before each action, and search within all apps when finding elements.
 	rootElement: 'rj-lab',
-	onPrepare: function () {
+	onPrepare: () => {
 		// Add jasmine spec reporter
 		jasmine.getEnv()
 			.addReporter(new SpecReporter({displayStacktrace: 'all'}));
@@ -92,15 +92,12 @@ Object.assign(config, {
 				project: 'e2e'
 			});
 	},
-	beforeLaunch: function () {},
 	plugins: [
-		// TODO: This is not compatible with Protractor 5 currently
-		// {
-		// 	package: 'protractor-accessibility-plugin',
-		// 	chromeA11YDevTools: {
-		// 		treatWarningsAsFailures: false
-		// 	}
-		// },
+		// For options see https://github.com/dequelabs/axe-webdriverjs#axebuilderoptionsoptionsobject.
+		{
+			package: 'protractor-accessibility-plugin',
+			axe: {rules: require('./accessibility-rules.js')}
+		},
 		{
 			package: 'protractor-console-plugin',
 			failOnWarning: false,
