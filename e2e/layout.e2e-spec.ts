@@ -26,7 +26,7 @@ describe('Layout', () => {
 				.toBeTrue();
 			browser.waitForAngularEnabled(false);
 			locationRoute.click();
-			browser.sleep(15000);
+			browser.sleep(15000); // tslint:disable-line: no-magic-numbers
 			expect(browser.getCurrentUrl())
 				.toEndWith('/iss/location');
 			browser.waitForAngularEnabled(true);
