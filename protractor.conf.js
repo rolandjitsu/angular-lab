@@ -4,7 +4,7 @@
 const SpecReporter = require('jasmine-spec-reporter');
 
 
-const {CUSTOM_LAUNCHERS} = require('./browsers.config.js');
+const {CUSTOM_LAUNCHERS} = require('./browsers.js');
 const config = {};
 
 const argv = require('yargs')
