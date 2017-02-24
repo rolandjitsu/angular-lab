@@ -5,12 +5,6 @@ import {LayoutPage} from './layout.po';
 describe('Layout', () => {
 	let layout: LayoutPage;
 
-	beforeAll(() => {
-		browser.waitForAngularEnabled(false);
-	});
-	afterAll(() => {
-		browser.waitForAngularEnabled(true);
-	});
 	beforeEach(() => {
 		layout = new LayoutPage();
 		layout.navigateTo();
@@ -30,9 +24,12 @@ describe('Layout', () => {
 			const locationRoute = layout.navigation.location;
 			expect(locationRoute.isPresent())
 				.toBeTrue();
+			browser.waitForAngularEnabled(false);
 			locationRoute.click();
+			browser.sleep(15000);
 			expect(browser.getCurrentUrl())
 				.toEndWith('/iss/location');
+			browser.waitForAngularEnabled(true);
 		});
 
 		it('should have a route that links to /', () => {
