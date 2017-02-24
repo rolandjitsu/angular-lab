@@ -86,13 +86,13 @@ Object.assign(config, {
 			.addReporter(new SpecReporter({displayStacktrace: 'all'}));
 		// Include jasmine expect
 		require('jasmine-expect');
-	},
-	beforeLaunch: function () {
+		// Transpile all TS to JS
 		require('ts-node')
 			.register({
 				project: 'e2e'
 			});
 	},
+	beforeLaunch: function () {},
 	plugins: [
 		// TODO: This is not compatible with Protractor 5 currently
 		// {
