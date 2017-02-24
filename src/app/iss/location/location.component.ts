@@ -1,7 +1,7 @@
 import {
+	AfterViewInit,
 	Component,
 	ElementRef,
-	OnInit,
 	OnDestroy,
 	ViewChild
 } from '@angular/core';
@@ -30,7 +30,7 @@ import {IssPosition} from '../shared/position';
 		visible
 	]
 })
-export class LocationComponent implements OnInit, OnDestroy {
+export class LocationComponent implements AfterViewInit, OnDestroy {
 	@ViewChild('map', {read: ElementRef}) mapRef: ElementRef;
 
 	private mapbox: Observable<MapboxMap>;
@@ -41,7 +41,7 @@ export class LocationComponent implements OnInit, OnDestroy {
 	constructor(private iss: IssService, private map: MapboxService, private pooling: PoolingService) {}
 
 	// tslint:disable: no-magic-numbers
-	ngOnInit(): void {
+	ngAfterViewInit(): void {
 		this.mapbox = this.map.create(this.mapRef.nativeElement);
 		// NOTE: It will try to get the ISS position if it fails for 10 times before it throws.
 		const position = this.pooling.execute(() => this.iss.position()
