@@ -12,10 +12,10 @@ describe('Layout', () => {
 
 	describe('Navigation', () => {
 		it('should have a route that links to /finance/exchange-rates', () => {
-			const astronautsRoute = layout.navigation.exchangeRates;
-			expect(astronautsRoute.isPresent())
+			const exchangeRatesRoute = layout.navigation.exchangeRates;
+			expect(exchangeRatesRoute.isPresent())
 				.toBeTrue();
-			astronautsRoute.click();
+			exchangeRatesRoute.click();
 			expect(browser.getCurrentUrl())
 				.toEndWith('/finance/exchange-rates');
 		});

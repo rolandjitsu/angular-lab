@@ -15,13 +15,11 @@ function toRule(rules = [], enabled = true) {
 
 
 // Rules: https://dequeuniversity.com/rules/axe.
-module.exports = Object.assign(toRule(['color-contrast', 'region'], false), toRule([
+module.exports = Object.assign(toRule(['color-contrast', 'region', 'aria-required-children', 'aria-valid-attr-value'], false), toRule([
 	'aria-allowed-attr',
 	'aria-required-attr',
-	'aria-required-children',
 	'aria-required-parent',
 	'aria-roles',
-	'aria-valid-attr-value',
 	'aria-valid-attr',
 	'button-name',
 	'checkboxgroup',
