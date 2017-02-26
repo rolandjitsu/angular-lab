@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
 
-import {ExchangeService} from './shared/exchange.service';
+import {OpenExchangeService} from './shared/exchange.service';
 import {FinanceComponent} from './finance.component';
 import {ExchangeRatesComponent} from './exchange-rates/exchange-rates.component';
 import {TrendsComponent} from './trends/trends.component';
@@ -26,7 +26,7 @@ const ENTRY_COMPONENTS = [
 	declarations: [...ENTRY_COMPONENTS],
 	entryComponents: [...ENTRY_COMPONENTS],
 	providers: [
-		ExchangeService
+		OpenExchangeService
 	]
 })
 export class FinanceModule {}

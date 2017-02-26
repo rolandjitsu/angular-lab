@@ -29,6 +29,7 @@
 						<input mdInput
 							   [(ngModel)]="from.value"
 							   (ngModelChange)="calculate()"
+							   [disabled]="ratesAreUnavailable | async"
 							   type="number"
 							   name="fromValue"
 							   placeholder="Value"
@@ -40,6 +41,7 @@
 						<input mdInput
 							   [(ngModel)]="to.value"
 							   (ngModelChange)="calculate(true)"
+							   [disabled]="ratesAreUnavailable | async"
 							   type="number"
 							   name="toValue"
 							   placeholder="Value"

@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
+import {MdSnackBar} from '@angular/material';
 
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import {ExchangeService} from '../shared/exchange.service';
+import {OpenExchangeService} from '../shared/exchange.service';
 import {Currency} from '../shared/currencies';
 import {Converter} from '../shared/converter';
 
@@ -26,21 +27,29 @@ export class ExchangeRatesComponent {
 	to: Source = {} as Source;
 	converter: Converter;
 
+	private ratesAreUnavailableSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	ratesAreUnavailable: Observable<boolean> = this.ratesAreUnavailableSource.asObservable(); // tslint:disable-line: member-ordering
+
 	private rtl: boolean;
 
 	private currenciesSource: BehaviorSubject<Currency[]> = new BehaviorSubject<Currency[]>([]);
 	currencies: Observable<Currency[]> = this.currenciesSource.asObservable(); // tslint:disable-line: member-ordering
 
-	constructor(exchange: ExchangeService) {
-		exchange.currencies()
+	constructor(snackbar: MdSnackBar, openExchange: OpenExchangeService) {
+		const handleOpenExchangeError = () => {
+			snackbar.open('Failed to access Open Exchange APIs.', 'Ok');
+			this.ratesAreUnavailableSource.next(true);
+		};
+
+		openExchange.currencies()
 			.subscribe((currencies) => {
 				this.currenciesSource.next(currencies.toArray());
 				this.from.currency = currencies.findByCode('EUR') as Currency;
 				this.to.currency = currencies.findByCode('USD') as Currency;
 				this.calculate();
-			});
+			}, handleOpenExchangeError);
 
-		this.converter = exchange.converter();
+		this.converter = openExchange.converter();
 
 		this.converter.output.subscribe(([value]) => {
 			if (this.rtl) {
@@ -49,7 +58,7 @@ export class ExchangeRatesComponent {
 				this.to.value = value;
 			}
 
-		});
+		}, handleOpenExchangeError);
 	}
 
 	calculate(rtl: boolean = false): void {

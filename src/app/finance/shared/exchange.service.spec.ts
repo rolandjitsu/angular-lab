@@ -10,7 +10,7 @@ import {
 } from '@angular/http';
 
 import {openExchangeAppId} from '../../../env';
-import {ExchangeService} from './exchange.service';
+import {OpenExchangeService} from './exchange.service';
 import {Currencies} from './currencies';
 import {Rates, RatesResponse} from './rates';
 import {Converter} from './converter';
@@ -20,18 +20,18 @@ export function provideHttpFactory(connectionBackend: ConnectionBackend, default
 	return new Http(connectionBackend, defaultOptions);
 }
 
-export function provideExchangeServiceFactory(http: Http): ExchangeService {
-	return new ExchangeService(http);
+export function provideExchangeServiceFactory(http: Http): OpenExchangeService {
+	return new OpenExchangeService(http);
 }
 
 
 describe('Angular Lab', () => {
-	describe('ExchangeService', () => {
+	describe('OpenExchangeService', () => {
 		beforeEach(() => {
 			TestBed.configureTestingModule({
 				providers: [
 					{
-						provide: ExchangeService,
+						provide: OpenExchangeService,
 						useFactory: provideExchangeServiceFactory,
 						deps: [
 							Http
@@ -57,12 +57,12 @@ describe('Angular Lab', () => {
 
 		describe('apiUrlForPath()', () => {
 			it('should properly construct an url for querying Open Exchange APIs', () => {
-				const url = ExchangeService.apiUrlForPath('/ping');
-				expect(url).toEqual(`${ExchangeService.API_ROOT}/ping.json?app_id=${openExchangeAppId}`);
+				const url = OpenExchangeService.apiUrlForPath('/ping');
+				expect(url).toEqual(`${OpenExchangeService.API_ROOT}/ping.json?app_id=${openExchangeAppId}`);
 			});
 
 			it('should append query params', () => {
-				const url = ExchangeService.apiUrlForPath('/ping', {
+				const url = OpenExchangeService.apiUrlForPath('/ping', {
 					test: true
 				});
 				expect(url.indexOf('test=true')).not.toEqual(-1);
@@ -70,7 +70,7 @@ describe('Angular Lab', () => {
 		});
 
 		describe('currencies()', () => {
-			it('should return a multicasted Observable', async(inject([MockBackend, ExchangeService], (backend: MockBackend, exchange: ExchangeService) => {
+			it('should return a multicasted Observable', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
 				let count = 0;
 				backend.connections.subscribe((connection: MockConnection) => {
 					count++;
@@ -80,7 +80,7 @@ describe('Angular Lab', () => {
 					})));
 				});
 
-				const currencies = exchange.currencies();
+				const currencies = openExchange.currencies();
 
 				currencies.subscribe();
 				currencies.subscribe();
@@ -88,13 +88,13 @@ describe('Angular Lab', () => {
 				expect(count).toEqual(1);
 			})));
 
-			it('should return an Observable of Currencies', async(inject([MockBackend, ExchangeService], (backend: MockBackend, exchange: ExchangeService) => {
+			it('should return an Observable of Currencies', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
 				backend.connections.subscribe((connection: MockConnection) => connection.mockRespond(new Response(new ResponseOptions({
 					body: {},
 					status: 200
 				}))));
 
-				exchange.currencies()
+				openExchange.currencies()
 					.subscribe((currencies) => {
 						expect(currencies instanceof Currencies)
 							.toBeTruthy();
@@ -116,7 +116,7 @@ describe('Angular Lab', () => {
 				};
 			});
 
-			it('should return a multicasted Observable', async(inject([MockBackend, ExchangeService], (backend: MockBackend, exchange: ExchangeService) => {
+			it('should return a multicasted Observable', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
 				let count = 0;
 				backend.connections.subscribe((connection: MockConnection) => {
 					count++;
@@ -126,7 +126,7 @@ describe('Angular Lab', () => {
 					})));
 				});
 
-				const rates = exchange.rates();
+				const rates = openExchange.rates();
 
 				rates.subscribe();
 				rates.subscribe();
@@ -134,13 +134,13 @@ describe('Angular Lab', () => {
 				expect(count).toEqual(1);
 			})));
 
-			it('should return an Observable of Rates', async(inject([MockBackend, ExchangeService], (backend: MockBackend, exchange: ExchangeService) => {
+			it('should return an Observable of Rates', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
 				backend.connections.subscribe((connection: MockConnection) => connection.mockRespond(new Response(new ResponseOptions({
 					body,
 					status: 200
 				}))));
 
-				exchange.rates()
+				openExchange.rates()
 					.subscribe((rates) => {
 						expect(rates instanceof Rates)
 							.toBeTruthy();
@@ -149,7 +149,7 @@ describe('Angular Lab', () => {
 		});
 
 		describe('converter()', () => {
-			it('should return a Converter', async(inject([MockBackend, ExchangeService], (backend: MockBackend, exchange: ExchangeService) => {
+			it('should return a Converter', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
 				backend.connections.subscribe((connection: MockConnection) => {
 					connection.mockRespond(new Response(new ResponseOptions({
 						body: {
@@ -165,7 +165,7 @@ describe('Angular Lab', () => {
 					})));
 				});
 
-				const converter = exchange.converter();
+				const converter = openExchange.converter();
 
 				expect(converter instanceof Converter)
 					.toBeTruthy();

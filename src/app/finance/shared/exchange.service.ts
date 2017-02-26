@@ -12,15 +12,14 @@ import {Rates, RatesResponse} from './rates';
 import {Converter} from './converter';
 
 
-
-/*interface OpenExchangeErrorResponse {
+export interface OpenExchangeError {
 	error: boolean;
 	status: number;
 	message: string;
 	description: string;
 }
 
-const statusCodes = new Map([
+/*const statusCodes = new Map([
 	['not_found', 404],
 	['missing_app_id', 401],
 	['invalid_app_id', 401],
@@ -36,7 +35,7 @@ const statusCodes = new Map([
  * https://openexchangerates.org
  */
 @Injectable()
-export class ExchangeService {
+export class OpenExchangeService {
 	static API_ROOT = 'https://openexchangerates.org/api';
 	// API requests require authentication via app id, see https://docs.openexchangerates.org/docs/authentication for more info.
 	static apiUrlForPath(path: string, params?: {[key: string]: any}): string {
@@ -68,7 +67,7 @@ export class ExchangeService {
 			Object.assign(params, {show_alternative: 1});
 		}
 
-		return this.http.get(ExchangeService.apiUrlForPath('/currencies', params))
+		return this.http.get(OpenExchangeService.apiUrlForPath('/currencies', params))
 			.map((response: Response) => response.json())
 			.map((json: CurrenciesResponse) => new Currencies(json))
 			.multicast(new ReplaySubject())
@@ -80,7 +79,7 @@ export class ExchangeService {
 	 * https://docs.openexchangerates.org/docs/latest-json
 	 */
 	rates(): Observable<Rates> {
-		return this.http.get(ExchangeService.apiUrlForPath('/latest'))
+		return this.http.get(OpenExchangeService.apiUrlForPath('/latest'))
 			.map((response: Response) => response.json())
 			.map((json: RatesResponse) => new Rates(json))
 			.multicast(new ReplaySubject())
