@@ -1,0 +1,53 @@
+<div fxLayout="column" fxFlex>
+	<md-toolbar>
+		<span>Exchange Rates</span>
+		<span fxFlex></span>
+	</md-toolbar>
+
+	<div padding>
+		<md-card>
+			<md-card-content>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<md-select [(ngModel)]="from.currency"
+							   (change)="calculate()"
+							   fxFlex
+							   margin-bottom>
+						<md-option *ngFor="let currency of currencies | async" [value]="currency">{{currency.name}}</md-option>
+					</md-select>
+					<span margin-left margin-right>
+						<span class="hidden">=</span>
+					</span>
+					<md-select [(ngModel)]="to.currency"
+							   (change)="calculate(true)"
+							   fxFlex
+							   margin-bottom>
+						<md-option *ngFor="let currency of currencies | async" [value]="currency">{{currency.name}}</md-option>
+					</md-select>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start center">
+					<md-input-container fxFlex>
+						<input mdInput
+							   [(ngModel)]="from.value"
+							   (ngModelChange)="calculate()"
+							   type="number"
+							   name="fromValue"
+							   placeholder="Value"
+							   required
+							   min="0">
+					</md-input-container>
+					<span margin-left margin-right>=</span>
+					<md-input-container fxFlex>
+						<input mdInput
+							   [(ngModel)]="to.value"
+							   (ngModelChange)="calculate(true)"
+							   type="number"
+							   name="toValue"
+							   placeholder="Value"
+							   required
+							   min="0">
+					</md-input-container>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+</div>

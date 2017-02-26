@@ -1,20 +1,29 @@
 /* Margins */
 [margin-right] {
-	margin-right: 8px !important;
+	margin-right: 16px !important;
 }
-
+[margin-top] {
+	margin-top: 16px !important;
+}
+[margin-bottom] {
+	margin-bottom: 16px !important;
+}
 [margin-left] {
-	margin-left: 8px !important;
+	margin-left: 16px !important;
 }
 
 /* Box model */
 /* TODO(rolandjitsu): Needs to be removed if Material has these figured out */
+[padding-left] {
+	padding-left: 16px;
+}
+[padding-right] {
+	padding-right: 16px;
+}
 [padding] {
-	padding: 8px;
+	padding: 16px;
 }
 
-@media (min-width: 960px) {
-	[padding] {
-		padding: 16px;
-	}
+.hidden {
+	visibility: hidden;
 }

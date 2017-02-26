@@ -189,3 +189,4 @@ In the making of this simple app, I have made use of whatever resources I could 
 thus, it's worth mentioning that the following projects have served as inspiration and help:
 
 * [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
+* [Open Exchange Rates](https://openexchangerates.org)

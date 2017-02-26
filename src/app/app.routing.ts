@@ -21,7 +21,8 @@ export const routing = RouterModule.forRoot([
 		component: LayoutComponent,
 		children: [
 			{path: '', component: HomeComponent},
-			{path: 'iss', loadChildren: 'app/iss/iss.module#IssModule', data: {preload: true}}
+			{path: 'iss', loadChildren: 'app/iss/iss.module#IssModule', data: {preload: true}},
+			{path: 'finance', loadChildren: 'app/finance/finance.module#FinanceModule', data: {preload: true}}
 		]
 	},
 	{path: '**', component: ErrorComponent}
