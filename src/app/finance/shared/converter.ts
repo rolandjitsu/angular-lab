@@ -19,8 +19,8 @@ export interface Input {
 
 
 export class Converter {
-	source: BehaviorSubject<Input[]> = new BehaviorSubject<Input[]>([]);
-	output: Observable<number[]> = this.source.asObservable()
+	input: BehaviorSubject<Input[]> = new BehaviorSubject<Input[]>([]);
+	output: Observable<number[]> = this.input.asObservable()
 		.skipWhile((item) => item.length === 0)
 		.distinctUntilChanged(compare)
 		.mergeMap((input: Input[]) => this.fx.map((fx) => input.map(({value, to, from}) => toDecimal(fx.convert(value, to, from) as number)))) // Idempotent operation

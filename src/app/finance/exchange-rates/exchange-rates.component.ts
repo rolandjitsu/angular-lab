@@ -64,13 +64,13 @@ export class ExchangeRatesComponent {
 	calculate(rtl: boolean = false): void {
 		this.rtl = rtl;
 		if (rtl) {
-			this.converter.source.next([{
+			this.converter.input.next([{
 				value: this.to.value,
 				to: this.from.currency,
 				from: this.to.currency
 			}]);
 		} else {
-			this.converter.source.next([{
+			this.converter.input.next([{
 				value: this.from.value,
 				to: this.to.currency,
 				from: this.from.currency

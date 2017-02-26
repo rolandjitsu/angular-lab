@@ -23,13 +23,13 @@ describe('Angular Lab', () => {
 			}});
 			converter = new Converter(Observable.create((observer: Observer<Rates>) => {
 				observer.next(rates);
-			}))
+			}));
 		});
 
-		it('should have {source, output} properties', () => {
-			expect(converter.source).not.toBeUndefined();
+		it('should have {input, output} properties', () => {
+			expect(converter.input).not.toBeUndefined();
 			expect(converter.output).not.toBeUndefined();
-			expect(converter.source instanceof BehaviorSubject)
+			expect(converter.input instanceof BehaviorSubject)
 				.toBeTruthy();
 			expect(converter.output instanceof Observable)
 				.toBeTruthy();
@@ -44,7 +44,7 @@ describe('Angular Lab', () => {
 					expect(value).toEqual(0.5);
 				});
 
-			converter.source.next([{
+			converter.input.next([{
 				value: 1,
 				from: usd,
 				to: euro
@@ -63,8 +63,8 @@ describe('Angular Lab', () => {
 				});
 
 			const input = {from, to, value: 1};
-			converter.source.next([input]);
-			converter.source.next([input]);
+			converter.input.next([input]);
+			converter.input.next([input]);
 
 			expect(count).toEqual(1);
 		}));
