@@ -13,7 +13,7 @@ import {Currency} from './currencies';
 describe('Angular Lab', () => {
 	describe('Converter', () => {
 		let converter: Converter;
-		let timestamp = Date.now() / 1000;
+		const timestamp = Date.now() / 1000;
 		beforeEach(() => {
 			const rates = new Rates({
 				timestamp,
