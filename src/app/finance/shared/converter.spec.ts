@@ -39,16 +39,21 @@ describe('Angular Lab', () => {
 			const usd = new Currency('USD', 'US Dollar');
 			const euro = new Currency('EUR', 'Euro');
 
-			converter.output.take(1)
-				.subscribe(([value]) => {
-					expect(value).toEqual(0.5);
-				});
+			const obs = converter.output.take(1);
+			const obsSpy = jasmine.createSpy('convert');
+			obs.subscribe(([value]) => {
+				expect(value).toEqual(0.5);
+				obsSpy();
+			});
 
 			converter.input.next([{
 				value: 1,
 				from: usd,
 				to: euro
 			}]);
+
+			expect(obsSpy)
+				.toHaveBeenCalled();
 		}));
 
 		it('should not emit values if the same input is sent', async(() => {

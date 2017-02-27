@@ -13,7 +13,6 @@ import {openExchangeAppId} from '../../../env';
 import {OpenExchangeService} from './exchange.service';
 import {Currencies} from './currencies';
 import {Rates, RatesResponse} from './rates';
-import {Converter} from './converter';
 
 
 export function provideHttpFactory(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions): Http {
@@ -145,30 +144,6 @@ describe('Angular Lab', () => {
 						expect(rates instanceof Rates)
 							.toBeTruthy();
 					});
-			})));
-		});
-
-		describe('converter()', () => {
-			it('should return a Converter', async(inject([MockBackend, OpenExchangeService], (backend: MockBackend, openExchange: OpenExchangeService) => {
-				backend.connections.subscribe((connection: MockConnection) => {
-					connection.mockRespond(new Response(new ResponseOptions({
-						body: {
-							disclaimer: '',
-							license: '',
-							timestamp: Date.now(),
-							base: 'USD',
-							rates: {
-								EUR: 0.96
-							}
-						},
-						status: 200
-					})));
-				});
-
-				const converter = openExchange.converter();
-
-				expect(converter instanceof Converter)
-					.toBeTruthy();
 			})));
 		});
 	});

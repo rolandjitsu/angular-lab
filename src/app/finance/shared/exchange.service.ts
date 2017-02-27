@@ -9,7 +9,6 @@ import 'rxjs/add/operator/multicast';
 import {openExchangeAppId} from '../../../env';
 import {Currencies, CurrenciesResponse} from './currencies';
 import {Rates, RatesResponse} from './rates';
-import {Converter} from './converter';
 
 
 export interface OpenExchangeError {
@@ -84,9 +83,5 @@ export class OpenExchangeService {
 			.map((json: RatesResponse) => new Rates(json))
 			.multicast(new ReplaySubject())
 			.refCount();
-	}
-
-	converter(): Converter {
-		return new Converter(this.rates());
 	}
 }
