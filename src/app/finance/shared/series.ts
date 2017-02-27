@@ -13,7 +13,7 @@ export interface RateSeriesResponse {
 }
 
 export interface RateOnDate {
-	date: number,
+	date: number;
 	rate: number;
 }
 

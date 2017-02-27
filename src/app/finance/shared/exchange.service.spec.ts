@@ -1,4 +1,3 @@
-///<reference path="series.ts"/>
 // tslint:disable:no-magic-numbers
 import {TestBed, async, inject} from '@angular/core/testing';
 import {MockBackend, MockConnection} from '@angular/http/testing';
@@ -80,7 +79,7 @@ describe('Angular Lab', () => {
 			it('should convert a Date to the format required by Open Exchange APIs', inject([OpenExchangeService], (openExchange: OpenExchangeService) => {
 				const date = new Date(1488195827019);
 				expect(openExchange.toOpenExchangeDateFormat(date))
-					.toEqual('2017-02-27')
+					.toEqual('2017-02-27');
 			}));
 		});
 
