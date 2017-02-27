@@ -1,3 +1,4 @@
+// tslint:disable:no-magic-numbers
 import {Currency} from './currencies';
 import {Rates} from './rates';
 

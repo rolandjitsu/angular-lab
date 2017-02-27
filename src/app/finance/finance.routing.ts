@@ -17,7 +17,7 @@ export const financeRouting = RouterModule.forChild([
 			{
 				path: 'trends',
 				component: TrendsComponent
-			},
+			}
 		]
 	}
 ]);

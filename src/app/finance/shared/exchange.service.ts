@@ -39,7 +39,7 @@ export class OpenExchangeService {
 	// API requests require authentication via app id, see https://docs.openexchangerates.org/docs/authentication for more info.
 	static apiUrlForPath(path: string, params?: {[key: string]: any}): string {
 		if (path.indexOf('/') !== 0) {
-			path = `/${path};`
+			path = `/${path};`;
 		}
 		let url = `${this.API_ROOT}${path}.json?app_id=${openExchangeAppId}`;
 
