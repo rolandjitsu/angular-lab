@@ -29,16 +29,16 @@ export class RateSeries {
 	start: Date;
 	end: Date;
 	base: string;
-	private list: Map<Currency, RateOnDate[][]>;
+	private list: Map<Currency, RateOnDate[]>;
 	constructor(currencies: Currency[], source: RateSeriesResponse) {
 		this.base = source.base;
 		this.start = new Date(source.start_date);
 		this.end = new Date(source.end_date);
 		const {rates} = source;
-		this.list = new Map(currencies.map((currency) => [
+		this.list = new Map(currencies.map<[Currency, RateOnDate[]]>((currency) => [
 			currency,
 			Object.keys(rates)
-				.map((date) => ({
+				.map<RateOnDate>((date) => ({
 					date: parseOpenExchangeDate(date),
 					rate: rates[date][currency.code]
 				}))
