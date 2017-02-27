@@ -1,6 +1,7 @@
 // tslint:disable:no-magic-numbers
 import {TestBed, async, inject} from '@angular/core/testing';
 import {MockBackend, MockConnection} from '@angular/http/testing';
+import {LOCALE_ID} from '@angular/core';
 import {
 	Http,
 	ConnectionBackend,
@@ -21,8 +22,8 @@ import {Currency} from './currencies';
 export function provideConverterServiceFactory(openExchange: OpenExchangeService): ConverterService {
 	return new ConverterService(openExchange);
 }
-export function provideExchangeServiceFactory(http: Http): OpenExchangeService {
-	return new OpenExchangeService(http);
+export function provideExchangeServiceFactory(http: Http, locale: string): OpenExchangeService {
+	return new OpenExchangeService(http, locale);
 }
 export function provideHttpFactory(connectionBackend: ConnectionBackend, defaultOptions: BaseRequestOptions): Http {
 	return new Http(connectionBackend, defaultOptions);
@@ -45,7 +46,8 @@ describe('Angular Lab', () => {
 						provide: OpenExchangeService,
 						useFactory: provideExchangeServiceFactory,
 						deps: [
-							Http
+							Http,
+							LOCALE_ID
 						]
 					},
 					{
@@ -57,7 +59,11 @@ describe('Angular Lab', () => {
 						]
 					},
 					BaseRequestOptions,
-					MockBackend
+					MockBackend,
+					{
+						provide: LOCALE_ID,
+						useValue: 'en-US'
+					}
 				]
 			});
 		});

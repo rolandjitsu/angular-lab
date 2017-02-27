@@ -1,4 +1,5 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, LOCALE_ID} from '@angular/core';
+import {DatePipe} from '@angular/common';
 import {Http, Response} from '@angular/http';
 
 import {Observable} from 'rxjs/Observable';
@@ -7,8 +8,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/multicast';
 
 import {openExchangeAppId} from '../../../env';
-import {Currencies, CurrenciesResponse} from './currencies';
+import {Currencies, CurrenciesResponse, Currency} from './currencies';
 import {Rates, RatesResponse} from './rates';
+import {RateSeries, RateSeriesResponse} from './series';
 
 
 export interface OpenExchangeError {
@@ -45,14 +47,26 @@ export class OpenExchangeService {
 
 		if (typeof params === 'object' && params !== null) {
 			for (const [key, value] of Object.entries(params)) {
-				url += `?${key}=${value}`;
+				url += `&${key}=${value}`;
 			}
 		}
 
 		return url;
 	}
 
-	constructor(private http: Http) {}
+	private datePipe: DatePipe;
+
+	constructor(private http: Http, @Inject(LOCALE_ID) locale: string) {
+		this.datePipe = new DatePipe(locale);
+	}
+
+	/**
+	 * Convert a date to the format required by Open Exchange.
+	 * @return {string} A date formatted to YYYY-MM-DD.
+	 */
+	toOpenExchangeDateFormat(date: Date): string {
+		return `${this.datePipe.transform(date, 'yyyy-MM-dd')}`;
+	}
 
 	/**
 	 * Get a list of all available currencies.
@@ -81,6 +95,23 @@ export class OpenExchangeService {
 		return this.http.get(OpenExchangeService.apiUrlForPath('/latest'))
 			.map((response: Response) => response.json())
 			.map((json: RatesResponse) => new Rates(json))
+			.multicast(new ReplaySubject())
+			.refCount();
+	}
+
+	/**
+	 * Get time series for exchange rates.
+	 * https://docs.openexchangerates.org/docs/time-series-json
+	 */
+	series(start: Date, end: Date, currencies: Currency[] = []): Observable<Rates> {
+		return this.http.get(OpenExchangeService.apiUrlForPath('/time-series', {
+				start: this.toOpenExchangeDateFormat(start),
+				end: this.toOpenExchangeDateFormat(end),
+				symbols: currencies.map((currency) => currency.code)
+					.join(',')
+			}))
+			.map((response: Response) => response.json())
+			.map((json: RateSeriesResponse) => new RateSeries(currencies, json))
 			.multicast(new ReplaySubject())
 			.refCount();
 	}

@@ -22,3 +22,10 @@ import 'core-js/es7/object';
 import 'core-js/es7/reflect';
 
 import 'zone.js/dist/zone';
+
+
+// Internationalization
+// Fixes issues in PhantomJS, see http://stackoverflow.com/a/35018352/1092007.
+// http://kangax.github.io/compat-table/esintl
+import 'intl';
+import 'intl/locale-data/jsonp/en';
