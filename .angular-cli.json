@@ -15,9 +15,11 @@
 			],
 			"index": "index.html",
 			"main": "main.ts",
+			"polyfills": "polyfills.ts",
 			"test": "test.ts",
-			"tsconfig": "tsconfig.json",
-			"prefix": "app",
+			"tsconfig": "tsconfig.app.json",
+			"testTsconfig": "tsconfig.spec.json",
+			"prefix": "rj",
 			"styles": [
 				"main.scss"
 			],
@@ -38,12 +40,13 @@
 	},
 	"lint": [
 		{
-			"files": "src/**/*.ts",
-			"project": "src/tsconfig.json"
+			"project": "src/tsconfig.app.json"
 		},
 		{
-			"files": "e2e/**/*.ts",
-			"project": "e2e/tsconfig.json"
+			"project": "src/tsconfig.spec.json"
+		},
+		{
+			"project": "e2e/tsconfig.e2e.json"
 		}
 	],
 	"test": {
@@ -59,18 +62,31 @@
 	},
 	"defaults": {
 		"styleExt": "scss",
-		"prefixInterfaces": false,
-		"inline": {
-			"style": false,
-			"template": false
+		"class": {
+			"spec": true
 		},
-		"spec": {
-			"class": false,
-			"component": true,
-			"directive": true,
-			"module": false,
-			"pipe": true,
-			"service": true
+		"component": {
+			"inlineTemplate": false,
+			"inlineStyle": false,
+			"prefix": true,
+			"spec": true
+		},
+		"directive": {
+			"prefix": true,
+			"spec": true
+		},
+		"guard": {
+			"spec": true
+		},
+		"module": {
+			"spec": true,
+			"routing": true
+		},
+		"pipe": {
+			"spec": true
+		},
+		"service": {
+			"spec": true
 		}
 	}
 }

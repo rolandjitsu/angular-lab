@@ -33,7 +33,6 @@ module.exports = function (config) {
 			require('karma-jasmine'),
 			require('karma-jasmine-html-reporter'),
 			require('karma-chrome-launcher'),
-			require('karma-phantomjs-launcher'),
 			require('karma-sauce-launcher'),
 			require('karma-coverage-istanbul-reporter'),
 			require('@angular/cli/plugins/karma')
@@ -52,7 +51,7 @@ module.exports = function (config) {
 			'text/x-typescript': ['ts', 'tsx']
 		},
 		coverageIstanbulReporter: {
-			reports: [ 'html', 'lcovonly' ],
+			reports: ['html', 'lcovonly'],
 			fixWebpackSourcePaths: true
 		},
 		angularCli: {
@@ -64,7 +63,6 @@ module.exports = function (config) {
 		logLevel: config.LOG_INFO,
 		autoWatch: true,
 		browsers: [
-			'PhantomJS',
 			'Chrome'
 		],
 		singleRun: false

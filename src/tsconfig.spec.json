@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"strictNullChecks": true,
+		"lib": [
+			"es2017"
+		],
+		"outDir": "../out-tsc/spec",
+		"module": "commonjs",
+		"target": "es6",
+		"baseUrl": "",
+		"types": [
+			"jasmine",
+			"jasmine-expect",
+			"node"
+		]
+	},
+	"files": [
+		"test.ts"
+	],
+	"include": [
+		"**/*.spec.ts"
+	]
+}

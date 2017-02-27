@@ -1,8 +1,7 @@
 // Protractor configuration file, see link for more information
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 /* global jasmine */
-const SpecReporter = require('jasmine-spec-reporter');
-
+const {SpecReporter} = require('jasmine-spec-reporter');
 
 const {CUSTOM_LAUNCHERS} = require('./browsers.js');
 const config = {};
@@ -83,13 +82,13 @@ Object.assign(config, {
 	onPrepare: () => {
 		// Add jasmine spec reporter
 		jasmine.getEnv()
-			.addReporter(new SpecReporter({displayStacktrace: 'all'}));
+			.addReporter(new SpecReporter({spec: {displayStacktrace: true}}));
 		// Include jasmine expect
 		require('jasmine-expect');
 		// Transpile all TS to JS
 		require('ts-node')
 			.register({
-				project: 'e2e'
+				project: 'e2e/tsconfig.e2e.json'
 			});
 	},
 	plugins: [

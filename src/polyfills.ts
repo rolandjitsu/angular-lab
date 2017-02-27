@@ -25,7 +25,20 @@ import 'zone.js/dist/zone';
 
 
 // Internationalization
-// Fixes issues in PhantomJS, see http://stackoverflow.com/a/35018352/1092007.
+// Date, currency, decimal and percent pipes.
+// Needed for: all but Chrome, Firefox, Edge, IE11 and Safari 10.
 // http://kangax.github.io/compat-table/esintl
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+
+
+// Needed for: IE9
+// import 'classlist.js';
+
+// Animations
+// Needed for: All but Chrome and Firefox, Not supported in IE9
+// import 'web-animations-js';
+
+// NgClass on SVG elements
+// Needed for: IE10, IE11
+// import 'classlist.js';

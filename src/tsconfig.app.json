@@ -1,23 +1,28 @@
 {
 	"compilerOptions": {
+		"sourceMap": true,
 		"declaration": false,
+		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
+		"noImplicitAny": true,
+		"noUnusedParameters": true,
+		"noUnusedLocals": true,
+		"strictNullChecks": true,
 		"lib": [
 			"es2017",
 			"dom"
 		],
-		"module": "commonjs",
-		"moduleResolution": "node",
-		"noImplicitAny": true,
-		"noUnusedParameters": true,
-		"noUnusedLocals": true,
-		"outDir": "../dist/out-tsc-e2e",
-		"sourceMap": true,
-		"strictNullChecks": true,
+		"outDir": "../out-tsc/app",
 		"target": "es5",
-		"typeRoots": [
-			"../node_modules/@types"
+		"module": "es2015",
+		"baseUrl": "",
+		"types": [
+			"hammerjs"
 		]
-	}
+	},
+	"exclude": [
+		"test.ts",
+		"**/*.spec.ts"
+	]
 }
