@@ -4,10 +4,10 @@ import {AppComponent} from './app.component';
 
 
 describe('AppComponent', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({imports: [AppModule]});
-		TestBed.compileComponents();
-	});
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({imports: [AppModule]})
+			.compileComponents();
+	}));
 
 	it('should create the app', async(() => {
 		const fixture = TestBed.createComponent(AppComponent);

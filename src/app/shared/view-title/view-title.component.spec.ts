@@ -5,10 +5,10 @@ import {ViewTitleService} from '../../core';
 
 
 describe('ViewTitleComponent', () => {
-	beforeEach(() => {
-		TestBed.configureTestingModule({imports: [AppModule]});
-		TestBed.compileComponents();
-	});
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({imports: [AppModule]})
+			.compileComponents();
+	}));
 
 	it('should create the <rj-view-title> component', async(() => {
 		const fixture = TestBed.createComponent<ViewTitleComponent>(ViewTitleComponent);
