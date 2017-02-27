@@ -5,7 +5,7 @@ import {Rates} from './rates';
 describe('Angular Lab', () => {
 	describe('Rates', () => {
 		let rates: Rates;
-		const timestamp = Date.now();
+		const timestamp = Date.now() / 1000;
 		beforeEach(() => {
 			rates = new Rates({
 				timestamp,
@@ -17,13 +17,13 @@ describe('Angular Lab', () => {
 			}});
 		});
 
-		it('should have {base, timestamp} properties', () => {
+		it('should have {base, freshness} properties', () => {
 			expect(rates.timestamp).not.toBeUndefined();
 			expect(rates.base).not.toBeUndefined();
 			expect(rates.timestamp instanceof Date)
 				.toBeTruthy();
 			expect(rates.timestamp.getTime())
-				.toEqual(timestamp);
+				.toEqual(timestamp * 1000);
 			expect(rates.base)
 				.toEqual('USD');
 		});

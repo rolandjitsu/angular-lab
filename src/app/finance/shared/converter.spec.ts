@@ -13,12 +13,13 @@ import {Currency} from './currencies';
 describe('Angular Lab', () => {
 	describe('Converter', () => {
 		let converter: Converter;
+		let timestamp = Date.now() / 1000;
 		beforeEach(() => {
 			const rates = new Rates({
+				timestamp,
 				disclaimer: '',
 				license: '',
 				base: 'USD',
-				timestamp: Date.now(),
 				rates: {
 					EUR: 0.5
 			}});
@@ -27,14 +28,26 @@ describe('Angular Lab', () => {
 			}));
 		});
 
-		it('should have {input, output} properties', () => {
-			expect(converter.input).not.toBeUndefined();
-			expect(converter.output).not.toBeUndefined();
+		it('should have {input, output, freshness} properties', () => {
+			for (const prop of [converter.input, converter.output, converter.freshness]) {
+				expect(prop).not.toBeUndefined();
+			}
 			expect(converter.input instanceof BehaviorSubject)
 				.toBeTruthy();
-			expect(converter.output instanceof Observable)
-				.toBeTruthy();
+			for (const prop of [converter.output, converter.freshness]) {
+				expect(prop instanceof Observable)
+					.toBeTruthy();
+			}
 		});
+
+		it('should emit the freshness of conversion rates via #freshness property', async(() => {
+			converter.freshness.subscribe((date) => {
+				expect(date instanceof Date)
+					.toBeTruthy();
+				expect(date.getTime())
+					.toEqual(timestamp * 1000);
+			});
+		}));
 
 		it('should convert an array of values from one Currency to another', async(() => {
 			const usd = new Currency('USD', 'US Dollar');

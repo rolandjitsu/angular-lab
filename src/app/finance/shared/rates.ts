@@ -15,7 +15,7 @@ export class Rates {
 	private list: Map<string, number>;
 	constructor(source: RatesResponse) {
 		this.base = source.base;
-		this.timestamp = new Date(source.timestamp);
+		this.timestamp = new Date(source.timestamp * 1000);
 		const {rates} = source;
 		this.list = new Map(Object.keys(rates)
 			.map<[string, number]>((code: string) => ([

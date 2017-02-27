@@ -2,6 +2,10 @@
 	<md-toolbar>
 		<span>Exchange Rates</span>
 		<span fxFlex></span>
+		<div fxLayout="row" fxLayoutAlign="start center">
+			<md-icon>access_time</md-icon>
+			<span class="md-caption" margin-left>{{converter.freshness | async | date}}</span>
+		</div>
 	</md-toolbar>
 
 	<div padding>

@@ -28,6 +28,8 @@ export class Converter {
 		.multicast(new ReplaySubject())
 		.refCount();
 
+	freshness: Observable<Date> = this.rates.map((rates) => rates.timestamp);
+
 	private fx: Observable<Fx> = this.rates.map((rates) => new Fx(rates))
 		.multicast(new ReplaySubject())
 		.refCount();
