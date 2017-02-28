@@ -60,7 +60,7 @@
 		"@types/jasmine": "^2.5.38",
 		"@types/jasmine-expect": "^2.0.29",
 		"@types/node": "^6.0.48",
-		"codelyzer": "^2.0.0-beta.4",
+		"codelyzer": "^3.0.0-beta.0",
 		"firebase-tools": "^3.3.0",
 		"jasmine": "^2.5.2",
 		"jasmine-core": "^2.5.2",
