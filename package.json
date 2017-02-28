@@ -27,7 +27,7 @@
 		"build:prod": "ng build --target=production --environment=prod --output-hashing=all --no-progress",
 		"lint": "ng lint --format stylish",
 		"test": "ng test --single-run",
-		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_EDGE,SL_IOS10,SL_ANDROID5 --single-run",
+		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IOS10 --single-run",
 		"e2e": "ng e2e --no-watch ---no-live-reload",
 		"e2e:ci": "ng e2e --no-progress --no-watch --target=production --environment=prod --no-live-reload",
 		"deploy": "npm run build:prod && firebase deploy --token ${FIREBASE_TOKEN}",
