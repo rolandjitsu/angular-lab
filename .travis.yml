@@ -33,17 +33,12 @@ before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
-# TODO: Right now Angular CLI does not work with Yarn
-install:
-  - npm install
-
 script:
   # Code style/format check with tslint.
   - npm run lint
   # Unit tests.
   - npm run test:ci
   # E2E tests.
-  # TODO: Protractor seems to fail, skip it until we fix it
   - npm run e2e:ci
 
 after_success: npm run deploy:ci
