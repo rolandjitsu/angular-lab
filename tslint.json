@@ -36,6 +36,7 @@
 		"import-spacing": true,
 		"interface-over-type-literal": true,
 		"jsdoc-format": true,
+		"match-default-export-name": true,
 		"new-parens": true,
 		"no-consecutive-blank-lines": false,
 		"no-unnecessary-initializer": true,
@@ -98,6 +99,7 @@
 		"no-console": [true, "debug", "log", "trace"],
 		"no-construct": true,
 		"no-debugger": true,
+		"no-duplicate-super": true,
 		"no-duplicate-variable": true,
 		"no-eval": true,
 		"no-invalid-this": true,
@@ -132,6 +134,7 @@
 		"use-pipe-transform-interface": true,
 		"component-class-suffix": [true, "Component"],
 		"directive-class-suffix": [true, "Directive"],
+		"import-destructuring-spacing": false,
 		"templates-use-public": true,
 		"no-access-missing-member": true,
 		"invoke-injectable": true
