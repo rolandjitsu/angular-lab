@@ -12,7 +12,7 @@
 		"lib": [
 			"es2017"
 		],
-		"outDir": "../dist/out-tsc-e2e",
+		"outDir": "../out-tsc-e2e",
 		"module": "commonjs",
 		"target": "es6",
 		"types":[
