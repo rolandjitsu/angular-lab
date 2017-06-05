@@ -1,12 +1,19 @@
-import {TestBed, async, inject} from '@angular/core/testing';
+import {MATERIAL_SANITY_CHECKS} from '@angular/material';
+import {async, inject, TestBed} from '@angular/core/testing';
+
+import {SharedModule} from '../shared.module';
 import {ViewTitleComponent} from './view-title.component';
-import {AppModule} from '../../app.module';
-import {ViewTitleService} from '../../core';
+import {ViewTitleService} from './view-title.service';
 
 
 describe('ViewTitleComponent', () => {
 	beforeEach(async(() => {
-		TestBed.configureTestingModule({imports: [AppModule]})
+		TestBed.configureTestingModule({
+				imports: [SharedModule],
+				providers: [
+					{provide: MATERIAL_SANITY_CHECKS, useValue: false}
+				]
+			})
 			.compileComponents();
 	}));
 

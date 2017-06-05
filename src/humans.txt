@@ -20,4 +20,3 @@
 	Protractor, Karma, Jasmine
 	Travis CI, Saucelabs
 	David
-	Open Exchange Rates

@@ -10,7 +10,7 @@
 			"./scripts",
 			"./src",
 			"./.*",
-			"browsers.config.js",
+			"browsers.js",
 			"firebase.json",
 			"karma.conf.js",
 			"LICENSE",

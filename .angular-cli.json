@@ -6,6 +6,7 @@
 	"packageManager": "yarn",
 	"apps": [
 		{
+			"name": "Angular Lab",
 			"root": "src",
 			"outDir": "dist",
 			"assets": [

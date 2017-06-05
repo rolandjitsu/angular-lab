@@ -1,17 +1,17 @@
 import {
-	trigger,
-	state,
 	animate,
+	AnimationTriggerMetadata,
+	state,
+	style,
 	transition,
-	style
-} from '@angular/core';
-
+	trigger
+} from '@angular/animations';
 
 const timing = 250;
 
 // Should be used together with `*ngIf`.
 // http://stackoverflow.com/a/39356145/1092007
-export const visible = trigger('visible', [
+export const visible: AnimationTriggerMetadata = trigger('visible', [
 	state('in', style({opacity: 1})),
 	transition('void => *', [
 		style({opacity: 0}),

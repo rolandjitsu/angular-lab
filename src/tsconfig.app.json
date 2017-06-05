@@ -1,28 +1,14 @@
 {
+	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"sourceMap": true,
-		"declaration": false,
-		"moduleResolution": "node",
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"noImplicitAny": true,
-		"noUnusedParameters": true,
-		"noUnusedLocals": true,
-		"strictNullChecks": true,
-		"lib": [
-			"es2017",
-			"dom"
-		],
-		"outDir": "../out-tsc/app",
-		"target": "es5",
-		"module": "es2015",
 		"baseUrl": "",
+		"outDir": "../out-tsc/app",
 		"types": [
 			"hammerjs"
 		]
 	},
 	"exclude": [
-		"test.ts",
-		"**/*.spec.ts"
+		"**/*.spec.ts",
+		"test.ts"
 	]
 }

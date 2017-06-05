@@ -1,11 +1,17 @@
-import {TestBed, async} from '@angular/core/testing';
+import {MATERIAL_SANITY_CHECKS} from '@angular/material';
+import {async, TestBed} from '@angular/core/testing';
 import {AppModule} from './app.module';
 import {AppComponent} from './app.component';
 
 
 describe('AppComponent', () => {
 	beforeEach(async(() => {
-		TestBed.configureTestingModule({imports: [AppModule]})
+		TestBed.configureTestingModule({
+				imports: [AppModule],
+				providers: [
+					{provide: MATERIAL_SANITY_CHECKS, useValue: false}
+				]
+			})
 			.compileComponents();
 	}));
 

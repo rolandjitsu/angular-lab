@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ViewTitleService} from '../core/view-title.service';
+import {ViewTitleService} from '../shared';
 
 @Component({
 	selector: 'rj-home',

@@ -1,8 +1,0 @@
-@import "../../core/mixins";
-:host {
-	@include fullscreen;
-}
-
-md-progress-spinner {
-	@include spinner-size();
-}

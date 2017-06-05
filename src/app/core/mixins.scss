@@ -1,12 +1,14 @@
 @import "variables";
 
-
+// Set the size of a <md-spinner>
 @mixin spinner-size($size: 24px) {
 	width: $size;
 	height: $size;
 }
 
+// Apply flex to an element
 @mixin fullscreen() {
 	display: flex;
+	flex-direction: column;
 	flex: 1;
 }

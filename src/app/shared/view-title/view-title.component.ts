@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 
-import {ViewTitleService} from '../../core';
+import {ViewTitleService} from './view-title.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class ViewTitleComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		// Set title when it changes
-		this.sub = this.viewTitle.title.subscribe((title) => this.set(title));
+		this.sub = this.viewTitle.title.subscribe(title => this.set(title));
 	}
 	ngOnDestroy(): void {
 		this.sub.unsubscribe();

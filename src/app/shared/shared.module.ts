@@ -1,36 +1,88 @@
-import {NgModule, ModuleWithProviders} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
 import {HttpModule} from '@angular/http';
-import {MaterialModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RouterModule} from '@angular/router';
+
+/**
+ * Angular 2 Material
+ * Docs: https://material.angular.io
+ */
+import {
+	MdButtonModule,
+	MdIconModule,
+	MdListModule,
+	MdMenuModule,
+	MdSidenavModule,
+	MdToolbarModule
+} from '@angular/material';
+
+/**
+ * Angular 2 Flex Layout
+ * Integration with Angular CLI: https://github.com/angular/flex-layout/wiki/Integration-with-Angular-CLI
+ * API: https://github.com/angular/flex-layout/wiki/API-Documentation
+ */
 import {FlexLayoutModule} from '@angular/flex-layout';
 
-import {PoolingService} from './pooling.service';
-import {ViewTitleComponent} from './view-title/view-title.component';
-
-
-const ANGULAR_SHARED_MODULES = [
+/**
+ * Modules
+ */
+export const modules: any[] = [
+	BrowserAnimationsModule,
 	CommonModule,
 	FormsModule,
-	ReactiveFormsModule,
-	RouterModule,
 	FlexLayoutModule,
 	HttpModule,
-	MaterialModule
+	MdButtonModule,
+	MdIconModule,
+	MdListModule,
+	MdMenuModule,
+	MdSidenavModule,
+	MdToolbarModule,
+	ReactiveFormsModule,
+	RouterModule
 ];
 
-
-const SHARED_MODULES = [];
-const SHARED_COMPONENTS = [
+/**
+ * Components
+ */
+import {ViewTitleComponent} from './view-title/view-title.component';
+export const components: any[] = [
 	ViewTitleComponent
 ];
-// Use this for Material dialogs.
-const SHARED_ENTRY_COMPONENTS = [];
-const SHARED_DIRECTIVES = [];
-const SHARED_PIPES = [];
-const SHARED_PROVIDERS = [
-	PoolingService
+
+/**
+ * Entry Components
+ */
+export const entryComponents: any[] = [];
+
+/**
+ * Directives
+ */
+export const directives: any[] = [];
+
+/**
+ * Pipes
+ */
+export const pipes: any[] = [];
+
+/**
+ * Guards
+ */
+export const guards = [];
+
+/**
+ * Resolvers
+ */
+export const resolvers: any[] = [];
+
+/**
+ * Services
+ */
+import {VIEW_TITLE_SERVICE_PROVIDER} from './view-title/view-title.service';
+export const services: any[] = [
+	VIEW_TITLE_SERVICE_PROVIDER
 ];
 
 
@@ -40,44 +92,31 @@ const SHARED_PROVIDERS = [
 	// A list of supporting modules.
 	// Specifically, the list of modules whose exported components,
 	// directives or pipes are referenced by the component templates declared in this module.
-	imports: [
-		// Angular
-		...ANGULAR_SHARED_MODULES,
-		// App
-		...SHARED_MODULES
-	],
+	imports: [...modules],
 	// Components/Directives/Pipes
 	// Declared classes are visible within the module but invisible to components in a different module unless (a) they are exported from this module and (b) that other module imports this one.
 	declarations: [
-		...SHARED_DIRECTIVES,
-		...SHARED_COMPONENTS,
-		...SHARED_ENTRY_COMPONENTS,
-		...SHARED_PIPES
+		...directives,
+		...components,
+		...entryComponents,
+		...pipes
 	],
+	entryComponents: [...entryComponents],
 	// A list of DI providers that an importing module can use.
 	providers: [
-		...SHARED_PROVIDERS
+		...services,
+		...guards,
+		...resolvers
 	],
 	// A list of declarations (component, directive,
 	// and pipe classes) that an importing module can use.
 	exports: [
-		// Angular
-		...ANGULAR_SHARED_MODULES,
-		// App
-		...SHARED_MODULES,
-		...SHARED_DIRECTIVES,
-		...SHARED_COMPONENTS,
-		...SHARED_PIPES
-	],
-	entryComponents: [
-		...SHARED_ENTRY_COMPONENTS
+		...modules,
+		...directives,
+		...components,
+		...pipes
 	]
 })
 export class SharedModule {
-	static forRoot(): ModuleWithProviders {
-		return {
-			ngModule: SharedModule,
-			providers: []
-		};
-	}
+
 }

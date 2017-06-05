@@ -1,19 +1,19 @@
 import {
 	APP_INITIALIZER,
+	ModuleWithProviders,
 	NgModule,
 	Optional,
-	SkipSelf,
-	ModuleWithProviders
+	SkipSelf
 } from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {ViewTitleService} from './view-title.service';
+import {SharedModule, ViewTitleService} from '../shared';
 
 
 export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void {
 	return () => {
 		// Subscribe to view title changes and update the document title.
-		viewTitle.title.subscribe((title) => {
+		viewTitle.title.subscribe(title => {
 			document.title = title ? `Angular Lab - ${title}` : 'Angular Lab';
 		});
 	};
@@ -26,7 +26,8 @@ export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void
  */
 @NgModule({
 	imports: [
-		BrowserModule
+		BrowserModule,
+		SharedModule
 	]
 })
 export class CoreModule {

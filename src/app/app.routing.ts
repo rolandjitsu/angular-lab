@@ -20,8 +20,8 @@ export const routing = RouterModule.forRoot([
 		path: '',
 		component: LayoutComponent,
 		children: [
-			{path: '', component: HomeComponent},
-			{path: 'finance', loadChildren: 'app/finance/finance.module#FinanceModule', data: {preload: true}}
+			{path: '', component: HomeComponent, pathMatch: 'full'}
+			// {path: 'finance', loadChildren: 'app/finance/finance.module#FinanceModule', data: {preload: true}}
 		]
 	},
 	{path: '**', component: ErrorComponent}

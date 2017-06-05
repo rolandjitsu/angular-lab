@@ -1,4 +1,4 @@
+@import "./core/mixins";
 :host {
-	display: block;
-	height: 100vh;
+	@include fullscreen;
 }

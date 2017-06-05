@@ -1,14 +1,18 @@
 import {
 	Component,
-	ViewChild,
-	OnInit,
 	OnDestroy,
-	Inject
+	OnInit,
+	ViewChild
 } from '@angular/core';
+import {ObservableMedia} from '@angular/flex-layout';
 import {Router} from '@angular/router';
 import {MdSidenav} from '@angular/material';
-import {ObservableMedia} from '@angular/flex-layout';
+
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
+import {async} from 'rxjs/scheduler/async';
+import 'rxjs/add/operator/map';
 
 
 @Component({
@@ -24,20 +28,28 @@ export class LayoutComponent implements OnInit, OnDestroy {
 	mode = 'side';
 	showMenuButton = false;
 
+	private isMenuVisibleSource: BehaviorSubject<boolean> = new BehaviorSubject(false);
+	isMenuVisible: Observable<boolean> = this.isMenuVisibleSource.asObservable(); // tslint:disable-line: member-ordering
+
 	private subs: Subscription[] = [];
 
-	constructor(private router: Router, @Inject(ObservableMedia) public media: any) {}
+	constructor(private router: Router, private media: ObservableMedia) {
+		this.media.subscribe(() => {
+			async.schedule(() => {
+				const isGtSm = this.media.isActive('gt-sm');
+				this.isMenuVisibleSource.next(isGtSm);
+			}, 150);
+		});
+	}
 
 	ngOnInit(): void {
-		// https://github.com/angular/flex-layout/wiki/Adaptive-Layouts
 		this.subs.push(...[
-			this.media.subscribe(() => {
-				const isGtSm = this.media.isActive('gt-sm');
-				this.showMenuButton = !isGtSm;
-
-				if (isGtSm) {
-					this.sidenav.open();
+			// https://github.com/angular/flex-layout/wiki/Adaptive-Layouts
+			this.isMenuVisible.subscribe(isMenuVisible => {
+				this.showMenuButton = !isMenuVisible;
+				if (isMenuVisible) {
 					this.mode = 'side';
+					this.sidenav.open();
 				} else {
 					this.sidenav.close()
 						.then(() => {
@@ -54,7 +66,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 	}
 
 	navigate(link: any[]): void {
-		if (!this.media.isActive('gt-sm')) {
+		if (!this.isMenuVisibleSource.getValue()) {
 			this.sidenav.close()
 				.then(() => this.router.navigate(link));
 		} else {

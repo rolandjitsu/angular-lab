@@ -11,13 +11,13 @@ describe('Layout', () => {
 	});
 
 	describe('Navigation', () => {
-		it('should have a route that links to /finance/exchange-rates', () => {
-			const exchangeRatesRoute = layout.navigation.exchangeRates;
-			expect(exchangeRatesRoute.isPresent())
+		it('should have a route that links to /', () => {
+			const homeRoute = layout.navigation.home;
+			expect(homeRoute.isPresent())
 				.toBeTrue();
-			exchangeRatesRoute.click();
+			homeRoute.click();
 			expect(browser.getCurrentUrl())
-				.toEndWith('/finance/exchange-rates');
+				.toEndWith('/');
 		});
 	});
 });

@@ -6,7 +6,7 @@ import {BrowserModule} from '@angular/platform-browser';
  * Core/Shared feature modules
  */
 import {CoreModule, PreloadSelectedModulesOnly} from './core';
-import {SharedModule} from './shared/shared.module';
+import {SharedModule} from './shared';
 
 
 /**
@@ -27,11 +27,11 @@ import {routing} from './app.routing';
 @NgModule({
 	imports: [
 		BrowserModule,
-		// Routing
-		routing,
 		// Core/Shared feature modules
-		SharedModule.forRoot(),
-		CoreModule.forRoot()
+		SharedModule,
+		CoreModule.forRoot(),
+		// Routing
+		routing
 	],
 	providers: [PreloadSelectedModulesOnly],
 	declarations: [

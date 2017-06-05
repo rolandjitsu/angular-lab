@@ -1,41 +1,43 @@
 <md-sidenav-container fxFlexFill>
-	<md-sidenav [mode]="mode" #sidenav>
+	<md-sidenav [mode]="mode" #sidenav class="mat-elevation-z2">
 		<md-toolbar color="primary">
-			<button md-icon-button
-					(click)="navigate(['/'])"
-					class="home-route"
-					margin-right>
-				<md-icon>home</md-icon>
-			</button>
-			Angular Lab
+			 <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                <button md-icon-button
+						(click)="navigate(['/'])"
+						class="home-route"
+						margin-right>
+					<md-icon>home</md-icon>
+				</button>
+				<span>Angular Lab</span>
+            </div>
 		</md-toolbar>
 
 		<md-nav-list>
-			<h3 md-subheader>Finance</h3>
-			<a md-list-item (click)="navigate(['/finance/exchange-rates'])" class="finance-er-route">
-				<md-icon md-list-icon>attach_money</md-icon>
-				<span md-line>Exchange Rates</span>
-			</a>
-			<a md-list-item (click)="navigate(['/finance/trends'])" class="finance-trends-route">
-				<md-icon md-list-icon>show_chart</md-icon>
-				<span md-line>Trends</span>
+			<h3 md-subheader>Navigation</h3>
+			<a md-list-item (click)="navigate(['/'])">
+				<md-icon md-list-icon>home</md-icon>
+				<span md-line>Home</span>
 			</a>
 		</md-nav-list>
 	</md-sidenav>
 
 	<div fxLayout="column" fxFlexFill>
 		<md-toolbar color="primary">
-			<button *ngIf="showMenuButton"
-					(click)="toggleSidenav()"
-					md-icon-button
-					margin-right>
-				<md-icon>menu</md-icon>
-			</button>
-			<rj-view-title></rj-view-title>
+			<div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+				<button *ngIf="showMenuButton"
+						(click)="toggleSidenav()"
+						md-icon-button
+						margin-right>
+					<md-icon>menu</md-icon>
+				</button>
+				<rj-view-title></rj-view-title>
+			</div>
 		</md-toolbar>
 
-		<div fxLayout="column" fxFlex>
-			<router-outlet></router-outlet>
+		<div class="content">
+			<div fxLayout="column" fxFlex>
+				<router-outlet></router-outlet>
+			</div>
 		</div>
 	</div>
 </md-sidenav-container>
