@@ -48,7 +48,7 @@ Object.assign(config, {
 	},
 	// Option for Angular to test against Angular 2+ applications on the page.
 	// Protractor will wait for the app to be stable before each action, and search within all apps when finding elements.
-	rootElement: 'rj-app',
+	rootElement: 'rj-lab',
 	onPrepare: () => {
 		// Add jasmine spec reporter
 		jasmine.getEnv()
