@@ -84,6 +84,6 @@
 		"typescript": "^2.3.4"
 	},
 	"engines": {
-		"node": ">= 7.4"
+		"node": ">= 6.9"
 	}
 }
