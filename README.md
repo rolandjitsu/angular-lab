@@ -11,7 +11,7 @@ This setup is using:
 * [TypeScript](http://www.typescriptlang.org)
 * [Angular](http://angular.io)
 * [Angular Flex Layout](https://github.com/angular/flex-layout)
-* [Material 2](https://material.angular.io)
+* [Angular Material](https://material.angular.io)
 
 PaaS:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
@@ -155,11 +155,10 @@ Pushing to `master` will automatically deploy the app, given that all tests pass
 
 ### Learning Material
 ---------------------
-* [Angular 2 Education](https://github.com/timjacobi/angular2-education)
-* [Awesome Angular 2](https://github.com/angular-class/awesome-angular2)
+* [Awesome Angular](https://github.com/angular-class/awesome-angular)
 * [Angular Docs](https://angular.io)
 * [Flex Layout](https://github.com/angular/flex-layout/wiki/API-Overview)
-* [Material 2 Docs](https://material.angular.io/guide/getting-started)
+* [Angular Material Docs](https://material.angular.io/guide/getting-started)
 * [Google Material](http://material.io)
 * [Thoughtram](https://blog.thoughtram.io/exploring-angular-2)
 * [Egghead](https://egghead.io/technologies/angular2)
@@ -177,9 +176,10 @@ You can expect the app to run wherever Angular does, but check the matrix below 
 If you wish to contribute, please use the following guidelines:
 * Use [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md) when committing changes
 * Follow [Angular Styleguide](https://angular.io/styleguide)
-* Use `npm run lint` to fix any TS warnings/errors before you check in anything:
+* Use `npm run lint`/`npm run lint:fix` to fix any TS warnings/errors before you check in anything:
 	* It will run [TSLint](http://palantir.github.io/tslint) to check for any inconsistencies
 	* It will check against Angular styleguide using [codelyzer](https://www.npmjs.com/package/codelyzer)
+	* If `npm run lint:fix` was used, it will fix some errors
 * Use `[ci skip]` in commit messages to skip a build (e.g. when making docs changes)
 
 
@@ -189,4 +189,3 @@ In the making of this simple app, I have made use of whatever resources I could 
 thus, it's worth mentioning that the following projects have served as inspiration and help:
 
 * [ng2-play](https://github.com/pkozlowski-opensource/ng2-play)
-* [Open Exchange Rates](https://openexchangerates.org)
