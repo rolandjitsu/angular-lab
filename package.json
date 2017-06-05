@@ -30,7 +30,7 @@
 		"lint:fix": "ng lint --type-check --fix --format stylish",
 		"pretest": "npm run lint",
 		"test": "ng test --single-run --browsers Chrome",
-		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX,SL_IOS10 --single-run",
+		"test:ci": "ng test --no-progress --browsers SL_CHROME,SL_SAFARI10,SL_FIREFOX --single-run",
 		"e2e": "ng e2e --no-watch ---no-live-reload --port 4224",
 		"e2e:ci": "ng e2e --no-progress --no-live-reload --no-watch --target=production --environment=prod --port 4224",
 		"deploy": "npm run build:prod && firebase deploy --token ${FIREBASE_TOKEN}",
