@@ -144,7 +144,8 @@ Tests can be run selectively as it follows:
 #### Angular CLI
 In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:prod` if the build is for production).
 
-To see what other commands are available, run `$(npm bin)/ng help`.
+To see what other commands are available, run `$(npm bin)/ng help`,
+or take a look at the `scripts` section in `package.json`.
 
 
 ### Deployments
