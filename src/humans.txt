@@ -17,6 +17,6 @@
     Angular Flex Layout, Material 2, Material Icons
 	NPM, Yarn
 	Firebase
-	Karma, Jasmine, Protractor
+	Karma, Jasmine, Protractor, TSLint
 	Travis CI, Saucelabs
 	David

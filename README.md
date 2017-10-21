@@ -6,30 +6,35 @@
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
 This setup is using:
+* [Angular](http://angular.io)
+* [TypeScript](http://www.typescriptlang.org)
 * [Core JS](https://github.com/zloirock/core-js) - necessary for browsers that haven't implemented any or some of the [ES6](http://es6-features.org) features required by Angular
 * [HammerJS](http://hammerjs.github.io) - adds support for touch gestures in Material 2
-* [TypeScript](http://www.typescriptlang.org)
-* [Angular](http://angular.io)
 * [Angular Flex Layout](https://github.com/angular/flex-layout)
-* [Angular Material](https://material.angular.io)
+* [Material 2](https://material.angular.io)
+* [Material Icons](https://material.io/icons)
+* [Normalize CSS](https://necolas.github.io/normalize.css)
+* [RxJs](http://reactivex.io/rxjs)
 
 PaaS:
 * [Firebase](https://firebase.com) - realtime store for the app's data, authentication and hosting provider
 
-Unit/E2E tests:
-* [Protractor](https://angular.github.io/protractor) - e2e test framework
+Unit/E2E tests & format check:
 * [Karma](http://karma-runner.github.io) - test runner for the app unit tests
+* [Protractor](https://angular.github.io/protractor) - e2e test framework
 * [Jasmine](http://jasmine.github.io) - assertion lib
+* [TSlint](https://palantir.github.io/tslint)
 
 CI/CD:
-* [Saucelabs](https://saucelabs.com) - browser provider for running tests on the CI server
 * [Travis CI](https://travis-ci.org) - CI/CD
+* [Saucelabs](https://saucelabs.com) - browser provider for running tests on the CI server
 
 Tools:
 * [Angular CLI](https://cli.angular.io)
 
 Package management:
-* [Gemnasium](https://gemnasium.com) - keeps an eye on all the project dependencies versions
+* [David](https://david-dm.org) - keeps an eye on all the project dependencies versions
+* [NPM](https://www.npmjs.com)
 * [Yarn](https://yarnpkg.com/en)
 
 
@@ -52,10 +57,10 @@ Package management:
 
 ### Setup
 ---------
-Make sure you have [Node](http://nodejs.org) version `v7` (or above) installed.
+Make sure you have [Node](http://nodejs.org) version `v7.9` (or above) installed.
 
 If you'd like to use [Yarn](https://yarnpkg.com/en), follow their [instructions](https://yarnpkg.com/en/docs/install) to install it on your platform,
-otherwise make sure at least [NPM 3](https://docs.npmjs.com/getting-started/installing-node#updating-npm) is installed, you can check the version with `npm --version`.
+otherwise make sure at least [NPM 5](https://docs.npmjs.com/getting-started/installing-node#updating-npm) is installed, you can check the version with `npm --version`.
 
 Follow the instructions for setting up the app:
 
@@ -80,7 +85,7 @@ In order to use your own Firebase account for [hosting](https://firebase.google.
 Now run `$(npm bin)/firebase login:ci` to get an auth token (follow the steps you are given by the command);
 2. Copy the token that was echoed in the terminal and put it somewhere safe for further usage;
 3. Alternatively, export the token (`export FIREBASE_TOKEN=<your Firebase token here>`);
-4. Replace `angular-lab-da3a7` with your own Firebase project id in `.firebaserc`.
+4. Replace `angular-laboratory` with your own Firebase project id in `.firebaserc`.
 
 Given that you have `FIREBASE_TOKEN` exported as env var, you can deploy the app to your own Firebase account with:
 ```shell
@@ -134,15 +139,15 @@ Unit tests run the same way, whenever there is a change the tests will rerun on 
 #### Run Tests
 Tests can be run selectively as it follows:
 
-* `npm run lint`/`$(npm bin)/ng lint`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
+* `npm run lint`/`$(npm bin)/ng lint --type-check --format stylish`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
 * `$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
-* `npm run test`/`$(npm bin)/ng test --single-run`: unit tests in a browser; runs in single run mode, meaning it will run once and it will not watch for file changes;
+* `npm run test`/`$(npm bin)/ng test --sourcemaps=false --single-run --browsers CHROME_HEADLESS`: unit tests in a browser ()Chrome headless; runs in single run mode, meaning it will run once and it will not watch for file changes;
 * `npm run test:ci`: unit tests on the CI server; same as `npm run test`, but it runs on [Saucelabs](https://saucelabs.com) browsers;
-* `npm run e2e`/`$(npm bin)/ng e2e`: e2e tests in Chrome;
+* `npm run e2e`/`$(npm bin)/ng e2e --no-watch ---no-live-reload --port 4224`: e2e tests in Chrome (headless) without code watch or live reload;
 * `npm run e2e:ci`: e2e tests on the CI server, in Chrome but on [Saucelabs](https://saucelabs.com) servers.
 
 #### Angular CLI
-In case you need to build everything, run `npm run build`/`$(npm bin)/ng build` (use `npm run build:prod` if the build is for production).
+In case you need to build everything, run `npm run build` (use `npm run build:prod` if the build is for production).
 
 To see what other commands are available, run `$(npm bin)/ng help`,
 or take a look at the `scripts` section in `package.json`.
