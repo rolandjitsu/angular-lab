@@ -8,7 +8,11 @@ const capabilities = {
     browserName: 'chrome',
     chromeOptions: {
         // Use headless Chrome https://github.com/angular/protractor/blob/master/docs/browser-setup.md#using-headless-chrome
-        args: ['--headless', '--js-flags=--expose-gc'],
+        args: [
+            '--headless',
+            '--disable-gpu',
+            '--js-flags=--expose-gc'
+        ],
         perfLoggingPrefs: {
             traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
         }
@@ -24,7 +28,7 @@ const capabilities = {
 if (process.env.TRAVIS) {
     capabilities.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
     capabilities['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-    capabilities.name = 'E2E - Angular Lab';
+    capabilities.name = 'Angular Lab (E2E)';
 
     config.sauceUser = process.env.SAUCE_USERNAME;
     config.sauceKey = process.env.SAUCE_ACCESS_KEY;
