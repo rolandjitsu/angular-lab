@@ -1,57 +1,127 @@
 {
-	"extends": ["tslint:latest"],
-	"rulesDirectory": ["node_modules/codelyzer"],
-	"rules" : {
-		// Angular 2 Styleguide
-		// Check https://github.com/mgechev/codelyzer for more info and rules.
-		// https://angular.io/styleguide
-		"directive-selector": {"options": ["attribute", "rj", "camelCase"]},
-		"component-selector": {"options": ["element", "rj", "kebab-case"]},
-		"pipe-naming": {"options": ["camelCase", "rj"]},
-		"use-input-property-decorator": true,
-		"use-output-property-decorator": true,
-		"use-host-property-decorator": true,
-		"no-attribute-parameter-decorator": true,
-		"no-input-rename": true,
-		"no-output-rename": true,
-		"no-forward-ref": true,
-		"use-life-cycle-interface": true,
-		"use-pipe-transform-interface": true,
-		"component-class-suffix": {"options": ["Component"]},
-		"directive-class-suffix": {"options": ["Directive"]},
-		"import-destructuring-spacing": false,
-		"templates-use-public": true,
-		"no-access-missing-member": true,
-		"invoke-injectable": true,
+    "extends": [
+        "tslint:latest"
+    ],
+    "rulesDirectory": [
+        "node_modules/codelyzer"
+    ],
+    "rules": {
+        // Angular 2 Styleguide
+        // Check https://github.com/mgechev/codelyzer for more info and rules.
+        // https://angular.io/styleguide
+        // TODO: Enable "check-pipe" below once https://github.com/mgechev/codelyzer/issues/379 and https://github.com/mgechev/codelyzer/issues/365 and others get fixed
+        "angular-whitespace": {
+            "options": [
+                "check-semicolon",
+                "check-interpolation"
+            ]
+        },
+        // "banana-in-box": true,
+        // "no-access-missing-member": true,
+        "templates-no-negated-async": true,
+        "use-view-encapsulation": true,
+        "directive-selector": {
+            "options": [
+                "attribute",
+                "rj",
+                "camelCase"
+            ]
+        },
+        "component-selector": {
+            "options": [
+                "element",
+                "rj",
+                "kebab-case"
+            ]
+        },
+        "pipe-naming": {
+            "options": [
+                "camelCase",
+                "rj"
+            ]
+        },
+        "use-input-property-decorator": true,
+        "use-output-property-decorator": true,
+        "use-host-property-decorator": true,
+        "no-attribute-parameter-decorator": true,
+        "no-input-rename": true,
+        "no-output-rename": true,
+        "no-forward-ref": true,
+        "use-life-cycle-interface": true,
+        "use-pipe-transform-interface": true,
+        "component-class-suffix": {
+            "options": [
+                "Component"
+            ]
+        },
+        "directive-class-suffix": {
+            "options": [
+                "Directive"
+            ]
+        },
+        "import-destructuring-spacing": false,
+        "templates-use-public": true,
+        "invoke-injectable": true,
 
-		// TSLint
-		"arrow-parens": {"options": ["ban-single-arg-parens"]},
-		"no-consecutive-blank-lines": {"options": 2},
-		"indent": {"options": ["tabs"]},
-		"interface-name": false,
-		"no-shadowed-variable": false,
-		"max-line-length": {"options": [240]},
-		"member-access": {"options": ["no-public"]},
-		"object-literal-sort-keys": false,
-		"ordered-imports": {
-			"options": {
-				"import-sources-order": "any",
-				"named-imports-order": "case-insensitive"
-			}
-		},
-		"prefer-function-over-method": {"options": ["allow-public"]},
-		"prefer-method-signature": true,
-		"trailing-comma": {
-			"options": {
-				"multiline": "never",
-				"singleline": "never"
-			}
-		},
-		"quotemark": {
-			"options": [
-				"avoid-escape",
-				"single"
-			]
-		}
-	}
+        // TSLint
+        "arrow-parens": {
+            "options": [
+                "ban-single-arg-parens"
+            ]
+        },
+        "no-consecutive-blank-lines": {
+            "options": 2
+        },
+        "no-implicit-dependencies": {
+            "options": [
+                "dev"
+            ]
+        },
+        "no-submodule-imports": {
+            "options": [
+                "@angular",
+                "core-js",
+                "intl",
+                "rxjs",
+                "zone.js"
+            ]
+        },
+        "interface-name": false,
+        "no-shadowed-variable": false,
+        "max-line-length": {
+            "options": [
+                240
+            ]
+        },
+        "member-access": {
+            "options": [
+                "no-public"
+            ]
+        },
+        "object-literal-sort-keys": false,
+        "ordered-imports": {
+            "options": {
+                "import-sources-order": "any",
+                "named-imports-order": "case-insensitive"
+            }
+        },
+        "prefer-function-over-method": {
+            "options": [
+                "allow-public"
+            ]
+        },
+        "prefer-method-signature": true,
+        "trailing-comma": {
+            "options": {
+                "multiline": "never",
+                "singleline": "never"
+            }
+        },
+        "quotemark": {
+            "options": [
+                "avoid-escape",
+                "single"
+            ]
+        }
+    }
 }

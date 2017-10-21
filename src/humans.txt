@@ -1,22 +1,22 @@
 # humanstxt.org
 # Humans responsible for the project & technology colophon
 
+
 # TEAM
 
 	Roland Groza
 	Software Engineer
 	https://github.com/rolandjitsu
 
+
 # TECHNOLOGY COLOPHON
 
 	ES6, TypeScript
-	HTML5, CSS3
-	Angular CLI
-	Angular, CoreJS
-	Material 2, HammerJS, Material Icons
-	Angular Flex Layout
-	Firebase
+	JavaScript, HTML5, CSS3
+	Angular, Angular CLI
+    Angular Flex Layout, Material 2, Material Icons
 	NPM, Yarn
-	Protractor, Karma, Jasmine
+	Firebase
+	Karma, Jasmine, Protractor
 	Travis CI, Saucelabs
 	David

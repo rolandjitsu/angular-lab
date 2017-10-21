@@ -1,43 +1,40 @@
-<md-sidenav-container fxFlexFill>
-	<md-sidenav [mode]="mode" #sidenav class="mat-elevation-z2">
-		<md-toolbar color="primary">
-			 <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
-                <button md-icon-button
-						(click)="navigate(['/'])"
-						class="home-route"
-						margin-right>
-					<md-icon>home</md-icon>
-				</button>
-				<span>Angular Lab</span>
+<mat-sidenav-container fxFlexFill>
+    <mat-sidenav [mode]="mode"
+        [fixedInViewport]="true"
+        #sidenav
+        class="mat-elevation-z2">
+        <mat-toolbar color="primary">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                <button mat-icon-button (click)="navigate(['/'])" class="js-home-route rj-margin-right">
+                    <mat-icon>home</mat-icon>
+                </button>
+                <span>Angular Lab</span>
             </div>
-		</md-toolbar>
+        </mat-toolbar>
 
-		<md-nav-list>
-			<h3 md-subheader>Navigation</h3>
-			<a md-list-item (click)="navigate(['/'])">
-				<md-icon md-list-icon>home</md-icon>
-				<span md-line>Home</span>
-			</a>
-		</md-nav-list>
-	</md-sidenav>
+        <mat-nav-list>
+            <h3 mat-subheader>Navigation</h3>
+            <a mat-list-item (click)="navigate(['/'])">
+                <mat-icon mat-list-icon>home</mat-icon>
+                <span mat-line>Home</span>
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
 
-	<div fxLayout="column" fxFlexFill>
-		<md-toolbar color="primary">
-			<div fxLayout="row" fxLayoutAlign="start center" fxFlex>
-				<button *ngIf="showMenuButton"
-						(click)="toggleSidenav()"
-						md-icon-button
-						margin-right>
-					<md-icon>menu</md-icon>
-				</button>
-				<rj-view-title></rj-view-title>
-			</div>
-		</md-toolbar>
+    <div fxLayout="column" fxFlexFill>
+        <mat-toolbar color="primary">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex>
+                <button (click)="sidenav.toggle()" mat-icon-button class="rj-margin-right">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <rj-view-title></rj-view-title>
+            </div>
+        </mat-toolbar>
 
-		<div class="content">
-			<div fxLayout="column" fxFlex>
-				<router-outlet></router-outlet>
-			</div>
-		</div>
-	</div>
-</md-sidenav-container>
+        <div class="content">
+            <div fxLayout="column" fxFlex>
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</mat-sidenav-container>

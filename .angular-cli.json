@@ -35,59 +35,59 @@
 		}
 	],
 	"e2e": {
-		"protractor": {
-			"config": "./protractor.conf.js"
-		}
-	},
-	"lint": [
-		{
-			"project": "src/tsconfig.app.json"
-		},
-		{
-			"project": "src/tsconfig.spec.json"
-		},
-		{
-			"project": "e2e/tsconfig.e2e.json"
-		}
-	],
-	"test": {
-		"karma": {
-			"config": "./karma.conf.js"
-		},
-		"codeCoverage": {
-			"exclude": [
-				"src/polyfills.ts",
-				"**/test.ts"
-			]
-		}
-	},
-	"defaults": {
-		"styleExt": "scss",
-		"class": {
-			"spec": true
-		},
-		"component": {
-			"inlineTemplate": false,
-			"inlineStyle": false,
-			"prefix": true,
-			"spec": true
-		},
-		"directive": {
-			"prefix": true,
-			"spec": true
-		},
-		"guard": {
-			"spec": true
-		},
-		"module": {
-			"spec": true,
-			"routing": true
-		},
-		"pipe": {
-			"spec": true
-		},
-		"service": {
-			"spec": true
-		}
-	}
+        "protractor": {
+            "config": "./protractor.conf.js"
+        }
+    },
+    "lint": [
+        {
+            "project": "src/tsconfig.app.json"
+        },
+        {
+            "project": "src/tsconfig.spec.json"
+        },
+        {
+            "project": "e2e/tsconfig.e2e.json"
+        }
+    ],
+    "test": {
+        "karma": {
+            "config": "./karma.conf.js"
+        },
+        "codeCoverage": {
+            "exclude": [
+                "src/polyfills.ts",
+                "**/test.ts"
+            ]
+        }
+    },
+    "defaults": {
+        "styleExt": "scss",
+        "class": {
+            "spec": true
+        },
+        "component": {
+            "inlineTemplate": false,
+            "inlineStyle": false,
+            "prefix": true,
+            "spec": true
+        },
+        "directive": {
+            "prefix": true,
+            "spec": true
+        },
+        "guard": {
+            "spec": true
+        },
+        "module": {
+            "spec": true,
+            "routing": true
+        },
+        "pipe": {
+            "spec": true
+        },
+        "service": {
+            "spec": true
+        }
+    }
 }

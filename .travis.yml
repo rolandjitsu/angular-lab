@@ -3,9 +3,8 @@ sudo: false
 
 language: node_js
 node_js:
-  - "6.9"
-  - "7.0"
-  - "8.0"
+  - "7.9"
+  - "8.7"
 
 cache:
   yarn: true
@@ -30,15 +29,9 @@ env:
     - SAUCE_USERNAME=rolandjitsu
     - secure: "JCabDo1wjn+rcfl9R3lXnF0XqPn5xOcm4zUo0+dSAgMiv+/3mC38KGo/fvbsdQzyxTU3hrYUOYk3cp/iI6MQE/h+u/sD0Ixo1B77inGZarSiQqyh93lDPF02NBziwWKOw/KA9PGehlE6SZ4qa55V4A3iOV4+fbwHGzmr/I9QNomAKybAiHrBx/1yA5Q8mFD9AtSgeP9f9vGFqFFFPJIikHdNQL4kF/PoDrn763jHLFVdk1BFd8U/ZV61fArtfxvb1ySMZuIp6GVvOjbDp/hG4hCdcuWiSF0TGQWcvxrzty26mP5qh75yKu9G28l7ln1PLqN/xLEDX7Bv2O5v57eeAGVh49AJjAab3brm69L6KOdJdOnYpCTb6ssrajJMCv+10UV97PYt8yYsUsn+Kg8f8jB0qOHeFwGX0EE9xNKXJOORjRt9gIg/H71XBGXQCMnqHWU2/3NY4XcT6aj4NNv8PkdxXkgV1x2HXs7MqUIk4pfhV+RJd9pbK0WaKc9sAOydyYW+ziEZXk6vCXnTlVoCuCzAFOx74OTuwk0fmNRD8knMW++evyImd5aSc6ENGhvu7MTUehfNSTH+fCSZhT1Ao1E2pSrOAWYl0wHBPPNRsQNEHf7MrzcWB42uM3icPsmoKZHs7+UB+lmY0ejxkI/jj8U2+BBVtf+QthETCDLj1k4="
     # Firebase encrypted token env var (exported as FIREBASE_TOKEN).
-    - secure: "mVD/EVRIZusNapg6LZpMc1UulNxyrQPUqGH8IBBUNG5fW6V3V/M0BcF3U5BEQbPpUpP8r97cvbw/lv0WNXt2x9wvzEz8UHyBTOebDgORahF8geiSNAZA3Xp21fzEJV3cDDam+QGkMDzfPMcqMJ95qsBYqN84jw+iS28O2XORrVps69inZCryifH+5cKDuGxSsnpfNjOxO5U4IcAdfpN65643sSDg00AhKJOOSp9eBhcM5bgC75wKoFHD2KKIIKYEuqpBr+OyrnH8asidmYhW9TUq7Re4xGu5SK9OFMtZDgEZK2ZQ/eLXKWEo7+iBsYAuvphjN8mAQ/pDil2lD8Ljsmagpg08sj8JtBjs0uv+lF48XiaBvOHvz5ppYuxy65YFLYpMzombid9dWMp39cdP4OxIOLcL7SZe0FuB0KR2m57+nhm8iOhFfoVV/Sx+UIMafT55XTri1jgQiR5dcLNdan5XXOBN3Jz4aVHQE20qUHndD2fzViABgcJgunyXYD8qO81IjXyOg8Wq29e0OdRRcnkDC8mkgqKrXwccMITy2Qabb9eagVQleDRJtNpZovAo1JExytzLRpf4JRhYPgqU+9TnWyUBQXoIBBzFdBc6uBek5HIb22TuJ7dAxDYuPQLai36nTJ5tKeOnBElctMAgr4rqmORO30d4d3a0ZlB2Xhg="
+    - secure: "gtY2QrWLN/BZ+fJsJww1sP2r8nVFBnuXG+FcRC6yoy8pmvV/0oCE86JlpxsQoRrFKveM2hG0CIohJfv2CZBokPEM0oH5ty74WIqwWsg0Z5KpDM98jX/b3+B6IvaJXD1NC3VJWwR2wMd837EpiB7citkNfhQ8xBrS9x4oLYt3ckzKK40iMgNCOBsvZIZLMgZJgrTEk25STzsLZeTXZsMYRbzjYGN5Ma1ll4N0skpSm0py+c0iXoZgUHOctyAOjdVS+JK3Cj42PpUtI8XImrrJ9i46FPlAjDuvlPzSUZChL+NHohcI89EDY/GrMjvZJFXAY0DSa7SYeWXN8VrQ0M7sp5Oeb6/OA/zMY7XxocJj1Upl3BK/I3myzMsWmLjlLxUAmaz6Kw7ttW/vjfGckzlylOvTmqwn5QFUBlr8vmmTn0JO60l1Y94qOjbfHHE5C19poVDcQZCYJzCkAHGs9Sd6FYZ71esnpujC2SY2yXMZhRoEqlxe/YzfbvupJcsgGeH9HZGfBJqsDou95nHcpcaTASmHKPK92CbiQYZdmuty+pBQzJ/YltPmnFtRz1SviNegSzTioH88UER5FR+4t9Hd5lP5NzVUqURsPUKS1KE9sOyh4zgINpOjd3IsLzr4/4ICZNv1DVmaFW8vbVJO6D31lONlzf+SEenv3d1xXRR3euQ="
     # Requirement for installing Node 5+
     - CXX=g++-4.8
-
-before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  # Give xvfb some time to start
-  - sleep 5
 
 script:
   # Code style/format check with tslint.

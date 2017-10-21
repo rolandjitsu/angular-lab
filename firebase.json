@@ -1,25 +1,26 @@
 {
-	"database": {
-		"rules": "./rules.json"
-	},
-	"hosting": {
-		"public": "./dist",
-		"ignore": [
-			"./e2e",
-			"./node_modules",
-			"./scripts",
-			"./src",
-			"./.*",
-			"browsers.js",
-			"firebase.json",
-			"karma.conf.js",
-			"LICENSE",
-			"package.json",
-			"protractor.conf.js",
-			"README.md",
-			"rules.json",
-			"tslint.json",
-			"yarn.lock"
-		]
-	}
+    "database": {
+        "rules": "./rules.json"
+    },
+    "hosting": {
+        "public": "./dist",
+        "ignore": [
+            "./e2e",
+            "./node_modules",
+            "./scripts",
+            "./src",
+            "./.*",
+            "browsers.js",
+            "firebase.json",
+            "karma.conf.js",
+            "LICENSE",
+            "package.json",
+            "protractor.conf.js",
+            "README.md",
+            "rules.json",
+            "tsconfig.json",
+            "tslint.json",
+            "yarn.lock"
+        ]
+    }
 }

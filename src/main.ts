@@ -6,8 +6,8 @@ import {AppModule} from './app/app.module';
 
 // Enable prod mode.
 if (environment.production) {
-	enableProdMode();
+    enableProdMode();
 }
 
 platformBrowserDynamic()
-	.bootstrapModule(AppModule);
+    .bootstrapModule(AppModule);

@@ -1,20 +1,19 @@
 @import "../core/mixins";
 @import "../core/variables";
+
 :host {
     @include fullscreen;
 }
 
-md-sidenav-container {
+mat-sidenav {
+    width: 250px;
+}
+mat-sidenav-container {
     flex: 1;
 }
 
-md-sidenav {
-    width: 250px;
-}
-
-
 .content {
-    // Each magic number is from <md-toolbar> height,
+    // Each magic number is from <mat-toolbar> height,
     // which is different depending on the viewport width.
     height: calc(100vh - 64px);
     @media (max-width: $breakpoint-screen-xs) {
