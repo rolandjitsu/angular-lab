@@ -35,6 +35,7 @@ module.exports = function (config) {
             require('karma-jasmine'),
             require('karma-jasmine-html-reporter'),
             require('karma-chrome-launcher'),
+            require('karma-sauce-launcher'),
             require('karma-coverage-istanbul-reporter'),
             require('@angular/cli/plugins/karma')
         ],

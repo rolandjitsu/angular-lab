@@ -8,9 +8,9 @@ const capabilities = {
     browserName: 'chrome',
     chromeOptions: {
         // Use headless Chrome https://github.com/angular/protractor/blob/master/docs/browser-setup.md#using-headless-chrome
-        'args': ['--headless', '--js-flags=--expose-gc'],
-        'perfLoggingPrefs': {
-            'traceCategories': 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
+        args: ['--headless', '--js-flags=--expose-gc'],
+        perfLoggingPrefs: {
+            traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
         }
     },
     loggingPrefs: {

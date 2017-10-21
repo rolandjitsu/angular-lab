@@ -25,6 +25,8 @@ const CUSTOM_LAUNCHERS = {
         base: 'Chrome',
         flags: [
             '--headless',
+            '--js-flags=--expose-gc',
+            '--remote-debugging-port=9000',
             '--disable-gpu'
         ]
     },
