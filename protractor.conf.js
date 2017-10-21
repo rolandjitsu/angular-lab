@@ -49,7 +49,7 @@ Object.assign(config, {
     },
     // Option for Angular to test against Angular 2+ applications on the page.
     // Protractor will wait for the app to be stable before each action, and search within all apps when finding elements.
-    // rootElement: 'in-app',
+    // rootElement: 'rj-lab',
     // TODO: Use above when https://github.com/angular/protractor/issues/4336 is fixed
     useAllAngular2AppRoots: true,
     // Turn off control flow (https://github.com/angular/protractor/tree/master/exampleTypescript/asyncAwait)
