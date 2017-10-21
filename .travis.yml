@@ -3,7 +3,6 @@ sudo: false
 
 language: node_js
 node_js:
-  - "7.9"
   - "8.7"
 
 cache:
