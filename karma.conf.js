@@ -5,7 +5,7 @@ const {CUSTOM_LAUNCHERS} = require('./browsers.js');
 
 // Source: https://github.com/angular/angular/blob/master/karma-js.conf.js.
 const sauceLabs = {
-    testName: 'UNIT - Angular Lab',
+    testName: 'Angular Lab (Unit)',
     retryLimit: 3,
     startConnect: false,
     recordVideo: false,
