@@ -2,7 +2,7 @@
 // see link for more information https://github.com/angular/protractor/blob/master/lib/config.ts
 const {SpecReporter} = require('jasmine-spec-reporter');
 
-const {SAUCE_ALIASES} = require('./browsers');
+const {CUSTOM_LAUNCHERS, SAUCE_ALIASES} = require('./browsers');
 
 const config = {};
 const capabilities = {
@@ -31,12 +31,13 @@ if (process.env.TRAVIS) {
     Object.assign(config, {
         sauceUser: process.env.SAUCE_USERNAME,
         sauceKey: process.env.SAUCE_ACCESS_KEY,
-        multiCapabilities: SAUCE_ALIASES.CI.map(capability => ({
-            ...capability,
-            build: `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`,
-            'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-            name: 'Angular Lab (E2E)'
-        }))
+        multiCapabilities: SAUCE_ALIASES.CI.map(key => CUSTOM_LAUNCHERS[key])
+            .map(capability => ({
+                ...capability,
+                build: `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`,
+                'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+                name: 'Angular Lab (E2E)'
+            }))
     });
 }
 
