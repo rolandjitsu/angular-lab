@@ -174,7 +174,7 @@ Pushing to `master` will automatically deploy the app, given that all tests pass
 -------------------
 You can expect the app to run wherever Angular does, but check the matrix below to see where the project tests pass.
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rolandjitsu.svg)](https://saucelabs.com/u/rolandjitsu)
+[![Sauce Tests](https://saucelabs.com/browser-matrix/angular-lab.svg)](https://saucelabs.com/u/angular-lab)
 
 
 ### Contribute
