@@ -41,6 +41,7 @@ Package management:
 # Table of Contents
 
 * [Setup](#setup)
+    * [Environment](#environment)
 	* [Firebase](#firebase)
 		* [Hosting](#hosting)
 	* [Travis CI](#travis-ci)
@@ -76,25 +77,45 @@ Or if you want to avoid writing all of that every time:
 
 Now you can simply run `<package>`.
 
+#### Environment
+If you'd like to use env variables, such as API keys, in the app, you can do so by importing from `secrets`:
+```ts
+import {MY_SECRET} from 'secrets';
+```
+
+For the above to work, you need to:
+
+1. Add `MY_SECRET` to the `.secrets` file (`MY_SECRET` needs to be an env variable)
+2. Add the var to `src/typings.d.ts`:
+```ts
+declare module "secrets" {
+    ...
+    export const MY_SECRET: any;
+}
+```
+3. Run `npm run secrets:eject`
+
+The last command will generate a `.secrets.js` module file containing all the secrets. This file is aliased to the `secrets` path you use to import from (using the TS `{paths}` compiler option).
+
+**NOTE**: All the values will be strings, therefore, it's up to you to parse them as needed.
 
 #### Firebase
 ##### Hosting
 In order to use your own Firebase account for [hosting](https://firebase.google.com/docs/hosting/quickstart) the app, follow the instructions below:
 
-1. Make sure that you ran `$(node bin)/npm install` so that [firebase-tools](https://github.com/firebase/firebase-tools) is installed.
-Now run `$(npm bin)/firebase login:ci` to get an auth token (follow the steps you are given by the command);
-2. Copy the token that was echoed in the terminal and put it somewhere safe for further usage;
-3. Alternatively, export the token (`export FIREBASE_TOKEN=<your Firebase token here>`);
+1. Run `$(npm bin)/firebase login:ci` to get an auth token (follow the steps you are given by the command) and export it `export FIREBASE_TOKEN=<your Firebase token>`;
+3. Get the Firebase API key (use `$(npm bin)/firebase setup:web` to get it from `{apiKey}`) and export it `export FIREBASE_API_KEY=<your Firebase API key>`;
 4. Replace `angular-laboratory` with your own Firebase project id in `.firebaserc`.
 
-Given that you have `FIREBASE_TOKEN` exported as env var, you can deploy the app to your own Firebase account with:
+Given that you have `FIREBASE_TOKEN` and `FIREBASE_API_KEY` exported as env var, you can deploy the app to your own Firebase account with:
 ```shell
+# NOTE: This also generates a .secrets.js
 npm run deploy
 ```
 
-Or you can also use the following to set `FIREBASE_TOKEN` and deploy:
+Or you can also use the following to set `FIREBASE_TOKEN`/`FIREBASE_API_KEY` and deploy:
 ```shell
-FIREBASE_TOKEN=<your Firebase token here> npm run deploy
+FIREBASE_API_KEY=<your Firebase API key> FIREBASE_TOKEN=<your Firebase token> npm run deploy
 ```
 
 #### Travis CI
@@ -103,20 +124,24 @@ you must make sure of a few of things in order to have everything working proper
 
 1. For deployments, setup the env variable `FIREBASE_TOKEN` containing the token you got from `$(npm bin)/firebase login:ci`:
 	- Encrypt the token using `travis encrypt FIREBASE_TOKEN=<your Firebase token>`, see [docs](https://docs.travis-ci.com/user/environment-variables/#Encrypted-Variables) to find out more about it;
-	- Replace the `secure` key's value, where the Firebase token is in `.travis.yml`, with your own encrypted string generated from the previous step;
-2. For tests that run on Saucelabs, setup the env variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`:
+	- Replace the `secure` key's value with the string generated from the previous step (it's right below `FIREBASE_TOKEN` in `.travis.yml`);
+2. For connecting the app to Firebase (and properly building the app), setup the `FIREBASE_API_KEY` env variable:
+    - Encrypt the API key using `travis encrypt FIREBASE_API_KEY=<your Firebase API key>`;
+    - Replace the `secure` key's value with the string generated from the previous step (it's right below `FIREBASE_API_KEY` in `.travis.yml`);
+3. For tests that run on Saucelabs, setup the env variables `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY`:
 	- Replace `SAUCE_USERNAME` with your own username (no need to encrypt);
-	- Encrypt the access key `SAUCE_ACCESS_KEY` using `travis encrypt SAUCE_ACCESS_KEY=<your Saucelabs access key>`;
-	- Replace the `secure` key's value with the string generated from the previous step (it's right below `SAUCE_USERNAME` in `.travis.yml`);
-3. Remove the `webhooks` section from `notifications` in `.travis.yml`.
+	- Encrypt the access key using `travis encrypt SAUCE_ACCESS_KEY=<your Saucelabs access key>`;
+	- Replace the `secure` key's value with the string generated from the previous step (it's right below `SAUCE_ACCESS_KEY` in `.travis.yml`);
+4. Remove the `webhooks` section from `notifications` in `.travis.yml`.
 
-If you don't want to deploy to Firebase on push skip the 1st step in the instructions above and remove the following in `.travis.yml`:
+If you don't want to deploy to Firebase on push skip the 1st and 2nd step in the instructions above and remove the following in `.travis.yml`:
 * `after_success: npm run deploy:ci` step;
-* Encrypted `FIREBASE_TOKEN` env var.
+* Encrypted `FIREBASE_TOKEN` env var;
+* Encrypted `FIREBASE_API_KEY` env var.
 
-If you don't use Saucelabs, skip the 2nd step and remove the following in `.travis.yml`;
+If you don't use Saucelabs, skip the 3nd step and remove the following in `.travis.yml`;
 * `sauce_connect` section from `addons`;
-* `SAUCE_USERNAME` and encrypted `SAUCE_ACCESS_KEY` env vars.
+* Encrypted `SAUCE_USERNAME` and `SAUCE_ACCESS_KEY` env vars.
 
 Now, keep in mind that cloning this repo and continuing in the same project will give you some issues with Travis if you wish to set it up with your own account.
 So I suggest you start out with a clean project and start git from scratch (`git init`),
@@ -134,23 +159,25 @@ Below you can find a few of things to help understand how this setup works and h
 [Angular CLI](https://cli.angular.io) is used to handle every aspect of the development of the app (e.g. building, testing, etc.).
 To get started, `npm start` will start a static webserver, rerun builds on file changes (styles, scripts, etc.), and reload the browser after builds are done.
 
-Unit tests run the same way, whenever there is a change the tests will rerun on the new code. For further info about tests read below.
+Unit tests run the same way, whenever there is a change the tests will rerun on the new code.
+For further info about tests read below.
 
 #### Run Tests
 Tests can be run selectively as it follows:
 
-* `npm run lint`/`$(npm bin)/ng lint --type-check --format stylish`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
-* `$(npm bin)/ng test`: unit tests in a browser; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
-* `npm run test`/`$(npm bin)/ng test --sourcemaps=false --single-run --browsers CHROME_HEADLESS`: unit tests in a browser ()Chrome headless; runs in single run mode, meaning it will run once and it will not watch for file changes;
+* `npm run lint`: runs [tslint](http://palantir.github.io/tslint) and checks all `.ts` files according to the `tslint.json` rules file;
+* `npm run lint:fix`: runs the above command and also tries to fix some of failures (see the [rules](https://palantir.github.io/tslint/rules/) with `Has Fixer` flag);
+* `npm run test:continuous`: unit tests in Chrome headless; runs in watch mode (i.e. watches the source files for changes and re-runs tests when files are updated);
+* `npm run test`: unit tests in Chrome headless; runs in single run mode, meaning it will run once and it will not watch for file changes;
 * `npm run test:ci`: unit tests on the CI server; same as `npm run test`, but it runs on [Saucelabs](https://saucelabs.com) browsers;
-* `npm run e2e`/`$(npm bin)/ng e2e --no-watch ---no-live-reload --port 4224`: e2e tests in Chrome (headless) without code watch or live reload;
-* `npm run e2e:ci`: e2e tests on the CI server, in Chrome but on [Saucelabs](https://saucelabs.com) servers.
+* `npm run e2e`: e2e tests in Chrome headless without code watch or live reload;
+* `npm run e2e:ci`: e2e tests on the CI server, but on [Saucelabs](https://saucelabs.com) browsers.
 
 #### Angular CLI
 In case you need to build everything, run `npm run build` (use `npm run build:prod` if the build is for production).
 
-To see what other commands are available, run `$(npm bin)/ng help`,
-or take a look at the `scripts` section in `package.json`.
+To see what other commands Angular CLI has, run `$(npm bin)/ng help`.
+Or take a look at the `scripts` section in `package.json` for project specific commands.
 
 
 ### Deployments

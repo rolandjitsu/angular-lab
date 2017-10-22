@@ -5,6 +5,7 @@
     "hosting": {
         "public": "./dist",
         "ignore": [
+            "./coverage",
             "./e2e",
             "./node_modules",
             "./scripts",

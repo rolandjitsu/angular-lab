@@ -19,6 +19,11 @@
         "typeRoots": [
             "node_modules/@types"
         ],
+        "paths": {
+            "secrets": [
+                "../.secrets.js"
+            ]
+        },
         "lib": [
             "es2017",
             "dom"

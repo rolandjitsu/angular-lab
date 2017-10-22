@@ -9,6 +9,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NoConflictStyleCompatibilityMode} from '@angular/material';
 
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+
+import {environment} from '../../environments/environment';
 import {SharedModule, ViewTitleService} from '../shared';
 
 
@@ -28,9 +32,16 @@ export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void
  */
 @NgModule({
     imports: [
+        // IMPORTANT: BrowserAnimationsModule must only be imported and used once!
         BrowserAnimationsModule,
-        NoConflictStyleCompatibilityMode, // Throw on use of 'md-' selector
+        // Material 2 compat mode
+        // Throws on use of 'md-' selector
+        NoConflictStyleCompatibilityMode,
         BrowserModule,
+        // Firebase
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        // App modules
         SharedModule
     ],
     exports: [

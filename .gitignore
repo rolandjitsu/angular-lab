@@ -32,5 +32,6 @@ Icon
 
 
 ## Dist
+.secrets.js
 coverage
 dist
