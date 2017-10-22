@@ -17,11 +17,11 @@ const capabilities = {
         // perfLoggingPrefs: {
         //     traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
         // }
-    },
-    loggingPrefs: {
-        performance: 'ALL',
-        browser: 'ALL'
     }
+    // loggingPrefs: {
+    //     performance: 'ALL',
+    //     browser: 'ALL'
+    // }
 };
 
 
