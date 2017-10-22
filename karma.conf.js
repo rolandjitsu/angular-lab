@@ -3,6 +3,9 @@
 const {CUSTOM_LAUNCHERS} = require('./browsers');
 
 
+const reporters = config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'];
+
+
 // Source: https://github.com/angular/angular/blob/master/karma-js.conf.js.
 const sauceLabs = {
     testName: 'Angular Lab (Unit)',
@@ -21,12 +24,16 @@ const sauceLabs = {
 if (process.env.TRAVIS) {
     sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
     sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+    // Also use the SauceLabs reporter provided by 'karma-sauce-launcher',
+    // otherwise the `{passed}` flag never gets set (hence the gray builds in the browser matrix badge).
+    reporters.push('saucelabs');
 }
 
 
 module.exports = function (config) {
     config.set({
         sauceLabs,
+        reporters,
         basePath: '',
         frameworks: [
             'jasmine',
@@ -66,7 +73,6 @@ module.exports = function (config) {
         angularCli: {
             environment: 'dev'
         },
-        reporters: config.angularCli && config.angularCli.codeCoverage ? ['progress', 'coverage-istanbul'] : ['progress', 'kjhtml'],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
