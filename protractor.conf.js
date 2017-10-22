@@ -11,7 +11,8 @@ const capabilities = {
         args: [
             '--headless',
             '--disable-gpu',
-            '--js-flags=--expose-gc'
+            '--js-flags=--expose-gc',
+            '--no-sandbox'
         ],
         perfLoggingPrefs: {
             traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
