@@ -5,6 +5,8 @@ const {SpecReporter} = require('jasmine-spec-reporter');
 const {CUSTOM_LAUNCHERS, SAUCE_ALIASES} = require('./browsers');
 
 const config = {};
+const timeout = 120 * 1000;
+
 const capabilities = {
     browserName: 'chrome',
     chromeOptions: {
@@ -44,7 +46,8 @@ if (process.env.TRAVIS) {
 
 Object.assign(config, {
     capabilities,
-    allScriptsTimeout: 120000,
+    allScriptsTimeout: timeout,
+    getPageTimeout: timeout,
     specs: [
         './e2e/**/*.e2e-spec.ts'
     ],
@@ -55,7 +58,7 @@ Object.assign(config, {
     jasmineNodeOpts: {
         showColors: true,
         showTiming: true,
-        defaultTimeoutInterval: 120000,
+        defaultTimeoutInterval: timeout,
         print: () => {}
     },
     // Option for Angular to test against Angular 2+ applications on the page.
