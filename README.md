@@ -163,9 +163,10 @@ Pushing to `master` will automatically deploy the app, given that all tests pass
 ---------------------
 * [Awesome Angular](https://github.com/angular-class/awesome-angular)
 * [Angular Docs](https://angular.io)
+* [Angular CLI](https://cli.angular.io)
 * [Flex Layout](https://github.com/angular/flex-layout/wiki/API-Overview)
-* [Angular Material Docs](https://material.angular.io/guide/getting-started)
-* [Google Material](http://material.io)
+* [Material 2](https://material.angular.io)
+* [Material Design](http://material.io)
 * [Thoughtram](https://blog.thoughtram.io/exploring-angular-2)
 * [Egghead](https://egghead.io/technologies/angular2)
 
@@ -181,7 +182,7 @@ You can expect the app to run wherever Angular does, but check the matrix below 
 --------------
 If you wish to contribute, please use the following guidelines:
 * Use [Conventional Changelog](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md) when committing changes
-* Follow [Angular Styleguide](https://angular.io/styleguide)
+* Follow [Angular Styleguide](https://angular.io/guide/styleguide)
 * Use `npm run lint`/`npm run lint:fix` to fix any TS warnings/errors before you check in anything:
 	* It will run [TSLint](http://palantir.github.io/tslint) to check for any inconsistencies
 	* It will check against Angular styleguide using [codelyzer](https://www.npmjs.com/package/codelyzer)
