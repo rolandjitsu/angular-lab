@@ -1,6 +1,6 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/0.13/config/configuration-file.html
-const {CUSTOM_LAUNCHERS} = require('./browsers.js');
+const {CUSTOM_LAUNCHERS} = require('./browsers');
 
 
 // Source: https://github.com/angular/angular/blob/master/karma-js.conf.js.

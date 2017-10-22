@@ -2,6 +2,7 @@
 // see link for more information https://github.com/angular/protractor/blob/master/lib/config.ts
 const {SpecReporter} = require('jasmine-spec-reporter');
 
+const {SAUCE_ALIASES} = require('./browsers');
 
 const config = {};
 const capabilities = {
@@ -11,28 +12,32 @@ const capabilities = {
         args: [
             '--headless',
             '--disable-gpu',
-            // '--js-flags=--expose-gc',
+            '--js-flags=--expose-gc',
             '--no-sandbox'
         ],
-        // perfLoggingPrefs: {
-        //     traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
-        // }
+        perfLoggingPrefs: {
+            traceCategories: 'v8,blink.console,disabled-by-default-devtools.timeline,devtools.timeline'
+        }
+    },
+    loggingPrefs: {
+        performance: 'ALL',
+        browser: 'ALL'
     }
-    // loggingPrefs: {
-    //     performance: 'ALL',
-    //     browser: 'ALL'
-    // }
 };
 
 
 // On Travis we use Saucelabs browsers.
 if (process.env.TRAVIS) {
-    capabilities.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
-    capabilities['tunnel-identifier'] = process.env.TRAVIS_JOB_NUMBER;
-    capabilities.name = 'Angular Lab (E2E)';
-
-    config.sauceUser = process.env.SAUCE_USERNAME;
-    config.sauceKey = process.env.SAUCE_ACCESS_KEY;
+    Object.assign(config, {
+        sauceUser: process.env.SAUCE_USERNAME,
+        sauceKey: process.env.SAUCE_ACCESS_KEY,
+        multiCapabilities: SAUCE_ALIASES.CI.map(capability => ({
+            ...capability,
+            build: `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`,
+            'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+            name: 'Angular Lab (E2E)'
+        }))
+    });
 }
 
 
