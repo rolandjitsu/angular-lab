@@ -11,24 +11,20 @@ const sauceLabs = {
     recordVideo: false,
     recordScreenshots: false,
     options: {
-        'selenium-version': '2.53.0',
+        // 'selenium-version': '2.53.1',
         'command-timeout': 600,
         'idle-timeout': 600,
         'max-duration': 5400
     }
 };
 
+if (process.env.TRAVIS) {
+    sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
+    sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
+}
 
 
 module.exports = function (config) {
-    if (process.env.TRAVIS) {
-        sauceLabs.build = `TRAVIS #${process.env.TRAVIS_BUILD_NUMBER} (${process.env.TRAVIS_BUILD_ID})`;
-        sauceLabs.tunnelIdentifier = process.env.TRAVIS_JOB_NUMBER;
-        // TODO: Remove once SauceLabs supports websockets.
-        // This speeds up the capturing a bit, as browsers don't even try to use websocket.
-        config.transports = ['polling'];
-    }
-
     config.set({
         sauceLabs,
         basePath: '',
