@@ -9,10 +9,10 @@ const SAUCE_ALIASES = {
     'DEV': ['SL_CHROMEDEV', 'SL_FIREFOXDEV'],
     'CI': [
         'SL_CHROME',
-        'SL_SAFARI10',
+        // 'SL_SAFARI10',
         'SL_IOS10',
         'SL_FIREFOX',
-        'SL_EDGE',
+        // 'SL_EDGE',
         'SL_ANDROID7'
     ]
 };
