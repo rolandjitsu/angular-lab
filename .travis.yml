@@ -38,6 +38,8 @@ env:
     - CXX=g++-4.8
 
 script:
+  # Setup the env
+  - npm run secrets:eject
   # Code style/format check with tslint.
   - npm run lint
   # Unit tests.

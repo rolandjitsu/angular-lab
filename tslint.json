@@ -72,14 +72,11 @@
         "no-consecutive-blank-lines": {
             "options": 2
         },
-        "no-implicit-dependencies": {
-            "options": [
-                "dev"
-            ]
-        },
+        "no-implicit-dependencies": false,
         "no-submodule-imports": {
             "options": [
                 "@angular",
+                "angularfire2",
                 "core-js",
                 "intl",
                 "rxjs",
