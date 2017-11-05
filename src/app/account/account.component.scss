@@ -1,0 +1,7 @@
+@import "../core/mixins";
+@import "../core/variables";
+
+:host {
+    @include fullscreen;
+    background-color: $lab-color-light;
+}

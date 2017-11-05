@@ -16,16 +16,6 @@ import {environment} from '../../environments/environment';
 import {SharedModule, ViewTitleService} from '../shared';
 
 
-export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void {
-    return () => {
-        // Subscribe to view title changes and update the document title.
-        viewTitle.title.subscribe(title => {
-            document.title = title ? `Angular Lab - ${title}` : 'Angular Lab';
-        });
-    };
-}
-
-
 /**
  * Module with service singletons.
  * Check https://angular.io/docs/ts/latest/guide/ngmodule.html#!#core-module for details why.
@@ -72,9 +62,18 @@ export class CoreModule {
                         ViewTitleService
                     ],
                     multi: true
-                },
-                ViewTitleService
+                }
             ]
         };
     }
+}
+
+
+export function provideViewTitleHandler(viewTitle: ViewTitleService): () => void {
+    return () => {
+        // Subscribe to view title changes and update the document title.
+        viewTitle.title.subscribe(title => {
+            document.title = title ? `Angular Lab - ${title}` : 'Angular Lab';
+        });
+    };
 }

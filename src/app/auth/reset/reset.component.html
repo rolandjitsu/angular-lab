@@ -1,0 +1,36 @@
+<form #reset="ngForm" (ngSubmit)="resetPassword()" novalidate>
+    <mat-card>
+        <mat-card-content fxLayout="column">
+            <mat-form-field class="rj-fix-field-width">
+                <input matInput
+                    [(ngModel)]="credentials.email"
+                    [disabled]="isResetting"
+                    #email="ngModel"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required>
+                <mat-error *ngIf="email.hasError('email')">
+                    Not a valid email
+                </mat-error>
+                <mat-error *ngIf="email.hasError('required')">
+                    Required
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button routerLink="../"
+                type="button"
+                [disabled]="isResetting"
+                mat-button>
+                Back
+            </button>
+            <button type="submit"
+                [disabled]="!reset.form.valid || isResetting"
+                mat-button
+                color="accent">
+                Reset
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

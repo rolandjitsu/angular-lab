@@ -1,0 +1,21 @@
+@import "../core/mixins";
+@import "../core/variables";
+
+:host {
+    background-color: $lab-color-light;
+    justify-content: flex-start;
+    @include fullscreen;
+}
+
+::ng-deep {
+    rj-login,
+    rj-register,
+    rj-reset {
+        padding-top: $padding * 2;
+        min-width: 100%;
+        @media (min-width: $breakpoint-screen-xs) {
+            padding-top: 0;
+            min-width: 350px;
+        }
+    }
+}

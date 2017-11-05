@@ -1,0 +1,52 @@
+<form #login="ngForm" (ngSubmit)="createUser()" novalidate>
+    <mat-card>
+        <mat-card-content>
+            <div fxLayout="column" fxLayoutGap="16px">
+                <mat-form-field class="rj-fix-field-width">
+                    <input matInput
+                        [(ngModel)]="credentials.email"
+                        [disabled]="isRegistering"
+                        #email="ngModel"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        required>
+                    <mat-error *ngIf="email.hasError('email')">
+                        Not a valid email
+                    </mat-error>
+                    <mat-error *ngIf="email.hasError('required')">
+                        Required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="rj-fix-field-width">
+                    <input matInput
+                        [(ngModel)]="credentials.password"
+                        [disabled]="isRegistering"
+                        #password="ngModel"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="off"
+                        required>
+                    <mat-error *ngIf="password.hasError('required')">
+                        Required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button routerLink="../"
+                type="button"
+                [disabled]="isRegistering"
+                mat-button>
+                Back
+            </button>
+            <button type="submit"
+                [disabled]="!login.form.valid || isRegistering"
+                mat-button
+                color="primary">
+                Register
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

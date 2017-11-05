@@ -28,6 +28,23 @@
                     <mat-icon>menu</mat-icon>
                 </button>
                 <rj-view-title></rj-view-title>
+                <span fxFlex></span>
+                <button *rjUnlessAuth routerLink="/login" mat-button>
+                    Login
+                </button>
+                <button *rjIfAuth mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button routerLink="/account" mat-menu-item>
+                        <mat-icon>person</mat-icon>
+                        Account
+                    </button>
+                    <button (click)="logout()" mat-menu-item>
+                        <mat-icon>lock</mat-icon>
+                        Logout
+                    </button>
+                </mat-menu>
             </div>
         </mat-toolbar>
 

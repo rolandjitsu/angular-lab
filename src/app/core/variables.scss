@@ -1,5 +1,34 @@
-// A bunch of useful SCSS variables
+@import '~@angular/material/theming';
+
+/**
+ * Mq breakpoints
+ */
 $breakpoint-screen-xs: 600px;
 
+
+/**
+ * Colors
+ */
+// Define the palettes for our theme using the Material Design palettes available in palette.scss (imported above).
+// For each palette, we can optionally specify a default,
+// lighter, and darker hue.
+$lab-app-primary: mat-palette($mat-blue);
+$lab-app-accent:  mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$lab-app-warn:    mat-palette($mat-red);
+// Just a grey palette
+$lab-app-light: mat-palette($mat-grey);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$lab-app-theme: mat-light-theme($lab-app-primary, $lab-app-accent, $lab-app-warn);
+
+// A bunch of colors
+$lab-color-light: mat-color($lab-app-light, 100);
+
+
+/**
+ * Box model
+ */
 $margin:    16px;
 $padding:   16px;

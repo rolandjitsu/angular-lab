@@ -1,0 +1,59 @@
+<form #login="ngForm" (ngSubmit)="loginWithEmail()" novalidate>
+    <mat-card>
+        <mat-card-content>
+            <div fxLayout="column" fxLayoutGap="16px">
+                <mat-form-field class="rj-fix-field-width">
+                    <input matInput
+                        [(ngModel)]="credentials.email"
+                        [disabled]="isAuthenticating"
+                        #email="ngModel"
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        required>
+                    <mat-error *ngIf="email.hasError('email')">
+                        Not a valid email
+                    </mat-error>
+                    <mat-error *ngIf="email.hasError('required')">
+                        Required
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="rj-fix-field-width">
+                    <input matInput
+                        [(ngModel)]="credentials.password"
+                        [disabled]="isAuthenticating"
+                        #password="ngModel"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        autocomplete="off"
+                        required>
+                    <mat-error *ngIf="password.hasError('required')">
+                        Required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <p class="mat-caption">
+                    If you're having trouble signing in, try to <a routerLink="./reset">reset</a> your password.
+                </p>
+            </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button type="submit"
+                [disabled]="!login.form.valid || isAuthenticating"
+                mat-button
+                color="primary">
+                Login
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="rj-margin-top">
+        <mat-card-content>
+            <p class="mat-caption">
+                Don't have an account yet? <a routerLink="./register">Register</a>
+            </p>
+        </mat-card-content>
+    </mat-card>
+</form>

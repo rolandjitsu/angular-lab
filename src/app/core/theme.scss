@@ -1,21 +1,10 @@
 @import '~@angular/material/theming';
+@import 'variables';
 
 // Include the common styles for Angular Material.
 // We include this here so that we only have to load a single css file for Angular Material in your app.
 // NOTE: Be sure that we only ever include this mixin once.
 @include mat-core();
-
-// Define the palettes for our theme using the Material Design palettes available in palette.scss (imported above).
-// For each palette, we can optionally specify a default,
-// lighter, and darker hue.
-$lab-app-primary: mat-palette($mat-indigo);
-$lab-app-accent:  mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$lab-app-warn:    mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$lab-app-theme: mat-light-theme($lab-app-primary, $lab-app-accent, $lab-app-warn);
 
 // Include theme styles for core and each component used in our app.
 // NOTE: We can import and @include the theme mixins for each component

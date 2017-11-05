@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {RouterModule} from '@angular/router';
 
@@ -28,6 +27,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 /**
  * App modules
  */
+import {AuthModule} from './auth/auth.module';
 import {ViewTitleModule} from './view-title/view-title.module';
 
 
@@ -37,9 +37,8 @@ import {ViewTitleModule} from './view-title/view-title.module';
 export const modules: any[] = [
     // Angular
     CommonModule,
-    FormsModule,
+    // TODO: Remove HttpModule when Material 2 removes it as well (see https://github.com/angular/material2/pull/6454)
     HttpModule,
-    ReactiveFormsModule,
     RouterModule,
     // Flex Layout
     FlexLayoutModule,
@@ -51,6 +50,7 @@ export const modules: any[] = [
     MatSidenavModule,
     MatToolbarModule,
     // App
+    AuthModule,
     ViewTitleModule
 ];
 

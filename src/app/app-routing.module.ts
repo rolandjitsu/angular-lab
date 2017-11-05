@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 
 import {PreloadSelectedModulesOnly} from './core';
+import {AuthGuard, RedirectGuard} from './shared';
 
 import {ErrorComponent} from './error/error.component';
 import {LayoutComponent} from './layout/layout.component';
@@ -15,11 +16,24 @@ export const routes: Routes = [
         path: '',
         component: LayoutComponent,
         children: [
-            {path: '', component: HomeComponent, pathMatch: 'full'}
-            // {path: 'finance', loadChildren: 'app/finance/finance.module#FinanceModule', data: {preload: true}}
+            {path: '', component: HomeComponent, pathMatch: 'full'},
+            {
+                path: 'account',
+                canLoad: [AuthGuard],
+                loadChildren: 'app/account/account.module#AccountModule'
+            }
         ]
     },
-    {path: '**', component: ErrorComponent}
+    {
+        path: 'login',
+        canLoad: [RedirectGuard],
+        loadChildren: 'app/auth/auth.module#AuthModule',
+        data: {preload: true}
+    },
+    {
+        path: '**',
+        component: ErrorComponent
+    }
 ];
 
 export const config: ExtraOptions = {

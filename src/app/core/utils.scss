@@ -35,3 +35,10 @@
 .rj-hidden {
     visibility: hidden;
 }
+
+// Fix form fields width
+.rj-fix-field-width {
+    &.mat-form-field {
+        width: auto;
+    }
+}
