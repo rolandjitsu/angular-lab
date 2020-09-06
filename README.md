@@ -5,6 +5,12 @@
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg?style=flat-square)](https://gitter.im/rolandjitsu/angular-lab)
 > Playground for experimenting with some of the core features of [Angular](https://angular.io) and integration with other software and services.
 
+# IMPORTANT NOTICE
+
+This project is no longer maintained and it's definitely out of date! Use at your own risk!
+
+# Setup
+
 This setup is using:
 * [Angular](http://angular.io)
 * [TypeScript](http://www.typescriptlang.org)
